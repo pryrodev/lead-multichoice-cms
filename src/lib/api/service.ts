@@ -6,7 +6,7 @@ import type { Profile, Settings, Activity, ActivityKind, Engagement, Kpis, Shipm
 const delay = <T,>(v: T, ms = 250) => new Promise<T>((r) => setTimeout(() => r(structuredClone(v)), ms));
 
 let profileStore: Profile = { name: "Aline Uwase", email: "aline@leadmultichoice.rw", role: "Operations Manager", phone: "+250 788 000 000" };
-let settingsStore: Settings = { usdToRwf: settingsStore.usdToRwf, deadlineWarningDays: 7, emailAlerts: true, blockerAlerts: true, weeklyDigest: false };
+let settingsStore: Settings = { usdToRwf: db.USD_TO_RWF, deadlineWarningDays: 7, emailAlerts: true, blockerAlerts: true, weeklyDigest: false };
 
 let activityStore = [...db.activities];
 
