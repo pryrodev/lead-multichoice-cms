@@ -12,7 +12,7 @@ import { useEffect, type ReactNode } from "react";
 
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/layout/app-sidebar";
-import { profileQuery } from "@/lib/api/hooks";
+import { profileQuery, settingsQuery } from "@/lib/api/hooks";
 import { Toaster } from "@/components/ui/sonner";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
@@ -100,7 +100,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
     ],
   }),
-  loader: ({ context }) => context.queryClient.ensureQueryData(profileQuery).then(() => undefined),
+  loader: ({ context }) => Promise.all([context.queryClient.ensureQueryData(profileQuery), context.queryClient.ensureQueryData(settingsQuery)]).then(() => undefined),
   shellComponent: RootShell,
   component: RootComponent,
   notFoundComponent: NotFoundComponent,
