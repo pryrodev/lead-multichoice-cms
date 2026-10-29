@@ -22,3 +22,20 @@ export function useAddActivity() {
     onSuccess: () => qc.invalidateQueries({ queryKey: ["activities"] }),
   });
 }
+
+export const profileQuery = queryOptions({ queryKey: ["profile"], queryFn: api.getProfile });
+export const settingsQuery = queryOptions({ queryKey: ["settings"], queryFn: api.getSettings });
+export const useProfile = () => useSuspenseQuery(profileQuery).data;
+export const useSettings = () => useSuspenseQuery(settingsQuery).data;
+
+export function useUpdateProfile() {
+  const qc = useQueryClient();
+  return useMutation({ mutationFn: api.updateProfile, onSuccess: () => qc.invalidateQueries({ queryKey: ["profile"] }) });
+}
+export function useUpdateSettings() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: api.updateSettings,
+    onSuccess: () => { qc.invalidateQueries({ queryKey: ["settings"] }); qc.invalidateQueries({ queryKey: ["kpis"] }); },
+  });
+}

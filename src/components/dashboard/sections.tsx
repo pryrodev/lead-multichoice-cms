@@ -11,7 +11,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Textarea } from "@/components/ui/textarea";
-import { useActivities, useAddActivity, useEngagements, useKpis, useShipments, useStages, useTenders } from "@/lib/api/hooks";
+import { useActivities, useAddActivity, useSettings, useEngagements, useKpis, useShipments, useStages, useTenders } from "@/lib/api/hooks";
 import type { ActivityKind, Shipment, StageKey, Tender, TenderStatus } from "@/lib/api/types";
 import { daysUntil, fmtDate, rwf, usd } from "@/lib/format";
 import { cn } from "@/lib/utils";
@@ -145,8 +145,9 @@ export function Engagements() {
 }
 
 function DueBadge({ days }: { days: number }) {
+  const { deadlineWarningDays } = useSettings();
   if (days < 0) return <Badge variant="destructive">{-days}d overdue</Badge>;
-  if (days <= 7) return <Badge className="bg-warning text-warning-foreground hover:bg-warning">{days}d left</Badge>;
+  if (days <= deadlineWarningDays) return <Badge className="bg-warning text-warning-foreground hover:bg-warning">{days}d left</Badge>;
   return <Badge variant="outline">{days}d</Badge>;
 }
 
@@ -164,6 +165,7 @@ export function TenderTable() {
   const [q, setQ] = useState("");
   const [status, setStatus] = useState<"all" | TenderStatus>("all");
   const [selected, setSelected] = useState<Tender | null>(null);
+  const rate = useSettings().usdToRwf;
   const rows = useMemo(
     () => tenders.filter((t) => (status === "all" || t.status === status) &&
       `${t.ref} ${t.title} ${t.entity} ${t.owner}`.toLowerCase().includes(q.toLowerCase())),
@@ -229,7 +231,7 @@ export function TenderTable() {
               </SheetHeader>
               <dl className="mt-6 space-y-4 text-sm">
                 {[["Procuring entity", selected.entity], ["Category", selected.category], ["Owner", selected.owner],
-                  ["Deadline", fmtDate(selected.deadline)], ["Estimated value", `${usd(selected.valueUsd)} · ${rwf(selected.valueUsd * 1420)}`], ["Notes", selected.notes]].map(([k, v]) => (
+                  ["Deadline", fmtDate(selected.deadline)], ["Estimated value", `${usd(selected.valueUsd)} · ${rwf(selected.valueUsd * rate)}`], ["Notes", selected.notes]].map(([k, v]) => (
                   <div key={k}><dt className="text-xs uppercase tracking-wide text-muted-foreground">{k}</dt><dd className="mt-1">{v}</dd></div>
                 ))}
                 <Badge variant="outline" className={cn("capitalize", statusStyle[selected.status])}>{selected.status}</Badge>

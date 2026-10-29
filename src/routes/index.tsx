@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { activitiesQuery, engagementsQuery, kpisQuery, shipmentsQuery, stagesQuery, tendersQuery } from "@/lib/api/hooks";
+import { PageShell } from "@/components/layout/page";
 import { ActivityFeed, Engagements, KpiRibbon, Logistics, Pipeline, TenderTable } from "@/components/dashboard/sections";
 
 export const Route = createFileRoute("/")({
@@ -20,30 +21,17 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   return (
-    <div className="min-h-screen bg-background">
-      <header className="border-b bg-primary text-primary-foreground">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-          <div>
-            <div className="font-mono text-xs uppercase tracking-[0.2em] opacity-70">LEAD MULTICHOICE Ltd · Kigali</div>
-            <h1 className="font-display text-xl font-semibold">Business Operations & Trade Facilitation</h1>
-          </div>
-          <div className="hidden font-mono text-xs opacity-80 sm:block">
-            {new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric", timeZone: "Africa/Kigali" })}
-          </div>
-        </div>
-      </header>
-      <main className="mx-auto max-w-7xl space-y-6 px-6 py-6">
-        <KpiRibbon />
-        <Pipeline />
-        <div className="grid gap-6 lg:grid-cols-3">
-          <div className="lg:col-span-2"><Engagements /></div>
-          <Logistics />
-        </div>
-        <div className="grid gap-6 lg:grid-cols-3">
-          <div className="lg:col-span-2"><TenderTable /></div>
-          <ActivityFeed />
-        </div>
-      </main>
-    </div>
+    <PageShell title="Dashboard" subtitle="Business operations & trade facilitation · Kigali">
+      <KpiRibbon />
+      <Pipeline />
+      <div className="grid gap-6 lg:grid-cols-3">
+        <div className="lg:col-span-2"><Engagements /></div>
+        <Logistics />
+      </div>
+      <div className="grid gap-6 lg:grid-cols-3">
+        <div className="lg:col-span-2"><TenderTable /></div>
+        <ActivityFeed />
+      </div>
+    </PageShell>
   );
 }

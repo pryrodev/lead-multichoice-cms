@@ -81,3 +81,18 @@ export interface Kpis {
   pendingClearances: number;
   attentionItems: number;
 }
+
+export interface Profile {
+  name: string;
+  email: string;
+  role: string;
+  phone: string;
+}
+
+export interface Settings {
+  usdToRwf: number;
+  deadlineWarningDays: number;
+  emailAlerts: boolean;
+  blockerAlerts: boolean;
+  weeklyDigest: boolean;
+}
