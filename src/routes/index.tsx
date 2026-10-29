@@ -28,7 +28,7 @@ function Index() {
             <h1 className="font-display text-xl font-semibold">Business Operations & Trade Facilitation</h1>
           </div>
           <div className="hidden font-mono text-xs opacity-80 sm:block">
-            {new Date().toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long", year: "numeric" })}
+            {new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric", timeZone: "Africa/Kigali" })}
           </div>
         </div>
       </header>
