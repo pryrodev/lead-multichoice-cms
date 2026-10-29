@@ -179,7 +179,7 @@ export function TenderTable() {
             <Input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search tenders…" className="w-56 pl-8" />
           </div>
           <Select value={status} onValueChange={(v) => setStatus(v as typeof status)}>
-            <SelectTrigger className="w-36"><SelectValue /></SelectTrigger>
+            <SelectTrigger className="w-36"><SelectValue>{status === "all" ? "All statuses" : <span className="capitalize">{status}</span>}</SelectValue></SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All statuses</SelectItem>
               {Object.keys(statusStyle).map((s) => <SelectItem key={s} value={s} className="capitalize">{s}</SelectItem>)}
@@ -316,7 +316,7 @@ export function ActivityFeed() {
         <div className="space-y-2 rounded-lg border bg-muted/40 p-3">
           <div className="flex gap-2">
             <Select value={kind} onValueChange={(v) => setKind(v as ActivityKind)}>
-              <SelectTrigger className="w-36"><SelectValue /></SelectTrigger>
+              <SelectTrigger className="w-36"><SelectValue>{kindStyle[kind].label}</SelectValue></SelectTrigger>
               <SelectContent>
                 {Object.entries(kindStyle).map(([k, v]) => <SelectItem key={k} value={k}>{v.label}</SelectItem>)}
               </SelectContent>
