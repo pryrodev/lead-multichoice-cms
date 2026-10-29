@@ -93,7 +93,7 @@ export function Engagements() {
     <Card>
       <CardHeader><CardTitle className="font-display">Active engagements</CardTitle></CardHeader>
       <CardContent>
-        <Tabs defaultValue={engagements[0]?.id}>
+        <Tabs defaultValue={engagements[0]?.id ?? ""}>
           <TabsList className="h-auto flex-wrap justify-start gap-1 bg-transparent p-0">
             {engagements.map((e) => (
               <TabsTrigger key={e.id} value={e.id} className="rounded-b-none border border-b-0 font-mono text-xs data-[state=active]:bg-accent data-[state=active]:text-accent-foreground">
@@ -302,7 +302,7 @@ export function ActivityFeed() {
   const [message, setMessage] = useState("");
 
   const submit = () => {
-    if (!ref.trim() || !message.trim()) return toast.error("Reference and message are required");
+    if (!ref.trim() || !message.trim()) { toast.error("Reference and message are required"); return; }
     add.mutate({ kind, ref: ref.trim(), message: message.trim() }, {
       onSuccess: () => { toast.success("Activity logged"); setMessage(""); },
       onError: () => toast.error("Could not log activity"),

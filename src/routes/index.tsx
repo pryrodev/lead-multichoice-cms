@@ -14,7 +14,7 @@ export const Route = createFileRoute("/")({
   loader: ({ context: { queryClient: qc } }) =>
     Promise.all([kpisQuery, stagesQuery, engagementsQuery, tendersQuery, shipmentsQuery, activitiesQuery].map((q) => qc.ensureQueryData(q as never))).then(() => undefined),
   component: Index,
-  errorComponent: ({ error }) => <div role="alert" className="p-8">{error.message}</div>,
+  errorComponent: ({ error }) => <div role="alert" className="p-8">{error instanceof Error ? error.message : String(error)}</div>,
   notFoundComponent: () => <div className="p-8">Not found.</div>,
 });
 
