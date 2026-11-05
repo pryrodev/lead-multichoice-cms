@@ -10,9 +10,9 @@ export function PortalUnavailable() {
         <Image src="/site/hero-port.jpg" alt="" fill priority sizes="100vw" className="object-cover" />
       </div>
       <div className="absolute inset-0 -z-10 bg-brand-primary/75" aria-hidden="true" />
-      <div className="w-full max-w-2xl">
+      <div className="w-full max-w-5xl">
         <p className="eyebrow mb-4 text-brass-light">Client portal</p>
-        <h1 className="font-display text-4xl font-semibold leading-tight md:text-5xl">Portal access is not available yet.</h1>
+        <h1 className="font-display text-[clamp(2rem,4.2vw,3rem)] font-semibold leading-tight lg:whitespace-nowrap">Portal access is not available yet.</h1>
         <p className="mx-auto mt-5 max-w-xl leading-relaxed text-brand-white/85">
           You can continue exploring the LEAD MULTICHOICE website. Client accounts and request tracking will open when portal access is enabled.
         </p>
