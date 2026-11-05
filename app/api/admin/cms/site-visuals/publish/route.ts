@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { requireUser } from "@/lib/auth/api";
 import { getDb } from "@/lib/db";
 import { Prisma } from "@/generated/prisma/client";
+import { revalidatePath, revalidateTag } from "next/cache";
 
 export async function POST() {
   const auth = await requireUser(["admin"]);
@@ -15,6 +16,8 @@ export async function POST() {
       where: { slug: "site-visuals" },
       data: { publishedContent: page.draftContent, draftContent: Prisma.DbNull, publishedBy: auth.user.id, publishedAt },
     });
+    revalidateTag("cms-site-visuals", "max");
+    revalidatePath("/", "layout");
     return NextResponse.json({ published: true, publishedAt: publishedAt.toISOString() });
   } catch (error) {
     console.error("CMS site visuals publish failed", error);

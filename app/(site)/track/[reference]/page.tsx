@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { RequestTrackingDetails } from "@/components/client-portal/request-tracking-details";
+import { QueryProvider } from "@/components/providers/query-provider";
 
 type PageProps = { params: Promise<{ reference: string }> };
 
@@ -10,5 +11,5 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function TrackDetailsPage({ params }: PageProps) {
   const { reference } = await params;
-  return <RequestTrackingDetails reference={decodeURIComponent(reference)} />;
+  return <QueryProvider><RequestTrackingDetails reference={decodeURIComponent(reference)} /></QueryProvider>;
 }

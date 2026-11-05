@@ -57,6 +57,18 @@ export default function Home({ contentOverride, initialContent }: { contentOverr
             fetchPriority="high"
             className="photo-parallax-image"
           />
+          <video
+            className="photo-parallax-video"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            poster={heroPort}
+            aria-hidden="true"
+          >
+            <source src="/video/hero-logistics-web.mp4" type="video/mp4" />
+          </video>
         </div>
         <div className="photo-parallax-shade absolute inset-0 -z-10" aria-hidden />
         <div className="container-site pb-12 pt-24 md:pb-14 md:pt-28">
@@ -163,6 +175,8 @@ export default function Home({ contentOverride, initialContent }: { contentOverr
           <SectionHeading
             eyebrow={cmsText("What we do")}
             title={cmsText("Local coordination across the supply journey.")}
+            className="max-w-none"
+            titleClassName="lg:whitespace-nowrap lg:text-[clamp(1.875rem,3.1vw,2.625rem)]"
           />
           <Link
             href="/services"

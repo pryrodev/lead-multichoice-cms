@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { ClientRequestForm } from "@/components/client-portal/request-form";
 import { getSessionUser } from "@/lib/auth/session";
+import { PortalFrame } from "@/components/client-portal/portal-frame";
 
 export const metadata: Metadata = { title: "Submit a request — LEAD MULTICHOICE Ltd" };
 
@@ -14,5 +15,5 @@ export default async function NewClientRequestPage() {
   }
   if (!user) redirect("/portal/login");
   if (user.role === "admin") redirect("/client-requests");
-  return <ClientRequestForm />;
+  return <PortalFrame><ClientRequestForm /></PortalFrame>;
 }

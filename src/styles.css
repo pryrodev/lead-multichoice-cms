@@ -252,6 +252,16 @@
   object-fit: cover;
   object-position: center;
 }
+.photo-parallax-video {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100vh;
+  height: 100svh;
+  object-fit: cover;
+  object-position: center;
+}
 .photo-parallax-shade {
   background: var(--photo-shade);
 }
@@ -261,6 +271,9 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .photo-parallax-video {
+    display: none;
+  }
   .story-parallax-image {
     transform: none !important;
   }
@@ -365,6 +378,21 @@
   transition:
     filter 180ms ease-out,
     box-shadow 180ms ease-out;
+}
+.brand-rainbow-button.header-join-button {
+  border-color: transparent;
+  color: var(--foreground);
+  background: var(--brand-gold);
+  animation: none;
+  box-shadow: 0 8px 20px color-mix(in srgb, var(--brand-gold) 22%, transparent);
+}
+.brand-rainbow-button.header-join-button::before {
+  opacity: 0;
+  animation: none;
+}
+.brand-rainbow-button.header-join-button:hover {
+  filter: brightness(0.97);
+  box-shadow: 0 10px 24px color-mix(in srgb, var(--brand-gold) 28%, transparent);
 }
 .brand-rainbow-button::before {
   position: absolute;

@@ -10,7 +10,13 @@ export function ScrollReveal() {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     let ctx: { revert: () => void } | undefined;
     let cancelled = false;
-    const timer = window.setTimeout(async () => {
+    let idleHandle: number | undefined;
+    let timer: number | undefined;
+    const idleScheduler = window as Window & {
+      requestIdleCallback?: (callback: IdleRequestCallback, options?: IdleRequestOptions) => number;
+      cancelIdleCallback?: (handle: number) => void;
+    };
+    const initialize = async () => {
       const { gsap } = await import("gsap");
       const { ScrollTrigger } = await import("gsap/ScrollTrigger");
       if (cancelled) return;
@@ -19,19 +25,7 @@ export function ScrollReveal() {
         const main = document.querySelector("#main");
         if (!main) return;
         const all = Array.from(main.querySelectorAll("section"));
-        const [first, ...rest] = all;
-        if (first && pathname !== "/") {
-          const firstTargets = first.querySelectorAll("h1, p, .eyebrow");
-          if (firstTargets.length) {
-            gsap.from(firstTargets, {
-              x: (i: number) => (i % 2 === 0 ? -20 : 20),
-              opacity: 0,
-              duration: 0.8,
-              ease: "power3.out",
-              stagger: 0.08,
-            });
-          }
-        }
+        const [, ...rest] = all;
         rest
           .filter((s) => !s.hasAttribute("data-no-reveal"))
           .forEach((section, sectionIndex) => {
@@ -75,11 +69,16 @@ export function ScrollReveal() {
           });
         });
       });
-      ScrollTrigger.refresh();
-    }, 60);
+    };
+    if (idleScheduler.requestIdleCallback) {
+      idleHandle = idleScheduler.requestIdleCallback(() => void initialize(), { timeout: 1200 });
+    } else {
+      timer = window.setTimeout(() => void initialize(), 180);
+    }
     return () => {
       cancelled = true;
-      window.clearTimeout(timer);
+      if (idleHandle !== undefined) idleScheduler.cancelIdleCallback?.(idleHandle);
+      if (timer !== undefined) window.clearTimeout(timer);
       ctx?.revert();
     };
   }, [pathname]);

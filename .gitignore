@@ -20,6 +20,7 @@ dist-ssr
 *.local
 .env*
 !.env.example
+/public/video/hero-logistics.mp4
 .npm-cache
 *.tsbuildinfo
 

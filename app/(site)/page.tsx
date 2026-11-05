@@ -2,8 +2,6 @@ import type { Metadata } from "next";
 import Home from "@/components/site/pages/index";
 import { getPublishedHomePage } from "@/lib/cms/server";
 
-export const dynamic = "force-dynamic";
-
 export async function generateMetadata(): Promise<Metadata> {
   const content = await getPublishedHomePage();
   return {

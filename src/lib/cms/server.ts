@@ -1,10 +1,11 @@
 import "server-only";
+import { unstable_cache } from "next/cache";
 import { getDb } from "@/lib/db";
 import { defaultHomePageContent, type HomePageContent } from "./homepage";
 import { defaultSiteVisuals, mergeSiteVisuals, type SiteVisuals } from "./site-visuals";
 import { mergeSiteCopy, type SiteCopyContent } from "./site-copy";
 
-export async function getPublishedHomePage(): Promise<HomePageContent> {
+export const getPublishedHomePage = unstable_cache(async (): Promise<HomePageContent> => {
   try {
     const page = await getDb().sitePage.findUnique({ where: { slug: "home" }, select: { publishedContent: true } });
     const stored = page?.publishedContent;
@@ -14,9 +15,9 @@ export async function getPublishedHomePage(): Promise<HomePageContent> {
     console.error("Could not load published homepage content", error);
     return defaultHomePageContent;
   }
-}
+}, ["published-home-page-v1"], { revalidate: 3600, tags: ["cms-homepage"] });
 
-export async function getPublishedSiteVisuals(): Promise<SiteVisuals> {
+export const getPublishedSiteVisuals = unstable_cache(async (): Promise<SiteVisuals> => {
   try {
     const page = await getDb().sitePage.findUnique({ where: { slug: "site-visuals" }, select: { publishedContent: true } });
     const stored = page?.publishedContent;
@@ -26,9 +27,9 @@ export async function getPublishedSiteVisuals(): Promise<SiteVisuals> {
     console.error("Could not load published site visuals", error);
     return defaultSiteVisuals;
   }
-}
+}, ["published-site-visuals-v1"], { revalidate: 3600, tags: ["cms-site-visuals"] });
 
-export async function getPublishedSiteCopy(): Promise<SiteCopyContent | null> {
+export const getPublishedSiteCopy = unstable_cache(async (): Promise<SiteCopyContent | null> => {
   try {
     const page = await getDb().sitePage.findUnique({ where: { slug: "site-copy" }, select: { publishedContent: true } });
     const stored = page?.publishedContent;
@@ -38,4 +39,4 @@ export async function getPublishedSiteCopy(): Promise<SiteCopyContent | null> {
     console.error("Could not load published site copy", error);
     return null;
   }
-}
+}, ["published-site-copy-v1"], { revalidate: 3600, tags: ["cms-site-copy"] });

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ArrowUpRight, ChevronDown, Mail, MapPin, Menu, Phone, X } from "lucide-react";
+import { ArrowUpRight, ChevronDown, Mail, MapPin, Menu, MessageCircle, Phone, X } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
@@ -112,6 +112,16 @@ export function SiteHeader() {
               </a>
             )}
             <a
+              href={company.whatsapp}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Chat with us on WhatsApp"
+              title="WhatsApp"
+              className="inline-flex items-center hover:text-brand-white/80"
+            >
+              <MessageCircle size={14} strokeWidth={2.2} aria-hidden="true" />
+            </a>
+            <a
               href={`tel:${company.phoneTel}`}
               className="inline-flex items-center gap-1.5 hover:underline"
             >
@@ -200,8 +210,8 @@ export function SiteHeader() {
               })}
             </ul>
           </nav>
-          <div className="flex items-center gap-0">
-            <RainbowButton asChild className="hidden sm:inline-flex">
+          <div className="flex items-center gap-2">
+            <RainbowButton asChild className="header-join-button hidden sm:inline-flex">
               <Link href="/portal/login">
                 {t("header.getStarted")}
               </Link>

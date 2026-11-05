@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { redirect } from "next/navigation";
 import { getSessionUser } from "@/lib/auth/session";
+import { AdminWorkspace } from "@/components/layout/admin-workspace";
 
 export default async function AdminLayout({ children }: { children: ReactNode }) {
   let user;
@@ -11,5 +12,5 @@ export default async function AdminLayout({ children }: { children: ReactNode })
   }
   if (!user) redirect("/portal/login?next=%2Fadmin");
   if (user.role !== "admin") redirect("/portal");
-  return children;
+  return <AdminWorkspace>{children}</AdminWorkspace>;
 }

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { ClientDashboard } from "@/components/client-portal/client-dashboard";
 import { getSessionUser } from "@/lib/auth/session";
+import { PortalFrame } from "@/components/client-portal/portal-frame";
 
 export const metadata: Metadata = { title: "My requests — LEAD MULTICHOICE Ltd" };
 
@@ -14,5 +15,5 @@ export default async function ClientPortalPage() {
   }
   if (!user) redirect("/portal/login");
   if (user.role === "admin") redirect("/admin");
-  return <ClientDashboard />;
+  return <PortalFrame><ClientDashboard /></PortalFrame>;
 }

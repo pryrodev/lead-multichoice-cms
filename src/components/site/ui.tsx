@@ -66,6 +66,8 @@ export function ExternalLink({
 export function SectionHeading({
   eyebrow,
   title,
+  titleClassName,
+  className,
   intro,
   align = "left",
   inverted,
@@ -73,13 +75,15 @@ export function SectionHeading({
 }: {
   eyebrow?: string;
   title: ReactNode;
+  titleClassName?: string;
+  className?: string;
   intro?: ReactNode;
   align?: "left" | "center";
   inverted?: boolean;
   as?: "h1" | "h2";
 }) {
   return (
-    <div className={cn("max-w-3xl", align === "center" && "mx-auto text-center")}>
+    <div className={cn("max-w-3xl", align === "center" && "mx-auto text-center", className)}>
       {eyebrow && (
         <p
           className={cn(
@@ -96,6 +100,7 @@ export function SectionHeading({
         className={cn(
           H === "h1" ? "text-[38px] md:text-[56px] lg:text-[62px]" : "text-[30px] md:text-[42px]",
           "text-balance",
+          titleClassName,
           inverted && "text-background",
         )}
       >

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
-import { AppProviders } from "@/app-providers";
+import { Toaster } from "@/components/ui/sonner";
 import "@/styles.css";
 
 export const metadata: Metadata = {
@@ -22,7 +22,8 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
       </head>
       <body>
-        <AppProviders>{children}</AppProviders>
+        {children}
+        <Toaster richColors />
       </body>
     </html>
   );
