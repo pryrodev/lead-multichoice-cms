@@ -1,0 +1,22 @@
+services:
+  mysql:
+    image: mysql:8.4
+    container_name: lead-multichoice-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-lead_multichoice}
+      MYSQL_USER: ${MYSQL_USER:-lmc_dev}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-lmc_dev_password}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-lmc_root_dev_password}
+    ports:
+      - "${MYSQL_PORT:-3307}:3306"
+    volumes:
+      - lead_multichoice_mysql:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -u \"$${MYSQL_USER}\" -p\"$${MYSQL_PASSWORD}\""]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  lead_multichoice_mysql:

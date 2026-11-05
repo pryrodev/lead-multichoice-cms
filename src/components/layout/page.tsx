@@ -1,19 +1,27 @@
-import type { ReactNode } from "react";
-import { SidebarTrigger } from "@/components/ui/sidebar";
-import { Separator } from "@/components/ui/separator";
+"use client";
 
-export function PageShell({ title, subtitle, children }: { title: string; subtitle?: string; children: ReactNode }) {
+import type { ReactNode } from "react";
+
+export function PageShell({
+  title,
+  subtitle,
+  children,
+}: {
+  title: string;
+  subtitle?: string;
+  children: ReactNode;
+}) {
   return (
-    <div className="flex min-h-screen flex-1 flex-col">
-      <header className="sticky top-0 z-10 flex h-14 items-center gap-3 border-b bg-background/90 px-4 backdrop-blur">
-        <SidebarTrigger />
-        <Separator orientation="vertical" className="h-5" />
-        <div className="min-w-0">
-          <h1 className="truncate font-display text-lg font-semibold leading-tight">{title}</h1>
-          {subtitle && <p className="truncate text-xs text-muted-foreground">{subtitle}</p>}
+    <main className="mx-auto w-full max-w-[1600px] flex-1 space-y-5 px-4 py-3 md:space-y-6 md:px-7 md:py-5">
+      <div className="flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <h1 className="font-display text-2xl font-semibold tracking-tight text-foreground md:text-[30px]">
+            {title}
+          </h1>
+          {subtitle && <p className="mt-1 text-sm text-muted-foreground">{subtitle}</p>}
         </div>
-      </header>
-      <main className="mx-auto w-full max-w-7xl flex-1 space-y-6 p-6">{children}</main>
-    </div>
+      </div>
+      {children}
+    </main>
   );
 }

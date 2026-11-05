@@ -1,34 +1,32 @@
-# TradeFlow Operations Hub
+# LEAD MULTICHOICE Business Platform
 
-Build the first version of the LEAD MULTICHOICE Ltd Business Operations and Trade Facilitation System dashboard based on the attached product requirements and dashboard references.
+Unified Next.js application for the public website, client portal, and staff operations area.
 
-Use the supported React stack, shadcn/ui library, Sonner for notifications, and React Query (TanStack Query). No raw fetch calls inside components or pages; encapsulate all data fetching and mutations in dedicated API/service modules and custom React Query hooks.
+## Routes
 
-Implement:
-1. Executive KPI metric ribbon (Active tenders, pipeline value in USD/RWF, pending clearances, items needing management attention).
-2. 5-Stage Trade Facilitation & Opportunity pipeline (Connect/Identification, Supplier-Buyer Introductions, Tender Bidding, Procurement/Logistics, Delivery & After-sales).
-3. Active engagements view with folder/card tabs showing responsible internal owner, milestones, and approaching deadlines.
-4. Procurement & tender tracking data table with filtering, status badges, links to external official portals, and detail inspection.
-5. Logistics tracking panel for regional corridor shipments and customs clearance milestones.
-6. Dated activity log and audit feed for blockers, updates, and next actions.
+- `/` and the public content pages serve the company website.
+- `/portal` is the buyer and supplier account area for requests and engagement updates.
+- `/admin` is the staff operations area. Staff review client requests, open engagements, and post client-visible updates.
+- `/api` contains the server-side API. MySQL access stays in the server layer; client components use TanStack Query fetchers and hooks.
 
-This project was built with [Lovable](https://lovable.dev).
+## Stack
 
-## Build with Lovable
+Next.js App Router, TypeScript, Tailwind CSS, shadcn/ui, Sonner, TanStack Query, and MySQL/MariaDB through `mysql2`.
 
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/9953419c-24f2-4594-80d6-92d4bc7eabf3).
+## Local development
 
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: every change made in Lovable is committed straight to this repository.
-- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
-
-## Development
-
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
+Requires Node.js 20.9 or later and Docker Desktop. Copy `.env.example` to `.env.local`, then start MySQL. Docker initializes a fresh database from `database/schema.sql` automatically.
 
 ```sh
-git clone <this-repository-url>
-cd <repository-name>
-npm i
+npm install
+docker compose --env-file .env.local up -d mysql
 npm run dev
 ```
+
+Open `http://localhost:3000`. Create the first staff account with the `admin:create` script. Database, Cloudinary, and production setup are documented in [database/README.md](database/README.md).
+
+Set `CLIENT_PORTAL_ENABLED=true` in `.env.local` when the database and portal are ready. When set to `false`, the public website remains available while client/admin sign-in, registration, tracking, dashboards, and protected APIs are disabled. `TRACKING_COOKIE_SECRET` is optional; if unset, the tracking access cookie uses `MYSQL_PASSWORD` for signing.
+
+Client requests, engagements, milestones, updates, opportunities, tenders, shipments, activity entries, staff profiles, admin preferences, media metadata, and published homepage copy persist in MySQL. Older installations must apply migrations `002_admin_operations.sql`, `003_media_library.sql`, and `004_website_cms.sql` in order; fresh installs can import the current `database/schema.sql`.
+
+The homepage has a draft, preview, and publish workflow in `/admin/content/home`, with four-language copy and Cloudinary hero media. Remaining website pages are still maintained in source files and can be added to the CMS next.

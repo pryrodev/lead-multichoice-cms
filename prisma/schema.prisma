@@ -1,0 +1,390 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+enum UserRole {
+  buyer
+  supplier
+  admin
+
+  @@map("user_role")
+}
+
+enum OpportunityType {
+  public_tender
+  institutional_procurement
+  direct_buyer_requirement
+  supplier_led
+  other
+}
+
+enum Priority {
+  low
+  medium
+  high
+}
+
+enum OpportunityStatus {
+  new
+  under_assessment
+  qualified
+  pursuing
+  monitoring
+  awaiting_information
+  preparing_submission
+  submitted
+  under_evaluation
+  awarded
+  not_awarded
+  withdrawn
+  closed
+}
+
+enum ClientRequestType {
+  buyer_request
+  supplier_offer
+  partnership
+}
+
+enum ClientRequestStatus {
+  submitted
+  in_review
+  accepted
+  declined
+}
+
+enum EngagementStage {
+  connect
+  introductions
+  bidding
+  procurement
+  delivery
+}
+
+enum EngagementStatus {
+  active
+  on_hold
+  completed
+  cancelled
+}
+
+enum UpdateVisibility {
+  client
+  internal
+}
+
+enum EngagementUpdateType {
+  progress
+  milestone
+  document
+  decision
+  blocker
+}
+
+enum TenderStatus {
+  monitoring
+  preparing
+  submitted
+  awarded
+  lost
+  cancelled
+}
+
+enum ShipmentClearance {
+  pending
+  in_review
+  cleared
+  held
+}
+
+enum ActivityKind {
+  update
+  blocker
+  next_action
+  decision
+}
+
+model User {
+  id                String   @id @db.Char(32)
+  name              String   @db.VarChar(160)
+  email             String   @unique(map: "email") @db.VarChar(254)
+  organization      String   @db.VarChar(200)
+  phone             String?  @db.VarChar(40)
+  role              UserRole @default(buyer)
+  passwordHash      String   @map("password_hash") @db.VarChar(180)
+  isActive          Boolean  @default(true) @map("is_active")
+  createdAt         DateTime @default(now()) @map("created_at") @db.DateTime(0)
+  updatedAt         DateTime @default(now()) @updatedAt @map("updated_at") @db.DateTime(0)
+  sessions          AuthSession[]
+  opportunities     Opportunity[]
+  clientRequests     ClientRequest[]
+  engagements       Engagement[] @relation("EngagementClient")
+  authoredUpdates   EngagementUpdate[]
+  tenders           Tender[]
+  shipments         Shipment[]
+  activities        ActivityEntry[]
+  adminPreferences  AdminPreference?
+  editedCompany     CompanySettings[]
+  uploadedMedia     MediaAsset[]
+  editedPages       SitePage[] @relation("PageEditor")
+  publishedPages    SitePage[] @relation("PagePublisher")
+
+  @@index([role, isActive], map: "idx_users_role_active")
+  @@map("users")
+}
+
+model AuthSession {
+  id        String   @id @db.Char(32)
+  userId    String   @map("user_id") @db.Char(32)
+  tokenHash String   @unique(map: "token_hash") @map("token_hash") @db.Char(64)
+  expiresAt DateTime @map("expires_at") @db.DateTime(0)
+  createdAt DateTime @default(now()) @map("created_at") @db.DateTime(0)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade, map: "fk_sessions_user")
+
+  @@index([expiresAt], map: "idx_sessions_expiry")
+  @@map("auth_sessions")
+}
+
+model Opportunity {
+  id                String           @id @db.Char(32)
+  reference         String           @unique(map: "reference") @db.VarChar(32)
+  title             String           @db.VarChar(220)
+  type              OpportunityType
+  buyer             String           @default("") @db.VarChar(200)
+  source            String           @default("") @db.VarChar(200)
+  sourceUrl         String           @default("") @map("source_url") @db.VarChar(1000)
+  externalReference String           @default("") @map("external_reference") @db.VarChar(120)
+  country           String           @default("") @db.VarChar(120)
+  sector            String           @default("") @db.VarChar(160)
+  description       String           @db.Text
+  requirements      String           @db.Text
+  publishedAt       DateTime?        @map("published_at") @db.Date
+  deadline          DateTime?        @db.Date
+  estimatedValue    Decimal?         @map("estimated_value") @db.Decimal(15, 2)
+  potentialSupplier String           @default("") @map("potential_supplier") @db.VarChar(200)
+  owner             String           @db.VarChar(160)
+  priority          Priority         @default(medium)
+  status            OpportunityStatus @default(new)
+  nextAction        String           @default("") @map("next_action") @db.VarChar(500)
+  nextActionDue     DateTime?        @map("next_action_due") @db.Date
+  closureReason     String           @map("closure_reason") @db.Text
+  createdBy         String?          @map("created_by") @db.Char(32)
+  createdAt         DateTime         @default(now()) @map("created_at") @db.DateTime(0)
+  updatedAt         DateTime         @default(now()) @updatedAt @map("updated_at") @db.DateTime(0)
+  creator           User?            @relation(fields: [createdBy], references: [id], onDelete: SetNull, map: "fk_opportunities_creator")
+
+  @@index([status, createdAt], map: "idx_opportunities_status_created")
+  @@index([deadline], map: "idx_opportunities_deadline")
+  @@map("opportunities")
+}
+
+model ClientRequest {
+  id          String             @id @db.Char(32)
+  reference   String             @unique(map: "reference") @db.VarChar(32)
+  submittedBy String             @map("submitted_by") @db.Char(32)
+  requestType ClientRequestType  @map("request_type")
+  title       String             @db.VarChar(220)
+  category    String             @db.VarChar(160)
+  targetMarket String            @default("Rwanda") @map("target_market") @db.VarChar(160)
+  details     String             @db.Text
+  status      ClientRequestStatus @default(submitted)
+  createdAt   DateTime           @default(now()) @map("created_at") @db.DateTime(0)
+  updatedAt   DateTime           @default(now()) @updatedAt @map("updated_at") @db.DateTime(0)
+  submitter   User               @relation(fields: [submittedBy], references: [id], map: "fk_client_requests_user")
+  engagement  Engagement?
+
+  @@index([submittedBy, createdAt], map: "idx_client_requests_user_created")
+  @@index([status, createdAt], map: "idx_client_requests_status_created")
+  @@map("client_requests")
+}
+
+model Engagement {
+  id            String           @id @db.Char(32)
+  reference     String           @unique(map: "reference") @db.VarChar(32)
+  requestId     String           @unique(map: "request_id") @map("request_id") @db.Char(32)
+  clientUserId  String           @map("client_user_id") @db.Char(32)
+  title         String           @db.VarChar(220)
+  stage         EngagementStage  @default(connect)
+  status        EngagementStatus @default(active)
+  valueUsd      Decimal?         @map("value_usd") @db.Decimal(15, 2)
+  buyer         String           @default("") @db.VarChar(200)
+  supplier      String           @default("") @db.VarChar(200)
+  owner         String           @default("") @db.VarChar(160)
+  priority      Priority         @default(medium)
+  needsAttention Boolean         @default(false) @map("needs_attention")
+  nextAction    String?          @map("next_action") @db.VarChar(500)
+  nextActionDue DateTime?        @map("next_action_due") @db.Date
+  createdAt     DateTime         @default(now()) @map("created_at") @db.DateTime(0)
+  updatedAt     DateTime         @default(now()) @updatedAt @map("updated_at") @db.DateTime(0)
+  request       ClientRequest    @relation(fields: [requestId], references: [id], map: "fk_engagement_request")
+  client        User             @relation("EngagementClient", fields: [clientUserId], references: [id], map: "fk_engagement_client")
+  milestones    EngagementMilestone[]
+  updates       EngagementUpdate[]
+
+  @@index([clientUserId, updatedAt], map: "idx_engagements_client_updated")
+  @@map("engagements")
+}
+
+model EngagementMilestone {
+  id           String     @id @db.Char(32)
+  engagementId String     @map("engagement_id") @db.Char(32)
+  title        String     @db.VarChar(220)
+  dueDate      DateTime?  @map("due_date") @db.Date
+  isComplete   Boolean    @default(false) @map("is_complete")
+  sortOrder    Int        @default(0) @map("sort_order")
+  createdAt    DateTime   @default(now()) @map("created_at") @db.DateTime(0)
+  engagement   Engagement @relation(fields: [engagementId], references: [id], onDelete: Cascade, map: "fk_milestones_engagement")
+
+  @@index([engagementId, sortOrder], map: "idx_milestones_order")
+  @@map("engagement_milestones")
+}
+
+model EngagementUpdate {
+  id           String             @id @db.Char(32)
+  engagementId String             @map("engagement_id") @db.Char(32)
+  authorUserId String?            @map("author_user_id") @db.Char(32)
+  visibility   UpdateVisibility   @default(client)
+  updateType   EngagementUpdateType @default(progress) @map("update_type")
+  title        String             @db.VarChar(220)
+  message      String             @db.Text
+  createdAt    DateTime           @default(now()) @map("created_at") @db.DateTime(0)
+  engagement   Engagement         @relation(fields: [engagementId], references: [id], onDelete: Cascade, map: "fk_updates_engagement")
+  author       User?              @relation(fields: [authorUserId], references: [id], onDelete: SetNull, map: "fk_updates_author")
+
+  @@index([engagementId, visibility, createdAt], map: "idx_updates_engagement_visibility_date")
+  @@map("engagement_updates")
+}
+
+model Tender {
+  id        String      @id @db.Char(32)
+  reference String      @unique(map: "reference") @db.VarChar(32)
+  title     String      @db.VarChar(220)
+  entity    String      @db.VarChar(200)
+  category  String      @default("") @db.VarChar(160)
+  portal    String      @default("") @db.VarChar(160)
+  portalUrl String      @default("") @map("portal_url") @db.VarChar(1000)
+  deadline  DateTime?   @db.Date
+  valueUsd  Decimal     @default(0) @map("value_usd") @db.Decimal(15, 2)
+  status    TenderStatus @default(monitoring)
+  owner     String      @default("") @db.VarChar(160)
+  notes     String      @db.Text
+  createdBy String?     @map("created_by") @db.Char(32)
+  createdAt DateTime    @default(now()) @map("created_at") @db.DateTime(0)
+  updatedAt DateTime    @default(now()) @updatedAt @map("updated_at") @db.DateTime(0)
+  creator   User?       @relation(fields: [createdBy], references: [id], onDelete: SetNull, map: "fk_tenders_creator")
+
+  @@index([status, deadline], map: "idx_tenders_status_deadline")
+  @@map("tenders")
+}
+
+model Shipment {
+  id          String            @id @db.Char(32)
+  reference   String            @unique(map: "reference") @db.VarChar(32)
+  cargo       String            @db.VarChar(220)
+  corridor    String            @default("") @db.VarChar(180)
+  origin      String            @db.VarChar(160)
+  destination String            @db.VarChar(160)
+  progress    Int               @default(0) @db.UnsignedTinyInt
+  eta         DateTime?         @db.Date
+  clearance   ShipmentClearance @default(pending)
+  createdBy   String?           @map("created_by") @db.Char(32)
+  createdAt   DateTime          @default(now()) @map("created_at") @db.DateTime(0)
+  updatedAt   DateTime          @default(now()) @updatedAt @map("updated_at") @db.DateTime(0)
+  creator     User?             @relation(fields: [createdBy], references: [id], onDelete: SetNull, map: "fk_shipments_creator")
+  milestones  ShipmentMilestone[]
+
+  @@index([clearance, eta], map: "idx_shipments_clearance_eta")
+  @@map("shipments")
+}
+
+model ShipmentMilestone {
+  id         String   @id @db.Char(32)
+  shipmentId String   @map("shipment_id") @db.Char(32)
+  label      String   @db.VarChar(220)
+  eventDate  DateTime? @map("event_date") @db.Date
+  isComplete Boolean  @default(false) @map("is_complete")
+  sortOrder  Int      @default(0) @map("sort_order")
+  createdAt  DateTime @default(now()) @map("created_at") @db.DateTime(0)
+  shipment   Shipment @relation(fields: [shipmentId], references: [id], onDelete: Cascade, map: "fk_shipment_milestones_shipment")
+
+  @@index([shipmentId, sortOrder], map: "idx_shipment_milestones_order")
+  @@map("shipment_milestones")
+}
+
+model ActivityEntry {
+  id           String      @id @db.Char(32)
+  kind         ActivityKind
+  reference    String      @db.VarChar(32)
+  message      String      @db.Text
+  authorUserId String      @map("author_user_id") @db.Char(32)
+  createdAt    DateTime    @default(now()) @map("created_at") @db.DateTime(0)
+  author       User        @relation(fields: [authorUserId], references: [id], map: "fk_activity_author")
+
+  @@index([createdAt], map: "idx_activity_created")
+  @@map("activity_entries")
+}
+
+model AdminPreference {
+  userId              String   @id @map("user_id") @db.Char(32)
+  usdToRwf            Decimal  @default(1420) @map("usd_to_rwf") @db.Decimal(12, 4)
+  deadlineWarningDays Int      @default(7) @map("deadline_warning_days") @db.UnsignedSmallInt
+  emailAlerts         Boolean  @default(true) @map("email_alerts")
+  blockerAlerts       Boolean  @default(true) @map("blocker_alerts")
+  weeklyDigest        Boolean  @default(false) @map("weekly_digest")
+  updatedAt           DateTime @default(now()) @updatedAt @map("updated_at") @db.DateTime(0)
+  user                User     @relation(fields: [userId], references: [id], onDelete: Cascade, map: "fk_admin_preferences_user")
+
+  @@map("admin_preferences")
+}
+
+model CompanySettings {
+  id          Int      @id @default(1) @db.UnsignedTinyInt
+  legalName   String   @default("LEAD MULTICHOICE Ltd") @map("legal_name") @db.VarChar(200)
+  taxId       String   @default("") @map("tax_id") @db.VarChar(80)
+  email       String?  @db.VarChar(254)
+  phone       String   @default("+250 788 312 338") @db.VarChar(40)
+  legalAddress String  @default("Remera, Kigali, Rwanda") @map("legal_address") @db.VarChar(500)
+  websiteUrl  String?  @map("website_url") @db.VarChar(500)
+  updatedBy   String?  @map("updated_by") @db.Char(32)
+  updatedAt   DateTime @default(now()) @updatedAt @map("updated_at") @db.DateTime(0)
+  editor      User?    @relation(fields: [updatedBy], references: [id], onDelete: SetNull, map: "fk_company_settings_editor")
+
+  @@map("company_settings")
+}
+
+model MediaAsset {
+  id        String   @id @db.Char(32)
+  publicId  String   @unique(map: "public_id") @map("public_id") @db.VarChar(255)
+  secureUrl String   @map("secure_url") @db.VarChar(1200)
+  format    String   @db.VarChar(20)
+  bytes     Int      @db.UnsignedInt
+  width     Int      @db.UnsignedInt
+  height    Int      @db.UnsignedInt
+  altText   String   @default("") @map("alt_text") @db.VarChar(500)
+  uploadedBy String  @map("uploaded_by") @db.Char(32)
+  createdAt DateTime @default(now()) @map("created_at") @db.DateTime(0)
+  uploader  User     @relation(fields: [uploadedBy], references: [id], map: "fk_media_uploader")
+
+  @@index([createdAt], map: "idx_media_created")
+  @@map("media_assets")
+}
+
+model SitePage {
+  id                String    @id @db.Char(32)
+  slug              String    @unique(map: "slug") @db.VarChar(120)
+  draftContent      Json?     @map("draft_content")
+  publishedContent  Json?     @map("published_content")
+  updatedBy         String?   @map("updated_by") @db.Char(32)
+  publishedBy       String?   @map("published_by") @db.Char(32)
+  updatedAt         DateTime  @default(now()) @updatedAt @map("updated_at") @db.DateTime(0)
+  publishedAt       DateTime? @map("published_at") @db.DateTime(0)
+  editor            User?     @relation("PageEditor", fields: [updatedBy], references: [id], onDelete: SetNull, map: "fk_site_pages_editor")
+  publisher         User?     @relation("PagePublisher", fields: [publishedBy], references: [id], onDelete: SetNull, map: "fk_site_pages_publisher")
+
+  @@map("site_pages")
+}

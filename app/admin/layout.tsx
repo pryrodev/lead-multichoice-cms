@@ -1,0 +1,15 @@
+import type { ReactNode } from "react";
+import { redirect } from "next/navigation";
+import { getSessionUser } from "@/lib/auth/session";
+
+export default async function AdminLayout({ children }: { children: ReactNode }) {
+  let user;
+  try {
+    user = await getSessionUser();
+  } catch {
+    redirect("/portal/login?next=%2Fadmin");
+  }
+  if (!user) redirect("/portal/login?next=%2Fadmin");
+  if (user.role !== "admin") redirect("/portal");
+  return children;
+}

@@ -9,5 +9,7 @@
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
 
-- Data access goes through `src/lib/api/service.ts` (currently in-memory sample data) and React Query hooks in `src/lib/api/hooks.ts`; components never fetch directly, so the backend can be swapped in one place.
-- App shell (sidebar + profile) lives in `src/routes/__root.tsx`; each page wraps content in `PageShell` for the header and sidebar toggle.
+- This is a Next.js App Router project. Add routes under `app/` and shared UI under `src/`.
+- Data access goes through `src/lib/api/service.ts` and React Query hooks in `src/lib/api/hooks.ts`; pages and components never fetch directly.
+- The client app shell and query provider live in `src/app-providers.tsx`; page headers and content layout use `src/components/layout/page.tsx`.
+- Keep shadcn/ui primitives in `src/components/ui/`. Use Sonner for notifications and React Query mutations for changes.

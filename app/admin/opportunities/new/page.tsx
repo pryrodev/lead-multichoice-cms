@@ -1,0 +1,12 @@
+import type { Metadata } from "next";
+import { OpportunityForm } from "@/components/opportunities/opportunity-form";
+
+export const metadata: Metadata = { title: "New opportunity — LEAD MULTICHOICE Ltd" };
+
+export default function NewOpportunityPage() {
+  return (
+    <main className="mx-auto w-full max-w-[1600px] flex-1 space-y-5 px-4 py-3 md:space-y-6 md:px-7 md:py-5">
+      <OpportunityForm />
+    </main>
+  );
+}
