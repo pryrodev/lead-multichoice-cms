@@ -30,7 +30,7 @@ export function ClientRequestForm() {
     event.preventDefault();
     try {
       const result = await create.mutateAsync(values);
-      toast.success("Request submitted", { description: `Your reference is ${result.reference}.` });
+      toast.success("Request submitted", { description: `Your Tracking ID is ${result.reference}.` });
       router.replace("/portal");
     } catch (error) {
       toast.error("Could not submit your request", { description: error instanceof Error ? error.message : "Please try again." });
@@ -46,7 +46,7 @@ export function ClientRequestForm() {
         <CardContent>
           <form onSubmit={submit} className="flex flex-col gap-5">
             <div className="grid gap-5 sm:grid-cols-2">
-              <div className="flex flex-col gap-2"><Label htmlFor="requestType">I am sharing a</Label><Select value={values.requestType} onValueChange={(value: NewClientRequest["requestType"]) => setValues((current) => ({ ...current, requestType: value }))}><SelectTrigger id="requestType"><SelectValue /></SelectTrigger><SelectContent><SelectItem value="buyer_request">Product or sourcing requirement</SelectItem><SelectItem value="supplier_offer">Supplier or manufacturer offer</SelectItem><SelectItem value="partnership">Partnership opportunity</SelectItem></SelectContent></Select></div>
+              <div className="flex flex-col gap-2"><Label htmlFor="requestType">Type of support</Label><Select value={values.requestType} onValueChange={(value: NewClientRequest["requestType"]) => setValues((current) => ({ ...current, requestType: value }))}><SelectTrigger id="requestType"><SelectValue /></SelectTrigger><SelectContent><SelectItem value="buyer_request">Buyer requirement</SelectItem><SelectItem value="supplier_offer">Supplier offer</SelectItem><SelectItem value="buying">Buying / purchasing</SelectItem><SelectItem value="selling">Selling / market representation</SelectItem><SelectItem value="sourcing">Supplier search / sourcing</SelectItem><SelectItem value="bidding">Tender / bidding support</SelectItem><SelectItem value="shipping">Shipping / logistics</SelectItem><SelectItem value="market_access">Market access</SelectItem><SelectItem value="partnership">Business partnership</SelectItem><SelectItem value="other">Other</SelectItem></SelectContent></Select></div>
               <div className="flex flex-col gap-2"><Label htmlFor="category">Product or service category</Label><Input id="category" required maxLength={160} placeholder="e.g. Medical equipment" value={values.category} onChange={(event) => setValues({ ...values, category: event.target.value })} /></div>
             </div>
             <div className="flex flex-col gap-2"><Label htmlFor="title">Request title</Label><Input id="title" required minLength={5} maxLength={220} placeholder="A short description of the opportunity" value={values.title} onChange={(event) => setValues({ ...values, title: event.target.value })} /></div>

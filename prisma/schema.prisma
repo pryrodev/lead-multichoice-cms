@@ -11,6 +11,7 @@ enum UserRole {
   buyer
   supplier
   admin
+  staff
 
   @@map("user_role")
 }
@@ -49,6 +50,13 @@ enum ClientRequestType {
   buyer_request
   supplier_offer
   partnership
+  buying
+  selling
+  sourcing
+  bidding
+  shipping
+  market_access
+  other
 }
 
 enum ClientRequestStatus {
@@ -116,6 +124,7 @@ model User {
   organization      String   @db.VarChar(200)
   phone             String?  @db.VarChar(40)
   role              UserRole @default(buyer)
+  canManageEngagements Boolean @default(false) @map("can_manage_engagements")
   passwordHash      String   @map("password_hash") @db.VarChar(180)
   isActive          Boolean  @default(true) @map("is_active")
   createdAt         DateTime @default(now()) @map("created_at") @db.DateTime(0)
@@ -186,7 +195,11 @@ model Opportunity {
 model ClientRequest {
   id          String             @id @db.Char(32)
   reference   String             @unique(map: "reference") @db.VarChar(32)
-  submittedBy String             @map("submitted_by") @db.Char(32)
+  submittedBy String?            @map("submitted_by") @db.Char(32)
+  clientName  String             @default("") @map("client_name") @db.VarChar(160)
+  clientEmail String?            @map("client_email") @db.VarChar(254)
+  clientPhone String?            @map("client_phone") @db.VarChar(40)
+  organization String            @default("") @db.VarChar(200)
   requestType ClientRequestType  @map("request_type")
   title       String             @db.VarChar(220)
   category    String             @db.VarChar(160)
@@ -195,7 +208,7 @@ model ClientRequest {
   status      ClientRequestStatus @default(submitted)
   createdAt   DateTime           @default(now()) @map("created_at") @db.DateTime(0)
   updatedAt   DateTime           @default(now()) @updatedAt @map("updated_at") @db.DateTime(0)
-  submitter   User               @relation(fields: [submittedBy], references: [id], map: "fk_client_requests_user")
+  submitter   User?              @relation(fields: [submittedBy], references: [id], onDelete: SetNull, map: "fk_client_requests_user")
   engagement  Engagement?
 
   @@index([submittedBy, createdAt], map: "idx_client_requests_user_created")
@@ -207,7 +220,7 @@ model Engagement {
   id            String           @id @db.Char(32)
   reference     String           @unique(map: "reference") @db.VarChar(32)
   requestId     String           @unique(map: "request_id") @map("request_id") @db.Char(32)
-  clientUserId  String           @map("client_user_id") @db.Char(32)
+  clientUserId  String?          @map("client_user_id") @db.Char(32)
   title         String           @db.VarChar(220)
   stage         EngagementStage  @default(connect)
   status        EngagementStatus @default(active)
@@ -222,7 +235,7 @@ model Engagement {
   createdAt     DateTime         @default(now()) @map("created_at") @db.DateTime(0)
   updatedAt     DateTime         @default(now()) @updatedAt @map("updated_at") @db.DateTime(0)
   request       ClientRequest    @relation(fields: [requestId], references: [id], map: "fk_engagement_request")
-  client        User             @relation("EngagementClient", fields: [clientUserId], references: [id], map: "fk_engagement_client")
+  client        User?            @relation("EngagementClient", fields: [clientUserId], references: [id], onDelete: SetNull, map: "fk_engagement_client")
   milestones    EngagementMilestone[]
   updates       EngagementUpdate[]
 

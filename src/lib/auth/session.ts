@@ -12,7 +12,8 @@ export interface SessionUser {
   name: string;
   email: string;
   organization: string;
-  role: "buyer" | "supplier" | "admin";
+  role: "buyer" | "supplier" | "admin" | "staff";
+  canManageEngagements: boolean;
 }
 
 const digest = (token: string) => createHash("sha256").update(token).digest("hex");
@@ -48,7 +49,7 @@ export async function getSessionUser(): Promise<SessionUser | null> {
 
   const session = await getDb().authSession.findFirst({
     where: { tokenHash: digest(token), expiresAt: { gt: new Date() }, user: { isActive: true } },
-    select: { user: { select: { id: true, name: true, email: true, organization: true, role: true } } },
+    select: { user: { select: { id: true, name: true, email: true, organization: true, role: true, canManageEngagements: true } } },
   });
   return session?.user ?? null;
 }

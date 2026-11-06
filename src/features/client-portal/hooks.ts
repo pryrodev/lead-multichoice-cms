@@ -16,13 +16,24 @@ export const useAdminClientRequests = () => useQuery({
   refetchInterval: 60_000,
   refetchOnWindowFocus: true,
 });
-export function useTrackClientRequest() {
-  return useMutation({ mutationFn: api.trackClientRequest });
+export function useCreateAdminClientRequest() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: api.createAdminClientRequest,
+    onSuccess: async () => {
+      await Promise.all([
+        queryClient.invalidateQueries({ queryKey: portalKeys.adminRequests }),
+        queryClient.invalidateQueries({ queryKey: portalKeys.overview }),
+      ]);
+    },
+  });
 }
 export const useTrackedClientRequest = (reference: string) => useQuery({
-  queryKey: ["public", "request-tracking", reference],
+  queryKey: portalKeys.publicTracking.detail(reference),
   queryFn: () => api.getTrackedClientRequest(reference),
   enabled: Boolean(reference),
+  refetchInterval: 60_000,
+  refetchOnWindowFocus: true,
   retry: false,
 });
 

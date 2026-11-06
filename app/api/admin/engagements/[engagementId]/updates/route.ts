@@ -1,7 +1,7 @@
 import { randomBytes } from "node:crypto";
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { requireUser } from "@/lib/auth/api";
+import { requireEngagementPermission } from "@/lib/auth/api";
 import { getDb } from "@/lib/db";
 
 const schema = z.object({
@@ -13,7 +13,7 @@ const schema = z.object({
 });
 
 export async function POST(request: Request, context: { params: Promise<{ engagementId: string }> }) {
-  const auth = await requireUser(["admin"]);
+  const auth = await requireEngagementPermission();
   if ("response" in auth) return auth.response;
   const parsed = schema.safeParse(await request.json().catch(() => null));
   if (!parsed.success) return NextResponse.json({ error: "Add a clear title and at least 10 characters of update detail." }, { status: 400 });

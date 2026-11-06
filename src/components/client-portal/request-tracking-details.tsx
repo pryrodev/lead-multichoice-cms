@@ -49,9 +49,9 @@ export function RequestTrackingDetails({ reference }: { reference: string }) {
       <div className="border-b bg-background">
         <div className="container-site flex min-h-[68px] flex-wrap items-center justify-between gap-3 py-3">
           <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-            <span className="text-sm font-medium text-muted-foreground">Request ID:</span>
+            <span className="text-sm font-medium text-muted-foreground">Tracking ID:</span>
             <span className="font-mono text-base font-semibold text-foreground sm:text-lg">{reference}</span>
-            <Button type="button" variant="ghost" size="icon" className="size-8 text-primary" aria-label="Copy request ID" onClick={copyReference}>
+            <Button type="button" variant="ghost" size="icon" className="size-8 text-primary" aria-label="Copy Tracking ID" onClick={copyReference}>
               {copied ? <Check className="size-4" /> : <Copy className="size-4" />}
             </Button>
           </div>
@@ -64,7 +64,7 @@ export function RequestTrackingDetails({ reference }: { reference: string }) {
           <div className="md:col-span-2">
             <Card><CardContent className="flex flex-col items-center gap-3 py-12 text-center">
               <p role="alert" className="font-medium">{query.error.message}</p>
-              <p className="max-w-md text-sm text-muted-foreground">For privacy, tracking details are available only after verifying the reference and account email.</p>
+              <p className="max-w-md text-sm text-muted-foreground">Check the order ID and try again, or contact our team for help.</p>
               <Button asChild variant="outline"><Link href="/track"><ArrowLeft data-icon="inline-start" />Return to tracking</Link></Button>
             </CardContent></Card>
           </div>
@@ -84,9 +84,7 @@ export function RequestTrackingDetails({ reference }: { reference: string }) {
                 <dl className="grid gap-4 text-sm sm:grid-cols-2">
                   <div><dt className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Submitted</dt><dd className="mt-1 font-medium">{new Date(query.data.createdAt).toLocaleString()}</dd></div>
                   <div><dt className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Last update</dt><dd className="mt-1 font-medium">{new Date(query.data.updatedAt).toLocaleString()}</dd></div>
-                  {query.data.engagement && <div className="sm:col-span-2"><dt className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Engagement ID</dt><dd className="mt-1 font-mono font-medium">{query.data.engagement.reference}</dd></div>}
                 </dl>
-                <Button asChild variant="outline" className="w-full sm:w-auto"><Link href="/portal/login">Sign in to your client portal</Link></Button>
               </CardContent>
             </Card>
 

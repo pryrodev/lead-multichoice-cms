@@ -1,7 +1,7 @@
 import { randomBytes } from "node:crypto";
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { requireUser } from "@/lib/auth/api";
+import { requireEngagementPermission } from "@/lib/auth/api";
 import { getDb } from "@/lib/db";
 
 const schema = z.object({
@@ -12,14 +12,14 @@ const schema = z.object({
 });
 
 export async function POST(request: Request, context: { params: Promise<{ requestId: string }> }) {
-  const auth = await requireUser(["admin"]);
+  const auth = await requireEngagementPermission();
   if ("response" in auth) return auth.response;
   const parsed = schema.safeParse(await request.json().catch(() => null));
   if (!parsed.success) return NextResponse.json({ error: "Add an update title and at least 10 characters of update detail." }, { status: 400 });
   const { requestId } = await context.params;
   const engagementId = randomBytes(16).toString("hex");
   const updateId = randomBytes(16).toString("hex");
-  const reference = `LMC-ENG-${new Date().getFullYear()}-${randomBytes(3).toString("hex").toUpperCase()}`;
+  const reference = `LMC-ENG-${randomBytes(12).toString("hex").toUpperCase()}`;
   try {
     const result = await getDb().$transaction(async (tx) => {
       const clientRequest = await tx.clientRequest.findUnique({
@@ -28,6 +28,7 @@ export async function POST(request: Request, context: { params: Promise<{ reques
       });
       if (!clientRequest) return "missing" as const;
       if (clientRequest.engagement) return "exists" as const;
+      const organization = clientRequest.organization || clientRequest.submitter?.organization || "";
 
       await tx.engagement.create({
         data: {
@@ -37,8 +38,12 @@ export async function POST(request: Request, context: { params: Promise<{ reques
           clientUserId: clientRequest.submittedBy,
           title: clientRequest.title,
           stage: parsed.data.stage,
-          buyer: clientRequest.submitter.role === "buyer" ? clientRequest.submitter.organization : "",
-          supplier: clientRequest.submitter.role === "supplier" ? clientRequest.submitter.organization : "",
+          buyer: clientRequest.submitter?.role === "buyer" || clientRequest.requestType === "buying" || clientRequest.requestType === "buyer_request"
+            ? organization
+            : "",
+          supplier: clientRequest.submitter?.role === "supplier" || clientRequest.requestType === "selling" || clientRequest.requestType === "supplier_offer"
+            ? organization
+            : "",
           owner: auth.user.name,
           nextAction: parsed.data.nextAction || null,
           updates: {

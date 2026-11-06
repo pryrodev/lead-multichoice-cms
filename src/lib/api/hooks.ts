@@ -1,6 +1,6 @@
 import { queryOptions, useMutation, useQuery, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
 import { api } from "./service";
-import type { AdminSiteCopy, AdminSiteVisuals, CompanySettings, MediaAsset } from "./types";
+import type { AdminSiteCopy, AdminSiteVisuals, CompanySettings, MediaAsset, StaffMember } from "./types";
 import type { SiteVisuals } from "@/lib/cms/site-visuals";
 import type { SiteCopyContent } from "@/lib/cms/site-copy";
 
@@ -167,4 +167,14 @@ export function useUpdateCompanySettings() {
     mutationFn: api.updateCompanySettings,
     onSuccess: (settings: CompanySettings) => qc.setQueryData(companySettingsQuery.queryKey, settings),
   });
+}
+export const staffMembersQuery = queryOptions({ queryKey: ["admin", "team"], queryFn: api.getStaffMembers });
+export const useStaffMembers = () => useQuery(staffMembersQuery);
+export function useCreateStaff() {
+  const qc = useQueryClient();
+  return useMutation({ mutationFn: api.createStaff, onSuccess: (member) => qc.setQueryData<StaffMember[]>(staffMembersQuery.queryKey, (members = []) => [member, ...members]) });
+}
+export function useUpdateStaff() {
+  const qc = useQueryClient();
+  return useMutation({ mutationFn: api.updateStaff, onSuccess: (updated) => qc.setQueryData<StaffMember[]>(staffMembersQuery.queryKey, (members = []) => members.map((member) => member.id === updated.id ? updated : member)) });
 }

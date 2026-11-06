@@ -11,6 +11,6 @@ export default async function AdminLayout({ children }: { children: ReactNode })
     redirect("/portal/login?next=%2Fadmin");
   }
   if (!user) redirect("/portal/login?next=%2Fadmin");
-  if (user.role !== "admin") redirect("/portal");
-  return <AdminWorkspace>{children}</AdminWorkspace>;
+  if (user.role !== "admin" && !(user.role === "staff" && user.canManageEngagements)) redirect("/portal");
+  return <AdminWorkspace staffMode={user.role === "staff"}>{children}</AdminWorkspace>;
 }

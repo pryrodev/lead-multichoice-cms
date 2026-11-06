@@ -25,6 +25,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import Image from "next/image";
 
 const navKeys: Record<(typeof nav)[number]["to"], MessageKey> = {
   "/": "nav.home",
@@ -119,7 +120,7 @@ export function SiteHeader() {
               title="WhatsApp"
               className="inline-flex items-center hover:text-brand-white/80"
             >
-              <MessageCircle size={14} strokeWidth={2.2} aria-hidden="true" />
+              <Image src={"/whatsapp.svg"} width={14} height={14} alt="WhatsApp" />
             </a>
             <a
               href={`tel:${company.phoneTel}`}

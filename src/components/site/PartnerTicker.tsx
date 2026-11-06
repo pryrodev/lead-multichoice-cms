@@ -9,29 +9,21 @@ const ecosystemOrganizations = [
     name: "Rwanda Development Board",
     href: "https://rdb.rw/",
     logo: "https://images.squarespace-cdn.com/content/v1/55ed8436e4b038f693789ca0/7f50683b-b00b-4fc4-8746-aab7d56cf8c9/RDB1.png",
-    width: 136,
-    height: 48,
   },
   {
     name: "National Bank of Rwanda",
     href: "https://www.bnr.rw/",
     logo: "https://www.bnr.rw/static/media/bnr-logo.7633d18322b2e9a1c715.png",
-    width: 44,
-    height: 44,
   },
   {
     name: "Bank of Kigali",
     href: "https://www.bk.rw/",
     logo: "https://www.rwandainkenya.gov.rw/fileadmin/user_upload/Kenya_user_upload/news_pictures/bk.png",
-    width: 44,
-    height: 44,
   },
   {
     name: "MTN Rwanda",
     href: "https://www.mtn.co.rw/",
     logo: "https://images.africanfinancials.com/f41c3ca9-rw-mtn-logo.png",
-    width: 48,
-    height: 48,
   },
 ];
 
@@ -56,15 +48,16 @@ export function PartnerTicker() {
                 rel="noreferrer"
                 className="flex min-h-12 items-center gap-3 rounded-sm text-brand-white/90 transition-opacity hover:opacity-75 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-white focus-visible:ring-offset-4 focus-visible:ring-offset-brand-primary"
               >
-                <Image
-                  src={organization.logo}
-                  alt=""
-                  width={organization.width}
-                  height={organization.height}
-                  unoptimized
-                  className="max-h-10 max-w-28 object-contain md:max-h-12 md:max-w-32"
-                  style={{ width: "auto", height: "auto" }}
-                />
+                <span className="relative block h-10 w-28 shrink-0 md:h-12 md:w-32">
+                  <Image
+                    src={organization.logo}
+                    alt=""
+                    fill
+                    sizes="(min-width: 768px) 128px, 112px"
+                    unoptimized
+                    className="object-contain"
+                  />
+                </span>
                 <span className="max-w-28 text-xs font-semibold leading-tight text-brand-white md:max-w-36 md:text-sm">
                   {organization.name}
                 </span>

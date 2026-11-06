@@ -36,7 +36,7 @@ export async function POST(request: Request) {
       },
     });
     await createSession(id);
-    return NextResponse.json({ user: { id, name: input.name, email: input.email.toLowerCase(), organization: input.organization, role: input.role } }, { status: 201 });
+    return NextResponse.json({ user: { id, name: input.name, email: input.email.toLowerCase(), organization: input.organization, role: input.role, canManageEngagements: false } }, { status: 201 });
   } catch (error) {
     if (typeof error === "object" && error !== null && "code" in error && error.code === "P2002") {
       return NextResponse.json({ error: "An account with this email already exists." }, { status: 409 });

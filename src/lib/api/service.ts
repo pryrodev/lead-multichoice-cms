@@ -1,5 +1,5 @@
 import * as db from "./mock-data";
-import type { Profile, CompanySettings, Settings, Activity, ActivityKind, AdminHomePage, Engagement, Kpis, MediaAsset, Opportunity, Shipment, Stage, Tender } from "./types";
+import type { Profile, CompanySettings, Settings, Activity, ActivityKind, AdminHomePage, Engagement, Kpis, MediaAsset, Opportunity, Shipment, Stage, Tender, StaffMember } from "./types";
 import type { HomePageContent } from "@/lib/cms/homepage";
 import type { SiteVisuals } from "@/lib/cms/site-visuals";
 import type { SiteCopyContent } from "@/lib/cms/site-copy";
@@ -45,6 +45,11 @@ export const api = {
   getCompanySettings: (): Promise<CompanySettings> => requestJson("/api/admin/company"),
   updateCompanySettings: (settings: CompanySettings): Promise<CompanySettings> =>
     requestJson("/api/admin/company", { method: "PUT", body: JSON.stringify(settings) }),
+  getStaffMembers: async (): Promise<StaffMember[]> => (await requestJson<{ members: StaffMember[] }>("/api/admin/team")).members,
+  createStaff: async (input: { name: string; email: string; organization: string; password: string }): Promise<StaffMember> =>
+    (await requestJson<{ member: StaffMember }>("/api/admin/team", { method: "POST", body: JSON.stringify(input) })).member,
+  updateStaff: async (input: { id: string; canManageEngagements: boolean }): Promise<StaffMember> =>
+    (await requestJson<{ member: StaffMember }>(`/api/admin/team/${encodeURIComponent(input.id)}`, { method: "PATCH", body: JSON.stringify({ canManageEngagements: input.canManageEngagements }) })).member,
   addActivity: (input: { kind: ActivityKind; ref: string; message: string }): Promise<Activity> =>
     requestJson("/api/admin/activities", { method: "POST", body: JSON.stringify(input) }),
   getMediaAssets: (): Promise<MediaAsset[]> => requestJson("/api/admin/media"),

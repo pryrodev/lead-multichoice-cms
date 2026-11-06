@@ -6,7 +6,7 @@ type PageProps = { params: Promise<{ reference: string }> };
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { reference } = await params;
-  return { title: `Request ${reference} | Tracking` };
+  return { title: `Tracking ${reference} | LEAD MULTICHOICE`, robots: { index: false, follow: false } };
 }
 
 export default async function TrackDetailsPage({ params }: PageProps) {

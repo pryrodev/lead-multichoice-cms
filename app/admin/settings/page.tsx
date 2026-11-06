@@ -18,6 +18,7 @@ import { Switch } from "@/components/ui/switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import type { CompanySettings, Profile, Settings } from "@/lib/api/types";
+import { TeamManagement } from "@/components/client-portal/team-management";
 
 const ROLES = ["Operations Manager", "Management", "Procurement Officer", "Logistics Coordinator", "External Supplier", "External Partner"];
 
@@ -27,7 +28,7 @@ const settingsCategories: { id: SettingsCategory; label: string; icon: typeof Us
   { id: "profile", label: "Profile", icon: UserRound, available: true },
   { id: "company", label: "Company", icon: Building2, available: true },
   { id: "notifications", label: "Notifications", icon: BellRing, available: true },
-  { id: "team", label: "Team", icon: UsersRound, available: false },
+  { id: "team", label: "Team", icon: UsersRound, available: true },
   { id: "security", label: "Privacy & Security", icon: ShieldCheck, available: false },
   { id: "integrations", label: "Integrations", icon: PlugZap, available: false },
   { id: "localization", label: "Localization", icon: Globe2, available: false },
@@ -52,7 +53,7 @@ export default function SettingsPage() {
           </nav>
         </aside>
         <section className="min-w-0" aria-labelledby="settings-section-title">
-          {active === "company" ? <CompanySettingsForm /> : active === "profile" ? <ProfileForm /> : active === "notifications" ? <NotificationsForm /> : active === "system" ? <SystemForm /> : <UnavailableCategory category={activeCategory.label} icon={activeCategory.icon} />}
+          {active === "company" ? <CompanySettingsForm /> : active === "profile" ? <ProfileForm /> : active === "notifications" ? <NotificationsForm /> : active === "team" ? <TeamManagement /> : active === "system" ? <SystemForm /> : <UnavailableCategory category={activeCategory.label} icon={activeCategory.icon} />}
         </section>
       </div>
     </PageShell>

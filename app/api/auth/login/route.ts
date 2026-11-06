@@ -19,8 +19,11 @@ export async function POST(request: Request) {
     if (!record || !(await verifyPassword(parsed.data.password, record.passwordHash))) {
       return NextResponse.json({ error: "Email or password is incorrect." }, { status: 401 });
     }
+    if (record.role === "staff" && !record.canManageEngagements) {
+      return NextResponse.json({ error: "Your staff account is waiting for an administrator to enable engagement access." }, { status: 403 });
+    }
     await createSession(record.id);
-    return NextResponse.json({ user: { id: record.id, name: record.name, email: record.email, organization: record.organization, role: record.role } });
+    return NextResponse.json({ user: { id: record.id, name: record.name, email: record.email, organization: record.organization, role: record.role, canManageEngagements: record.canManageEngagements } });
   } catch (error) {
     return apiError(error);
   }

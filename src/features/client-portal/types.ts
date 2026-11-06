@@ -1,10 +1,11 @@
 export type ClientRequestStatus = "submitted" | "in_review" | "accepted" | "declined";
 export type EngagementStage = "connect" | "introductions" | "bidding" | "procurement" | "delivery";
+export type ClientRequestType = "buyer_request" | "supplier_offer" | "partnership" | "buying" | "selling" | "sourcing" | "bidding" | "shipping" | "market_access" | "other";
 
 export interface ClientRequest {
   id: string;
   reference: string;
-  requestType: "buyer_request" | "supplier_offer" | "partnership";
+  requestType: ClientRequestType;
   title: string;
   category: string;
   targetMarket: string;
@@ -42,7 +43,8 @@ export interface PortalUser {
   name: string;
   email: string;
   organization: string;
-  role: "buyer" | "supplier" | "admin";
+  role: "buyer" | "supplier" | "admin" | "staff";
+  canManageEngagements: boolean;
 }
 
 export interface ClientOverview {
@@ -59,7 +61,6 @@ export interface PublicRequestTracking {
   createdAt: string;
   updatedAt: string;
   engagement: {
-    reference: string;
     stage: EngagementStage;
     status: "active" | "on_hold" | "completed" | "cancelled";
     milestones: { title: string; dueDate: string | null; isComplete: boolean }[];
@@ -76,9 +77,26 @@ export interface NewClientRequest {
 }
 
 export interface AdminClientRequest extends Omit<ClientRequest, "nextActionDue" | "nextAction"> {
-  clientId: string;
+  clientId: string | null;
   clientName: string;
-  clientEmail: string;
+  clientEmail: string | null;
+  clientPhone: string | null;
   organization: string;
-  clientRole: "buyer" | "supplier";
+  clientRole: "buyer" | "supplier" | "admin" | "external";
+}
+
+export interface CreateAdminClientRequest {
+  clientName: string;
+  organization: string;
+  clientEmail: string;
+  clientPhone: string;
+  requestType: ClientRequestType;
+  title: string;
+  category: string;
+  targetMarket: string;
+  details: string;
+  stage: EngagementStage;
+  nextAction: string;
+  updateTitle: string;
+  updateMessage: string;
 }

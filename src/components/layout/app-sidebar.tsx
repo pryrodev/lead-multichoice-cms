@@ -55,7 +55,7 @@ export const initials = (name: string) =>
     .join("")
     .toUpperCase();
 
-export function AppSidebar() {
+export function AppSidebar({ staffMode = false }: { staffMode?: boolean }) {
   const path = usePathname();
   return (
     <Sidebar collapsible="icon">
@@ -83,10 +83,10 @@ export function AppSidebar() {
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Overview</SidebarGroupLabel>
+          {!staffMode && <SidebarGroupLabel>Overview</SidebarGroupLabel>}
           <SidebarGroupContent>
             <SidebarMenu>
-              {overview.map((i) => (
+              {(staffMode ? overview.filter((i) => i.url === "/admin/client-requests") : overview).map((i) => (
                 <SidebarMenuItem key={i.url}>
                   <SidebarMenuButton asChild isActive={path === i.url} tooltip={i.title}>
                     <Link href={i.url}>
@@ -99,7 +99,7 @@ export function AppSidebar() {
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
-        <SidebarGroup>
+        {!staffMode && <SidebarGroup>
           <SidebarGroupLabel>Website CMS</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
@@ -110,8 +110,8 @@ export function AppSidebar() {
               </SidebarMenuItem>)}
             </SidebarMenu>
           </SidebarGroupContent>
-        </SidebarGroup>
-        <SidebarGroup>
+        </SidebarGroup>}
+        {!staffMode && <SidebarGroup>
           <SidebarGroupLabel>Tools</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
@@ -128,8 +128,8 @@ export function AppSidebar() {
               </SidebarMenuItem>
             </SidebarMenu>
           </SidebarGroupContent>
-        </SidebarGroup>
-        <SidebarGroup className="mt-auto">
+        </SidebarGroup>}
+        {!staffMode && <SidebarGroup className="mt-auto">
           <SidebarMenu>
             <SidebarMenuItem>
               <SidebarMenuButton asChild isActive={path === "/admin/settings"} tooltip="Settings">
@@ -140,7 +140,7 @@ export function AppSidebar() {
               </SidebarMenuButton>
             </SidebarMenuItem>
           </SidebarMenu>
-        </SidebarGroup>
+        </SidebarGroup>}
       </SidebarContent>
     </Sidebar>
   );

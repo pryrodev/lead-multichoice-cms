@@ -22,6 +22,15 @@ export async function requireUser(roles?: SessionUser["role"][]) {
   return { user } as const;
 }
 
+export async function requireEngagementPermission() {
+  const auth = await requireUser();
+  if ("response" in auth) return auth;
+  if (auth.user.role !== "admin" && !(auth.user.role === "staff" && auth.user.canManageEngagements)) {
+    return { response: NextResponse.json({ error: "You do not have permission to manage client engagements." }, { status: 403 }) } as const;
+  }
+  return auth;
+}
+
 export function apiError(error: unknown) {
   console.error("API request failed", error);
   return NextResponse.json({ error: "The request could not be completed." }, { status: 500 });

@@ -154,6 +154,16 @@ export interface Settings {
   weeklyDigest: boolean;
 }
 
+export interface StaffMember {
+  id: string;
+  name: string;
+  email: string;
+  organization: string;
+  canManageEngagements: boolean;
+  isActive: boolean;
+  createdAt: string;
+}
+
 export interface MediaAsset {
   id: string;
   publicId: string;

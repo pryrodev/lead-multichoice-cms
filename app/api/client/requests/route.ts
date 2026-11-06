@@ -5,7 +5,7 @@ import { requireUser } from "@/lib/auth/api";
 import { getDb } from "@/lib/db";
 
 const requestSchema = z.object({
-  requestType: z.enum(["buyer_request", "supplier_offer", "partnership"]),
+  requestType: z.enum(["buyer_request", "supplier_offer", "partnership", "buying", "selling", "sourcing", "bidding", "shipping", "market_access", "other"]),
   title: z.string().trim().min(5).max(220),
   category: z.string().trim().min(2).max(160),
   targetMarket: z.string().trim().min(2).max(160).default("Rwanda"),
@@ -19,7 +19,7 @@ export async function POST(request: Request) {
   const parsed = requestSchema.safeParse(await request.json().catch(() => null));
   if (!parsed.success) return NextResponse.json({ error: "Complete all required fields. Details must be at least 20 characters." }, { status: 400 });
   const id = randomBytes(16).toString("hex");
-  const reference = `LMC-REQ-${new Date().getFullYear()}-${randomBytes(8).toString("hex").toUpperCase()}`;
+  const reference = `LMC-REQ-${randomBytes(12).toString("hex").toUpperCase()}`;
   try {
     await getDb().clientRequest.create({
       data: {

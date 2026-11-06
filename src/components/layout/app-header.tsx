@@ -18,7 +18,7 @@ import { useRouter } from "next/navigation";
 const labelFromSegment = (segment: string) =>
   segment.replace(/[-_]+/g, " ").replace(/\b[a-z]/g, (letter) => letter.toUpperCase());
 
-export function AppHeader() {
+export function AppHeader({ staffMode = false }: { staffMode?: boolean }) {
   const pathname = usePathname();
   const { data: auth } = usePortalUser();
   const signOut = usePortalLogout();
@@ -73,7 +73,7 @@ export function AppHeader() {
             <DropdownMenuContent align="end" className="w-64">
               <DropdownMenuLabel><span className="block text-sm">{profile.name}</span><span className="block truncate text-xs font-normal text-muted-foreground">{profile.email}</span></DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem asChild><Link href="/admin/settings"><Settings2 aria-hidden="true" />Profile & settings</Link></DropdownMenuItem>
+              {!staffMode && <DropdownMenuItem asChild><Link href="/admin/settings"><Settings2 aria-hidden="true" />Profile & settings</Link></DropdownMenuItem>}
               <DropdownMenuItem
                 className="bg-destructive text-destructive-foreground hover:bg-destructive/90 focus:bg-destructive focus:text-destructive-foreground"
                 onClick={() => signOut.mutate(undefined, { onSuccess: () => router.replace("/portal/login"), onError: (error) => toast.error(error.message) })}

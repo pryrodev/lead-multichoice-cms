@@ -47,7 +47,7 @@ export function PortalAuthForm() {
             role,
           });
       toast.success(mode === "login" ? "Signed in" : "Account created");
-      router.replace(user.role === "admin" ? "/admin" : "/portal");
+      router.replace(user.role === "admin" ? "/admin" : user.role === "staff" ? "/admin/client-requests" : "/portal");
     } catch (error) {
       setFormError(mode === "login"
         ? "We couldn’t sign you in. Check your email and password, then try again."
