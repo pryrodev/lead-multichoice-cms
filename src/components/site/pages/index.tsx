@@ -5,7 +5,7 @@ import { ArrowRight, Check, Globe2, Handshake, SearchCheck, Truck } from "lucide
 import { motion } from "motion/react";
 import { services } from "@/content/services";
 import { procurementResources } from "@/content/site";
-import { ButtonLink, ExternalLink, SectionHeading, btn } from "@/components/site/ui";
+import { ButtonLink, CallToActionSection, ExternalLink, SectionHeading, btn } from "@/components/site/ui";
 import { PartnerTicker } from "@/components/site/PartnerTicker";
 import { PhotoScrollSection } from "@/components/site/PhotoScrollSection";
 import { InsightsGrid } from "@/components/site/InsightsGrid";
@@ -237,47 +237,7 @@ export default function Home({ contentOverride, initialContent }: { contentOverr
 
       <InsightsGrid />
 
-      <PhotoScrollSection image="/site/hero-port.jpg" visualKey="home.cta" overlayClassName="bg-brand-primary/55" className="text-brand-white">
-        <div className="container-site py-16 text-center md:py-20">
-          <div className="mx-auto max-w-3xl">
-            <p className="eyebrow mb-4 flex items-center justify-center gap-3 text-brass-light">
-              <span className="h-px w-8 bg-current" aria-hidden="true" />
-              {cmsText("Start a conversation")}
-            </p>
-            <h2 className="text-balance text-[30px] leading-tight text-brand-white md:text-[44px]">
-              {cmsText("Looking for a supplier or a route into Rwanda?")}
-            </h2>
-            <p className="mt-5 text-brand-white/90">
-              {cmsText("Tell us what you are sourcing or the market you want to reach.")}
-            </p>
-          </div>
-          <div className="mt-9 flex flex-wrap justify-center gap-3">
-            <ButtonLink href="/contact#business-enquiry" variant="light" arrow>
-              {cmsText("Partner with Us")}
-            </ButtonLink>
-            <ButtonLink href="/procurement-opportunities" variant="ghostLight">
-              {cmsText("Explore Opportunities")}
-            </ButtonLink>
-            <ButtonLink href="/contact" variant="ghostLight" className="w-full">
-              {cmsText("Contact Us")}
-            </ButtonLink>
-          </div>
-          <dl className="mx-auto mt-12 grid max-w-md grid-cols-3 gap-6 border-t border-brand-white/25 pt-6">
-            <div>
-              <dt className="text-[12px] uppercase tracking-[0.14em] text-brand-white/70">{cmsText("Based in")}</dt>
-              <dd className="mt-1 font-display font-semibold">Kigali</dd>
-            </div>
-            <div>
-              <dt className="text-[12px] uppercase tracking-[0.14em] text-brand-white/70">{cmsText("Since")}</dt>
-              <dd className="mt-1 font-display font-semibold">2015</dd>
-            </div>
-            <div>
-              <dt className="text-[12px] uppercase tracking-[0.14em] text-brand-white/70">{cmsText("Reach")}</dt>
-              <dd className="mt-1 font-display font-semibold">East Africa</dd>
-            </div>
-          </dl>
-        </div>
-      </PhotoScrollSection>
+      <CallToActionSection visualKey="home.cta" photoBackground="/site/hero-port.jpg" />
     </>
   );
 }

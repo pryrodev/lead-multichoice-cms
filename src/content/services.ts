@@ -124,12 +124,12 @@ export const industries = [
 ];
 
 export const values = [
-  { title: "Trustworthiness", text: "We do what we say." },
-  { title: "Integrity", text: "Ethical, transparent representation." },
-  { title: "Reliability", text: "Consistent from first contact to after-sales." },
-  { title: "Professionalism", text: "International standards, clear communication." },
-  { title: "Accountability", text: "Clear owners, documented follow-up." },
-  { title: "Partnership", text: "Relationships built to last." },
+  { title: "Trustworthiness", text: "We build confidence through transparent engagement, responsible conduct and consistent follow-through." },
+  { title: "Integrity", text: "We uphold honesty, ethical practices, fairness and respect for commercial agreements." },
+  { title: "Reliability", text: "We strive to deliver timely communication, dependable coordination and consistent operational support." },
+  { title: "Professionalism", text: "We approach every engagement with competence, respect, discretion and a commitment to quality." },
+  { title: "Accountability", text: "We promote clear responsibilities, accurate reporting and proactive follow-up on agreed commitments." },
+  { title: "Partnership", text: "We foster long-term relationships based on mutual respect, shared objectives and sustainable business value." },
 ];
 
 export const whyUs = [

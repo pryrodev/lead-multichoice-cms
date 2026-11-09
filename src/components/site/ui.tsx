@@ -178,7 +178,7 @@ export function PageHero({
 
 export function CallToActionSection({
   title = "Let's move your business into Rwanda.",
-  text = "Supplier, buyer or partner — tell us what you need.",
+  text = "Manufacturer, Distributor — Let's connect for business in Rwanda and beyond.",
   brandGradient = false,
   photoBackground = "/site/hero-port.jpg",
   visualKey,

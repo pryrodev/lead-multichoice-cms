@@ -472,6 +472,8 @@ const sw: Record<string, string> = {
 };
 
 Object.assign(rw, {
+  "Lead Multichoice": "Lead Multichoice",
+  "is a private limited company registered in 2015 with the Rwanda Development Board (RDB). Our headquarters are in Remera, Kigali, Rwanda.": "ni ikigo cyigenga gifite uburyozwe bugarukira ku migabane cyanditswe mu 2015 mu Rwego rw'Igihugu rw'Iterambere (RDB). Icyicaro cyacu kiri i Remera, Kigali, mu Rwanda.",
   to: "mu",
   "Rwanda.": "Rwanda.",
   "Trusted local representation. Accountable coordination.":
@@ -496,6 +498,8 @@ Object.assign(rw, {
     "Abatanga ibicuruzwa n'inzego z'abaguzi bashobora kuvugana na LEAD MULTICHOICE bakaganira ku bufasha bukwiye bwo guhuza ibikorwa, kuva ku guhuza abatanga ibicuruzwa kugeza ku bwikorezi no gukurikirana ishyikirizwa.",
 });
 Object.assign(fr, {
+  "Lead Multichoice": "Lead Multichoice",
+  "is a private limited company registered in 2015 with the Rwanda Development Board (RDB). Our headquarters are in Remera, Kigali, Rwanda.": "est une société privée à responsabilité limitée, enregistrée en 2015 auprès du Rwanda Development Board (RDB). Son siège se trouve à Remera, Kigali, au Rwanda.",
   "Trusted local representation. Accountable coordination.":
     "Une représentation locale fiable. Une coordination responsable.",
   "Coordinating the transaction, not duplicating it.":
@@ -518,6 +522,8 @@ Object.assign(fr, {
     "Les fournisseurs et acheteurs institutionnels peuvent contacter LEAD MULTICHOICE pour discuter d’un appui adapté, de la mise en relation avec des fournisseurs au suivi logistique et à la livraison.",
 });
 Object.assign(sw, {
+  "Lead Multichoice": "Lead Multichoice",
+  "is a private limited company registered in 2015 with the Rwanda Development Board (RDB). Our headquarters are in Remera, Kigali, Rwanda.": "ni kampuni binafsi yenye dhima ndogo iliyosajiliwa mwaka 2015 katika Bodi ya Maendeleo ya Rwanda (RDB). Makao yake makuu yako Remera, Kigali, Rwanda.",
   "Trusted local representation. Accountable coordination.":
     "Uwakilishi wa ndani unaotegemewa. Uratibu wenye uwajibikaji.",
   "Coordinating the transaction, not duplicating it.": "Kuratibu shughuli bila kuzirudia.",
@@ -541,8 +547,8 @@ Object.assign(sw, {
 
 Object.assign(rw, {
   "Let's move your business into Rwanda.": "Tugufashe guteza imbere ubucuruzi bwawe mu Rwanda.",
-  "Supplier, buyer or partner — tell us what you need.":
-    "Utanga ibicuruzwa, umuguzi cyangwa umufatanyabikorwa—tubwire ibyo ukeneye.",
+  "Manufacturer, Distributor — Let's connect for business in Rwanda and beyond.":
+    "Abakora ibicuruzwa, ababikwirakwiza — duhurire ku bucuruzi mu Rwanda no hanze yarwo.",
   "Week 1": "Icyumweru cya 1",
   "Week 2–4": "Ibyumweru 2–4",
   Order: "Igihe cyo gutumiza",
@@ -566,8 +572,8 @@ Object.assign(rw, {
 });
 Object.assign(fr, {
   "Let's move your business into Rwanda.": "Développons votre activité au Rwanda.",
-  "Supplier, buyer or partner — tell us what you need.":
-    "Fournisseur, acheteur ou partenaire : dites-nous ce dont vous avez besoin.",
+  "Manufacturer, Distributor — Let's connect for business in Rwanda and beyond.":
+    "Fabricants, distributeurs — échangeons pour développer les affaires au Rwanda et au-delà.",
   "Week 1": "Semaine 1",
   "Week 2–4": "Semaines 2 à 4",
   Order: "Commande",
@@ -591,8 +597,8 @@ Object.assign(fr, {
 });
 Object.assign(sw, {
   "Let's move your business into Rwanda.": "Tusaidie kukuza biashara yako nchini Rwanda.",
-  "Supplier, buyer or partner — tell us what you need.":
-    "Msambazaji, mnunuzi au mshirika—tuambie unahitaji nini.",
+  "Manufacturer, Distributor — Let's connect for business in Rwanda and beyond.":
+    "Watengenezaji, wasambazaji — tuungane kwa biashara nchini Rwanda na kwingineko.",
   "Week 1": "Wiki ya 1",
   "Week 2–4": "Wiki ya 2–4",
   Order: "Agizo",
@@ -909,10 +915,6 @@ Object.assign(rw, {
   "Reliable supply coordination": "Guhuza itangwa ry'ibicuruzwa mu buryo bwizewe",
   "Long-term commercial partnerships": "Ubufatanye burambye mu bucuruzi",
   "Start a conversation": "Tangira ikiganiro",
-  "Looking for a supplier or a route into Rwanda?":
-    "Urashaka ugutanga ibicuruzwa cyangwa inzira yo kwinjira ku isoko ry'u Rwanda?",
-  "Tell us what you are sourcing or the market you want to reach.":
-    "Tubwire ibyo ushaka kugura cyangwa isoko wifuza kugeraho.",
 });
 
 Object.assign(fr, {
@@ -966,10 +968,6 @@ Object.assign(fr, {
   "Reliable supply coordination": "Une coordination fiable des approvisionnements",
   "Long-term commercial partnerships": "Des partenariats commerciaux durables",
   "Start a conversation": "Engageons la conversation",
-  "Looking for a supplier or a route into Rwanda?":
-    "Vous cherchez un fournisseur ou un accès au marché rwandais ?",
-  "Tell us what you are sourcing or the market you want to reach.":
-    "Parlez-nous de vos besoins d'approvisionnement ou du marché que vous souhaitez atteindre.",
 });
 
 Object.assign(sw, {
@@ -1021,10 +1019,6 @@ Object.assign(sw, {
   "Reliable supply coordination": "Uratibu wa ugavi unaotegemewa",
   "Long-term commercial partnerships": "Ushirikiano wa kibiashara wa muda mrefu",
   "Start a conversation": "Anza mazungumzo",
-  "Looking for a supplier or a route into Rwanda?":
-    "Unatafuta msambazaji au njia ya kuingia katika soko la Rwanda?",
-  "Tell us what you are sourcing or the market you want to reach.":
-    "Tuambie unachotafuta kununua au soko unalotaka kufikia.",
 });
 
 Object.assign(rw, {
@@ -1299,6 +1293,57 @@ Object.assign(sw, {
   "Partner with Us": "Shirikiana nasi",
   "Explore Opportunities": "Chunguza fursa",
   "Contact Us": "Wasiliana nasi",
+});
+
+Object.assign(rw, {
+  "Connecting International Business to Rwanda Through Trust, Integrity and Local Expertise.": "Guhuza ubucuruzi mpuzamahanga n'u Rwanda binyuze mu cyizere, ubunyangamugayo n'ubumenyi bw'aho dukorera.",
+  "We specialize in trade facilitation and business representation, connecting international manufacturers, authorized distributors and suppliers with purchasing entities, institutions and commercial organizations in Rwanda and the wider East African region.": "Dufasha korohereza ubucuruzi no guhagararira ibigo, duhuza abakora ibicuruzwa, ababikwirakwiza babifitiye uburenganzira n'ababitanga mpuzamahanga n'inzego z'amasoko, ibigo n'imiryango y'ubucuruzi mu Rwanda no mu karere kagari ka Afurika y'Iburasirazuba.",
+  "We identify business opportunities, facilitate introductions, coordinate communication, support procurement processes and help parties navigate local operating requirements. Our team provides a coordinated local point of contact from market intelligence and opportunity identification through procurement coordination, regulatory liaison, delivery monitoring and post-delivery support.": "Tumenya amahirwe y'ubucuruzi, tugahuza abafatanyabikorwa, tugahuza itumanaho, tugafasha mu masoko no gusobanurira impande zifitanye ubufatanye ibisabwa mu mikorere yo mu karere. Itsinda ryacu rihuza ibikorwa kuva ku makuru y'isoko no kumenya amahirwe kugeza ku guhuza amasoko, kuvugana n'inzego zibishinzwe, gukurikirana ishyikirizwa no gutanga ubufasha nyuma yo kugeza ibicuruzwa.",
+  "Our agency model is built on transparency and clearly defined responsibilities. Buyers and sellers enter into their own commercial agreements and manage their contractual and payment obligations directly, unless otherwise agreed. We support the relationship through coordination, communication, follow-up and operational assistance within the agreed scope of engagement.": "Uburyo bwacu bwo guhagararira abandi bushingiye ku mucyo no ku nshingano zisobanutse. Abaguzi n'abagurisha bagirana amasezerano y'ubucuruzi kandi buri ruhande rukubahiriza mu buryo butaziguye inshingano zarwo z'amasezerano n'iz'ubwishyu, keretse habaye andi masezerano. Dufasha ubwo bufatanye mu guhuza ibikorwa, itumanaho, gukurikirana no gutanga ubufasha mu mikorere nk'uko byumvikanyweho.",
+  "Our objective is to build trusted business relationships, simplify cross-border trade, and support efficient, compliant and reliable delivery of goods and services.": "Intego yacu ni ukubaka umubano w'ubucuruzi wizewe, koroshya ubucuruzi bwambukiranya imipaka no gufasha kugeza ibicuruzwa na serivisi mu buryo bunoze, bukurikije amategeko kandi bwizewe.",
+  "To connect international businesses with opportunities in Rwanda through trusted trade facilitation, ethical business representation, reliable coordination and professional local support.": "Guhuza ibigo mpuzamahanga n'amahirwe yo mu Rwanda binyuze mu korohereza ubucuruzi byizewe, guhagararira ibigo mu buryo bw'indangagaciro, guhuza ibikorwa mu buryo bwizewe no gutanga ubufasha bw'umwuga bwo mu karere.",
+  "To become a trusted and respected regional partner for international manufacturers, distributors and businesses seeking dependable market access, compliant trade facilitation and effective supply-chain coordination in Rwanda and the wider East African region.": "Kuba umufatanyabikorwa w'akarere wizewe kandi wubahwa ku bakora ibicuruzwa mpuzamahanga, ababikwirakwiza n'ibigo bishaka kugera ku masoko mu buryo bwizewe, koroherezwa ubucuruzi bukurikije amategeko no guhuza uruhererekane rw'ibicuruzwa mu Rwanda no mu karere kagari ka Afurika y'Iburasirazuba.",
+  "Our Core Values": "Indangagaciro Zacu",
+  "We build confidence through transparent engagement, responsible conduct and consistent follow-through.": "Duteza imbere icyizere binyuze mu bufatanye buboneye, imyitwarire iboneye no gukurikirana ibyo twiyemeje.",
+  "We uphold honesty, ethical practices, fairness and respect for commercial agreements.": "Dukurikiza ukuri, imyitwarire myiza, ubutabera no kubaha amasezerano y'ubucuruzi.",
+  "We strive to deliver timely communication, dependable coordination and consistent operational support.": "Duharanira gutanga amakuru ku gihe, guhuza ibikorwa mu buryo bwizewe no gutanga ubufasha buhoraho.",
+  "We approach every engagement with competence, respect, discretion and a commitment to quality.": "Dukora buri bufatanye dushingiye ku bumenyi, icyubahiro, ibanga n'ubwitange ku bwiza.",
+  "We promote clear responsibilities, accurate reporting and proactive follow-up on agreed commitments.": "Dushyiraho inshingano zisobanutse, dutanga amakuru nyayo kandi tugakurikirana ibyo twemeranyijeho.",
+  "We foster long-term relationships based on mutual respect, shared objectives and sustainable business value.": "Twubaka umubano w'igihe kirekire ushingiye ku kubahana, intego dusangiye n'agaciro karambye mu bucuruzi.",
+});
+
+Object.assign(fr, {
+  "Connecting International Business to Rwanda Through Trust, Integrity and Local Expertise.": "Relier les entreprises internationales au Rwanda grâce à la confiance, à l'intégrité et à l'expertise locale.",
+  "We specialize in trade facilitation and business representation, connecting international manufacturers, authorized distributors and suppliers with purchasing entities, institutions and commercial organizations in Rwanda and the wider East African region.": "Nous sommes spécialisés dans la facilitation des échanges et la représentation commerciale. Nous mettons en relation les fabricants, distributeurs agréés et fournisseurs internationaux avec les entités acheteuses, institutions et organisations commerciales du Rwanda et de l'ensemble de l'Afrique de l'Est.",
+  "We identify business opportunities, facilitate introductions, coordinate communication, support procurement processes and help parties navigate local operating requirements. Our team provides a coordinated local point of contact from market intelligence and opportunity identification through procurement coordination, regulatory liaison, delivery monitoring and post-delivery support.": "Nous repérons les opportunités commerciales, facilitons les mises en relation, coordonnons les échanges, appuyons les processus d'achat et aidons les parties à comprendre les exigences opérationnelles locales. Notre équipe assure un point de contact local coordonné, de l'analyse du marché et du repérage des opportunités jusqu'à la coordination des achats, la liaison avec les autorités, le suivi des livraisons et l'assistance après livraison.",
+  "Our agency model is built on transparency and clearly defined responsibilities. Buyers and sellers enter into their own commercial agreements and manage their contractual and payment obligations directly, unless otherwise agreed. We support the relationship through coordination, communication, follow-up and operational assistance within the agreed scope of engagement.": "Notre modèle d'agence repose sur la transparence et des responsabilités clairement définies. Sauf accord contraire, acheteurs et vendeurs concluent leurs propres contrats commerciaux et gèrent directement leurs obligations contractuelles et de paiement. Nous accompagnons la relation par la coordination, la communication, le suivi et l'assistance opérationnelle prévus dans le cadre convenu.",
+  "Our objective is to build trusted business relationships, simplify cross-border trade, and support efficient, compliant and reliable delivery of goods and services.": "Notre objectif est de bâtir des relations commerciales de confiance, de simplifier les échanges transfrontaliers et de contribuer à la livraison efficace, conforme et fiable de biens et de services.",
+  "To connect international businesses with opportunities in Rwanda through trusted trade facilitation, ethical business representation, reliable coordination and professional local support.": "Relier les entreprises internationales aux opportunités au Rwanda grâce à une facilitation des échanges de confiance, une représentation commerciale éthique, une coordination fiable et un accompagnement local professionnel.",
+  "To become a trusted and respected regional partner for international manufacturers, distributors and businesses seeking dependable market access, compliant trade facilitation and effective supply-chain coordination in Rwanda and the wider East African region.": "Devenir un partenaire régional reconnu et de confiance pour les fabricants, distributeurs et entreprises internationaux recherchant un accès fiable au marché, une facilitation des échanges conforme et une coordination efficace de la chaîne d'approvisionnement au Rwanda et dans l'ensemble de l'Afrique de l'Est.",
+  "Our Core Values": "Nos valeurs fondamentales",
+  "We build confidence through transparent engagement, responsible conduct and consistent follow-through.": "Nous inspirons confiance par des relations transparentes, une conduite responsable et un suivi constant de nos engagements.",
+  "We uphold honesty, ethical practices, fairness and respect for commercial agreements.": "Nous défendons l'honnêteté, l'éthique, l'équité et le respect des accords commerciaux.",
+  "We strive to deliver timely communication, dependable coordination and consistent operational support.": "Nous nous efforçons d'assurer une communication rapide, une coordination fiable et un soutien opérationnel constant.",
+  "We approach every engagement with competence, respect, discretion and a commitment to quality.": "Nous abordons chaque mission avec compétence, respect, discrétion et exigence de qualité.",
+  "We promote clear responsibilities, accurate reporting and proactive follow-up on agreed commitments.": "Nous favorisons des responsabilités claires, des comptes rendus exacts et le suivi proactif des engagements convenus.",
+  "We foster long-term relationships based on mutual respect, shared objectives and sustainable business value.": "Nous cultivons des relations durables fondées sur le respect mutuel, des objectifs communs et une valeur commerciale pérenne.",
+});
+
+Object.assign(sw, {
+  "Connecting International Business to Rwanda Through Trust, Integrity and Local Expertise.": "Kuunganisha biashara za kimataifa na Rwanda kupitia uaminifu, uadilifu na utaalamu wa ndani.",
+  "We specialize in trade facilitation and business representation, connecting international manufacturers, authorized distributors and suppliers with purchasing entities, institutions and commercial organizations in Rwanda and the wider East African region.": "Tuna utaalamu katika kurahisisha biashara na uwakilishi wa kampuni, tukiunganisha watengenezaji, wasambazaji walioidhinishwa na wauzaji wa kimataifa na taasisi za ununuzi, taasisi na mashirika ya kibiashara nchini Rwanda na Afrika Mashariki.",
+  "We identify business opportunities, facilitate introductions, coordinate communication, support procurement processes and help parties navigate local operating requirements. Our team provides a coordinated local point of contact from market intelligence and opportunity identification through procurement coordination, regulatory liaison, delivery monitoring and post-delivery support.": "Tunatambua fursa za biashara, tunawezesha utambulisho wa washirika, kuratibu mawasiliano na kusaidia michakato ya ununuzi na uelewa wa mahitaji ya ndani. Timu yetu hutoa kituo cha mawasiliano cha ndani kilichoratibiwa, kuanzia taarifa za soko na utambuzi wa fursa hadi uratibu wa ununuzi, mawasiliano na mamlaka, ufuatiliaji wa uwasilishaji na msaada baada ya bidhaa kufikishwa.",
+  "Our agency model is built on transparency and clearly defined responsibilities. Buyers and sellers enter into their own commercial agreements and manage their contractual and payment obligations directly, unless otherwise agreed. We support the relationship through coordination, communication, follow-up and operational assistance within the agreed scope of engagement.": "Mfumo wetu wa uwakala unategemea uwazi na majukumu yaliyofafanuliwa wazi. Isipokuwa ikikubaliwa vinginevyo, wanunuzi na wauzaji huingia katika mikataba yao ya kibiashara na kusimamia moja kwa moja wajibu wao wa kimkataba na malipo. Tunaunga mkono uhusiano huo kwa uratibu, mawasiliano, ufuatiliaji na msaada wa kiutendaji ndani ya wigo uliokubaliwa.",
+  "Our objective is to build trusted business relationships, simplify cross-border trade, and support efficient, compliant and reliable delivery of goods and services.": "Lengo letu ni kujenga mahusiano ya biashara yenye uaminifu, kurahisisha biashara za kuvuka mipaka na kusaidia uwasilishaji bora, unaozingatia sheria na unaotegemewa wa bidhaa na huduma.",
+  "To connect international businesses with opportunities in Rwanda through trusted trade facilitation, ethical business representation, reliable coordination and professional local support.": "Kuunganisha biashara za kimataifa na fursa nchini Rwanda kupitia urahisishaji wa biashara unaoaminika, uwakilishi wa kimaadili, uratibu unaotegemewa na msaada wa kitaalamu wa ndani.",
+  "To become a trusted and respected regional partner for international manufacturers, distributors and businesses seeking dependable market access, compliant trade facilitation and effective supply-chain coordination in Rwanda and the wider East African region.": "Kuwa mshirika wa kikanda anayeaminika na kuheshimiwa kwa watengenezaji, wasambazaji na biashara za kimataifa zinazotafuta ufikiaji wa soko unaotegemewa, urahisishaji wa biashara unaozingatia sheria na uratibu bora wa mnyororo wa ugavi nchini Rwanda na Afrika Mashariki.",
+  "Our Core Values": "Maadili Yetu ya Msingi",
+  "We build confidence through transparent engagement, responsible conduct and consistent follow-through.": "Tunajenga imani kupitia ushirikiano ulio wazi, mwenendo wenye uwajibikaji na ufuatiliaji wa ahadi kwa uthabiti.",
+  "We uphold honesty, ethical practices, fairness and respect for commercial agreements.": "Tunazingatia uaminifu, maadili, haki na heshima kwa mikataba ya kibiashara.",
+  "We strive to deliver timely communication, dependable coordination and consistent operational support.": "Tunajitahidi kutoa mawasiliano kwa wakati, uratibu unaotegemewa na msaada thabiti wa kiutendaji.",
+  "We approach every engagement with competence, respect, discretion and a commitment to quality.": "Tunashughulikia kila kazi kwa umahiri, heshima, busara na kujitolea kwa ubora.",
+  "We promote clear responsibilities, accurate reporting and proactive follow-up on agreed commitments.": "Tunaendeleza majukumu yaliyo wazi, taarifa sahihi na ufuatiliaji wa mapema wa ahadi zilizokubaliwa.",
+  "We foster long-term relationships based on mutual respect, shared objectives and sustainable business value.": "Tunajenga mahusiano ya muda mrefu yanayotegemea heshima ya pande zote, malengo ya pamoja na thamani endelevu ya biashara.",
 });
 
 const copy: Partial<Record<Language, Record<string, string>>> = { rw, fr, sw };
