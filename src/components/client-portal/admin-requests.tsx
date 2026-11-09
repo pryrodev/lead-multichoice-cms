@@ -146,15 +146,9 @@ export function AdminClientRequests({ canManageStatuses = false }: { canManageSt
   const requests = query.data;
   return (
     <div className="flex flex-col gap-5">
-      <div className="flex flex-wrap items-end justify-between gap-3">
-        <div>
-          <h1 className="font-display text-2xl font-semibold tracking-tight md:text-[30px]">Client requests</h1>
-          <p className="mt-1 text-sm text-muted-foreground">Record and follow buying, selling, sourcing, bidding, logistics, and other client needs.</p>
-        </div>
-        <div className="flex flex-wrap items-center gap-2">
-          <TrackingStatusManager canManage={canManageStatuses} />
-          <AdminRequestCreateDialog />
-        </div>
+      <div className="flex flex-wrap justify-end gap-2">
+        <TrackingStatusManager canManage={canManageStatuses} />
+        <AdminRequestCreateDialog />
       </div>
 
       {requests.length === 0 ? (
