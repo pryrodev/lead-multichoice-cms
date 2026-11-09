@@ -11,7 +11,7 @@ export const services = [
     id: "market-access",
     title: "Market Access & Trade Facilitation",
     summary:
-      "Find opportunities, meet the right buyers and enter Rwanda with local representation.",
+      "Identify relevant opportunities and purchasing entities, facilitate introductions and provide local representation.",
     image: meeting,
     alt: "Business professionals reviewing procurement documents in a Kigali meeting room",
     items: [
@@ -25,7 +25,7 @@ export const services = [
     id: "procurement",
     title: "Procurement & Supply Chain Coordination",
     summary:
-      "Source suppliers, manage procurement and follow every order through to delivery.",
+      "Identify suppliers and coordinate procurement communication, order follow-up and delivery.",
     image: warehouse,
     alt: "Warehouse operator scanning palletised cartons in a distribution centre",
     items: [
@@ -39,7 +39,7 @@ export const services = [
     id: "logistics",
     title: "Logistics, Distribution & Trade Compliance Support",
     summary:
-      "Track shipments, coordinate customs and documents, and confirm final delivery.",
+      "Coordinate transport, shipment tracking, customs liaison, import documents and delivery follow-up.",
     image: truck,
     alt: "Container truck travelling along a hillside highway in Rwanda",
     note: "Approvals remain with the relevant authorities.",

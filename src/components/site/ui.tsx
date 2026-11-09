@@ -67,6 +67,7 @@ export function SectionHeading({
   eyebrow,
   title,
   titleClassName,
+  introClassName,
   className,
   intro,
   align = "left",
@@ -76,6 +77,7 @@ export function SectionHeading({
   eyebrow?: string;
   title: ReactNode;
   titleClassName?: string;
+  introClassName?: string;
   className?: string;
   intro?: ReactNode;
   align?: "left" | "center";
@@ -111,6 +113,7 @@ export function SectionHeading({
           className={cn(
             "mt-5 text-[17px] md:text-[18px]",
             inverted ? "text-background/75" : "text-muted-foreground",
+            introClassName,
           )}
         >
           {intro}
@@ -123,6 +126,9 @@ export function SectionHeading({
 export function PageHero({
   eyebrow,
   title,
+  headingClassName,
+  titleClassName,
+  introClassName,
   intro,
   image,
   alt,
@@ -131,6 +137,9 @@ export function PageHero({
 }: {
   eyebrow: string;
   title: ReactNode;
+  headingClassName?: string;
+  titleClassName?: string;
+  introClassName?: string;
   intro?: ReactNode;
   image?: string;
   alt?: string;
@@ -167,7 +176,10 @@ export function PageHero({
           as="h1"
           eyebrow={eyebrow}
           title={title}
+          className={headingClassName ?? ""}
+          titleClassName={titleClassName ?? ""}
           intro={intro}
+          introClassName={introClassName ?? ""}
           inverted={Boolean(heroImage)}
         />
         {children}

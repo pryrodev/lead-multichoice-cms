@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { requireUser } from "@/lib/auth/api";
 import { getDb } from "@/lib/db";
-import { HOME_CMS_FIELDS, defaultHomePageContent, type HomePageContent } from "@/lib/cms/homepage";
+import { HOME_CMS_FIELDS, defaultHomePageContent, mergeHomePageContent, type HomePageContent } from "@/lib/cms/homepage";
 
 const translationsSchema = z.object({ en: z.record(z.string(), z.string().max(5000)), rw: z.record(z.string(), z.string().max(5000)), fr: z.record(z.string(), z.string().max(5000)), sw: z.record(z.string(), z.string().max(5000)) });
 const contentSchema = z.object({ translations: translationsSchema, heroImageUrl: z.string().max(1200) }).superRefine((content, context) => {
@@ -19,7 +19,7 @@ export async function GET() {
   try {
     const page = await getDb().sitePage.findUnique({ where: { slug: "home" }, select: { draftContent: true, publishedContent: true, publishedAt: true, updatedAt: true } });
     const stored = page?.draftContent ?? page?.publishedContent;
-    const content = typeof stored === "string" ? JSON.parse(stored) as HomePageContent : stored ?? defaultHomePageContent;
+    const content = stored ? mergeHomePageContent(typeof stored === "string" ? JSON.parse(stored) : stored) : defaultHomePageContent;
     return NextResponse.json({ content, hasDraft: Boolean(page?.draftContent), publishedAt: page?.publishedAt?.toISOString() ?? null, updatedAt: page?.updatedAt.toISOString() ?? null });
   } catch (error) { console.error("CMS homepage read failed", error); return NextResponse.json({ error: "Could not load homepage content." }, { status: 500 }); }
 }

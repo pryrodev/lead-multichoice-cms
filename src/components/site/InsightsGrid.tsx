@@ -3,11 +3,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
+import { cn } from "@/lib/utils";
 import { insights, insightUi } from "@/content/insights";
 import { useI18n } from "@/i18n/I18nProvider";
 import { useSiteVisuals } from "@/components/site/SiteVisualsProvider";
 
-export function InsightsGrid() {
+export function InsightsGrid({ singleLineTitle = false }: { singleLineTitle?: boolean }) {
   const { language } = useI18n();
   const visuals = useSiteVisuals();
   const copy = insightUi[language];
@@ -18,7 +19,16 @@ export function InsightsGrid() {
       <div className="mb-7 flex flex-wrap items-end justify-between gap-4">
         <div>
           <p className="eyebrow mb-3 text-brass">{copy.eyebrow}</p>
-          <h2 className="max-w-2xl text-balance text-[30px] md:text-[40px]">{copy.title}</h2>
+          <h2
+            className={cn(
+              singleLineTitle
+                ? "max-w-none whitespace-nowrap"
+                : "max-w-2xl text-balance text-[30px] md:text-[40px]",
+            )}
+            style={singleLineTitle ? { whiteSpace: "nowrap", fontSize: "clamp(0.875rem, 3.2vw, 2.5rem)" } : undefined}
+          >
+            {copy.title}
+          </h2>
           <p className="mt-3 max-w-2xl text-sm text-muted-foreground md:text-base">{copy.intro}</p>
         </div>
         <Link href="/blog" className="inline-flex items-center gap-1.5 text-sm font-semibold text-brand-primary hover:underline">{copy.all}<ArrowUpRight className="size-4" aria-hidden="true" /></Link>

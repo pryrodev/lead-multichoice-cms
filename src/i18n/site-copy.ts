@@ -883,8 +883,8 @@ Object.assign(rw, {
   "Understand Rwanda's procurement environment, identify relevant opportunities and reach purchasing entities through local representation.":
     "Sobanukirwa n'uburyo amasoko akorwa mu Rwanda, umenye amahirwe ahari kandi ugere ku bigo bigura ibicuruzwa ubinyujije ku bahagarariye ibikorwa mu karere.",
   "For Rwanda's purchasing entities": "Ku bigo byo mu Rwanda bigura ibicuruzwa",
-  "Expand access to credible manufacturers, authorised distributors and specialised service providers around the world.":
-    "Bona uburyo bwagutse bwo kugera ku bakora ibicuruzwa bizewe, ababikwirakwiza babifitiye uburenganzira n'abatanga serivisi zihariye ku isi.",
+  "Expand access to credible manufacturers, authorised distributors and specialised service providers around the world through credible representatives.":
+    "Bona uburyo bwagutse bwo kugera ku bakora ibicuruzwa bizewe, ababikwirakwiza babifitiye uburenganzira n'abatanga serivisi zihariye ku isi binyuze ku bahagarariye bizewe.",
   "Our role": "Uruhare rwacu",
   "From supplier identification to coordinated delivery.":
     "Kuva ku kumenya abatanga ibicuruzwa kugeza ku ishyikirizwa rihujwe neza.",
@@ -937,8 +937,8 @@ Object.assign(fr, {
   "Understand Rwanda's procurement environment, identify relevant opportunities and reach purchasing entities through local representation.":
     "Comprendre les achats au Rwanda, repérer les possibilités pertinentes et accéder aux acheteurs grâce à une représentation locale.",
   "For Rwanda's purchasing entities": "Pour les organismes acheteurs rwandais",
-  "Expand access to credible manufacturers, authorised distributors and specialised service providers around the world.":
-    "Élargir l'accès aux fabricants fiables, aux distributeurs agréés et aux prestataires spécialisés dans le monde entier.",
+  "Expand access to credible manufacturers, authorised distributors and specialised service providers around the world through credible representatives.":
+    "Élargir l'accès aux fabricants fiables, aux distributeurs agréés et aux prestataires spécialisés dans le monde entier grâce à des représentants fiables.",
   "Our role": "Notre rôle",
   "From supplier identification to coordinated delivery.":
     "De l'identification des fournisseurs à la coordination de la livraison.",
@@ -989,8 +989,8 @@ Object.assign(sw, {
   "Understand Rwanda's procurement environment, identify relevant opportunities and reach purchasing entities through local representation.":
     "Elewa mazingira ya ununuzi nchini Rwanda, tambua fursa husika na ufikie taasisi za ununuzi kupitia uwakilishi wa ndani.",
   "For Rwanda's purchasing entities": "Kwa taasisi za ununuzi za Rwanda",
-  "Expand access to credible manufacturers, authorised distributors and specialised service providers around the world.":
-    "Panua upatikanaji wa wazalishaji wanaoaminika, wasambazaji walioidhinishwa na watoa huduma maalumu duniani.",
+  "Expand access to credible manufacturers, authorised distributors and specialised service providers around the world through credible representatives.":
+    "Panua upatikanaji wa wazalishaji wanaoaminika, wasambazaji walioidhinishwa na watoa huduma maalumu duniani kupitia wawakilishi wanaoaminika.",
   "Our role": "Jukumu letu",
   "From supplier identification to coordinated delivery.":
     "Kuanzia kutambua wasambazaji hadi kuratibu uwasilishaji.",
@@ -1346,8 +1346,136 @@ Object.assign(sw, {
   "We foster long-term relationships based on mutual respect, shared objectives and sustainable business value.": "Tunajenga mahusiano ya muda mrefu yanayotegemea heshima ya pande zote, malengo ya pamoja na thamani endelevu ya biashara.",
 });
 
+Object.assign(rw, {
+  "Connecting International Suppliers with Purchasing Entities across Rwanda and East Africa": "Guhuza abatanga ibicuruzwa mpuzamahanga n'inzego z'amasoko mu Rwanda no muri Afurika y'Iburasirazuba",
+  "Lead Multichoice connects international manufacturers, authorized distributors and suppliers with purchasing entities in Rwanda and the wider East African region through trade facilitation, procurement coordination, logistics and delivery support.": "Lead Multichoice ihuza abakora ibicuruzwa, ababikwirakwiza babifitiye uburenganzira n'ababitanga mpuzamahanga n'inzego z'amasoko mu Rwanda no muri Afurika y'Iburasirazuba, binyuze mu korohereza ubucuruzi, guhuza amasoko, ubwikorezi no gukurikirana ishyikirizwa.",
+  "Connecting international suppliers with purchasing entities across Rwanda and East Africa.": "Guhuza abatanga ibicuruzwa mpuzamahanga n'inzego z'amasoko mu Rwanda no muri Afurika y'Iburasirazuba.",
+  "We connect international manufacturers, authorised distributors and suppliers with purchasing entities in Rwanda and the wider East African region. We facilitate introductions and coordinate procurement, logistics, delivery and after-sales support.": "Duhuza abakora ibicuruzwa, ababikwirakwiza babifitiye uburenganzira n'ababitanga mpuzamahanga n'inzego z'amasoko mu Rwanda no muri Afurika y'Iburasirazuba. Dufasha impande kumenyana kandi tugahuza amasoko, ubwikorezi, ishyikirizwa n'ubufasha nyuma yo kugeza ibicuruzwa.",
+  "About LEAD MULTICHOICE": "Ibyerekeye LEAD MULTICHOICE",
+  "A Rwanda-based partner connecting suppliers and purchasing entities.": "Umufatanyabikorwa ukorera mu Rwanda uhuza abatanga ibicuruzwa n'inzego z'amasoko.",
+  "Based in Rwanda, Lead Multichoice connects international manufacturers, authorised distributors and suppliers with purchasing entities, institutions and commercial organizations in Rwanda and the wider East African region.": "Lead Multichoice ifite icyicaro mu Rwanda ihuza abakora ibicuruzwa, ababikwirakwiza babifitiye uburenganzira n'ababitanga mpuzamahanga n'inzego zigura, ibigo n'imiryango y'ubucuruzi mu Rwanda no muri Afurika y'Iburasirazuba.",
+  "From procurement opportunity to delivery acceptance and payment.": "Kuva ku mahirwe y'amasoko kugeza ku kwemeza iyakirwa ry'ibyagejejwe no kwishyura.",
+  "We identify relevant partners, facilitate introductions, and coordinate procurement, logistics, delivery and after-sales follow-up within the agreed scope.": "Tumenya abafatanyabikorwa bakwiye, tukorohereza kumenyana kandi tugahuza amasoko, ubwikorezi, ishyikirizwa n'ubufasha nyuma yo kugeza ibicuruzwa nk'uko byumvikanyweho.",
+  "Identify relevant opportunities and potential buyers.": "Kumenya amahirwe akwiye n'abaguzi cyangwa abatanga ibicuruzwa bashobora kubigiramo uruhare.",
+  Introduce: "Kumenyekanisha abafatanyabikorwa",
+  "Connect international suppliers with local and regional purchasing entities.": "Guhuza abatanga ibicuruzwa mpuzamahanga n'inzego z'amasoko zo mu Rwanda no mu karere.",
+  "Support procurement communication, documentation and logistics coordination.": "Gufasha mu itumanaho ry'amasoko, inyandiko no guhuza ubwikorezi.",
+  "Follow through": "Gukurikirana kugeza birangiye",
+  "Ground handling in country.": "Gutunganya ibikorwa byo ku butaka mu gihugu.",
+  "Identify relevant opportunities and purchasing entities, facilitate introductions and provide local representation.": "Kumenya amahirwe n'inzego zigura bikwiye, korohereza kumenyana no gutanga ubuhagararizi bwo mu karere.",
+  "Identify suppliers and coordinate procurement communication, order follow-up and delivery.": "Kumenya abatanga ibicuruzwa no guhuza itumanaho ry'amasoko, gukurikirana ibyatumijwe n'ishyikirizwa.",
+  "Coordinate transport, shipment tracking, customs liaison, import documents and delivery follow-up.": "Guhuza ubwikorezi, gukurikirana imizigo, kuvugana n'abashinzwe gasutamo, inyandiko zo gutumiza no gukurikirana ishyikirizwa.",
+  "Browse live notices on Rwanda's official procurement portals. Check the source for complete documents and deadlines.": "Reba amatangazo ari ku mbuga zemewe z'amasoko mu Rwanda. Koresha urubuga rw'inkomoko urebe inyandiko zuzuye n'igihe ntarengwa.",
+  "Official procurement portals": "Imbuga zemewe z'amasoko",
+  "Explore procurement notices at the source.": "Reba amatangazo y'amasoko ku rubuga rw'inkomoko.",
+  "Visit Rwanda's official procurement portals to review current notices, documents and deadlines.": "Sura imbuga zemewe z'amasoko mu Rwanda urebe amatangazo agezweho, inyandiko n'igihe ntarengwa.",
+});
+
+Object.assign(fr, {
+  "Connecting International Suppliers with Purchasing Entities across Rwanda and East Africa": "Relier les fournisseurs internationaux aux entités acheteuses du Rwanda et de l'Afrique de l'Est",
+  "Lead Multichoice connects international manufacturers, authorized distributors and suppliers with purchasing entities in Rwanda and the wider East African region through trade facilitation, procurement coordination, logistics and delivery support.": "Lead Multichoice met en relation les fabricants, distributeurs agréés et fournisseurs internationaux avec les entités acheteuses au Rwanda et dans l'ensemble de l'Afrique de l'Est, grâce à la facilitation des échanges, la coordination des achats, la logistique et le suivi des livraisons.",
+  "Connecting international suppliers with purchasing entities across Rwanda and East Africa.": "Relier les fournisseurs internationaux aux entités acheteuses du Rwanda et de l'Afrique de l'Est.",
+  "We connect international manufacturers, authorised distributors and suppliers with purchasing entities in Rwanda and the wider East African region. We facilitate introductions and coordinate procurement, logistics, delivery and after-sales support.": "Nous mettons en relation les fabricants, distributeurs agréés et fournisseurs internationaux avec les entités acheteuses du Rwanda et de l'ensemble de l'Afrique de l'Est. Nous facilitons les mises en relation et coordonnons les achats, la logistique, les livraisons et le suivi après-vente.",
+  "About LEAD MULTICHOICE": "À propos de LEAD MULTICHOICE",
+  "A Rwanda-based partner connecting suppliers and purchasing entities.": "Un partenaire basé au Rwanda qui met en relation fournisseurs et acheteurs.",
+  "Based in Rwanda, Lead Multichoice connects international manufacturers, authorised distributors and suppliers with purchasing entities, institutions and commercial organizations in Rwanda and the wider East African region.": "Basée au Rwanda, Lead Multichoice met en relation les fabricants, distributeurs agréés et fournisseurs internationaux avec les entités acheteuses, institutions et organisations commerciales du Rwanda et de l'ensemble de l'Afrique de l'Est.",
+  "From procurement opportunity to delivery acceptance and payment.": "De l'opportunité d'achat à l'acceptation de la livraison et au paiement.",
+  "We identify relevant partners, facilitate introductions, and coordinate procurement, logistics, delivery and after-sales follow-up within the agreed scope.": "Nous repérons les partenaires pertinents, facilitons les mises en relation et coordonnons les achats, la logistique, les livraisons et le suivi après-vente dans le cadre convenu.",
+  "Identify relevant opportunities and potential buyers.": "Repérer les opportunités pertinentes et les acheteurs potentiels.",
+  Introduce: "Mettre en relation",
+  "Connect international suppliers with local and regional purchasing entities.": "Mettre en relation les fournisseurs internationaux avec les acheteurs locaux et régionaux.",
+  "Support procurement communication, documentation and logistics coordination.": "Appuyer la communication des achats, la documentation et la coordination logistique.",
+  "Follow through": "Assurer le suivi",
+  "Ground handling in country.": "Manutention au sol dans le pays.",
+  "Identify relevant opportunities and purchasing entities, facilitate introductions and provide local representation.": "Repérer les opportunités et acheteurs pertinents, faciliter les mises en relation et assurer une représentation locale.",
+  "Identify suppliers and coordinate procurement communication, order follow-up and delivery.": "Identifier les fournisseurs et coordonner les échanges liés aux achats, le suivi des commandes et les livraisons.",
+  "Coordinate transport, shipment tracking, customs liaison, import documents and delivery follow-up.": "Coordonner le transport, le suivi des expéditions, la liaison douanière, les documents d'importation et le suivi des livraisons.",
+  "Browse live notices on Rwanda's official procurement portals. Check the source for complete documents and deadlines.": "Consultez les avis publiés sur les portails officiels des marchés publics du Rwanda. Vérifiez les documents complets et les échéances sur le portail source.",
+  "Official procurement portals": "Portails officiels des marchés publics",
+  "Explore procurement notices at the source.": "Consultez les avis de marchés à la source.",
+  "Visit Rwanda's official procurement portals to review current notices, documents and deadlines.": "Consultez les portails officiels des marchés publics du Rwanda pour examiner les avis, documents et échéances en cours.",
+});
+
+Object.assign(sw, {
+  "Connecting International Suppliers with Purchasing Entities across Rwanda and East Africa": "Kuunganisha wasambazaji wa kimataifa na taasisi za ununuzi nchini Rwanda na Afrika Mashariki",
+  "Lead Multichoice connects international manufacturers, authorized distributors and suppliers with purchasing entities in Rwanda and the wider East African region through trade facilitation, procurement coordination, logistics and delivery support.": "Lead Multichoice inaunganisha watengenezaji, wasambazaji walioidhinishwa na wauzaji wa kimataifa na taasisi za ununuzi nchini Rwanda na Afrika Mashariki kupitia urahisishaji wa biashara, uratibu wa ununuzi, usafirishaji na ufuatiliaji wa uwasilishaji.",
+  "Connecting international suppliers with purchasing entities across Rwanda and East Africa.": "Kuunganisha wasambazaji wa kimataifa na taasisi za ununuzi nchini Rwanda na Afrika Mashariki.",
+  "We connect international manufacturers, authorised distributors and suppliers with purchasing entities in Rwanda and the wider East African region. We facilitate introductions and coordinate procurement, logistics, delivery and after-sales support.": "Tunaunganisha watengenezaji, wasambazaji walioidhinishwa na wauzaji wa kimataifa na taasisi za ununuzi nchini Rwanda na Afrika Mashariki. Tunawezesha utambulisho wa washirika na kuratibu ununuzi, usafirishaji, uwasilishaji na msaada baada ya mauzo.",
+  "About LEAD MULTICHOICE": "Kuhusu LEAD MULTICHOICE",
+  "A Rwanda-based partner connecting suppliers and purchasing entities.": "Mshirika aliye nchini Rwanda anayeunganisha wasambazaji na taasisi za ununuzi.",
+  "Based in Rwanda, Lead Multichoice connects international manufacturers, authorised distributors and suppliers with purchasing entities, institutions and commercial organizations in Rwanda and the wider East African region.": "Lead Multichoice yenye makao yake Rwanda inaunganisha watengenezaji, wasambazaji walioidhinishwa na wauzaji wa kimataifa na taasisi za ununuzi, taasisi na mashirika ya kibiashara nchini Rwanda na Afrika Mashariki.",
+  "From procurement opportunity to delivery acceptance and payment.": "Kuanzia fursa ya ununuzi hadi kukubali kupokea bidhaa na kufanya malipo.",
+  "We identify relevant partners, facilitate introductions, and coordinate procurement, logistics, delivery and after-sales follow-up within the agreed scope.": "Tunatambua washirika wanaofaa, tunawezesha utambulisho na kuratibu ununuzi, usafirishaji, uwasilishaji na ufuatiliaji baada ya mauzo kulingana na makubaliano.",
+  "Identify relevant opportunities and potential buyers.": "Tambua fursa zinazofaa na wanunuzi au wasambazaji wanaoweza kushiriki.",
+  Introduce: "Tambulisha washirika",
+  "Connect international suppliers with local and regional purchasing entities.": "Kuunganisha wasambazaji wa kimataifa na taasisi za ununuzi za ndani na za kikanda.",
+  "Support procurement communication, documentation and logistics coordination.": "Kusaidia mawasiliano ya ununuzi, nyaraka na uratibu wa usafirishaji.",
+  "Follow through": "Fuatilia hadi kukamilika",
+  "Ground handling in country.": "Ushughulikiaji wa ardhini nchini.",
+  "Identify relevant opportunities and purchasing entities, facilitate introductions and provide local representation.": "Tambua fursa na taasisi za ununuzi zinazofaa, wezesha utambulisho na utoe uwakilishi wa ndani.",
+  "Identify suppliers and coordinate procurement communication, order follow-up and delivery.": "Tambua wasambazaji na uratibu mawasiliano ya ununuzi, ufuatiliaji wa oda na uwasilishaji.",
+  "Coordinate transport, shipment tracking, customs liaison, import documents and delivery follow-up.": "Ratibu usafirishaji, ufuatiliaji wa shehena, mawasiliano ya forodha, nyaraka za uagizaji na ufuatiliaji wa uwasilishaji.",
+  "Browse live notices on Rwanda's official procurement portals. Check the source for complete documents and deadlines.": "Angalia matangazo ya sasa kwenye tovuti rasmi za ununuzi za Rwanda. Tumia tovuti husika kupata nyaraka kamili na tarehe za mwisho.",
+  "Official procurement portals": "Tovuti rasmi za ununuzi",
+  "Explore procurement notices at the source.": "Angalia matangazo ya ununuzi kwenye chanzo rasmi.",
+  "Visit Rwanda's official procurement portals to review current notices, documents and deadlines.": "Tembelea tovuti rasmi za ununuzi za Rwanda ili kuona matangazo, nyaraka na tarehe za mwisho za sasa.",
+});
+
+Object.assign(rw, { "About Us": "Ibyerekeye twe" });
+Object.assign(fr, { "About Us": "À propos de nous" });
+Object.assign(sw, { "About Us": "Kuhusu sisi" });
+
+Object.assign(rw, {
+  "Local coordination across the global supply chain.": "Guhuza ibikorwa mu ruhererekane rw'ibicuruzwa ku isi.",
+});
+Object.assign(fr, {
+  "Local coordination across the global supply chain.": "Une coordination locale tout au long de la chaîne d'approvisionnement mondiale.",
+});
+Object.assign(sw, {
+  "Local coordination across the global supply chain.": "Uratibu wa ndani katika mnyororo wa ugavi wa kimataifa.",
+});
+
+Object.assign(rw, {
+  "A Rwanda-based partner connecting international suppliers with local entities.": "Umufatanyabikorwa ukorera mu Rwanda uhuza abatanga ibicuruzwa mpuzamahanga n'inzego zo mu Rwanda.",
+});
+Object.assign(fr, {
+  "A Rwanda-based partner connecting international suppliers with local entities.": "Un partenaire basé au Rwanda qui met en relation les fournisseurs internationaux avec les entités locales.",
+});
+Object.assign(sw, {
+  "A Rwanda-based partner connecting international suppliers with local entities.": "Mshirika aliye Rwanda anayeunganisha wasambazaji wa kimataifa na taasisi za ndani.",
+});
+
+Object.assign(rw, {
+  "Assess markets and sourcing options.": "Gusuzuma amasoko n'uburyo bwo gushaka ibikenewe.",
+  Verify: "Kugenzura",
+  "Vet buyer companies and procurement rules.": "Gusuzuma ibigo bigura n'amabwiriza y'amasoko.",
+  Connect: "Guhuza",
+  "Link global suppliers with local buyers.": "Guhuza abatanga ibicuruzwa ku isi n'abaguzi bo mu gihugu.",
+  "Coordinate procurement, logistics, delivery and in-country ground handling.": "Guhuza amasoko, ubwikorezi, ishyikirizwa n'ibikorwa byo ku butaka mu gihugu.",
+});
+Object.assign(fr, {
+  "Assess markets and sourcing options.": "Évaluer les marchés et les options d'approvisionnement.",
+  Verify: "Vérifier",
+  "Vet buyer companies and procurement rules.": "Vérifier les entreprises acheteuses et les règles d'achat.",
+  Connect: "Mettre en relation",
+  "Link global suppliers with local buyers.": "Relier les fournisseurs mondiaux aux acheteurs locaux.",
+  "Coordinate procurement, logistics, delivery and in-country ground handling.": "Coordonner les achats, la logistique, les livraisons et la manutention au sol dans le pays.",
+});
+Object.assign(sw, {
+  "Assess markets and sourcing options.": "Tathmini masoko na njia za upatikanaji wa bidhaa.",
+  Verify: "Thibitisha",
+  "Vet buyer companies and procurement rules.": "Kagua kampuni za wanunuzi na kanuni za ununuzi.",
+  Connect: "Unganisha",
+  "Link global suppliers with local buyers.": "Unganisha wasambazaji wa kimataifa na wanunuzi wa ndani.",
+  "Coordinate procurement, logistics, delivery and in-country ground handling.": "Ratibu ununuzi, usafirishaji, uwasilishaji na ushughulikiaji wa ardhini nchini.",
+});
+
 const copy: Partial<Record<Language, Record<string, string>>> = { rw, fr, sw };
 export const siteCopySourceTexts = [...new Set([...Object.keys(rw), ...Object.keys(fr), ...Object.keys(sw)])];
+const siteCopyAliases: Record<string, string> = {
+  "Local support from supplier search through delivery.": "From procurement opportunity to delivery acceptance.",
+};
 export function translateSiteCopy(language: Language, text: string) {
-  return language === "en" ? text : (copy[language]?.[text] ?? text);
+  const canonicalText = siteCopyAliases[text] ?? text;
+  return language === "en" ? canonicalText : (copy[language]?.[canonicalText] ?? copy[language]?.[text] ?? canonicalText);
 }

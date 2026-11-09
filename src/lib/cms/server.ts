@@ -1,7 +1,7 @@
 import "server-only";
 import { unstable_cache } from "next/cache";
 import { getDb } from "@/lib/db";
-import { defaultHomePageContent, type HomePageContent } from "./homepage";
+import { defaultHomePageContent, mergeHomePageContent, type HomePageContent } from "./homepage";
 import { defaultSiteVisuals, mergeSiteVisuals, type SiteVisuals } from "./site-visuals";
 import { mergeSiteCopy, type SiteCopyContent } from "./site-copy";
 
@@ -9,8 +9,8 @@ export const getPublishedHomePage = unstable_cache(async (): Promise<HomePageCon
   try {
     const page = await getDb().sitePage.findUnique({ where: { slug: "home" }, select: { publishedContent: true } });
     const stored = page?.publishedContent;
-    if (typeof stored === "string") return JSON.parse(stored) as HomePageContent;
-    return (stored as HomePageContent | null) ?? defaultHomePageContent;
+    if (typeof stored === "string") return mergeHomePageContent(JSON.parse(stored));
+    return stored ? mergeHomePageContent(stored) : defaultHomePageContent;
   } catch (error) {
     console.error("Could not load published homepage content", error);
     return defaultHomePageContent;
