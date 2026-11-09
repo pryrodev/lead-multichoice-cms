@@ -1,11 +1,19 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
+import { ListChecks } from "lucide-react";
 import { toast } from "sonner";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -33,6 +41,9 @@ export function TrackingStatusManager({ canManage }: { canManage: boolean }) {
   const update = useUpdateTrackingStatus();
   const [requestType, setRequestType] = useState<ClientRequestType>("buying");
   const [isTerminal, setIsTerminal] = useState(false);
+  const [open, setOpen] = useState(false);
+  const statuses = query.data?.filter((status) => status.requestType === requestType) ?? [];
+  const activeCount = query.data?.filter((status) => status.isActive).length ?? 0;
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -62,68 +73,76 @@ export function TrackingStatusManager({ canManage }: { canManage: boolean }) {
     }
   }
 
+  if (!canManage) return null;
+
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="font-display">Tracking statuses</CardTitle>
-        <CardDescription>Set the client-facing progress steps for each type of request. Staff select one when posting an update.</CardDescription>
-      </CardHeader>
-      <CardContent className="space-y-6">
-        {canManage && <form onSubmit={(event) => void submit(event)} className="grid gap-4 rounded-lg border bg-muted/20 p-4 md:grid-cols-2">
-          <div className="flex flex-col gap-2">
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button variant="outline" className="gap-2">
+          <ListChecks className="size-4" />
+          Manage tracking statuses
+          <Badge variant="secondary" className="ml-1">{activeCount}</Badge>
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="max-h-[88vh] overflow-y-auto sm:max-w-2xl">
+        <DialogHeader>
+          <DialogTitle className="font-display">Tracking status settings</DialogTitle>
+          <DialogDescription>Set the progress steps available to staff and visible to clients for each request type.</DialogDescription>
+        </DialogHeader>
+
+        <div className="grid gap-5">
+          <div className="grid gap-2">
             <Label htmlFor="status-request-type">Request type</Label>
             <Select value={requestType} onValueChange={(value: ClientRequestType) => setRequestType(value)}>
               <SelectTrigger id="status-request-type"><SelectValue /></SelectTrigger>
               <SelectContent>{requestTypes.map(([value, label]) => <SelectItem key={value} value={value}>{label}</SelectItem>)}</SelectContent>
             </Select>
           </div>
-          <div className="flex flex-col gap-2">
-            <Label htmlFor="tracking-status-name">Status name</Label>
-            <Input id="tracking-status-name" name="statusName" required minLength={2} maxLength={100} placeholder="e.g. Supplier verification" />
-          </div>
-          <div className="flex flex-col gap-2 md:col-span-2">
-            <Label htmlFor="tracking-status-description">Client-facing explanation</Label>
-            <Textarea id="tracking-status-description" name="statusDescription" maxLength={500} rows={2} placeholder="Briefly explain what this step means for the client." />
-          </div>
-          <div className="flex items-center justify-between gap-4 rounded-md border bg-background px-3 py-2 md:col-span-2">
-            <div><Label htmlFor="tracking-status-terminal">Final status</Label><p className="text-xs text-muted-foreground">Mark the engagement complete when staff select this status.</p></div>
-            <Switch id="tracking-status-terminal" checked={isTerminal} onCheckedChange={setIsTerminal} />
-          </div>
-          <div className="md:col-span-2"><Button type="submit" disabled={create.isPending}>{create.isPending ? "Creating..." : "Add status"}</Button></div>
-        </form>}
 
-        {query.isPending ? <p role="status" className="text-sm text-muted-foreground">Loading tracking statuses...</p> : query.isError ? (
-          <Alert variant="destructive"><AlertTitle>Could not load statuses</AlertTitle><AlertDescription>{query.error.message}</AlertDescription></Alert>
-        ) : query.data.length ? (
-          <div className="grid gap-5 lg:grid-cols-2">
-            {requestTypes.map(([type, label]) => {
-              const statuses = query.data.filter((status) => status.requestType === type);
-              if (!statuses.length) return null;
-              return (
-                <section key={type} className="rounded-lg border p-4" aria-label={`${label} tracking statuses`}>
-                  <h3 className="font-semibold">{label}</h3>
-                  <ol className="mt-3 space-y-2">
-                    {statuses.map((status, index) => (
-                      <li key={status.id} className="flex items-center gap-3 rounded-md bg-muted/30 px-3 py-2">
-                        <span className="w-6 shrink-0 font-mono text-xs text-muted-foreground">{String(index + 1).padStart(2, "0")}</span>
-                        <div className="min-w-0 flex-1">
-                          <p className={`text-sm font-medium ${!status.isActive ? "text-muted-foreground line-through" : ""}`}>{status.name}</p>
-                          {status.description && <p className="mt-0.5 text-xs text-muted-foreground">{status.description}</p>}
-                        </div>
-                        {status.isTerminal && <Badge variant="secondary">Final</Badge>}
-                        {canManage && <Switch checked={status.isActive} onCheckedChange={(checked) => void toggleStatus(status.id, checked)} aria-label={`${status.isActive ? "Deactivate" : "Activate"} ${status.name}`} />}
-                      </li>
-                    ))}
-                  </ol>
-                </section>
-              );
-            })}
-          </div>
-        ) : (
-          <p className="rounded-md border border-dashed p-6 text-center text-sm text-muted-foreground">No tracking statuses yet. Add statuses before creating tracked requests.</p>
-        )}
-        <p className="text-xs text-muted-foreground">Deactivating a status hides it from new updates while preserving it in existing client tracking history.</p>
-      </CardContent>
-    </Card>
+          <form onSubmit={(event) => void submit(event)} className="grid gap-4 rounded-xl border bg-muted/20 p-4 sm:grid-cols-2">
+            <div className="grid gap-2">
+              <Label htmlFor="tracking-status-name">Status name</Label>
+              <Input id="tracking-status-name" name="statusName" required minLength={2} maxLength={100} placeholder="e.g. Supplier verification" />
+            </div>
+            <div className="flex items-center justify-between gap-4 rounded-md border bg-background px-3 py-2">
+              <div><Label htmlFor="tracking-status-terminal">Final status</Label><p className="text-xs text-muted-foreground">Selecting it completes the engagement.</p></div>
+              <Switch id="tracking-status-terminal" checked={isTerminal} onCheckedChange={setIsTerminal} />
+            </div>
+            <div className="grid gap-2 sm:col-span-2">
+              <Label htmlFor="tracking-status-description">Client-facing explanation</Label>
+              <Textarea id="tracking-status-description" name="statusDescription" maxLength={500} rows={2} placeholder="Briefly explain what this step means for the client." />
+            </div>
+            <div className="sm:col-span-2"><Button type="submit" disabled={create.isPending}>{create.isPending ? "Adding status..." : "Add status"}</Button></div>
+          </form>
+
+          <section aria-label="Statuses for selected request type" className="space-y-3">
+            <div className="flex items-center justify-between gap-3">
+              <h3 className="text-sm font-semibold">Progress steps</h3>
+              <span className="text-xs text-muted-foreground">Ordered by creation</span>
+            </div>
+            {query.isPending ? <p role="status" className="text-sm text-muted-foreground">Loading statuses...</p> : query.isError ? (
+              <Alert variant="destructive"><AlertTitle>Could not load statuses</AlertTitle><AlertDescription>{query.error.message}</AlertDescription></Alert>
+            ) : statuses.length ? (
+              <ol className="space-y-2">
+                {statuses.map((status, index) => (
+                  <li key={status.id} className="flex items-center gap-3 rounded-lg border px-3 py-2.5">
+                    <span className="w-7 shrink-0 font-mono text-xs text-muted-foreground">{String(index + 1).padStart(2, "0")}</span>
+                    <div className="min-w-0 flex-1">
+                      <p className={`text-sm font-medium ${!status.isActive ? "text-muted-foreground line-through" : ""}`}>{status.name}</p>
+                      {status.description && <p className="mt-0.5 text-xs text-muted-foreground">{status.description}</p>}
+                    </div>
+                    {status.isTerminal && <Badge variant="secondary">Final</Badge>}
+                    <Switch checked={status.isActive} disabled={update.isPending} onCheckedChange={(checked) => void toggleStatus(status.id, checked)} aria-label={`${status.isActive ? "Deactivate" : "Activate"} ${status.name}`} />
+                  </li>
+                ))}
+              </ol>
+            ) : (
+              <p className="rounded-lg border border-dashed px-4 py-6 text-center text-sm text-muted-foreground">No statuses for this request type yet.</p>
+            )}
+            <p className="text-xs text-muted-foreground">Deactivated statuses stay in existing tracking history but can’t be selected for new updates.</p>
+          </section>
+        </div>
+      </DialogContent>
+    </Dialog>
   );
 }
