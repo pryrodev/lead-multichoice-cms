@@ -2,6 +2,16 @@ export type ClientRequestStatus = "submitted" | "in_review" | "accepted" | "decl
 export type EngagementStage = "connect" | "introductions" | "bidding" | "procurement" | "delivery";
 export type ClientRequestType = "buyer_request" | "supplier_offer" | "partnership" | "buying" | "selling" | "sourcing" | "bidding" | "shipping" | "market_access" | "other";
 
+export interface TrackingStatus {
+  id: string;
+  requestType: ClientRequestType;
+  name: string;
+  description: string;
+  sortOrder: number;
+  isActive: boolean;
+  isTerminal: boolean;
+}
+
 export interface ClientRequest {
   id: string;
   reference: string;
@@ -57,14 +67,17 @@ export interface ClientOverview {
 export interface PublicRequestTracking {
   reference: string;
   title: string;
+  requestType: ClientRequestType;
   status: ClientRequestStatus;
   createdAt: string;
   updatedAt: string;
   engagement: {
     stage: EngagementStage;
     status: "active" | "on_hold" | "completed" | "cancelled";
+    currentTrackingStatusId: string | null;
+    trackingStatuses: TrackingStatus[];
     milestones: { title: string; dueDate: string | null; isComplete: boolean }[];
-    updates: { title: string; message: string; createdAt: string }[];
+    updates: { title: string; message: string; createdAt: string; trackingStatus: Pick<TrackingStatus, "id" | "name" | "description" | "sortOrder"> | null }[];
   } | null;
 }
 
@@ -77,6 +90,8 @@ export interface NewClientRequest {
 }
 
 export interface AdminClientRequest extends Omit<ClientRequest, "nextActionDue" | "nextAction"> {
+  currentTrackingStatusId: string | null;
+  currentTrackingStatusName: string | null;
   clientId: string | null;
   clientName: string;
   clientEmail: string | null;
@@ -96,7 +111,11 @@ export interface CreateAdminClientRequest {
   targetMarket: string;
   details: string;
   stage: EngagementStage;
+  trackingStatusId: string;
   nextAction: string;
   updateTitle: string;
   updateMessage: string;
 }
+
+export type CreateTrackingStatus = Pick<TrackingStatus, "requestType" | "name" | "description" | "isTerminal">;
+export type UpdateTrackingStatus = Pick<TrackingStatus, "id"> & Partial<Pick<TrackingStatus, "name" | "description" | "sortOrder" | "isActive" | "isTerminal">>;

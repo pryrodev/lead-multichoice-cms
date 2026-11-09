@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useEffect, useMemo, useState, type FormEvent } from "react";
 import { toast } from "sonner";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
@@ -18,12 +18,14 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { Textarea } from "@/components/ui/textarea";
 import { AdminRequestCreateDialog } from "@/components/client-portal/admin-request-create-dialog";
+import { TrackingStatusManager } from "@/components/client-portal/tracking-status-manager";
 import {
   useAdminClientRequests,
   useCreateEngagement,
   usePostEngagementUpdate,
 } from "@/features/client-portal/hooks";
-import type { EngagementStage } from "@/features/client-portal/types";
+import { useTrackingStatuses } from "@/features/client-portal/tracking-statuses-hooks";
+import type { ClientRequestType, EngagementStage } from "@/features/client-portal/types";
 
 const stages: Array<[EngagementStage, string]> = [
   ["connect", "Request review & identification"],
@@ -37,10 +39,14 @@ function RequestActions({
   requestId,
   engagementId,
   initialStage,
+  requestType,
+  initialTrackingStatusId,
 }: {
   requestId: string;
   engagementId: string | null;
   initialStage: EngagementStage | null;
+  requestType: ClientRequestType;
+  initialTrackingStatusId: string | null;
 }) {
   const create = useCreateEngagement();
   const post = usePostEngagementUpdate();
@@ -48,6 +54,18 @@ function RequestActions({
   const [nextAction, setNextAction] = useState("");
   const [title, setTitle] = useState("");
   const [message, setMessage] = useState("");
+  const [trackingStatusId, setTrackingStatusId] = useState(initialTrackingStatusId ?? "");
+  const trackingStatuses = useTrackingStatuses();
+  const availableStatuses = useMemo(
+    () => trackingStatuses.data?.filter((status) => status.requestType === requestType && status.isActive) ?? [],
+    [requestType, trackingStatuses.data],
+  );
+
+  useEffect(() => {
+    if (!availableStatuses.some((status) => status.id === trackingStatusId)) {
+      setTrackingStatusId(availableStatuses[0]?.id ?? "");
+    }
+  }, [availableStatuses, trackingStatusId]);
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -56,6 +74,7 @@ function RequestActions({
         const result = await create.mutateAsync({
           requestId,
           stage,
+          trackingStatusId,
           nextAction,
           updateTitle: title,
           updateMessage: message,
@@ -65,6 +84,7 @@ function RequestActions({
         await post.mutateAsync({
           engagementId,
           stage,
+          trackingStatusId,
           ...(nextAction ? { nextAction } : {}),
           title,
           message,
@@ -104,6 +124,16 @@ function RequestActions({
           </Select>
         </div>
         <div className="flex flex-col gap-2">
+          <Label htmlFor={`tracking-status-${requestId}`}>Client-visible status</Label>
+          <Select value={trackingStatusId} onValueChange={setTrackingStatusId} disabled={!availableStatuses.length}>
+            <SelectTrigger id={`tracking-status-${requestId}`}>
+              <SelectValue placeholder={trackingStatuses.isPending ? "Loading statuses..." : "No active statuses"} />
+            </SelectTrigger>
+            <SelectContent>{availableStatuses.map((status) => <SelectItem key={status.id} value={status.id}>{status.name}</SelectItem>)}</SelectContent>
+          </Select>
+          {!availableStatuses.length && <p className="text-xs text-muted-foreground">An admin must add an active status for this request type.</p>}
+        </div>
+        <div className="flex flex-col gap-2">
           <Label htmlFor={`next-${requestId}`}>
             Next action <span className="font-normal text-muted-foreground">(optional)</span>
           </Label>
@@ -141,7 +171,7 @@ function RequestActions({
           placeholder="Explain the progress and any action required from the client."
         />
       </div>
-      <Button type="submit" className="w-fit" disabled={create.isPending || post.isPending}>
+      <Button type="submit" className="w-fit" disabled={create.isPending || post.isPending || !trackingStatusId}>
         {create.isPending || post.isPending
           ? "Saving…"
           : engagementId
@@ -152,7 +182,7 @@ function RequestActions({
   );
 }
 
-export function AdminClientRequests() {
+export function AdminClientRequests({ canManageStatuses = false }: { canManageStatuses?: boolean }) {
   const query = useAdminClientRequests();
   if (query.isPending)
     return (
@@ -184,6 +214,7 @@ export function AdminClientRequests() {
         </div>
         <AdminRequestCreateDialog />
       </div>
+      <TrackingStatusManager canManage={canManageStatuses} />
       {requests.length === 0 ? (
         <Card>
           <CardContent className="py-12 text-center">
@@ -211,7 +242,7 @@ export function AdminClientRequests() {
               </div>
               <Badge variant={request.engagementId ? "default" : "secondary"}>
                 {request.engagementReference
-                  ? `${request.engagementReference} · ${request.engagementStage}`
+                  ? `${request.currentTrackingStatusName ?? request.engagementStage ?? "Engagement active"}`
                   : request.status.replaceAll("_", " ")}
               </Badge>
             </CardHeader>
@@ -252,6 +283,8 @@ export function AdminClientRequests() {
                 requestId={request.id}
                 engagementId={request.engagementId}
                 initialStage={request.engagementStage}
+                requestType={request.requestType}
+                initialTrackingStatusId={request.currentTrackingStatusId}
               />
             </CardContent>
           </Card>

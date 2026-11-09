@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useEffect, useMemo, useState, type FormEvent } from "react";
 import { Plus } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -10,6 +10,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { useCreateAdminClientRequest } from "@/features/client-portal/hooks";
+import { useTrackingStatuses } from "@/features/client-portal/tracking-statuses-hooks";
 import type { ClientRequestType, CreateAdminClientRequest, EngagementStage } from "@/features/client-portal/types";
 
 const requestTypes: Array<[ClientRequestType, string]> = [
@@ -35,7 +36,19 @@ export function AdminRequestCreateDialog() {
   const [open, setOpen] = useState(false);
   const [requestType, setRequestType] = useState<ClientRequestType>("other");
   const [stage, setStage] = useState<EngagementStage>("connect");
+  const [trackingStatusId, setTrackingStatusId] = useState("");
   const create = useCreateAdminClientRequest();
+  const statuses = useTrackingStatuses();
+  const availableStatuses = useMemo(
+    () => statuses.data?.filter((status) => status.requestType === requestType && status.isActive) ?? [],
+    [requestType, statuses.data],
+  );
+
+  useEffect(() => {
+    if (!availableStatuses.some((status) => status.id === trackingStatusId)) {
+      setTrackingStatusId(availableStatuses[0]?.id ?? "");
+    }
+  }, [availableStatuses, trackingStatusId]);
 
   function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -52,6 +65,7 @@ export function AdminRequestCreateDialog() {
       targetMarket: String(values.get("targetMarket") ?? "Rwanda"),
       details: String(values.get("details") ?? ""),
       stage,
+      trackingStatusId,
       nextAction: String(values.get("nextAction") ?? ""),
       updateTitle: String(values.get("updateTitle") ?? ""),
       updateMessage: String(values.get("updateMessage") ?? ""),
@@ -66,6 +80,7 @@ export function AdminRequestCreateDialog() {
         form.reset();
         setRequestType("other");
         setStage("connect");
+        setTrackingStatusId("");
         setOpen(false);
       },
       onError: (error) => toast.error("Could not create client request", { description: error.message }),
@@ -116,6 +131,14 @@ export function AdminRequestCreateDialog() {
                 <SelectContent>{stages.map(([value, label]) => <SelectItem key={value} value={value}>{label}</SelectItem>)}</SelectContent>
               </Select>
             </div>
+            <div className="flex flex-col gap-2">
+              <Label htmlFor="guest-request-tracking-status">Starting client status</Label>
+              <Select value={trackingStatusId} onValueChange={setTrackingStatusId} disabled={!availableStatuses.length}>
+                <SelectTrigger id="guest-request-tracking-status"><SelectValue placeholder={statuses.isPending ? "Loading statuses..." : "Create a status first"} /></SelectTrigger>
+                <SelectContent>{availableStatuses.map((status) => <SelectItem key={status.id} value={status.id}>{status.name}</SelectItem>)}</SelectContent>
+              </Select>
+              {!availableStatuses.length && <p className="text-xs text-muted-foreground">An admin must create an active status for this request type before it can be tracked.</p>}
+            </div>
             <Field name="nextAction" label="Next team action (optional)" placeholder="What happens next?" />
           </div>
 
@@ -130,7 +153,7 @@ export function AdminRequestCreateDialog() {
 
           <DialogFooter>
             <Button type="button" variant="outline" onClick={() => setOpen(false)} disabled={create.isPending}>Cancel</Button>
-            <Button type="submit" disabled={create.isPending}>{create.isPending ? "Creating…" : "Create and generate Tracking ID"}</Button>
+            <Button type="submit" disabled={create.isPending || !trackingStatusId}>{create.isPending ? "Creating…" : "Create and generate Tracking ID"}</Button>
           </DialogFooter>
         </form>
       </DialogContent>

@@ -15,6 +15,7 @@ const createSchema = z.object({
   targetMarket: z.string().trim().min(2).max(160).default("Rwanda"),
   details: z.string().trim().min(20).max(8000),
   stage: z.enum(["connect", "introductions", "bidding", "procurement", "delivery"]).default("connect"),
+  trackingStatusId: z.string().length(32),
   nextAction: z.string().trim().max(500).optional().default(""),
   updateTitle: z.string().trim().min(3).max(220),
   updateMessage: z.string().trim().min(10).max(5000),
@@ -28,7 +29,20 @@ export async function GET() {
     const rows = await getDb().clientRequest.findMany({
       include: {
         submitter: { select: { id: true, name: true, email: true, phone: true, organization: true, role: true } },
-        engagement: { select: { id: true, reference: true, stage: true, status: true } },
+        engagement: {
+          select: {
+            id: true,
+            reference: true,
+            stage: true,
+            status: true,
+            updates: {
+              where: { visibility: "client", trackingStatusId: { not: null } },
+              orderBy: { createdAt: "desc" },
+              take: 1,
+              select: { trackingStatusId: true, trackingStatus: { select: { name: true } } },
+            },
+          },
+        },
       },
       orderBy: { createdAt: "desc" },
     });
@@ -54,6 +68,8 @@ export async function GET() {
         engagementReference: row.engagement?.reference ?? null,
         engagementStage: row.engagement?.stage ?? null,
         engagementStatus: row.engagement?.status ?? null,
+        currentTrackingStatusId: row.engagement?.updates[0]?.trackingStatusId ?? null,
+        currentTrackingStatusName: row.engagement?.updates[0]?.trackingStatus?.name ?? null,
       }));
     return NextResponse.json({ requests });
   } catch (error) {
@@ -74,7 +90,12 @@ export async function POST(request: Request) {
   const requestReference = `LMC-REQ-${randomBytes(12).toString("hex").toUpperCase()}`;
   const engagementReference = `LMC-ENG-${randomBytes(12).toString("hex").toUpperCase()}`;
   try {
-    await getDb().$transaction(async (tx) => {
+    const created = await getDb().$transaction(async (tx) => {
+      const trackingStatus = await tx.trackingStatus.findFirst({
+        where: { id: input.trackingStatusId, requestType: input.requestType, isActive: true },
+        select: { id: true, isTerminal: true },
+      });
+      if (!trackingStatus) return false;
       await tx.clientRequest.create({
         data: {
           id: requestId,
@@ -100,6 +121,7 @@ export async function POST(request: Request) {
           clientUserId: null,
           title: input.title,
           stage: input.stage,
+          status: trackingStatus.isTerminal ? "completed" : "active",
           owner: auth.user.name,
           buyer: input.requestType === "buying" || input.requestType === "buyer_request" ? input.organization : "",
           supplier: input.requestType === "selling" || input.requestType === "supplier_offer" ? input.organization : "",
@@ -110,13 +132,16 @@ export async function POST(request: Request) {
               authorUserId: auth.user.id,
               visibility: "client",
               updateType: "progress",
+              trackingStatusId: input.trackingStatusId,
               title: input.updateTitle,
               message: input.updateMessage,
             },
           },
         },
       });
+      return true;
     });
+    if (!created) return NextResponse.json({ error: "Choose an active tracking status for this request type." }, { status: 400 });
     return NextResponse.json({ id: requestId, reference: requestReference, engagementId }, { status: 201 });
   } catch (error) {
     console.error("Admin guest request creation failed", error);

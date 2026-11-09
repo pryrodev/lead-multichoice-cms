@@ -10,6 +10,7 @@ async function findRequest(reference: string) {
     select: {
       reference: true,
       title: true,
+      requestType: true,
       status: true,
       createdAt: true,
       updatedAt: true,
@@ -25,22 +26,42 @@ async function findRequest(reference: string) {
           updates: {
             where: { visibility: "client" },
             orderBy: { createdAt: "desc" },
-            select: { title: true, message: true, createdAt: true },
+            select: {
+              title: true,
+              message: true,
+              createdAt: true,
+              trackingStatus: { select: { id: true, name: true, description: true, sortOrder: true, isTerminal: true } },
+            },
           },
         },
       },
     },
   });
   if (!result) return null;
+  const historicallyUsedStatusIds = result.engagement?.updates
+    .map((update) => update.trackingStatus?.id)
+    .filter((id): id is string => Boolean(id)) ?? [];
+  const trackingStatuses = await getDb().trackingStatus.findMany({
+    where: {
+      requestType: result.requestType,
+      OR: [{ isActive: true }, { id: { in: historicallyUsedStatusIds } }],
+    },
+    orderBy: [{ sortOrder: "asc" }, { createdAt: "asc" }],
+    select: { id: true, requestType: true, name: true, description: true, sortOrder: true, isActive: true, isTerminal: true },
+  });
+  const currentTrackingStatusId = result.engagement?.updates.find((update) => update.trackingStatus)?.trackingStatus?.id ?? null;
   return {
     reference: result.reference,
     title: result.title,
+    requestType: result.requestType,
     status: result.status,
     createdAt: result.createdAt.toISOString(),
     updatedAt: (result.engagement?.updatedAt ?? result.updatedAt).toISOString(),
     engagement: result.engagement ? {
       stage: result.engagement.stage,
       status: result.engagement.status,
+      currentTrackingStatusId,
+      trackingStatuses,
       milestones: result.engagement.milestones.map((milestone) => ({
         title: milestone.title,
         dueDate: milestone.dueDate?.toISOString().slice(0, 10) ?? null,
@@ -50,6 +71,7 @@ async function findRequest(reference: string) {
         title: update.title,
         message: update.message,
         createdAt: update.createdAt.toISOString(),
+        trackingStatus: update.trackingStatus,
       })),
     } : null,
   };

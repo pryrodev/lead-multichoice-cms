@@ -261,6 +261,7 @@ model EngagementUpdate {
   id           String             @id @db.Char(32)
   engagementId String             @map("engagement_id") @db.Char(32)
   authorUserId String?            @map("author_user_id") @db.Char(32)
+  trackingStatusId String?         @map("tracking_status_id") @db.Char(32)
   visibility   UpdateVisibility   @default(client)
   updateType   EngagementUpdateType @default(progress) @map("update_type")
   title        String             @db.VarChar(220)
@@ -268,9 +269,27 @@ model EngagementUpdate {
   createdAt    DateTime           @default(now()) @map("created_at") @db.DateTime(0)
   engagement   Engagement         @relation(fields: [engagementId], references: [id], onDelete: Cascade, map: "fk_updates_engagement")
   author       User?              @relation(fields: [authorUserId], references: [id], onDelete: SetNull, map: "fk_updates_author")
+  trackingStatus TrackingStatus?   @relation(fields: [trackingStatusId], references: [id], onDelete: SetNull, map: "fk_updates_tracking_status")
 
   @@index([engagementId, visibility, createdAt], map: "idx_updates_engagement_visibility_date")
+  @@index([trackingStatusId], map: "idx_updates_tracking_status")
   @@map("engagement_updates")
+}
+
+model TrackingStatus {
+  id          String             @id @db.Char(32)
+  requestType ClientRequestType  @map("request_type")
+  name        String             @db.VarChar(100)
+  description String             @default("") @db.VarChar(500)
+  sortOrder   Int                @default(0) @map("sort_order")
+  isActive    Boolean            @default(true) @map("is_active")
+  isTerminal  Boolean            @default(false) @map("is_terminal")
+  createdAt   DateTime           @default(now()) @map("created_at") @db.DateTime(0)
+  updates     EngagementUpdate[]
+
+  @@unique([requestType, name], map: "uq_tracking_status_type_name")
+  @@index([requestType, isActive, sortOrder], map: "idx_tracking_status_type_active_order")
+  @@map("tracking_statuses")
 }
 
 model Tender {

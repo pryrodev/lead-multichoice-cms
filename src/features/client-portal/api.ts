@@ -31,7 +31,7 @@ export const createAdminClientRequest = (input: CreateAdminClientRequest) =>
     method: "POST",
     body: JSON.stringify(input),
   });
-export const createEngagement = (requestId: string, input: { stage: string; nextAction: string; updateTitle: string; updateMessage: string }) =>
+export const createEngagement = (requestId: string, input: { stage: string; trackingStatusId: string; nextAction: string; updateTitle: string; updateMessage: string }) =>
   requestJson<{ id: string; reference: string }>(`/api/admin/requests/${requestId}/engagement`, { method: "POST", body: JSON.stringify(input) });
-export const postEngagementUpdate = (engagementId: string, input: { title: string; message: string; type: string; stage?: string; nextAction?: string }) =>
+export const postEngagementUpdate = (engagementId: string, input: { title: string; message: string; type: string; stage?: string; trackingStatusId: string; nextAction?: string }) =>
   requestJson<{ ok: boolean }>(`/api/admin/engagements/${engagementId}/updates`, { method: "POST", body: JSON.stringify(input) });

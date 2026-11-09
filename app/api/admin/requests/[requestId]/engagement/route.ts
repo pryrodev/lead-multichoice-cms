@@ -6,6 +6,7 @@ import { getDb } from "@/lib/db";
 
 const schema = z.object({
   stage: z.enum(["connect", "introductions", "bidding", "procurement", "delivery"]).default("connect"),
+  trackingStatusId: z.string().length(32),
   nextAction: z.string().trim().max(500).optional().default(""),
   updateTitle: z.string().trim().min(3).max(220),
   updateMessage: z.string().trim().min(10).max(5000),
@@ -29,6 +30,11 @@ export async function POST(request: Request, context: { params: Promise<{ reques
       if (!clientRequest) return "missing" as const;
       if (clientRequest.engagement) return "exists" as const;
       const organization = clientRequest.organization || clientRequest.submitter?.organization || "";
+      const trackingStatus = await tx.trackingStatus.findFirst({
+        where: { id: parsed.data.trackingStatusId, requestType: clientRequest.requestType, isActive: true },
+        select: { id: true, isTerminal: true },
+      });
+      if (!trackingStatus) return "invalid-status" as const;
 
       await tx.engagement.create({
         data: {
@@ -38,6 +44,7 @@ export async function POST(request: Request, context: { params: Promise<{ reques
           clientUserId: clientRequest.submittedBy,
           title: clientRequest.title,
           stage: parsed.data.stage,
+          status: trackingStatus.isTerminal ? "completed" : "active",
           buyer: clientRequest.submitter?.role === "buyer" || clientRequest.requestType === "buying" || clientRequest.requestType === "buyer_request"
             ? organization
             : "",
@@ -52,6 +59,7 @@ export async function POST(request: Request, context: { params: Promise<{ reques
               authorUserId: auth.user.id,
               visibility: "client",
               updateType: "progress",
+              trackingStatusId: parsed.data.trackingStatusId,
               title: parsed.data.updateTitle,
               message: parsed.data.updateMessage,
             },
@@ -63,6 +71,7 @@ export async function POST(request: Request, context: { params: Promise<{ reques
     });
     if (result === "missing") return NextResponse.json({ error: "Request not found." }, { status: 404 });
     if (result === "exists") return NextResponse.json({ error: "This request already has an engagement." }, { status: 409 });
+    if (result === "invalid-status") return NextResponse.json({ error: "Choose an active tracking status for this request type." }, { status: 400 });
     return NextResponse.json({ id: engagementId, reference }, { status: 201 });
   } catch (error) {
     if (typeof error === "object" && error !== null && "code" in error && error.code === "P2002") {

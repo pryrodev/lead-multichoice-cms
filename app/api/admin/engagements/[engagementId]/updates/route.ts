@@ -7,6 +7,7 @@ import { getDb } from "@/lib/db";
 const schema = z.object({
   title: z.string().trim().min(3).max(220),
   message: z.string().trim().min(10).max(5000),
+  trackingStatusId: z.string().length(32),
   type: z.enum(["progress", "milestone", "document", "decision", "blocker"]).default("progress"),
   stage: z.enum(["connect", "introductions", "bidding", "procurement", "delivery"]).optional(),
   nextAction: z.string().trim().max(500).optional(),
@@ -20,8 +21,13 @@ export async function POST(request: Request, context: { params: Promise<{ engage
   const { engagementId } = await context.params;
   try {
     const created = await getDb().$transaction(async (tx) => {
-      const engagement = await tx.engagement.findUnique({ where: { id: engagementId }, select: { id: true } });
+      const engagement = await tx.engagement.findUnique({ where: { id: engagementId }, select: { id: true, request: { select: { requestType: true } } } });
       if (!engagement) return false;
+      const trackingStatus = await tx.trackingStatus.findFirst({
+        where: { id: parsed.data.trackingStatusId, requestType: engagement.request.requestType, isActive: true },
+        select: { id: true, isTerminal: true },
+      });
+      if (!trackingStatus) return "invalid-status" as const;
       await tx.engagementUpdate.create({
         data: {
           id: randomBytes(16).toString("hex"),
@@ -29,6 +35,7 @@ export async function POST(request: Request, context: { params: Promise<{ engage
           authorUserId: auth.user.id,
           visibility: "client",
           updateType: parsed.data.type,
+          trackingStatusId: parsed.data.trackingStatusId,
           title: parsed.data.title,
           message: parsed.data.message,
         },
@@ -36,11 +43,14 @@ export async function POST(request: Request, context: { params: Promise<{ engage
       const data = {
         ...(parsed.data.stage ? { stage: parsed.data.stage } : {}),
         ...(parsed.data.nextAction !== undefined ? { nextAction: parsed.data.nextAction || null } : {}),
+        status: trackingStatus.isTerminal ? "completed" as const : "active" as const,
+        updatedAt: new Date(),
       };
-      if (Object.keys(data).length) await tx.engagement.update({ where: { id: engagementId }, data });
-      return true;
+      await tx.engagement.update({ where: { id: engagementId }, data });
+      return "created" as const;
     });
-    if (!created) return NextResponse.json({ error: "Engagement not found." }, { status: 404 });
+    if (created === false) return NextResponse.json({ error: "Engagement not found." }, { status: 404 });
+    if (created === "invalid-status") return NextResponse.json({ error: "Choose an active tracking status for this request type." }, { status: 400 });
     return NextResponse.json({ ok: true }, { status: 201 });
   } catch (error) {
     console.error("Engagement update failed", error);
