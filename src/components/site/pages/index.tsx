@@ -203,7 +203,6 @@ export default function Home({ contentOverride, initialContent }: { contentOverr
                 0{index + 1}
               </p>
               <h3 className="mt-3 text-[20px] group-hover:text-corporate">{cmsText(service.title)}</h3>
-              <p className="mt-2 text-[14.5px] text-muted-foreground">{cmsText(service.summary)}</p>
             </Link>
           ))}
         </div>

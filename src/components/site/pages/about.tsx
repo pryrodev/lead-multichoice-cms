@@ -3,7 +3,6 @@
 const truck = "/site/truck.jpg";
 import { values } from "@/content/services";
 import { CallToActionSection, PageHero, SectionHeading } from "@/components/site/ui";
-import { ProcessTimeline } from "@/components/site/sections";
 import { PhotoScrollSection } from "@/components/site/PhotoScrollSection";
 import { useI18n } from "@/i18n/I18nProvider";
 
@@ -24,19 +23,11 @@ export default function About() {
       <section className="container-site py-12 md:py-16">
         <SectionHeading
           eyebrow={t("about.companyOverview")}
-          title={t("nav.about")}
+          title={tc("Registered in Rwanda since 2015")}
         />
-        <div className="mt-8 grid gap-x-14 gap-y-6 text-justify text-charcoal md:grid-cols-2 md:gap-y-8">
-          <div className="space-y-5 leading-relaxed">
-            <p><strong className="font-semibold">{tc("Lead Multichoice")}</strong> {tc("is a private limited company registered in 2015 with the Rwanda Development Board (RDB). Our headquarters are in Remera, Kigali, Rwanda.")}</p>
-            <p>{tc("We specialize in trade facilitation and business representation, connecting international manufacturers, authorized distributors and suppliers with purchasing entities, institutions and commercial organizations in Rwanda and the wider East African region.")}</p>
-          </div>
-          <div className="space-y-5 leading-relaxed">
-            <p>{tc("We identify business opportunities, facilitate introductions, coordinate communication, support procurement processes and help parties navigate local operating requirements. Our team provides a coordinated local point of contact from market intelligence and opportunity identification through procurement coordination, regulatory liaison, delivery monitoring and post-delivery support.")}</p>
-            <p>{tc("Our agency model is built on transparency and clearly defined responsibilities. Buyers and sellers enter into their own commercial agreements and manage their contractual and payment obligations directly, unless otherwise agreed. We support the relationship through coordination, communication, follow-up and operational assistance within the agreed scope of engagement.")}</p>
-          </div>
-          <p className="border-l-2 border-primary bg-primary/5 px-5 py-4 font-medium leading-relaxed md:col-span-2 md:px-6">{tc("Our objective is to build trusted business relationships, simplify cross-border trade, and support efficient, compliant and reliable delivery of goods and services.")}</p>
-        </div>
+        <p className="mt-6 max-w-3xl leading-relaxed text-muted-foreground">
+          {tc("LEAD MULTICHOICE is a private limited company registered with the Rwanda Development Board and headquartered in Remera, Kigali.")}
+        </p>
       </section>
       <PhotoScrollSection image="/site/meeting.jpg" visualKey="about.mission" overlayClassName="bg-brand-primary/50" className="py-12 text-background md:py-16">
         <div className="container-site grid gap-12 md:grid-cols-2 md:gap-16">
@@ -71,20 +62,6 @@ export default function About() {
           ))}
         </ol>
       </section>
-      <PhotoScrollSection image="/site/warehouse.jpg" visualKey="about.agency" overlayClassName="bg-brand-white/88" className="bg-warm py-12 md:py-16">
-        <div className="container-site">
-          <SectionHeading
-            eyebrow={t("about.agencyModel")}
-            title={tc("Five stages from first contact to lasting relationship.")}
-          />
-          <div className="mt-16">
-            <ProcessTimeline />
-          </div>
-          <p className="mt-14 max-w-3xl border-l-2 border-brass pl-5 text-charcoal">
-            {tc("Contracts and payments stay between buyer and seller. We coordinate around them.")}
-          </p>
-        </div>
-      </PhotoScrollSection>
       <CallToActionSection visualKey="about.cta" />
     </>
   );

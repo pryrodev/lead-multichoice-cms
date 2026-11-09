@@ -1470,6 +1470,25 @@ Object.assign(sw, {
   "Coordinate procurement, logistics, delivery and in-country ground handling.": "Ratibu ununuzi, usafirishaji, uwasilishaji na ushughulikiaji wa ardhini nchini.",
 });
 
+Object.assign(rw, {
+  "Registered in Rwanda since 2015": "Yanditswe mu Rwanda mu 2015",
+  "LEAD MULTICHOICE is a private limited company registered with the Rwanda Development Board and headquartered in Remera, Kigali.": "LEAD MULTICHOICE ni ikigo cyigenga gifite uburyozwe bugarukira ku migabane, cyanditswe mu Rwego rw'Igihugu rw'Iterambere kandi gifite icyicaro i Remera, Kigali.",
+  "Independent commercial relationships.": "Imikoranire y'ubucuruzi yigenga.",
+  "Buyers and suppliers manage their own contracts and payments; we coordinate the agreed work between them.": "Abaguzi n'abatanga ibicuruzwa bacunga amasezerano n'ubwishyu byabo; twe tugahuza ibikorwa bumvikanyeho.",
+});
+Object.assign(fr, {
+  "Registered in Rwanda since 2015": "Enregistrée au Rwanda depuis 2015",
+  "LEAD MULTICHOICE is a private limited company registered with the Rwanda Development Board and headquartered in Remera, Kigali.": "LEAD MULTICHOICE est une société privée à responsabilité limitée, enregistrée auprès du Rwanda Development Board et basée à Remera, Kigali.",
+  "Independent commercial relationships.": "Des relations commerciales indépendantes.",
+  "Buyers and suppliers manage their own contracts and payments; we coordinate the agreed work between them.": "Les acheteurs et fournisseurs gèrent leurs propres contrats et paiements ; nous coordonnons les activités convenues entre eux.",
+});
+Object.assign(sw, {
+  "Registered in Rwanda since 2015": "Imesajiliwa Rwanda tangu 2015",
+  "LEAD MULTICHOICE is a private limited company registered with the Rwanda Development Board and headquartered in Remera, Kigali.": "LEAD MULTICHOICE ni kampuni binafsi yenye dhima ndogo iliyosajiliwa katika Bodi ya Maendeleo ya Rwanda na yenye makao yake Remera, Kigali.",
+  "Independent commercial relationships.": "Mahusiano huru ya kibiashara.",
+  "Buyers and suppliers manage their own contracts and payments; we coordinate the agreed work between them.": "Wanunuzi na wasambazaji husimamia mikataba na malipo yao; sisi huratibu kazi iliyokubaliwa kati yao.",
+});
+
 const copy: Partial<Record<Language, Record<string, string>>> = { rw, fr, sw };
 export const siteCopySourceTexts = [...new Set([...Object.keys(rw), ...Object.keys(fr), ...Object.keys(sw)])];
 const siteCopyAliases: Record<string, string> = {

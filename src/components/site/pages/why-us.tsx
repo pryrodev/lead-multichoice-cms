@@ -2,7 +2,6 @@
 
 const meeting = "/site/meeting.jpg";
 import { CallToActionSection, PageHero, SectionHeading } from "@/components/site/ui";
-import { ProcessTimeline } from "@/components/site/sections";
 import { PhotoScrollSection } from "@/components/site/PhotoScrollSection";
 import { useI18n } from "@/i18n/I18nProvider";
 
@@ -21,10 +20,6 @@ const points = [
   {
     title: "Regulatory awareness and appropriate liaison",
     text: "We know the rules and the right channels.",
-  },
-  {
-    title: "Integrated operational support",
-    text: "One contact for procurement, logistics and after-sales.",
   },
   {
     title: "Clear responsibilities and documented follow-up",
@@ -64,12 +59,9 @@ export default function WhyUs() {
           <SectionHeading
             inverted
             eyebrow={t("about.agencyModel")}
-            title={tc("Coordinating the transaction, not duplicating it.")}
-            intro={tc("You keep your contracts. We connect the parties and keep things moving.")}
+            title={tc("Independent commercial relationships.")}
+            intro={tc("Buyers and suppliers manage their own contracts and payments; we coordinate the agreed work between them.")}
           />
-          <div className="mt-16">
-            <ProcessTimeline inverted />
-          </div>
         </div>
       </PhotoScrollSection>
       <CallToActionSection visualKey="why.cta" />
