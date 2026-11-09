@@ -161,18 +161,11 @@ function RequestDetails({ request }: { request: AdminClientRequest }) {
 
 function RequestProgressBadge({ request }: { request: AdminClientRequest }) {
   const isComplete = request.engagementStatus === "completed";
-  const isActive = Boolean(request.engagementId);
   const label = request.currentTrackingStatusName ?? request.engagementStage ?? request.status.replaceAll("_", " ");
-  const tone = isComplete
-    ? "border-brand-gold/40 bg-brand-gold/20 text-foreground"
-    : isActive
-      ? "border-brand-primary/20 bg-brand-primary/10 text-primary"
-      : "border-border bg-muted/70 text-muted-foreground";
 
   return (
-    <span className={`inline-flex max-w-44 items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-semibold leading-tight ${tone}`}>
-      <span className={`size-1.5 shrink-0 rounded-full ${isComplete ? "bg-brand-gold" : isActive ? "bg-brand-primary" : "bg-muted-foreground/60"}`} aria-hidden="true" />
-      <span className="line-clamp-2">{label}</span>
+    <span title={label} className={`inline-flex max-w-36 items-center rounded-md border px-2 py-1 text-xs font-medium ${isComplete ? "border-border bg-muted/60 text-foreground" : "border-border bg-background text-muted-foreground"}`}>
+      <span className="truncate whitespace-nowrap">{label}</span>
     </span>
   );
 }
@@ -207,26 +200,26 @@ export function AdminClientRequests({ canManageStatuses = false }: { canManageSt
     {
       id: "reference",
       header: "Tracking ID",
-      className: "min-w-36",
-      cell: (request) => <span className="inline-flex max-w-40 break-all rounded-md border border-brand-primary/15 bg-brand-primary/[0.055] px-2 py-1 font-mono text-[0.68rem] font-semibold leading-relaxed text-primary">{request.reference}</span>,
+      className: "min-w-48 whitespace-nowrap",
+      cell: (request) => <span title={request.reference} className="font-mono text-[0.68rem] font-medium text-primary">{request.reference}</span>,
     },
     {
       id: "request",
       header: "Request",
       className: "min-w-56",
-      cell: (request) => <div className="max-w-sm"><p className="font-medium text-foreground">{request.title}</p><p className="mt-0.5 text-xs text-muted-foreground">{request.category} · {request.targetMarket}</p></div>,
+      cell: (request) => <div className="max-w-sm"><p className="font-medium leading-snug text-foreground">{request.title}</p><p className="mt-0.5 text-xs text-muted-foreground">{request.category} · {request.targetMarket}</p></div>,
     },
     {
       id: "client",
       header: "Client",
-      className: "min-w-44",
+      className: "min-w-40",
       cell: (request) => <div><p className="font-medium">{request.clientName}</p><p className="mt-0.5 text-xs text-muted-foreground">{request.organization || (request.clientId ? "Client account" : "Guest client")}</p></div>,
     },
     {
       id: "type",
       header: "Type",
       className: "min-w-28",
-      cell: (request) => <span className="inline-flex rounded-full border border-brand-gold/30 bg-brand-gold/10 px-2.5 py-1 text-xs font-medium capitalize text-foreground">{request.requestType.replaceAll("_", " ")}</span>,
+      cell: (request) => <span className="text-sm capitalize text-muted-foreground">{request.requestType.replaceAll("_", " ")}</span>,
     },
     {
       id: "progress",
@@ -243,7 +236,7 @@ export function AdminClientRequests({ canManageStatuses = false }: { canManageSt
     {
       id: "actions",
       header: <span className="sr-only">Actions</span>,
-      className: "min-w-44 text-right",
+      className: "min-w-40 text-right",
       cell: (request) => (
         <div className="flex items-center justify-end gap-1">
           <RequestDetails request={request} />
@@ -280,11 +273,11 @@ export function AdminClientRequests({ canManageStatuses = false }: { canManageSt
         toolbar={(
           <>
             <Select value={requestTypeFilter} onValueChange={(value: ClientRequestType | "all") => setRequestTypeFilter(value)}>
-              <SelectTrigger className="w-[170px] border-brand-primary/15 bg-brand-white/90 shadow-sm shadow-brand-primary/5" aria-label="Filter by request type"><SelectValue /></SelectTrigger>
+              <SelectTrigger className="w-[170px] bg-background" aria-label="Filter by request type"><SelectValue /></SelectTrigger>
               <SelectContent>{requestTypes.map(([value, label]) => <SelectItem key={value} value={value}>{label}</SelectItem>)}</SelectContent>
             </Select>
             <Select value={trackingFilter} onValueChange={setTrackingFilter}>
-              <SelectTrigger className="w-[160px] border-brand-primary/15 bg-brand-white/90 shadow-sm shadow-brand-primary/5" aria-label="Filter by tracking status"><SelectValue /></SelectTrigger>
+              <SelectTrigger className="w-[160px] bg-background" aria-label="Filter by tracking status"><SelectValue /></SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">All progress</SelectItem>
                 <SelectItem value="active">Tracking active</SelectItem>

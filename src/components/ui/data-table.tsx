@@ -60,12 +60,11 @@ export function DataTable<TRow>({
   }, [resetKey]);
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-brand-primary/15 bg-card shadow-sm shadow-brand-primary/5">
-      <div className="relative border-b border-brand-primary/10 bg-[linear-gradient(115deg,color-mix(in_oklab,var(--brand-primary)_7%,var(--brand-white)),var(--brand-white)_54%,color-mix(in_oklab,var(--brand-gold)_8%,var(--brand-white)))] p-4">
-        <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,color-mix(in_oklab,var(--brand-primary)_24%,transparent)_1px,transparent_0)] [background-size:18px_18px] opacity-25" />
-        <div className="relative flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+    <div className="overflow-hidden rounded-xl border bg-card">
+      <div className="border-b bg-muted/20 p-4">
+        <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
           <div className="relative w-full md:max-w-sm">
-            <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-brand-primary/75" />
+            <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
             <Input
               value={search}
               onChange={(event) => {
@@ -73,14 +72,14 @@ export function DataTable<TRow>({
                 setPageIndex(0);
               }}
               placeholder={searchPlaceholder}
-              className="border-brand-primary/15 bg-brand-white/90 pl-9 shadow-sm shadow-brand-primary/5 placeholder:text-muted-foreground/80 focus-visible:border-brand-primary/40"
+              className="bg-background pl-9"
               aria-label={searchPlaceholder}
             />
           </div>
           <div className="flex flex-wrap items-center gap-2">
             {toolbar}
             <Select value={String(pageSize)} onValueChange={(value) => { setPageSize(Number(value)); setPageIndex(0); }}>
-              <SelectTrigger className="w-[138px] border-brand-primary/15 bg-brand-white/90 shadow-sm shadow-brand-primary/5" aria-label="Rows per page"><SelectValue /></SelectTrigger>
+              <SelectTrigger className="w-[138px] bg-background" aria-label="Rows per page"><SelectValue /></SelectTrigger>
               <SelectContent>{pageSizeOptions.map((size) => <SelectItem key={size} value={String(size)}>{size} per page</SelectItem>)}</SelectContent>
             </Select>
           </div>
@@ -89,14 +88,14 @@ export function DataTable<TRow>({
 
       <div className="w-full overflow-x-auto">
         <Table>
-          <TableHeader className="border-b border-brand-primary/15 bg-brand-primary/[0.045] text-brand-primary/85 [&_th]:h-11 [&_th]:text-[0.7rem] [&_th]:font-semibold [&_th]:uppercase [&_th]:tracking-[0.08em]">
+          <TableHeader className="bg-muted/40 [&_th]:h-11 [&_th]:text-xs [&_th]:font-semibold [&_th]:text-muted-foreground">
             <TableRow className="hover:bg-transparent">
               {columns.map((column) => <TableHead key={column.id} className={column.className}>{column.header}</TableHead>)}
             </TableRow>
           </TableHeader>
-          <TableBody className="[&_tr]:border-brand-primary/10 [&_tr:nth-child(even)]:bg-brand-primary/[0.022] [&_tr:hover]:bg-brand-primary/[0.065] [&_td]:py-3">
+          <TableBody className="[&_td]:py-3">
             {pageRows.length ? pageRows.map((row) => (
-              <TableRow key={getRowId(row)}>
+              <TableRow key={getRowId(row)} className="border-border/70 hover:bg-muted/30">
                 {columns.map((column) => <TableCell key={column.id} className={column.className}>{column.cell(row)}</TableCell>)}
               </TableRow>
             )) : (
@@ -108,7 +107,7 @@ export function DataTable<TRow>({
         </Table>
       </div>
 
-      <div className="flex flex-col gap-3 border-t border-brand-primary/10 bg-brand-primary/[0.025] px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
+      <div className="flex flex-col gap-3 border-t bg-background px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-sm text-muted-foreground" aria-live="polite">Showing <span className="font-medium text-foreground">{rangeStart}–{rangeEnd}</span> of <span className="font-medium text-foreground">{filteredRows.length}</span> records</p>
         <nav aria-label="Table pagination" className="flex items-center gap-2 self-end sm:self-auto">
           <Button type="button" variant="outline" size="sm" className="gap-1" onClick={() => setPageIndex(currentPage - 1)} disabled={currentPage === 0}>
