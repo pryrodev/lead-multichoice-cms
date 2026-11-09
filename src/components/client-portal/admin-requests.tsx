@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { DataTable, type DataTableColumn } from "@/components/ui/data-table";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -132,23 +133,40 @@ function RequestActions({
 
 function RequestDetails({ request, open, onOpenChange }: { request: AdminClientRequest; open: boolean; onOpenChange: (open: boolean) => void }) {
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-2xl">
-        <DialogHeader>
-          <DialogTitle>{request.title}</DialogTitle>
-          <DialogDescription>{request.reference} · {request.category} · {request.targetMarket}</DialogDescription>
-        </DialogHeader>
-        <dl className="grid gap-x-6 gap-y-4 sm:grid-cols-2">
-          <div><dt className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Client</dt><dd className="mt-1 text-sm font-medium">{request.clientName}</dd></div>
-          <div><dt className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Organization</dt><dd className="mt-1 text-sm">{request.organization || "Not provided"}</dd></div>
-          <div><dt className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Email</dt><dd className="mt-1 break-all text-sm">{request.clientEmail || "Not provided"}</dd></div>
-          <div><dt className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Phone</dt><dd className="mt-1 text-sm">{request.clientPhone || "Not provided"}</dd></div>
-          <div><dt className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Request type</dt><dd className="mt-1 text-sm capitalize">{request.requestType.replaceAll("_", " ")}</dd></div>
-          <div><dt className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Account</dt><dd className="mt-1 text-sm">{request.clientId ? "Linked client account" : "Guest client · Tracking ID shared directly"}</dd></div>
-          <div className="sm:col-span-2"><dt className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Request details</dt><dd className="mt-1 whitespace-pre-wrap text-sm leading-relaxed">{request.details}</dd></div>
-        </dl>
-      </DialogContent>
-    </Dialog>
+    <Sheet open={open} onOpenChange={onOpenChange}>
+      <SheetContent side="right" className="w-full gap-0 overflow-y-auto p-0 sm:max-w-xl">
+        <div className="border-b bg-muted/20 px-6 py-6 pr-14">
+          <SheetHeader className="text-left">
+            <div className="mb-2"><RequestProgressBadge request={request} /></div>
+            <SheetTitle className="text-xl leading-snug">{request.title}</SheetTitle>
+            <SheetDescription>{request.category} · {request.targetMarket}</SheetDescription>
+          </SheetHeader>
+        </div>
+        <div className="space-y-7 px-6 py-6">
+          <section className="space-y-3" aria-labelledby="request-detail-heading">
+            <h3 id="request-detail-heading" className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Request details</h3>
+            <p className="whitespace-pre-wrap text-sm leading-relaxed">{request.details}</p>
+          </section>
+          <section className="space-y-3 border-t pt-5" aria-labelledby="request-client-heading">
+            <h3 id="request-client-heading" className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Client</h3>
+            <dl className="grid gap-x-5 gap-y-4 sm:grid-cols-2">
+              <div><dt className="text-xs text-muted-foreground">Name</dt><dd className="mt-1 text-sm font-medium">{request.clientName}</dd></div>
+              <div><dt className="text-xs text-muted-foreground">Organization</dt><dd className="mt-1 text-sm">{request.organization || "Not provided"}</dd></div>
+              <div><dt className="text-xs text-muted-foreground">Email</dt><dd className="mt-1 break-all text-sm">{request.clientEmail || "Not provided"}</dd></div>
+              <div><dt className="text-xs text-muted-foreground">Phone</dt><dd className="mt-1 text-sm">{request.clientPhone || "Not provided"}</dd></div>
+            </dl>
+          </section>
+          <section className="space-y-3 border-t pt-5" aria-labelledby="request-tracking-heading">
+            <h3 id="request-tracking-heading" className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Tracking</h3>
+            <div className="flex flex-wrap items-center justify-between gap-3 rounded-lg border p-3">
+              <p className="text-xs text-muted-foreground">Tracking ID</p>
+              <TrackingReferenceCell reference={request.reference} />
+            </div>
+            <p className="text-sm text-muted-foreground">{request.clientId ? "Linked to a client account" : "Guest request · the client can follow progress with this Tracking ID"}</p>
+          </section>
+        </div>
+      </SheetContent>
+    </Sheet>
   );
 }
 
@@ -189,11 +207,26 @@ function RequestRowActions({ request }: { request: AdminClientRequest }) {
 }
 
 function RequestProgressBadge({ request }: { request: AdminClientRequest }) {
-  const isComplete = request.engagementStatus === "completed";
   const label = request.currentTrackingStatusName ?? request.engagementStage ?? request.status.replaceAll("_", " ");
+  const palette = [
+    "bg-brand-primary text-brand-white",
+    "bg-brand-gold text-foreground",
+    "bg-emerald-600 text-white",
+    "bg-violet-600 text-white",
+    "bg-cyan-700 text-white",
+    "bg-orange-600 text-white",
+    "bg-indigo-600 text-white",
+    "bg-rose-600 text-white",
+  ];
+  const colorIndex = Array.from(label).reduce((hash, character) => (hash * 31 + character.charCodeAt(0)) >>> 0, 7) % palette.length;
+  const tone = request.engagementStatus === "completed"
+    ? "bg-emerald-600 text-white"
+    : request.engagementStatus === "cancelled" || request.status === "declined"
+      ? "bg-rose-600 text-white"
+      : palette[colorIndex];
 
   return (
-    <span title={label} className={`inline-flex max-w-36 items-center rounded-md border px-2 py-1 text-xs font-medium ${isComplete ? "border-border bg-muted/60 text-foreground" : "border-border bg-background text-muted-foreground"}`}>
+    <span title={label} className={`inline-flex max-w-36 items-center rounded-md px-2 py-1 text-xs font-semibold ${tone}`}>
       <span className="truncate whitespace-nowrap">{label}</span>
     </span>
   );
