@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { ListChecks } from "lucide-react";
+import { ListChecks, Plus } from "lucide-react";
 import { toast } from "sonner";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
@@ -41,9 +41,9 @@ export function TrackingStatusManager({ canManage }: { canManage: boolean }) {
   const update = useUpdateTrackingStatus();
   const [requestType, setRequestType] = useState<ClientRequestType>("buying");
   const [isTerminal, setIsTerminal] = useState(false);
+  const [adding, setAdding] = useState(false);
   const [open, setOpen] = useState(false);
   const statuses = query.data?.filter((status) => status.requestType === requestType) ?? [];
-  const activeCount = query.data?.filter((status) => status.isActive).length ?? 0;
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -58,6 +58,7 @@ export function TrackingStatusManager({ canManage }: { canManage: boolean }) {
       });
       form.reset();
       setIsTerminal(false);
+      setAdding(false);
       toast.success("Tracking status created");
     } catch (error) {
       toast.error("Could not create tracking status", { description: error instanceof Error ? error.message : "Please try again." });
@@ -80,14 +81,13 @@ export function TrackingStatusManager({ canManage }: { canManage: boolean }) {
       <DialogTrigger asChild>
         <Button variant="outline" className="gap-2">
           <ListChecks className="size-4" />
-          Manage tracking statuses
-          <Badge variant="secondary" className="ml-1">{activeCount}</Badge>
+          Manage progress steps
         </Button>
       </DialogTrigger>
       <DialogContent className="max-h-[88vh] overflow-y-auto sm:max-w-2xl">
         <DialogHeader>
-          <DialogTitle className="font-display">Tracking status settings</DialogTitle>
-          <DialogDescription>Set the progress steps available to staff and visible to clients for each request type.</DialogDescription>
+          <DialogTitle className="font-display">Client progress steps</DialogTitle>
+          <DialogDescription>Staff choose a step when posting an update. Clients see the selected step on their Tracking ID page.</DialogDescription>
         </DialogHeader>
 
         <div className="grid gap-5">
@@ -99,27 +99,28 @@ export function TrackingStatusManager({ canManage }: { canManage: boolean }) {
             </Select>
           </div>
 
-          <form onSubmit={(event) => void submit(event)} className="grid gap-4 rounded-xl border bg-muted/20 p-4 sm:grid-cols-2">
-            <div className="grid gap-2">
-              <Label htmlFor="tracking-status-name">Status name</Label>
-              <Input id="tracking-status-name" name="statusName" required minLength={2} maxLength={100} placeholder="e.g. Supplier verification" />
-            </div>
-            <div className="flex items-center justify-between gap-4 rounded-md border bg-background px-3 py-2">
-              <div><Label htmlFor="tracking-status-terminal">Final status</Label><p className="text-xs text-muted-foreground">Selecting it completes the engagement.</p></div>
-              <Switch id="tracking-status-terminal" checked={isTerminal} onCheckedChange={setIsTerminal} />
-            </div>
-            <div className="grid gap-2 sm:col-span-2">
-              <Label htmlFor="tracking-status-description">Client-facing explanation</Label>
-              <Textarea id="tracking-status-description" name="statusDescription" maxLength={500} rows={2} placeholder="Briefly explain what this step means for the client." />
-            </div>
-            <div className="sm:col-span-2"><Button type="submit" disabled={create.isPending}>{create.isPending ? "Adding status..." : "Add status"}</Button></div>
-          </form>
-
           <section aria-label="Statuses for selected request type" className="space-y-3">
             <div className="flex items-center justify-between gap-3">
-              <h3 className="text-sm font-semibold">Progress steps</h3>
-              <span className="text-xs text-muted-foreground">Ordered by creation</span>
+              <div><h3 className="text-sm font-semibold">Progress steps</h3><p className="text-xs text-muted-foreground">Shown in this order on the client tracking page.</p></div>
+              <Button type="button" variant={adding ? "ghost" : "outline"} size="sm" className="shrink-0 gap-1.5" onClick={() => setAdding((current) => !current)}>
+                <Plus className="size-4" /> {adding ? "Cancel" : "Add a step"}
+              </Button>
             </div>
+            {adding && <form onSubmit={(event) => void submit(event)} className="grid gap-4 rounded-lg border bg-muted/20 p-4 sm:grid-cols-2">
+              <div className="grid gap-2">
+                <Label htmlFor="tracking-status-name">Step name</Label>
+                <Input id="tracking-status-name" name="statusName" required minLength={2} maxLength={100} placeholder="e.g. Supplier verification" />
+              </div>
+              <div className="flex items-center justify-between gap-4 rounded-md border bg-background px-3 py-2">
+                <div><Label htmlFor="tracking-status-terminal">Final step</Label><p className="text-xs text-muted-foreground">Selecting this completes the request.</p></div>
+                <Switch id="tracking-status-terminal" checked={isTerminal} onCheckedChange={setIsTerminal} />
+              </div>
+              <div className="grid gap-2 sm:col-span-2">
+                <Label htmlFor="tracking-status-description">Explanation for the client <span className="font-normal text-muted-foreground">(optional)</span></Label>
+                <Textarea id="tracking-status-description" name="statusDescription" maxLength={500} rows={2} placeholder="What does this step mean for the client?" />
+              </div>
+              <div className="sm:col-span-2"><Button type="submit" disabled={create.isPending}>{create.isPending ? "Adding step..." : "Add progress step"}</Button></div>
+            </form>}
             {query.isPending ? <p role="status" className="text-sm text-muted-foreground">Loading statuses...</p> : query.isError ? (
               <Alert variant="destructive"><AlertTitle>Could not load statuses</AlertTitle><AlertDescription>{query.error.message}</AlertDescription></Alert>
             ) : statuses.length ? (
