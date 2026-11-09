@@ -1,13 +1,12 @@
 "use client";
 
 import { useEffect, useMemo, useState, type FormEvent } from "react";
-import { ChevronDown, MessageSquarePlus } from "lucide-react";
+import { Eye, MessageSquarePlus } from "lucide-react";
 import { toast } from "sonner";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { DataTable, type DataTableColumn } from "@/components/ui/data-table";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -18,7 +17,7 @@ import { AdminRequestCreateDialog } from "@/components/client-portal/admin-reque
 import { TrackingStatusManager } from "@/components/client-portal/tracking-status-manager";
 import { useAdminClientRequests, useCreateEngagement, usePostEngagementUpdate } from "@/features/client-portal/hooks";
 import { useTrackingStatuses } from "@/features/client-portal/tracking-statuses-hooks";
-import type { ClientRequestType, EngagementStage } from "@/features/client-portal/types";
+import type { AdminClientRequest, ClientRequestType, EngagementStage } from "@/features/client-portal/types";
 
 function RequestActions({
   requestId,
@@ -92,7 +91,7 @@ function RequestActions({
       <DialogTrigger asChild>
         <Button variant={engagementId ? "outline" : "default"} size="sm" className="gap-2">
           <MessageSquarePlus className="size-4" />
-          {engagementId ? "Post update" : "Start tracking"}
+          {engagementId ? "Update" : "Start tracking"}
         </Button>
       </DialogTrigger>
       <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-xl">
@@ -134,80 +133,150 @@ function RequestActions({
   );
 }
 
+function RequestDetails({ request }: { request: AdminClientRequest }) {
+  return (
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button type="button" variant="ghost" size="sm" className="gap-1.5">
+          <Eye className="size-4" /> Details
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-2xl">
+        <DialogHeader>
+          <DialogTitle>{request.title}</DialogTitle>
+          <DialogDescription>{request.reference} · {request.category} · {request.targetMarket}</DialogDescription>
+        </DialogHeader>
+        <dl className="grid gap-x-6 gap-y-4 sm:grid-cols-2">
+          <div><dt className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Client</dt><dd className="mt-1 text-sm font-medium">{request.clientName}</dd></div>
+          <div><dt className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Organization</dt><dd className="mt-1 text-sm">{request.organization || "Not provided"}</dd></div>
+          <div><dt className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Email</dt><dd className="mt-1 break-all text-sm">{request.clientEmail || "Not provided"}</dd></div>
+          <div><dt className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Phone</dt><dd className="mt-1 text-sm">{request.clientPhone || "Not provided"}</dd></div>
+          <div><dt className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Request type</dt><dd className="mt-1 text-sm capitalize">{request.requestType.replaceAll("_", " ")}</dd></div>
+          <div><dt className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Account</dt><dd className="mt-1 text-sm">{request.clientId ? "Linked client account" : "Guest client · Tracking ID shared directly"}</dd></div>
+          <div className="sm:col-span-2"><dt className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Request details</dt><dd className="mt-1 whitespace-pre-wrap text-sm leading-relaxed">{request.details}</dd></div>
+        </dl>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+const requestTypes: Array<[ClientRequestType | "all", string]> = [
+  ["all", "All request types"],
+  ["buying", "Buying"],
+  ["selling", "Selling"],
+  ["sourcing", "Sourcing"],
+  ["bidding", "Bidding"],
+  ["shipping", "Shipping"],
+  ["market_access", "Market access"],
+  ["partnership", "Partnership"],
+  ["other", "Other"],
+  ["buyer_request", "Buyer request"],
+  ["supplier_offer", "Supplier offer"],
+];
+
 export function AdminClientRequests({ canManageStatuses = false }: { canManageStatuses?: boolean }) {
   const query = useAdminClientRequests();
-  const [openRequestId, setOpenRequestId] = useState<string | null>(null);
+  const [requestTypeFilter, setRequestTypeFilter] = useState<ClientRequestType | "all">("all");
+  const [trackingFilter, setTrackingFilter] = useState("all");
 
-  if (query.isPending)
-    return <div className="flex flex-col gap-4">{[1, 2, 3].map((key) => <Skeleton key={key} className="h-36 rounded-2xl" />)}</div>;
-  if (query.isError)
-    return <Alert variant="destructive"><AlertTitle>Could not load client requests</AlertTitle><AlertDescription>{query.error.message}</AlertDescription></Alert>;
+  const requests = query.data ?? [];
+  const filteredRequests = useMemo(() => requests.filter((request) => {
+    const matchesType = requestTypeFilter === "all" || request.requestType === requestTypeFilter;
+    const matchesTracking = trackingFilter === "all" || (trackingFilter === "active" ? Boolean(request.engagementId) : !request.engagementId);
+    return matchesType && matchesTracking;
+  }), [requests, requestTypeFilter, trackingFilter]);
 
-  const requests = query.data;
+  const columns = useMemo<DataTableColumn<AdminClientRequest>[]>(() => [
+    {
+      id: "reference",
+      header: "Tracking ID",
+      className: "min-w-44",
+      cell: (request) => <span className="font-mono text-xs font-medium text-primary">{request.reference}</span>,
+    },
+    {
+      id: "request",
+      header: "Request",
+      className: "min-w-64",
+      cell: (request) => <div className="max-w-sm"><p className="font-medium text-foreground">{request.title}</p><p className="mt-0.5 text-xs text-muted-foreground">{request.category} · {request.targetMarket}</p></div>,
+    },
+    {
+      id: "client",
+      header: "Client",
+      className: "min-w-48",
+      cell: (request) => <div><p className="font-medium">{request.clientName}</p><p className="mt-0.5 text-xs text-muted-foreground">{request.organization || (request.clientId ? "Client account" : "Guest client")}</p></div>,
+    },
+    {
+      id: "type",
+      header: "Type",
+      className: "min-w-32",
+      cell: (request) => <span className="text-sm capitalize">{request.requestType.replaceAll("_", " ")}</span>,
+    },
+    {
+      id: "progress",
+      header: "Progress",
+      className: "min-w-40",
+      cell: (request) => <Badge variant={request.engagementId ? "default" : "secondary"}>{request.currentTrackingStatusName ?? request.engagementStage ?? request.status.replaceAll("_", " ")}</Badge>,
+    },
+    {
+      id: "submitted",
+      header: "Submitted",
+      className: "min-w-32 whitespace-nowrap",
+      cell: (request) => <time className="text-sm text-muted-foreground">{new Intl.DateTimeFormat("en", { dateStyle: "medium" }).format(new Date(request.createdAt))}</time>,
+    },
+    {
+      id: "actions",
+      header: <span className="sr-only">Actions</span>,
+      className: "min-w-48 text-right",
+      cell: (request) => (
+        <div className="flex items-center justify-end gap-1">
+          <RequestDetails request={request} />
+          <RequestActions
+            key={`${request.id}-${request.engagementId ?? "new"}`}
+            requestId={request.id}
+            engagementId={request.engagementId}
+            initialStage={request.engagementStage}
+            requestType={request.requestType}
+            initialTrackingStatusId={request.currentTrackingStatusId}
+          />
+        </div>
+      ),
+    },
+  ], []);
+
+  if (query.isPending) return <Skeleton className="h-[26rem] rounded-xl" />;
+  if (query.isError) return <Alert variant="destructive"><AlertTitle>Could not load client requests</AlertTitle><AlertDescription>{query.error.message}</AlertDescription></Alert>;
+
   return (
-    <div className="flex flex-col gap-5">
+    <div className="flex flex-col gap-4">
       <div className="flex flex-wrap justify-end gap-2">
         <TrackingStatusManager canManage={canManageStatuses} />
         <AdminRequestCreateDialog />
       </div>
-
-      {requests.length === 0 ? (
-        <Card><CardContent className="py-12 text-center"><p className="font-medium">No client requests yet</p><p className="mt-1 text-sm text-muted-foreground">New submissions will appear here for the team to review.</p></CardContent></Card>
-      ) : requests.map((request) => {
-        const isOpen = openRequestId === request.id;
-        return (
-          <Card key={request.id} className="overflow-hidden">
-            <CardHeader className="flex flex-col gap-3 pb-4 sm:flex-row sm:items-start sm:justify-between">
-              <div className="min-w-0">
-                <p className="font-mono text-xs text-muted-foreground">{request.reference} <span aria-hidden="true">·</span> {new Intl.DateTimeFormat("en", { dateStyle: "medium" }).format(new Date(request.createdAt))}</p>
-                <CardTitle className="mt-1 text-lg">{request.title}</CardTitle>
-                <CardDescription className="mt-1">{request.category} <span aria-hidden="true">·</span> {request.targetMarket}</CardDescription>
-              </div>
-              <div className="flex shrink-0 flex-wrap items-center gap-2">
-                <Badge variant={request.engagementId ? "default" : "secondary"}>
-                  {request.engagementReference ? request.currentTrackingStatusName ?? request.engagementStage ?? "Engagement active" : request.status.replaceAll("_", " ")}
-                </Badge>
-                <RequestActions
-                  key={`${request.id}-${request.engagementId ?? "new"}`}
-                  requestId={request.id}
-                  engagementId={request.engagementId}
-                  initialStage={request.engagementStage}
-                  requestType={request.requestType}
-                  initialTrackingStatusId={request.currentTrackingStatusId}
-                />
-              </div>
-            </CardHeader>
-            <CardContent className="pt-0">
-              <div className="flex flex-wrap items-center justify-between gap-x-5 gap-y-2 border-t pt-3 text-sm">
-                <p className="min-w-0"><span className="font-medium">{request.clientName}</span>{request.organization && <span className="text-muted-foreground"> <span aria-hidden="true">·</span> {request.organization}</span>}</p>
-                <div className="flex items-center gap-3 text-xs text-muted-foreground">
-                  <span className="capitalize">{request.requestType.replaceAll("_", " ")}</span>
-                  <span>{request.clientId ? "Account linked" : "Guest client"}</span>
-                </div>
-                <Collapsible open={isOpen} onOpenChange={(open) => setOpenRequestId(open ? request.id : null)} className="w-full">
-                  <CollapsibleTrigger asChild>
-                    <Button type="button" variant="ghost" size="sm" className="-ml-2 mt-1 h-8 gap-1.5 px-2 text-muted-foreground">
-                      {isOpen ? "Hide request details" : "View request details"}
-                      <ChevronDown className={`size-4 transition-transform ${isOpen ? "rotate-180" : ""}`} />
-                    </Button>
-                  </CollapsibleTrigger>
-                  <CollapsibleContent>
-                    <div className="mt-3 grid gap-4 border-t pt-4 sm:grid-cols-2">
-                      <div className="space-y-1">
-                        <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Client contact</p>
-                        <p className="text-sm">{request.clientEmail || "No email provided"}{request.clientPhone ? ` · ${request.clientPhone}` : ""}</p>
-                        <p className="text-xs text-muted-foreground">{request.clientId ? "Linked client account" : "No account needed; Tracking ID is shared directly"}</p>
-                      </div>
-                      <div className="space-y-1"><p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Request type</p><p className="text-sm capitalize">{request.requestType.replaceAll("_", " ")}</p></div>
-                      <div className="sm:col-span-2"><p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Request details</p><p className="mt-1 whitespace-pre-wrap text-sm leading-relaxed text-muted-foreground">{request.details}</p></div>
-                    </div>
-                  </CollapsibleContent>
-                </Collapsible>
-              </div>
-            </CardContent>
-          </Card>
-        );
-      })}
+      <DataTable
+        data={filteredRequests}
+        columns={columns}
+        getRowId={(request) => request.id}
+        getSearchText={(request) => [request.reference, request.title, request.category, request.targetMarket, request.clientName, request.organization, request.requestType].join(" ")}
+        searchPlaceholder="Search by Tracking ID, request, or client..."
+        resetKey={`${requestTypeFilter}:${trackingFilter}`}
+        emptyMessage={requests.length ? "No requests match these filters." : "No client requests have been submitted yet."}
+        toolbar={(
+          <>
+            <Select value={requestTypeFilter} onValueChange={(value: ClientRequestType | "all") => setRequestTypeFilter(value)}>
+              <SelectTrigger className="w-[170px]" aria-label="Filter by request type"><SelectValue /></SelectTrigger>
+              <SelectContent>{requestTypes.map(([value, label]) => <SelectItem key={value} value={value}>{label}</SelectItem>)}</SelectContent>
+            </Select>
+            <Select value={trackingFilter} onValueChange={setTrackingFilter}>
+              <SelectTrigger className="w-[160px]" aria-label="Filter by tracking status"><SelectValue /></SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All progress</SelectItem>
+                <SelectItem value="active">Tracking active</SelectItem>
+                <SelectItem value="awaiting">Awaiting tracking</SelectItem>
+              </SelectContent>
+            </Select>
+          </>
+        )}
+      />
     </div>
   );
 }
