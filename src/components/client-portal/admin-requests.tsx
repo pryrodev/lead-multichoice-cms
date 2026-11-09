@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState, type FormEvent } from "react";
-import { Eye, MessageSquarePlus, MoreHorizontal } from "lucide-react";
+import { Check, Copy, Eye, MessageSquarePlus, MoreHorizontal } from "lucide-react";
 import { toast } from "sonner";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
@@ -199,6 +199,29 @@ function RequestProgressBadge({ request }: { request: AdminClientRequest }) {
   );
 }
 
+function TrackingReferenceCell({ reference }: { reference: string }) {
+  const [copied, setCopied] = useState(false);
+
+  async function copyReference() {
+    try {
+      await navigator.clipboard.writeText(reference);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 1400);
+    } catch {
+      toast.error("Could not copy the Tracking ID");
+    }
+  }
+
+  return (
+    <div className="flex max-w-44 items-center gap-1.5">
+      <span title={reference} className="min-w-0 truncate whitespace-nowrap font-mono text-xs text-foreground">{reference}</span>
+      <Button type="button" variant="ghost" size="icon" className="size-7 shrink-0 text-muted-foreground" onClick={() => void copyReference()} aria-label={`Copy Tracking ID ${reference}`}>
+        {copied ? <Check className="size-3.5" /> : <Copy className="size-3.5" />}
+      </Button>
+    </div>
+  );
+}
+
 const requestTypes: Array<[ClientRequestType | "all", string]> = [
   ["all", "All request types"],
   ["buying", "Buying"],
@@ -229,8 +252,8 @@ export function AdminClientRequests({ canManageStatuses = false }: { canManageSt
     {
       id: "reference",
       header: "Tracking ID",
-      className: "min-w-48 whitespace-nowrap",
-      cell: (request) => <span title={request.reference} className="font-mono text-[0.68rem] font-medium text-primary">{request.reference}</span>,
+      className: "min-w-44",
+      cell: (request) => <TrackingReferenceCell reference={request.reference} />,
     },
     {
       id: "request",
