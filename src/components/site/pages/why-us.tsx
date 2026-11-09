@@ -59,8 +59,9 @@ export default function WhyUs() {
           <SectionHeading
             inverted
             eyebrow={t("about.agencyModel")}
-            title={tc("Independent commercial relationships.")}
-            intro={tc("Buyers and suppliers manage their own contracts and payments; we coordinate the agreed work between them.")}
+            title={tc("Our agency model is built on transparency and clearly defined responsibilities.")}
+            titleClassName="font-semibold"
+            intro={tc("Where transactions are facilitated through our agency, the buyer and seller enter into their own commercial agreements and manage their contractual and payment obligations directly, unless otherwise agreed. LEAD MULTICHOICE supports the relationship through coordination, communication, follow-up, and operational assistance within the agreed scope of engagement.")}
           />
         </div>
       </PhotoScrollSection>

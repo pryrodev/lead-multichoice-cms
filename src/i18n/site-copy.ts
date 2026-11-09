@@ -1475,18 +1475,24 @@ Object.assign(rw, {
   "LEAD MULTICHOICE is a private limited company registered with the Rwanda Development Board and headquartered in Remera, Kigali.": "LEAD MULTICHOICE ni ikigo cyigenga gifite uburyozwe bugarukira ku migabane, cyanditswe mu Rwego rw'Igihugu rw'Iterambere kandi gifite icyicaro i Remera, Kigali.",
   "Independent commercial relationships.": "Imikoranire y'ubucuruzi yigenga.",
   "Buyers and suppliers manage their own contracts and payments; we coordinate the agreed work between them.": "Abaguzi n'abatanga ibicuruzwa bacunga amasezerano n'ubwishyu byabo; twe tugahuza ibikorwa bumvikanyeho.",
+  "Our agency model is built on transparency and clearly defined responsibilities.": "Uburyo bwacu bwo guhagararira abandi bushingiye ku mucyo no ku nshingano zisobanutse.",
+  "Where transactions are facilitated through our agency, the buyer and seller enter into their own commercial agreements and manage their contractual and payment obligations directly, unless otherwise agreed. LEAD MULTICHOICE supports the relationship through coordination, communication, follow-up, and operational assistance within the agreed scope of engagement.": "Iyo dufashije mu bucuruzi nk'abahagarariye impande, umuguzi n'ugurisha bagirana amasezerano yabo kandi buri ruhande rugacunga inshingano zarwo z'amasezerano n'ubwishyu, keretse bumvikanye ukundi. LEAD MULTICHOICE ishyigikira ubwo bufatanye ihuza ibikorwa, itumanaho, ikurikirana ibyumvikanyweho kandi igatanga ubufasha mu mikorere iri mu nshingano yemeye.",
 });
 Object.assign(fr, {
   "Registered in Rwanda since 2015": "Enregistrée au Rwanda depuis 2015",
   "LEAD MULTICHOICE is a private limited company registered with the Rwanda Development Board and headquartered in Remera, Kigali.": "LEAD MULTICHOICE est une société privée à responsabilité limitée, enregistrée auprès du Rwanda Development Board et basée à Remera, Kigali.",
   "Independent commercial relationships.": "Des relations commerciales indépendantes.",
   "Buyers and suppliers manage their own contracts and payments; we coordinate the agreed work between them.": "Les acheteurs et fournisseurs gèrent leurs propres contrats et paiements ; nous coordonnons les activités convenues entre eux.",
+  "Our agency model is built on transparency and clearly defined responsibilities.": "Notre modèle d'agence repose sur la transparence et des responsabilités clairement définies.",
+  "Where transactions are facilitated through our agency, the buyer and seller enter into their own commercial agreements and manage their contractual and payment obligations directly, unless otherwise agreed. LEAD MULTICHOICE supports the relationship through coordination, communication, follow-up, and operational assistance within the agreed scope of engagement.": "Lorsque nous facilitons une transaction en tant qu'agence, l'acheteur et le vendeur concluent leurs propres accords commerciaux et gèrent directement leurs obligations contractuelles et de paiement, sauf accord contraire. LEAD MULTICHOICE accompagne la relation par la coordination, la communication, le suivi et l'assistance opérationnelle dans le cadre convenu.",
 });
 Object.assign(sw, {
   "Registered in Rwanda since 2015": "Imesajiliwa Rwanda tangu 2015",
   "LEAD MULTICHOICE is a private limited company registered with the Rwanda Development Board and headquartered in Remera, Kigali.": "LEAD MULTICHOICE ni kampuni binafsi yenye dhima ndogo iliyosajiliwa katika Bodi ya Maendeleo ya Rwanda na yenye makao yake Remera, Kigali.",
   "Independent commercial relationships.": "Mahusiano huru ya kibiashara.",
   "Buyers and suppliers manage their own contracts and payments; we coordinate the agreed work between them.": "Wanunuzi na wasambazaji husimamia mikataba na malipo yao; sisi huratibu kazi iliyokubaliwa kati yao.",
+  "Our agency model is built on transparency and clearly defined responsibilities.": "Mfumo wetu wa uwakala unategemea uwazi na majukumu yaliyofafanuliwa wazi.",
+  "Where transactions are facilitated through our agency, the buyer and seller enter into their own commercial agreements and manage their contractual and payment obligations directly, unless otherwise agreed. LEAD MULTICHOICE supports the relationship through coordination, communication, follow-up, and operational assistance within the agreed scope of engagement.": "Tunapowezesha miamala kama wakala, mnunuzi na muuzaji huingia katika makubaliano yao ya kibiashara na kusimamia moja kwa moja wajibu wa mikataba na malipo, isipokuwa wakubaliane vinginevyo. LEAD MULTICHOICE huunga mkono uhusiano huo kwa uratibu, mawasiliano, ufuatiliaji na msaada wa kiutendaji ndani ya wigo uliokubaliwa.",
 });
 
 const copy: Partial<Record<Language, Record<string, string>>> = { rw, fr, sw };
