@@ -1,12 +1,13 @@
 "use client";
 
 import { useEffect, useMemo, useState, type FormEvent } from "react";
-import { Eye, MessageSquarePlus } from "lucide-react";
+import { Eye, MessageSquarePlus, MoreHorizontal } from "lucide-react";
 import { toast } from "sonner";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { DataTable, type DataTableColumn } from "@/components/ui/data-table";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -19,12 +20,16 @@ import { useTrackingStatuses } from "@/features/client-portal/tracking-statuses-
 import type { AdminClientRequest, ClientRequestType, EngagementStage } from "@/features/client-portal/types";
 
 function RequestActions({
+  open,
+  onOpenChange,
   requestId,
   engagementId,
   initialStage,
   requestType,
   initialTrackingStatusId,
 }: {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
   requestId: string;
   engagementId: string | null;
   initialStage: EngagementStage | null;
@@ -37,7 +42,6 @@ function RequestActions({
   const [title, setTitle] = useState("");
   const [message, setMessage] = useState("");
   const [trackingStatusId, setTrackingStatusId] = useState(initialTrackingStatusId ?? "");
-  const [open, setOpen] = useState(false);
   const trackingStatuses = useTrackingStatuses();
   const availableStatuses = useMemo(
     () => trackingStatuses.data?.filter((status) => status.requestType === requestType && status.isActive) ?? [],
@@ -77,7 +81,7 @@ function RequestActions({
       setTitle("");
       setMessage("");
       setNextAction("");
-      setOpen(false);
+      onOpenChange(false);
     } catch (error) {
       toast.error("Could not save this update", {
         description: error instanceof Error ? error.message : "Please try again.",
@@ -86,13 +90,7 @@ function RequestActions({
   }
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button variant={engagementId ? "outline" : "default"} size="sm" className="gap-2">
-          <MessageSquarePlus className="size-4" />
-          {engagementId ? "Update" : "Start tracking"}
-        </Button>
-      </DialogTrigger>
+    <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-xl">
         <DialogHeader>
           <DialogTitle>{engagementId ? "Post a client update" : "Start tracking this request"}</DialogTitle>
@@ -132,14 +130,9 @@ function RequestActions({
   );
 }
 
-function RequestDetails({ request }: { request: AdminClientRequest }) {
+function RequestDetails({ request, open, onOpenChange }: { request: AdminClientRequest; open: boolean; onOpenChange: (open: boolean) => void }) {
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button type="button" variant="ghost" size="sm" className="gap-1.5">
-          <Eye className="size-4" /> Details
-        </Button>
-      </DialogTrigger>
+    <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-2xl">
         <DialogHeader>
           <DialogTitle>{request.title}</DialogTitle>
@@ -156,6 +149,42 @@ function RequestDetails({ request }: { request: AdminClientRequest }) {
         </dl>
       </DialogContent>
     </Dialog>
+  );
+}
+
+function RequestRowActions({ request }: { request: AdminClientRequest }) {
+  const [detailsOpen, setDetailsOpen] = useState(false);
+  const [updateOpen, setUpdateOpen] = useState(false);
+
+  return (
+    <>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button type="button" variant="ghost" size="icon" className="size-9" aria-label={`Actions for ${request.title}`}>
+            <MoreHorizontal className="size-4" />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end" className="w-48">
+          <DropdownMenuItem onSelect={() => setDetailsOpen(true)}>
+            <Eye className="mr-2 size-4" /> View details
+          </DropdownMenuItem>
+          <DropdownMenuItem onSelect={() => setUpdateOpen(true)}>
+            <MessageSquarePlus className="mr-2 size-4" /> {request.engagementId ? "Post update" : "Start tracking"}
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+      <RequestDetails request={request} open={detailsOpen} onOpenChange={setDetailsOpen} />
+      <RequestActions
+        key={`${request.id}-${request.engagementId ?? "new"}`}
+        open={updateOpen}
+        onOpenChange={setUpdateOpen}
+        requestId={request.id}
+        engagementId={request.engagementId}
+        initialStage={request.engagementStage}
+        requestType={request.requestType}
+        initialTrackingStatusId={request.currentTrackingStatusId}
+      />
+    </>
   );
 }
 
@@ -235,21 +264,9 @@ export function AdminClientRequests({ canManageStatuses = false }: { canManageSt
     },
     {
       id: "actions",
-      header: <span className="sr-only">Actions</span>,
-      className: "min-w-40 text-right",
-      cell: (request) => (
-        <div className="flex items-center justify-end gap-1">
-          <RequestDetails request={request} />
-          <RequestActions
-            key={`${request.id}-${request.engagementId ?? "new"}`}
-            requestId={request.id}
-            engagementId={request.engagementId}
-            initialStage={request.engagementStage}
-            requestType={request.requestType}
-            initialTrackingStatusId={request.currentTrackingStatusId}
-          />
-        </div>
-      ),
+      header: "Actions",
+      className: "w-20 text-right",
+      cell: (request) => <div className="flex justify-end"><RequestRowActions request={request} /></div>,
     },
   ], []);
 
