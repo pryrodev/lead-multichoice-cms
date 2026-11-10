@@ -108,22 +108,24 @@ export function HomepageEditor() {
         {sections.map((section) => <TabsTrigger key={section} value={section}>{section}</TabsTrigger>)}
       </TabsList>
       {sections.map((section) => <TabsContent key={section} value={section} className="mt-0">
-        <Card>
-          <CardHeader><CardTitle>{section}</CardTitle><CardDescription>Text is shown on the public homepage in the visitor’s selected language.</CardDescription></CardHeader>
-          <CardContent>
+        <Card className="rounded-md shadow-none">
+          <CardHeader><CardTitle>{section}</CardTitle><CardDescription>Edit the text visitors see in each language.</CardDescription></CardHeader>
+              <CardContent>
             <Tabs defaultValue="en">
               <TabsList className="mb-5">
                 {languageOptions.map(({ code, name }) => <TabsTrigger key={code} value={code}>{languageFlags[code]} {name}</TabsTrigger>)}
               </TabsList>
-              {languageOptions.map(({ code }) => <TabsContent key={code} value={code} className="mt-0">
-                <div className="grid gap-5 md:grid-cols-2">
+                {languageOptions.map(({ code }) => <TabsContent key={code} value={code} className="mt-0">
+                <div className="grid items-start gap-x-5 gap-y-6 md:grid-cols-2">
                   {HOME_CMS_FIELDS.filter((field) => field.section === section).map((field) => {
                     const fieldId = `${section}-${code}-${HOME_CMS_FIELDS.indexOf(field)}`;
                     const value = content.translations[code][field.text] ?? "";
-                    return <div key={field.text} className="flex flex-col gap-2">
-                      <Label htmlFor={fieldId}>{field.text}</Label>
-                      {field.text.length > 90
-                        ? <Textarea id={fieldId} value={value} onChange={(event) => updateTranslation(code, field.text, event.target.value)} rows={3} maxLength={5000} />
+                    const isLongCopy = Math.max(field.text.length, value.length) > 120;
+                    return <div key={field.text} className={`flex min-w-0 flex-col gap-2 ${isLongCopy ? "md:col-span-2" : ""}`}>
+                      <Label htmlFor={fieldId} className="text-sm font-semibold">{field.label}</Label>
+                      {code !== "en" && <p className="rounded-md bg-muted/50 px-3 py-2 text-xs leading-relaxed text-muted-foreground"><span className="font-medium text-foreground">English source: </span>{field.text}</p>}
+                      {isLongCopy
+                        ? <Textarea id={fieldId} value={value} onChange={(event) => updateTranslation(code, field.text, event.target.value)} rows={4} maxLength={5000} />
                         : <Input id={fieldId} value={value} onChange={(event) => updateTranslation(code, field.text, event.target.value)} maxLength={5000} />}
                     </div>;
                   })}

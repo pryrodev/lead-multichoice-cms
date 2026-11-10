@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import { Activity, AlertTriangle, ArrowRight, ArrowUpRight, Briefcase, CalendarDays, CheckCircle2, Circle, Clock3, ExternalLink, FileSearch, Gavel, Handshake, Package, Search, Ship, Truck, Wallet } from "lucide-react";
+import { Activity, AlertTriangle, ArrowRight, ArrowUpRight, Briefcase, CalendarDays, CheckCircle2, Circle, Clock3, ExternalLink, FileSearch, Gavel, Handshake, Package, Ship, Truck, Wallet } from "lucide-react";
 import { toast } from "sonner";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ChartContainer, ChartTooltip, ChartTooltipContent, type ChartConfig } from "@/components/ui/chart";
@@ -67,39 +67,20 @@ const compactUsd = (value: number) =>
 export function Pipeline() {
   const stages = useStages();
   const engagements = useEngagements();
+  const rows = stages.map((stage, index) => {
+    const items = engagements.filter((engagement) => engagement.stage === stage.key);
+    return { ...stage, order: index + 1, count: items.length, value: items.reduce((sum, item) => sum + item.valueUsd, 0) };
+  });
+  const columns: DataTableColumn<(typeof rows)[number]>[] = [
+    { id: "stage", header: "Stage", className: "min-w-48", cell: (row) => <span className="font-medium">{String(row.order).padStart(2, "0")} · {row.label}</span> },
+    { id: "description", header: "What happens", className: "min-w-64 text-sm text-muted-foreground", cell: (row) => row.description },
+    { id: "count", header: "Engagements", className: "w-32 tabular-nums", cell: (row) => row.count },
+    { id: "value", header: "Pipeline value", className: "w-36 whitespace-nowrap text-right tabular-nums", cell: (row) => row.value > 0 ? usd(row.value) : <span className="text-muted-foreground">—</span> },
+  ];
   return (
-    <Card>
+    <Card className="rounded-md shadow-none">
       <CardHeader><CardTitle className="font-display">Trade facilitation pipeline</CardTitle></CardHeader>
-      <CardContent className="grid gap-3 md:grid-cols-5">
-        {stages.map((s, idx) => {
-          const items = engagements.filter((e) => e.stage === s.key);
-          const total = items.reduce((a, e) => a + e.valueUsd, 0);
-          const Icon = stageIcons[s.key];
-          return (
-            <div key={s.key} className="relative rounded-lg border bg-muted/40 p-4">
-              <div className="flex items-center gap-2">
-                <span className="flex h-7 w-7 items-center justify-center rounded-md bg-primary text-primary-foreground font-mono text-xs">{idx + 1}</span>
-                <Icon className="h-4 w-4 text-muted-foreground" />
-              </div>
-              <div className="mt-3 text-sm font-semibold leading-tight">{s.label}</div>
-              <div className="mt-1 text-xs text-muted-foreground">{s.description}</div>
-              <div className="mt-3 flex items-baseline justify-between">
-                <span className="font-display text-2xl font-semibold">{items.length}</span>
-                <span className="font-mono text-xs text-muted-foreground">{usd(total)}</span>
-              </div>
-              <div className="mt-2 space-y-1">
-                {items.map((e) => (
-                  <div key={e.id} className="truncate rounded bg-card px-2 py-1 text-xs border" title={e.title}>
-                    {e.needsAttention && <span className="mr-1 inline-block h-1.5 w-1.5 rounded-full bg-warning align-middle" />}
-                    {e.title}
-                  </div>
-                ))}
-              </div>
-              {idx < 4 && <ArrowRight className="absolute -right-3 top-1/2 hidden h-4 w-4 text-muted-foreground md:block" />}
-            </div>
-          );
-        })}
-      </CardContent>
+      <CardContent className="px-0 pb-0"><ReusableTable rows={rows} columns={columns} getRowId={(row) => row.key} emptyMessage="No pipeline stages are configured." /></CardContent>
     </Card>
   );
 }
@@ -178,16 +159,15 @@ const statusStyle: Record<TenderStatus, string> = {
   cancelled: "bg-muted text-muted-foreground line-through",
 };
 
-export function TenderTable() {
+export function TenderTable({ initialSearch = "" }: { initialSearch?: string }) {
   const tenders = useTenders();
-  const [q, setQ] = useState("");
   const [status, setStatus] = useState<"all" | TenderStatus>("all");
   const [selected, setSelected] = useState<Tender | null>(null);
   const rate = useSettings().usdToRwf;
   const rows = useMemo(
     () => tenders.filter((t) => (status === "all" || t.status === status) &&
-      `${t.ref} ${t.title} ${t.entity} ${t.owner}`.toLowerCase().includes(q.toLowerCase())),
-    [tenders, q, status],
+      `${t.ref} ${t.title} ${t.entity} ${t.owner} ${t.portal}`.toLowerCase().includes(initialSearch.toLowerCase())),
+    [tenders, initialSearch, status],
   );
   const columns: DataTableColumn<Tender>[] = [
     { id: "reference", header: "Reference", className: "font-mono text-xs", cell: (tender) => tender.ref },
@@ -202,15 +182,12 @@ export function TenderTable() {
     { id: "portal", header: "Portal", className: "min-w-36", cell: (tender) => <a href={tender.portalUrl} target="_blank" rel="noreferrer" onClick={(event) => event.stopPropagation()} className="inline-flex items-center gap-1 text-sm text-primary hover:underline">{tender.portal}<ExternalLink className="h-3 w-3" /></a> },
   ];
   return (
+    <div className="space-y-3">
+      <div className="flex justify-end"><AddTenderDialog /></div>
     <Card>
       <CardHeader className="flex-row flex-wrap items-center justify-between gap-3 space-y-0">
-        <CardTitle className="font-display">Procurement & tender tracking</CardTitle>
+          <CardTitle className="font-display">Tender tracking</CardTitle>
         <div className="flex flex-wrap gap-2">
-          <AddTenderDialog />
-          <div className="relative">
-            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-            <Input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search tenders…" className="w-56 pl-8" />
-          </div>
           <Select value={status} onValueChange={(v) => setStatus(v as typeof status)}>
             <SelectTrigger className="w-36"><SelectValue>{status === "all" ? "All statuses" : <span className="capitalize">{status}</span>}</SelectValue></SelectTrigger>
             <SelectContent>
@@ -246,6 +223,7 @@ export function TenderTable() {
         </SheetContent>
       </Sheet>
     </Card>
+    </div>
   );
 }
 
@@ -254,39 +232,20 @@ const clearanceStyle: Record<Shipment["clearance"], string> = {
   cleared: "bg-success text-success-foreground", held: "bg-destructive text-destructive-foreground",
 };
 
-export function Logistics() {
+export function Logistics({ initialSearch = "" }: { initialSearch?: string }) {
   const shipments = useShipments();
+  const columns: DataTableColumn<Shipment>[] = [
+    { id: "cargo", header: "Shipment", className: "min-w-56", cell: (shipment) => <div><p className="font-medium">{shipment.cargo}</p><p className="mt-1 font-mono text-xs text-muted-foreground">{shipment.ref}</p></div> },
+    { id: "route", header: "Route", className: "min-w-44", cell: (shipment) => <div><p>{shipment.origin} → {shipment.destination}</p><p className="mt-1 text-xs text-muted-foreground">{shipment.corridor}</p></div> },
+    { id: "progress", header: "Progress", className: "min-w-36", cell: (shipment) => <div className="flex items-center gap-2"><Progress value={shipment.progress} className="h-2 min-w-16" /><span className="text-xs tabular-nums">{shipment.progress}%</span></div> },
+    { id: "clearance", header: "Clearance", cell: (shipment) => <Badge variant="outline" className={cn("capitalize", clearanceStyle[shipment.clearance])}>{shipment.clearance.replace("_", " ")}</Badge> },
+    { id: "milestones", header: "Milestones", className: "whitespace-nowrap", cell: (shipment) => `${shipment.milestones.filter((milestone) => milestone.done).length} / ${shipment.milestones.length}` },
+    { id: "eta", header: "ETA", className: "whitespace-nowrap text-sm", cell: (shipment) => fmtDate(shipment.eta) },
+  ];
   return (
     <Card>
       <CardHeader className="flex-row flex-wrap items-center justify-between gap-3"><CardTitle className="font-display">Regional corridor logistics</CardTitle><AddShipmentDialog /></CardHeader>
-      <CardContent className="space-y-5">
-        {shipments.map((s) => (
-          <div key={s.id} className="rounded-lg border p-4">
-            <div className="flex items-start justify-between gap-2">
-              <div>
-                <div className="font-mono text-xs text-muted-foreground">{s.ref} · {s.corridor}</div>
-                <div className="font-medium">{s.cargo}</div>
-              </div>
-              <Badge variant="outline" className={cn("capitalize", clearanceStyle[s.clearance])}>{s.clearance.replace("_", " ")}</Badge>
-            </div>
-            <div className="mt-3 flex items-center justify-between text-xs font-mono text-muted-foreground">
-              <span>{s.origin}</span><span>ETA {fmtDate(s.eta)}</span><span>{s.destination}</span>
-            </div>
-            <Progress value={s.progress} className="mt-1 h-2" />
-            <ol className="mt-3 space-y-1.5">
-              {s.milestones.map((m) => (
-                <li key={m.label} className="flex items-center justify-between text-xs">
-                  <span className="flex items-center gap-2">
-                    {m.done ? <CheckCircle2 className="h-3.5 w-3.5 text-success" /> : <Circle className="h-3.5 w-3.5 text-muted-foreground" />}
-                    {m.label}
-                  </span>
-                  <span className="font-mono text-muted-foreground">{m.date ? fmtDate(m.date) : "—"}</span>
-                </li>
-              ))}
-            </ol>
-          </div>
-        ))}
-      </CardContent>
+      <CardContent className="px-0 pb-0"><ReusableTable rows={shipments} columns={columns} getRowId={(shipment) => shipment.id} initialSearch={initialSearch} getSearchText={(shipment) => [shipment.ref, shipment.cargo, shipment.corridor, shipment.origin, shipment.destination].join(" ")} emptyMessage="No shipments match this search." /></CardContent>
     </Card>
   );
 }
@@ -304,6 +263,12 @@ export function ActivityFeed() {
   const [kind, setKind] = useState<ActivityKind>("update");
   const [ref, setRef] = useState("");
   const [message, setMessage] = useState("");
+  const columns: DataTableColumn<import("@/lib/api/types").Activity>[] = [
+    { id: "time", header: "Time", className: "min-w-36 whitespace-nowrap text-xs text-muted-foreground", cell: (activity) => new Date(activity.at).toLocaleString("en-GB", { dateStyle: "medium", timeStyle: "short", timeZone: "Africa/Kigali" }) },
+    { id: "type", header: "Type", cell: (activity) => <Badge className={cn("hover:opacity-100", kindStyle[activity.kind].cls)}>{kindStyle[activity.kind].label}</Badge> },
+    { id: "reference", header: "Reference", className: "min-w-40 font-mono text-xs", cell: (activity) => activity.ref },
+    { id: "activity", header: "Activity", className: "min-w-64", cell: (activity) => <div><p className="text-sm">{activity.message}</p><p className="mt-1 text-xs text-muted-foreground">{activity.author}</p></div> },
+  ];
 
   const submit = () => {
     if (!ref.trim() || !message.trim()) { toast.error("Reference and message are required"); return; }
@@ -330,21 +295,7 @@ export function ActivityFeed() {
           <Textarea value={message} onChange={(e) => setMessage(e.target.value)} placeholder="What happened, what's blocked, or what's next?" rows={2} />
           <Button size="sm" onClick={submit} disabled={add.isPending}>Log entry</Button>
         </div>
-        <ol className="mt-4 space-y-4 border-l pl-4">
-          {activities.map((a) => (
-            <li key={a.id} className="relative">
-              <span className="absolute -left-[21px] top-1.5 h-2.5 w-2.5 rounded-full border-2 border-background bg-primary" />
-              <div className="flex flex-wrap items-center gap-2 text-xs">
-                <Badge className={cn("hover:opacity-100", kindStyle[a.kind].cls)}>{kindStyle[a.kind].label}</Badge>
-                <span className="font-mono text-muted-foreground">{a.ref}</span>
-              </div>
-              <p className="mt-1 text-sm">{a.message}</p>
-              <div className="mt-0.5 font-mono text-xs text-muted-foreground">
-                {new Date(a.at).toLocaleString("en-GB", { dateStyle: "medium", timeStyle: "short", timeZone: "Africa/Kigali" })} · {a.author}
-              </div>
-            </li>
-          ))}
-        </ol>
+        <div className="mt-4"><ReusableTable rows={activities} columns={columns} getRowId={(activity) => activity.id} emptyMessage="No activity has been logged." /></div>
       </CardContent>
     </Card>
   );

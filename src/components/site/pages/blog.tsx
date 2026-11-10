@@ -12,16 +12,16 @@ export default function BlogPage() {
     <>
       <PageHero
         eyebrow={copy.eyebrow}
-        title={<span style={{ display: "inline-block", whiteSpace: "nowrap", fontSize: "clamp(0.875rem, 3.2vw, 2.5rem)" }}>{copy.title}</span>}
+        title={<span className="block text-[clamp(1.25rem,3.2vw,2.5rem)] leading-tight md:whitespace-nowrap">{copy.title}</span>}
         headingClassName="max-w-none"
-        titleClassName="whitespace-nowrap text-[clamp(0.875rem,3.2vw,2.5rem)]"
+        titleClassName="max-w-none"
         intro={copy.intro}
         introClassName="max-w-3xl"
         image="/site/meeting.jpg"
         visualKey="blog.hero"
         alt="Colleagues discussing business and sourcing information"
       />
-      <InsightsGrid singleLineTitle />
+      <InsightsGrid />
     </>
   );
 }

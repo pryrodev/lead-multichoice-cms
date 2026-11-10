@@ -24,7 +24,7 @@ export default function Contact() {
       />
       <section className="container-site grid gap-14 py-12 md:py-16 lg:grid-cols-[1fr_1.6fr] lg:gap-20">
         <aside>
-          <h2 className="text-[24px]">LEAD MULTICHOICE Ltd</h2>
+          <h2 className="text-[24px]">LEAD MULTI-CHOICE ® Ltd</h2>
           <ul className="mt-6 space-y-5">
             <li className="flex gap-4">
               <MapPin className="mt-1 text-brass" size={18} aria-hidden />

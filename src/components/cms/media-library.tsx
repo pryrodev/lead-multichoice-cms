@@ -10,6 +10,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
+import { ReusableTable, type DataTableColumn } from "@/components/data-table/reusable-table";
+import type { MediaAsset } from "@/lib/api/types";
 
 export function MediaLibrary() {
   const assets = useMediaAssets();
@@ -18,6 +20,14 @@ export function MediaLibrary() {
   const fileInput = useRef<HTMLInputElement>(null);
   const [file, setFile] = useState<File | null>(null);
   const [altText, setAltText] = useState("");
+  const columns: DataTableColumn<MediaAsset>[] = [
+    { id: "preview", header: "Preview", className: "w-20", cell: (asset) => <div className="relative size-12 overflow-hidden rounded-md border bg-muted"><Image src={asset.secureUrl} alt="" fill unoptimized sizes="48px" className="object-cover" /></div> },
+    { id: "name", header: "Image", className: "min-w-52", cell: (asset) => <div className="max-w-sm"><p className="truncate font-medium" title={asset.altText || asset.publicId}>{asset.altText || asset.publicId}</p><p className="mt-1 truncate text-xs text-muted-foreground">{asset.publicId}</p></div> },
+    { id: "dimensions", header: "Dimensions", className: "whitespace-nowrap text-sm", cell: (asset) => `${asset.width} × ${asset.height}` },
+    { id: "size", header: "File size", className: "whitespace-nowrap text-sm", cell: (asset) => formatBytes(asset.bytes) },
+    { id: "date", header: "Uploaded", className: "whitespace-nowrap text-sm text-muted-foreground", cell: (asset) => new Date(asset.createdAt).toLocaleDateString() },
+    { id: "actions", header: "Action", className: "w-24", cell: (asset) => <AlertDialog><AlertDialogTrigger asChild><Button variant="ghost" size="icon" aria-label={`Delete ${asset.altText || asset.publicId}`} disabled={deleteAsset.isPending}><Trash2 className="size-4 text-destructive" /></Button></AlertDialogTrigger><AlertDialogContent><AlertDialogHeader><AlertDialogTitle>Delete this image?</AlertDialogTitle><AlertDialogDescription>This removes the image from Cloudinary and from the website media library.</AlertDialogDescription></AlertDialogHeader><AlertDialogFooter><AlertDialogCancel>Cancel</AlertDialogCancel><AlertDialogAction onClick={() => deleteAsset.mutate(asset.id, { onSuccess: () => toast.success("Image deleted"), onError: (error) => toast.error(error.message) })}>Delete image</AlertDialogAction></AlertDialogFooter></AlertDialogContent></AlertDialog> },
+  ];
 
   const submit = () => {
     if (!file) { toast.error("Choose an image first"); return; }
@@ -35,12 +45,7 @@ export function MediaLibrary() {
       <p className="text-xs text-muted-foreground md:col-span-3">JPG, PNG, WebP, or AVIF · maximum 10 MB. Images are stored in Cloudinary; the library metadata is stored in MySQL.</p>
     </CardContent></Card>
 
-    {assets.length ? <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">{assets.map((asset) => <Card key={asset.id} className="overflow-hidden">
-      <div className="relative aspect-[4/3] bg-muted"><Image src={asset.secureUrl} alt={asset.altText || "Uploaded media"} fill unoptimized sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 25vw" className="object-cover" /></div>
-      <CardContent className="space-y-3 p-4"><div><p className="truncate text-sm font-medium" title={asset.altText || asset.publicId}>{asset.altText || asset.publicId}</p><p className="mt-1 text-xs text-muted-foreground">{asset.width} × {asset.height} · {formatBytes(asset.bytes)}</p></div>
-        <AlertDialog><AlertDialogTrigger asChild><Button variant="outline" size="sm" className="w-full" disabled={deleteAsset.isPending}><Trash2 className="mr-2 h-4 w-4" /> Delete image</Button></AlertDialogTrigger><AlertDialogContent><AlertDialogHeader><AlertDialogTitle>Delete this image?</AlertDialogTitle><AlertDialogDescription>This removes the image from Cloudinary and from the website media library.</AlertDialogDescription></AlertDialogHeader><AlertDialogFooter><AlertDialogCancel>Cancel</AlertDialogCancel><AlertDialogAction onClick={() => deleteAsset.mutate(asset.id, { onSuccess: () => toast.success("Image deleted"), onError: (error) => toast.error(error.message) })}>Delete image</AlertDialogAction></AlertDialogFooter></AlertDialogContent></AlertDialog>
-      </CardContent>
-    </Card>)}</div> : <Card><CardContent className="flex min-h-40 flex-col items-center justify-center gap-2 p-6 text-center"><ImagePlus className="h-8 w-8 text-muted-foreground" /><p className="font-medium">No media uploaded yet</p><p className="text-sm text-muted-foreground">Images uploaded here will be available to website content editors.</p></CardContent></Card>}
+    <Card className="rounded-md shadow-none"><CardContent className="px-0 pb-0"><ReusableTable rows={assets} columns={columns} getRowId={(asset) => asset.id} emptyMessage="No images uploaded yet. Upload an image to make it available to website editors." initialPageSize={10} pageSizeOptions={[10, 20, 50]} /></CardContent></Card>
   </div>;
 }
 

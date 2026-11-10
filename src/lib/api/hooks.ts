@@ -1,8 +1,9 @@
 import { queryOptions, useMutation, useQuery, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
 import { api } from "./service";
-import type { AdminSiteCopy, AdminSiteVisuals, CompanySettings, MediaAsset, StaffMember } from "./types";
+import type { AdminProcurementResources, AdminSiteCopy, AdminSiteVisuals, CompanySettings, MediaAsset, StaffMember } from "./types";
 import type { SiteVisuals } from "@/lib/cms/site-visuals";
 import type { SiteCopyContent } from "@/lib/cms/site-copy";
+import type { ProcurementResourcesContent } from "@/lib/cms/procurement-resources";
 
 export const kpisQuery = queryOptions({ queryKey: ["kpis"], queryFn: api.getKpis });
 export const stagesQuery = queryOptions({ queryKey: ["stages"], queryFn: api.getStages });
@@ -28,6 +29,14 @@ export const useTenders = () => useSuspenseQuery(tendersQuery).data;
 export const useOpportunities = () => useSuspenseQuery(opportunitiesQuery).data;
 export const useShipments = () => useSuspenseQuery(shipmentsQuery).data;
 export const useActivities = () => useSuspenseQuery(activitiesQuery).data;
+
+export const adminSearchQuery = (query: string) => queryOptions({
+  queryKey: ["admin", "search", query] as const,
+  queryFn: () => api.searchAdmin(query),
+  staleTime: 30_000,
+});
+export const useAdminSearch = (query: string, enabled: boolean) =>
+  useQuery({ ...adminSearchQuery(query), enabled });
 
 export const mediaAssetsQuery = queryOptions({ queryKey: ["admin", "media"], queryFn: api.getMediaAssets });
 export const useMediaAssets = () => useSuspenseQuery(mediaAssetsQuery).data;
@@ -98,6 +107,32 @@ export function usePublishSiteCopy() {
   return useMutation({
     mutationFn: api.publishSiteCopy,
     onSuccess: (published) => qc.setQueryData<AdminSiteCopy>(siteCopyQuery.queryKey, (current) => current ? {
+      ...current,
+      hasDraft: false,
+      publishedAt: published.publishedAt,
+    } : current),
+  });
+}
+
+export const procurementResourcesQuery = queryOptions({ queryKey: ["admin", "cms", "procurement-resources"], queryFn: api.getProcurementResources });
+export const useProcurementResourcesDraft = () => useSuspenseQuery(procurementResourcesQuery).data;
+export function useSaveProcurementResourcesDraft() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (content: ProcurementResourcesContent) => api.saveProcurementResourcesDraft(content),
+    onSuccess: (saved) => qc.setQueryData<AdminProcurementResources>(procurementResourcesQuery.queryKey, (current) => ({
+      content: saved.content,
+      hasDraft: saved.hasDraft,
+      publishedAt: current?.publishedAt ?? null,
+      updatedAt: new Date().toISOString(),
+    })),
+  });
+}
+export function usePublishProcurementResources() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: api.publishProcurementResources,
+    onSuccess: (published) => qc.setQueryData<AdminProcurementResources>(procurementResourcesQuery.queryKey, (current) => current ? {
       ...current,
       hasDraft: false,
       publishedAt: published.publishedAt,

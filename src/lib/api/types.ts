@@ -130,6 +130,14 @@ export interface Kpis {
   attentionItems: number;
 }
 
+export interface AdminSearchResult {
+  id: string;
+  kind: string;
+  title: string;
+  description: string;
+  href: string;
+}
+
 export interface Profile {
   name: string;
   email: string;
@@ -192,6 +200,13 @@ export interface AdminSiteVisuals {
 
 export interface AdminSiteCopy {
   content: import("@/lib/cms/site-copy").SiteCopyContent;
+  hasDraft: boolean;
+  publishedAt: string | null;
+  updatedAt: string | null;
+}
+
+export interface AdminProcurementResources {
+  content: import("@/lib/cms/procurement-resources").ProcurementResourcesContent;
   hasDraft: boolean;
   publishedAt: string | null;
   updatedAt: string | null;

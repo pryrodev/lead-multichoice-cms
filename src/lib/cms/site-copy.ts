@@ -1,4 +1,4 @@
-import { company, enquiryTypes, nav, processStages, procurementResources, leader } from "@/content/site";
+import { company, enquiryTypes, nav, processStages, procurementModels, procurementResources, leader } from "@/content/site";
 import { industries, services, values, whyUs } from "@/content/services";
 import { insights } from "@/content/insights";
 import { languages, messages, type Language, type MessageKey } from "@/i18n/messages";
@@ -42,6 +42,7 @@ collectFields(values, "About");
 collectFields(whyUs, "Why choose us");
 collectFields(processStages, "Company");
 collectFields(procurementResources, "Procurement");
+collectFields(procurementModels, "Procurement models");
 collectFields(enquiryTypes, "Contact");
 collectFields(leader, "Leadership");
 collectFields(company, "Company");

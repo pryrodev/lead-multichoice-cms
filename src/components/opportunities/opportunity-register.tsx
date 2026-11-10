@@ -1,12 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
-import { ArrowDownUp, ArrowRight, CircleHelp, ExternalLink, Plus, Search } from "lucide-react";
+import { useMemo } from "react";
+import { ArrowDownUp, ArrowRight, CircleHelp, ExternalLink, Plus } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
 import { ReusableTable, type DataTableColumn } from "@/components/data-table/reusable-table";
 import { useOpportunities } from "@/lib/api/hooks";
 import type { Opportunity, OpportunityStatus, OpportunityType } from "@/lib/api/types";
@@ -105,18 +104,17 @@ const columns: DataTableColumn<Opportunity>[] = [
   },
 ];
 
-export function OpportunityRegister() {
+export function OpportunityRegister({ initialSearch = "" }: { initialSearch?: string }) {
   const opportunities = useOpportunities();
-  const [search, setSearch] = useState("");
   const filtered = useMemo(() => {
-    const term = search.trim().toLowerCase();
+    const term = initialSearch.trim().toLowerCase();
     if (!term) return opportunities;
     return opportunities.filter((o) =>
       [o.ref, o.title, o.buyer, o.source, o.owner, o.externalRef].some((v) =>
         v.toLowerCase().includes(term),
       ),
     );
-  }, [opportunities, search]);
+  }, [opportunities, initialSearch]);
   const open = opportunities.filter(
     (o) => !["closed", "withdrawn", "not_awarded"].includes(o.status),
   ).length;
@@ -132,7 +130,7 @@ export function OpportunityRegister() {
             Opportunity register
           </h1>
           <p className="mt-1 text-sm text-muted-foreground">
-            Capture and assess tenders, procurement needs, and other business leads.
+            Track buyer needs, supplier leads, and potential commercial partnerships.
           </p>
         </div>
         <Button asChild className="rounded-xl">
@@ -186,23 +184,13 @@ export function OpportunityRegister() {
                 {filtered.length} records · newest first
               </p>
             </div>
-            <label className="relative w-full sm:w-72">
-              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-              <Input
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                placeholder="Search title, buyer, ref…"
-                className="pl-9"
-                aria-label="Search opportunities"
-              />
-            </label>
           </div>
           <ReusableTable
             rows={filtered}
             columns={columns}
             getRowId={(row) => row.id}
             initialPageSize={5}
-            emptyMessage="No opportunities match. Try another search or add an opportunity."
+            emptyMessage="No opportunities match this search. Try another term or add an opportunity."
           />
         </CardContent>
       </Card>

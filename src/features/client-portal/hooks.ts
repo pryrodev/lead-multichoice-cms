@@ -3,7 +3,15 @@ import * as api from "./api";
 import { portalKeys } from "./query-keys";
 import type { NewClientRequest } from "./types";
 
-export const usePortalUser = () => useQuery({ queryKey: portalKeys.user, queryFn: api.getPortalUser });
+export const usePortalUser = () => useQuery({
+  queryKey: portalKeys.user,
+  queryFn: api.getPortalUser,
+  // The session endpoint renews an active cookie near expiry. Refocus also checks
+  // after users return from a long-running tab without polling on every dashboard refresh.
+  refetchInterval: 12 * 60 * 60 * 1000,
+  refetchOnWindowFocus: true,
+  retry: false,
+});
 export const useClientOverview = () => useQuery({
   queryKey: portalKeys.overview,
   queryFn: api.getClientOverview,

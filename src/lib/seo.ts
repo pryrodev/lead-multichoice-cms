@@ -1,5 +1,5 @@
 export function pageMeta(title: string, description: string) {
-  const full = `${title} | LEAD MULTICHOICE Ltd`;
+  const full = `${title} | LEAD MULTI-CHOICE ® Ltd`;
   return {
     meta: [
       { title: full },

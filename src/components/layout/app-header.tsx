@@ -3,13 +3,13 @@
 import Link from "next/link";
 import { Fragment } from "react";
 import { usePathname } from "next/navigation";
-import { Bell, ChevronDown, LogOut, Search, Settings2 } from "lucide-react";
+import { Bell, ChevronDown, LogOut, Settings2 } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
-import { Input } from "@/components/ui/input";
 import { SidebarTrigger } from "@/components/ui/sidebar";
+import { AdminGlobalSearch } from "@/components/layout/admin-global-search";
 import { initials } from "@/components/layout/app-sidebar";
 import { toast } from "sonner";
 import { usePortalLogout, usePortalUser } from "@/features/client-portal/hooks";
@@ -53,10 +53,9 @@ export function AppHeader({ staffMode = false }: { staffMode?: boolean }) {
           </BreadcrumbList>
         </Breadcrumb>
 
-        <label className="absolute left-1/2 hidden w-[min(30vw,420px)] -translate-x-1/2 lg:block" aria-label="Search records">
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-foreground" />
-          <Input placeholder="Search…" className="h-10 rounded-xl border-0 bg-muted/80 pl-10 shadow-sm placeholder:text-muted-foreground" />
-        </label>
+        <div className="absolute left-1/2 -translate-x-1/2 lg:block">
+          <AdminGlobalSearch staffMode={staffMode} />
+        </div>
 
         <div className="ml-auto flex shrink-0 items-center gap-2">
           <Button variant="outline" size="icon" aria-label="Notifications" className="relative h-9 w-9 rounded-xl bg-card shadow-sm">

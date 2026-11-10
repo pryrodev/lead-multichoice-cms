@@ -24,9 +24,18 @@ export function AddTenderDialog() {
     });
   };
   return <Dialog open={open} onOpenChange={setOpen}><DialogTrigger asChild><Button><Plus className="mr-2 h-4 w-4" /> Add tender</Button></DialogTrigger><DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-xl"><DialogHeader><DialogTitle>Add tender</DialogTitle><DialogDescription>Record a procurement opportunity and its tracking details.</DialogDescription></DialogHeader><form action={submit} className="space-y-4">
-    <div className="grid gap-3 sm:grid-cols-2"><Field name="title" label="Tender title" required /><Field name="entity" label="Procuring entity" required /><Field name="category" label="Category" /><Field name="portal" label="Portal" /><Field name="portalUrl" label="Portal URL" type="url" /><Field name="deadline" label="Deadline" type="date" /><Field name="valueUsd" label="Estimated value (USD)" type="number" /><Field name="owner" label="Owner" /></div>
-    <div className="space-y-1.5"><Label>Status</Label><Select value={status} onValueChange={(v) => setStatus(v as TenderStatus)}><SelectTrigger><SelectValue /></SelectTrigger><SelectContent>{["monitoring", "preparing", "submitted", "awarded", "lost", "cancelled"].map((v) => <SelectItem key={v} value={v} className="capitalize">{v}</SelectItem>)}</SelectContent></Select></div>
-    <div className="space-y-1.5"><Label htmlFor="tender-notes">Notes</Label><Textarea id="tender-notes" name="notes" rows={3} /></div>
+    <div className="grid gap-3 sm:grid-cols-2">
+      <Field name="title" label="Tender title" placeholder="e.g. Supply of medical equipment" required className="rounded-md shadow-none" />
+      <Field name="entity" label="Procuring entity" placeholder="e.g. Ministry of Health" required className="rounded-md shadow-none" />
+      <Field name="category" label="Category" placeholder="e.g. Healthcare" className="rounded-md shadow-none" />
+      <Field name="portal" label="Portal" placeholder="e.g. UMUCYO" className="rounded-md shadow-none" />
+      <Field name="portalUrl" label="Portal URL" type="url" placeholder="https://example.gov.rw/tenders" className="rounded-md shadow-none" />
+      <Field name="deadline" label="Deadline" type="date" placeholder="Select a deadline" className="rounded-md shadow-none" />
+      <Field name="valueUsd" label="Estimated value (USD)" type="number" placeholder="e.g. 25000" className="rounded-md shadow-none" />
+      <Field name="owner" label="Owner" placeholder="Staff member responsible" className="rounded-md shadow-none" />
+    </div>
+    <div className="space-y-1.5"><Label>Status</Label><Select value={status} onValueChange={(v) => setStatus(v as TenderStatus)}><SelectTrigger className="rounded-md shadow-none"><SelectValue placeholder="Select status" /></SelectTrigger><SelectContent>{["monitoring", "preparing", "submitted", "awarded", "lost", "cancelled"].map((v) => <SelectItem key={v} value={v} className="capitalize">{v}</SelectItem>)}</SelectContent></Select></div>
+    <div className="space-y-1.5"><Label htmlFor="tender-notes">Notes</Label><Textarea id="tender-notes" name="notes" rows={3} placeholder="Add any important details or follow-up notes" className="rounded-md shadow-none" /></div>
     <DialogFooter><Button type="submit" disabled={create.isPending}>{create.isPending ? "Saving…" : "Save tender"}</Button></DialogFooter>
   </form></DialogContent></Dialog>;
 }
@@ -49,7 +58,7 @@ export function AddShipmentDialog() {
   </form></DialogContent></Dialog>;
 }
 
-function Field({ name, label, type = "text", required, min, max }: { name: string; label: string; type?: string; required?: boolean; min?: string; max?: string }) {
+function Field({ name, label, type = "text", required, min, max, placeholder, className }: { name: string; label: string; type?: string; required?: boolean; min?: string; max?: string; placeholder?: string; className?: string }) {
   const id = `record-${name}`;
-  return <div className="space-y-1.5"><Label htmlFor={id}>{label}</Label><Input id={id} name={name} type={type} required={required} min={min} max={max} step={type === "number" ? "any" : undefined} /></div>;
+  return <div className="space-y-1.5"><Label htmlFor={id}>{label}</Label><Input id={id} name={name} type={type} required={required} min={min} max={max} step={type === "number" ? "any" : undefined} placeholder={placeholder} className={className} /></div>;
 }

@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { ChevronLeft, ChevronRight, Search } from "lucide-react";
+import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -24,6 +25,9 @@ interface DataTableProps<TRow> {
   emptyMessage?: string;
   pageSizeOptions?: number[];
   resetKey?: string;
+  className?: string;
+  initialSearch?: string;
+  hideSearch?: boolean;
 }
 
 export function DataTable<TRow>({
@@ -36,8 +40,11 @@ export function DataTable<TRow>({
   emptyMessage = "No records found.",
   pageSizeOptions = [10, 25, 50],
   resetKey,
+  className,
+  initialSearch = "",
+  hideSearch = false,
 }: DataTableProps<TRow>) {
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(initialSearch);
   const [pageSize, setPageSize] = useState(pageSizeOptions[0] ?? 10);
   const [pageIndex, setPageIndex] = useState(0);
 
@@ -57,13 +64,14 @@ export function DataTable<TRow>({
   // Reset pagination when external filters change.
   useEffect(() => {
     setPageIndex(0);
-  }, [resetKey]);
+    setSearch(initialSearch);
+  }, [initialSearch, resetKey]);
 
   return (
-    <div className="overflow-hidden rounded-xl border bg-card">
+    <div className={cn("overflow-hidden rounded-xl border bg-card", className)}>
       <div className="border-b bg-muted/20 p-4">
         <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-          <div className="relative w-full md:max-w-sm">
+          {!hideSearch && <div className="relative w-full md:max-w-sm">
             <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
             <Input
               value={search}
@@ -75,14 +83,8 @@ export function DataTable<TRow>({
               className="bg-background pl-9"
               aria-label={searchPlaceholder}
             />
-          </div>
-          <div className="flex flex-wrap items-center gap-2">
-            {toolbar}
-            <Select value={String(pageSize)} onValueChange={(value) => { setPageSize(Number(value)); setPageIndex(0); }}>
-              <SelectTrigger className="w-[138px] bg-background" aria-label="Rows per page"><SelectValue /></SelectTrigger>
-              <SelectContent>{pageSizeOptions.map((size) => <SelectItem key={size} value={String(size)}>{size} per page</SelectItem>)}</SelectContent>
-            </Select>
-          </div>
+          </div>}
+          <div className="flex flex-wrap items-center gap-2">{toolbar}</div>
         </div>
       </div>
 
@@ -109,6 +111,11 @@ export function DataTable<TRow>({
 
       <div className="flex flex-col gap-3 border-t bg-background px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-sm text-muted-foreground" aria-live="polite">Showing <span className="font-medium text-foreground">{rangeStart}–{rangeEnd}</span> of <span className="font-medium text-foreground">{filteredRows.length}</span> records</p>
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
+          <Select value={String(pageSize)} onValueChange={(value) => { setPageSize(Number(value)); setPageIndex(0); }}>
+            <SelectTrigger className="w-[138px] bg-background" aria-label="Rows per page"><SelectValue /></SelectTrigger>
+            <SelectContent>{pageSizeOptions.map((size) => <SelectItem key={size} value={String(size)}>{size} per page</SelectItem>)}</SelectContent>
+          </Select>
         <nav aria-label="Table pagination" className="flex items-center gap-2 self-end sm:self-auto">
           <Button type="button" variant="outline" size="sm" className="gap-1" onClick={() => setPageIndex(currentPage - 1)} disabled={currentPage === 0}>
             <ChevronLeft className="size-4" /> Previous
@@ -118,6 +125,7 @@ export function DataTable<TRow>({
             Next <ChevronRight className="size-4" />
           </Button>
         </nav>
+        </div>
       </div>
     </div>
   );

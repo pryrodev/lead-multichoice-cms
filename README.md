@@ -1,4 +1,4 @@
-# LEAD MULTICHOICE Business Platform
+# LEAD MULTI-CHOICE ® Business Platform
 
 Unified Next.js application for the public website, client portal, and staff operations area.
 

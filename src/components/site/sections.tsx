@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, ExternalLink as ExtIcon } from "lucide-react";
-import { leader, processStages, procurementResources } from "@/content/site";
+import { ArrowRight } from "lucide-react";
+import { leader, processStages } from "@/content/site";
+import { getResourceDomain, type ProcurementResource } from "@/lib/cms/procurement-resources";
 import { cn } from "@/lib/utils";
 import { CheckList, ExternalLink, btn } from "./ui";
 import { useI18n } from "@/i18n/I18nProvider";
@@ -47,25 +48,22 @@ export function ProcessTimeline({ inverted }: { inverted?: boolean }) {
   );
 }
 
-export function ProcurementResourceCard({ r }: { r: (typeof procurementResources)[number] }) {
+export function ProcurementResourceCard({ r }: { r: ProcurementResource }) {
   const { t, tc } = useI18n();
   return (
-    <article className="flex flex-col justify-between rounded border border-border bg-background p-7 md:p-9">
-      <div>
-        <div className="flex items-center justify-between gap-4">
-          <p className="eyebrow">{t("resources.external")}</p>
-          <span className="font-mono text-[12.5px] text-muted-foreground">{r.domain}</span>
+    <article className="flex h-full flex-col rounded border border-border bg-background p-5 sm:p-7">
+      <div className="min-w-0">
+        <div className="flex min-w-0 items-center justify-between gap-3">
+          <p className="eyebrow shrink-0 whitespace-nowrap">{t("resources.external")}</p>
+          <span className="min-w-0 max-w-[45%] truncate text-right font-mono text-xs text-muted-foreground" title={getResourceDomain(r.url)}>{getResourceDomain(r.url)}</span>
         </div>
-        <h3 className="mt-5 text-[25px]">{r.name}</h3>
-        <p className="mt-3 text-muted-foreground">{tc(r.description)}</p>
+        <h3 className="mt-5 text-xl leading-snug [overflow-wrap:anywhere] sm:text-[22px]">{r.name}</h3>
+        <p className="mt-3 text-[15px] leading-6 text-muted-foreground [overflow-wrap:anywhere]">{tc(r.description)}</p>
       </div>
-      <div className="mt-8">
-        <ExternalLink href={r.url} className={btn("primary")}>
+      <div className="mt-5">
+        <ExternalLink href={r.url} className={btn("primary", "max-w-full whitespace-normal text-center [overflow-wrap:anywhere]")}>
           {tc(r.cta)}
         </ExternalLink>
-        <p className="mt-3 flex items-center gap-2 text-[13px] text-muted-foreground">
-          <ExtIcon size={13} aria-hidden /> {t("resources.leaving")}
-        </p>
       </div>
     </article>
   );

@@ -1,7 +1,7 @@
 // Central company content. Update verified details here.
 export const company = {
-  name: "LEAD MULTICHOICE® Ltd",
-  shortName: "LEAD MULTICHOICE",
+  name: "LEAD MULTI-CHOICE ® Ltd",
+  shortName: "LEAD MULTI-CHOICE ®",
   tagline: "Your Local Partner. Your Regional Advantage.",
   location: "Remera, Kigali, Rwanda",
   phoneDisplay: "+250 788 312 338",
@@ -36,7 +36,7 @@ export const headerNavigation = [
 export const procurementResources = [
   {
     id: "rms",
-    name: "Rwanda Medical Supply (RMS)",
+    name: "Rwanda Medical Supply",
     description:
       "Medical and healthcare supply tenders.",
     cta: "Visit RMS Tenders",
@@ -53,6 +53,29 @@ export const procurementResources = [
     domain: "umucyo.gov.rw",
   },
 ];
+
+export const procurementModels = [
+  {
+    id: "hardware-supply",
+    name: "Hardware Supply",
+    description: "Sourcing and supply of equipment and goods to defined specifications.",
+  },
+  {
+    id: "framework-contracts",
+    name: "Framework contracts",
+    description: "Supply under agreed terms and call-off requirements.",
+  },
+  {
+    id: "epc-turnkey-contracts",
+    name: "EPC turnkey contracts",
+    description: "Engineering, procurement and construction coordinated through project handover.",
+  },
+  {
+    id: "consultancy-urgency",
+    name: "Consultancy / urgency",
+    description: "Professional advice and support for urgent procurement needs.",
+  },
+] as const;
 
 export const processStages = [
   { n: "01", title: "Connect", text: "Find buyers and opportunities." },

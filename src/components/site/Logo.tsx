@@ -10,11 +10,11 @@ export function Logo({ inverted = false, className }: { inverted?: boolean; clas
     <Link
       href="/"
       className={cn("inline-flex shrink-0 items-center", className)}
-      aria-label={`${t("nav.home")} — LEAD MULTICHOICE`}
+      aria-label={`${t("nav.home")} — LEAD MULTI-CHOICE ®`}
     >
       <img
         src="/lead_multi-choice_logo.png"
-        alt="LEAD MULTICHOICE"
+        alt="LEAD MULTI-CHOICE ®"
         width={512}
         height={191}
         className={cn(

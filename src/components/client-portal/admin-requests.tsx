@@ -17,6 +17,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { AdminRequestCreateDialog } from "@/components/client-portal/admin-request-create-dialog";
 import { TrackingStatusManager } from "@/components/client-portal/tracking-status-manager";
 import { useAdminClientRequests, useCreateEngagement, usePostEngagementUpdate } from "@/features/client-portal/hooks";
+import { getTrackingStatusTone } from "@/features/client-portal/status-color";
 import { useTrackingStatuses } from "@/features/client-portal/tracking-statuses-hooks";
 import type { AdminClientRequest, ClientRequestType, EngagementStage } from "@/features/client-portal/types";
 
@@ -208,22 +209,13 @@ function RequestRowActions({ request }: { request: AdminClientRequest }) {
 
 function RequestProgressBadge({ request }: { request: AdminClientRequest }) {
   const label = request.currentTrackingStatusName ?? request.engagementStage ?? request.status.replaceAll("_", " ");
-  const palette = [
-    "bg-brand-primary text-brand-white",
-    "bg-brand-gold text-foreground",
-    "bg-emerald-600 text-white",
-    "bg-violet-600 text-white",
-    "bg-cyan-700 text-white",
-    "bg-orange-600 text-white",
-    "bg-indigo-600 text-white",
-    "bg-rose-600 text-white",
-  ];
-  const colorIndex = Array.from(label).reduce((hash, character) => (hash * 31 + character.charCodeAt(0)) >>> 0, 7) % palette.length;
   const tone = request.engagementStatus === "completed"
-    ? "bg-emerald-600 text-white"
+    ? getTrackingStatusTone(label, "complete")
     : request.engagementStatus === "cancelled" || request.status === "declined"
-      ? "bg-rose-600 text-white"
-      : palette[colorIndex];
+      ? getTrackingStatusTone(label, "cancelled")
+      : request.engagementStatus === "on_hold"
+        ? getTrackingStatusTone(label, "paused")
+        : getTrackingStatusTone(label);
 
   return (
     <span title={label} className={`inline-flex max-w-36 items-center rounded-md px-2 py-1 text-xs font-semibold ${tone}`}>
@@ -269,7 +261,7 @@ const requestTypes: Array<[ClientRequestType | "all", string]> = [
   ["supplier_offer", "Supplier offer"],
 ];
 
-export function AdminClientRequests({ canManageStatuses = false }: { canManageStatuses?: boolean }) {
+export function AdminClientRequests({ canManageStatuses = false, initialSearch = "" }: { canManageStatuses?: boolean; initialSearch?: string }) {
   const query = useAdminClientRequests();
   const [requestTypeFilter, setRequestTypeFilter] = useState<ClientRequestType | "all">("all");
   const [trackingFilter, setTrackingFilter] = useState("all");
@@ -340,7 +332,8 @@ export function AdminClientRequests({ canManageStatuses = false }: { canManageSt
         columns={columns}
         getRowId={(request) => request.id}
         getSearchText={(request) => [request.reference, request.title, request.category, request.targetMarket, request.clientName, request.organization, request.requestType].join(" ")}
-        searchPlaceholder="Search by Tracking ID, request, or client..."
+        initialSearch={initialSearch}
+        hideSearch
         resetKey={`${requestTypeFilter}:${trackingFilter}`}
         emptyMessage={requests.length ? "No requests match these filters." : "No client requests have been submitted yet."}
         toolbar={(

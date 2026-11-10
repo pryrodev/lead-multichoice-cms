@@ -3,13 +3,14 @@ import { AdminClientRequests } from "@/components/client-portal/admin-requests";
 import { PageShell } from "@/components/layout/page";
 import { getSessionUser } from "@/lib/auth/session";
 
-export const metadata: Metadata = { title: "Client requests — LEAD MULTICHOICE Ltd" };
+export const metadata: Metadata = { title: "Client requests — LEAD MULTI-CHOICE ® Ltd" };
 
-export default function ClientRequestsPage() {
-  return <ClientRequestsContent />;
+export default async function ClientRequestsPage({ searchParams }: { searchParams: Promise<{ q?: string }> }) {
+  const { q = "" } = await searchParams;
+  return <ClientRequestsContent initialSearch={q} />;
 }
 
-async function ClientRequestsContent() {
+async function ClientRequestsContent({ initialSearch }: { initialSearch: string }) {
   const user = await getSessionUser();
-  return <PageShell title="Client requests" subtitle="Review requests submitted through the client portal"><AdminClientRequests canManageStatuses={user?.role === "admin"} /></PageShell>;
+  return <PageShell title="Client requests" subtitle="Review requests submitted through the client portal"><AdminClientRequests canManageStatuses={user?.role === "admin"} initialSearch={initialSearch} /></PageShell>;
 }

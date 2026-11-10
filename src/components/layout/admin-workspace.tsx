@@ -19,7 +19,7 @@ export function AdminWorkspace({ children, staffMode = false }: { children: Reac
   return (
     <QueryProvider>
       <SidebarProvider>
-        <div className="flex h-svh w-full overflow-hidden">
+        <div className="flex h-svh w-full overflow-hidden bg-background">
           <Suspense fallback={<div className="hidden h-full w-64 animate-pulse bg-sidebar md:block" />}>
             <AppSidebar staffMode={staffMode} />
           </Suspense>

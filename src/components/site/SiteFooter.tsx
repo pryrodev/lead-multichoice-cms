@@ -120,7 +120,7 @@ export function SiteFooter() {
       <div className="border-t border-background/10">
         <div className="container-site flex flex-col gap-2 py-6 text-[13px] md:flex-row md:justify-between">
           <p>
-            © {new Date().getFullYear()} LEAD MULTICHOICE Ltd. {t("footer.allRightsReserved")}
+            © {new Date().getFullYear()} LEAD MULTI-CHOICE ® Ltd. {t("footer.allRightsReserved")}
           </p>
           <p>
             <a

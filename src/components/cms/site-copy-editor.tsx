@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { Languages, Save, Search, Send } from "lucide-react";
 import { toast } from "sonner";
 import { SITE_COPY_FIELDS, type SiteCopyContent } from "@/lib/cms/site-copy";
@@ -13,8 +13,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
+import { ReusableTable, type DataTableColumn } from "@/components/data-table/reusable-table";
 
-const PAGE_SIZE = 24;
 const languageFlags: Record<Language, string> = { en: "🇬🇧", rw: "🇷🇼", fr: "🇫🇷", sw: "🇹🇿" };
 
 export function SiteCopyEditor() {
@@ -23,7 +23,6 @@ export function SiteCopyEditor() {
   const publishCopy = usePublishSiteCopy();
   const [content, setContent] = useState<SiteCopyContent>(saved.content);
   const [search, setSearch] = useState("");
-  const [pageIndex, setPageIndex] = useState(0);
   const groups = [...new Set(SITE_COPY_FIELDS.map((field) => field.group))];
   const isDirty = JSON.stringify(content) !== JSON.stringify(saved.content);
 
@@ -80,10 +79,10 @@ export function SiteCopyEditor() {
 
       <div className="relative max-w-xl">
         <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" aria-hidden="true" />
-        <Input value={search} onChange={(event) => { setSearch(event.target.value); setPageIndex(0); }} placeholder="Search English copy or translation key" className="pl-9" aria-label="Search website copy" />
+        <Input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Search English copy or translation key" className="pl-9" aria-label="Search website copy" />
       </div>
 
-      <Tabs defaultValue={groups[0] ?? "Website copy"} onValueChange={() => setPageIndex(0)}>
+      <Tabs defaultValue={groups[0] ?? "Website copy"}>
         <TabsList className="h-auto max-w-full justify-start gap-1 overflow-x-auto">
           {groups.map((group) => <TabsTrigger key={group} value={group}>{group}</TabsTrigger>)}
         </TabsList>
@@ -99,8 +98,6 @@ export function SiteCopyEditor() {
                     language={code}
                     fields={SITE_COPY_FIELDS.filter((field) => field.group === group && (!lowerSearch || `${field.source} ${field.id}`.toLowerCase().includes(lowerSearch)))}
                     content={content}
-                    pageIndex={pageIndex}
-                    onPageChange={setPageIndex}
                     onChange={updateTranslation}
                   />
                 </TabsContent>
@@ -118,45 +115,25 @@ function CopyFields({
   language,
   fields,
   content,
-  pageIndex,
-  onPageChange,
   onChange,
 }: {
   language: Language;
   fields: typeof SITE_COPY_FIELDS;
   content: SiteCopyContent;
-  pageIndex: number;
-  onPageChange: (index: number) => void;
   onChange: (language: Language, fieldId: string, value: string) => void;
 }) {
-  const totalPages = Math.max(1, Math.ceil(fields.length / PAGE_SIZE));
-  const visibleFields = useMemo(() => fields.slice(pageIndex * PAGE_SIZE, (pageIndex + 1) * PAGE_SIZE), [fields, pageIndex]);
+  const columns: DataTableColumn<(typeof SITE_COPY_FIELDS)[number]>[] = [
+    { id: "source", header: "English source", className: "min-w-64 max-w-md", cell: (field) => <div><p className="text-sm leading-relaxed">{field.source}</p><p className="mt-1 font-mono text-xs text-muted-foreground">{field.id}</p></div> },
+    { id: "translation", header: "Translation", className: "min-w-[24rem]", cell: (field) => {
+      const value = content.translations[language][field.id] ?? field.defaults[language];
+      const id = `site-copy-${language}-${field.id.replace(/[^a-zA-Z0-9_-]/g, "-")}`;
+      return <><Label htmlFor={id} className="sr-only">{field.source} ({language})</Label>{Math.max(field.source.length, value.length) > 100
+        ? <Textarea id={id} rows={2} maxLength={5000} value={value} onChange={(event) => onChange(language, field.id, event.target.value)} />
+        : <Input id={id} maxLength={5000} value={value} onChange={(event) => onChange(language, field.id, event.target.value)} />}</>;
+    } },
+  ];
 
   return (
-    <div className="flex flex-col gap-4">
-      <div className="flex flex-wrap items-center justify-between gap-2 text-sm text-muted-foreground">
-        <span>{fields.length} copy fields</span>
-        {totalPages > 1 && <div className="flex items-center gap-2">
-          <Button size="sm" variant="outline" onClick={() => onPageChange(Math.max(0, pageIndex - 1))} disabled={pageIndex === 0}>Previous</Button>
-          <span>Page {pageIndex + 1} of {totalPages}</span>
-          <Button size="sm" variant="outline" onClick={() => onPageChange(Math.min(totalPages - 1, pageIndex + 1))} disabled={pageIndex >= totalPages - 1}>Next</Button>
-        </div>}
-      </div>
-      {visibleFields.length ? <div className="grid gap-4 xl:grid-cols-2">
-        {visibleFields.map((field, index) => {
-          const id = `site-copy-${language}-${pageIndex}-${index}`;
-          const value = content.translations[language][field.id] ?? field.defaults[language];
-          return <Card key={field.id}>
-            <CardHeader className="pb-2"><CardDescription>{field.id}</CardDescription><CardTitle className="text-sm font-medium leading-relaxed">{field.source}</CardTitle></CardHeader>
-            <CardContent>
-              <Label htmlFor={id} className="sr-only">{field.source} ({language})</Label>
-              {Math.max(field.source.length, value.length) > 100
-                ? <Textarea id={id} rows={3} maxLength={5000} value={value} onChange={(event) => onChange(language, field.id, event.target.value)} />
-                : <Input id={id} maxLength={5000} value={value} onChange={(event) => onChange(language, field.id, event.target.value)} />}
-            </CardContent>
-          </Card>;
-        })}
-      </div> : <Card><CardContent className="py-8 text-center text-sm text-muted-foreground">No copy fields match this search.</CardContent></Card>}
-    </div>
+    <div className="rounded-md border"><ReusableTable rows={fields} columns={columns} getRowId={(field) => field.id} initialPageSize={10} pageSizeOptions={[10, 20, 50]} emptyMessage="No copy fields match this search." /></div>
   );
 }

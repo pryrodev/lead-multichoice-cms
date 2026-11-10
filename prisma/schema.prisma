@@ -376,7 +376,7 @@ model AdminPreference {
 
 model CompanySettings {
   id          Int      @id @default(1) @db.UnsignedTinyInt
-  legalName   String   @default("LEAD MULTICHOICE Ltd") @map("legal_name") @db.VarChar(200)
+  legalName   String   @default("LEAD MULTI-CHOICE ® Ltd") @map("legal_name") @db.VarChar(200)
   taxId       String   @default("") @map("tax_id") @db.VarChar(80)
   email       String?  @db.VarChar(254)
   phone       String   @default("+250 788 312 338") @db.VarChar(40)

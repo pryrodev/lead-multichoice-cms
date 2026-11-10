@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
-import { Engagements, Pipeline } from "@/components/dashboard/sections";
+import { EngagementWorkspace } from "@/components/dashboard/engagement-workspace";
 import { PageShell } from "@/components/layout/page";
 
-export const metadata: Metadata = { title: "Engagements — LEAD MULTICHOICE Ltd" };
+export const metadata: Metadata = { title: "Engagements — LEAD MULTI-CHOICE ® Ltd" };
 
-export default function EngagementsPage() {
-  return <PageShell title="Engagements" subtitle="Active business engagements, owners and milestones"><Pipeline /><Engagements /></PageShell>;
+export default async function EngagementsPage({ searchParams }: { searchParams: Promise<{ q?: string }> }) {
+  const { q = "" } = await searchParams;
+  return <PageShell title="Engagements" subtitle="Track client work from first contact through delivery and after-sales support."><EngagementWorkspace initialSearch={q} /></PageShell>;
 }

@@ -1,8 +1,9 @@
 import * as db from "./mock-data";
-import type { Profile, CompanySettings, Settings, Activity, ActivityKind, AdminHomePage, Engagement, Kpis, MediaAsset, Opportunity, Shipment, Stage, Tender, StaffMember } from "./types";
+import type { Profile, CompanySettings, Settings, Activity, ActivityKind, AdminHomePage, AdminSearchResult, Engagement, Kpis, MediaAsset, Opportunity, Shipment, Stage, Tender, StaffMember } from "./types";
 import type { HomePageContent } from "@/lib/cms/homepage";
 import type { SiteVisuals } from "@/lib/cms/site-visuals";
 import type { SiteCopyContent } from "@/lib/cms/site-copy";
+import type { ProcurementResourcesContent } from "@/lib/cms/procurement-resources";
 
 async function requestJson<T>(url: string, init?: RequestInit): Promise<T> {
   const response = await fetch(url, {
@@ -23,6 +24,7 @@ async function requestForm<T>(url: string, body: FormData): Promise<T> {
 }
 
 export const api = {
+  searchAdmin: async (query: string): Promise<AdminSearchResult[]> => (await requestJson<{ results: AdminSearchResult[] }>(`/api/admin/search?q=${encodeURIComponent(query)}`)).results,
   getStages: (): Promise<Stage[]> => Promise.resolve(db.stages),
   getEngagements: (): Promise<Engagement[]> => requestJson("/api/admin/engagements"),
   getTenders: (): Promise<Tender[]> => requestJson("/api/admin/tenders"),
@@ -74,4 +76,9 @@ export const api = {
     requestJson("/api/admin/cms/site-copy", { method: "PUT", body: JSON.stringify(content) }),
   publishSiteCopy: (): Promise<{ published: boolean; publishedAt: string }> =>
     requestJson("/api/admin/cms/site-copy/publish", { method: "POST" }),
+  getProcurementResources: (): Promise<import("./types").AdminProcurementResources> => requestJson("/api/admin/cms/procurement-resources"),
+  saveProcurementResourcesDraft: (content: ProcurementResourcesContent): Promise<Pick<import("./types").AdminProcurementResources, "content" | "hasDraft">> =>
+    requestJson("/api/admin/cms/procurement-resources", { method: "PUT", body: JSON.stringify(content) }),
+  publishProcurementResources: (): Promise<{ published: boolean; publishedAt: string }> =>
+    requestJson("/api/admin/cms/procurement-resources/publish", { method: "POST" }),
 };

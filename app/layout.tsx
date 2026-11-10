@@ -4,7 +4,7 @@ import { Toaster } from "@/components/ui/sonner";
 import "@/styles.css";
 
 export const metadata: Metadata = {
-  title: { default: "LEAD MULTICHOICE Ltd | Trade Facilitation in Rwanda", template: "%s | LEAD MULTICHOICE Ltd" },
+  title: { default: "LEAD MULTI-CHOICE ® Ltd | Trade Facilitation in Rwanda", template: "%s | LEAD MULTI-CHOICE ® Ltd" },
   description: "Rwanda-based trade facilitation, business representation, procurement coordination and supply chain support.",
   icons: {
     icon: [{ url: "/favicon.png", type: "image/png" }],

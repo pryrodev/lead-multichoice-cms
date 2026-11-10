@@ -6,7 +6,7 @@ import { QueryProvider } from "@/components/providers/query-provider";
 
 export const metadata: Metadata = {
   title: "Track a Request",
-  description: "View the latest LEAD MULTICHOICE updates for your request.",
+  description: "View the latest LEAD MULTI-CHOICE ® updates for your request.",
 };
 
 export default function TrackPage() {

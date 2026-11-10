@@ -14,7 +14,7 @@ export function PortalUnavailable() {
         <p className="eyebrow mb-4 text-brass-light">Client portal</p>
         <h1 className="font-display text-[clamp(2rem,4.2vw,3rem)] font-semibold leading-tight lg:whitespace-nowrap">Portal access is not available yet.</h1>
         <p className="mx-auto mt-5 max-w-xl leading-relaxed text-brand-white/85">
-          You can continue exploring the LEAD MULTICHOICE website. Client accounts and request tracking will open when portal access is enabled.
+          You can continue exploring the LEAD MULTI-CHOICE ® website. Client accounts and request tracking will open when portal access is enabled.
         </p>
         <div className="mt-8 flex flex-wrap justify-center gap-3">
           <Button asChild variant="outline" className="border-brand-white/60 bg-brand-white text-brand-primary hover:bg-brand-white/90 hover:text-brand-primary">

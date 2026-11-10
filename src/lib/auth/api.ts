@@ -9,7 +9,8 @@ export async function requireUser(roles?: SessionUser["role"][]) {
   }
   let user: SessionUser | null;
   try {
-    user = await getSessionUser();
+    // API routes can renew the rolling cookie; page/layout checks stay read-only.
+    user = await getSessionUser({ renew: true });
   } catch (error) {
     console.error("Session lookup failed", error);
     return { response: NextResponse.json({ error: "Authentication service unavailable." }, { status: 503 }) } as const;

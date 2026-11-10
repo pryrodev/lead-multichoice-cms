@@ -1,17 +1,19 @@
-﻿"use client";
+"use client";
 
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, Check, Handshake, SearchCheck, Truck } from "lucide-react";
 import { motion } from "motion/react";
 import { services } from "@/content/services";
-import { procurementResources } from "@/content/site";
-import { ButtonLink, CallToActionSection, ExternalLink, SectionHeading, btn } from "@/components/site/ui";
+import { procurementModels } from "@/content/site";
+import { ButtonLink, CallToActionSection, SectionHeading } from "@/components/site/ui";
+import { ProcurementResourceCarousel } from "@/components/site/ProcurementResourceCarousel";
 import { PartnerTicker } from "@/components/site/PartnerTicker";
 import { PhotoScrollSection } from "@/components/site/PhotoScrollSection";
 import { InsightsGrid } from "@/components/site/InsightsGrid";
 import { useI18n } from "@/i18n/I18nProvider";
 import { defaultHomePageContent, type HomePageContent } from "@/lib/cms/homepage";
+import { defaultProcurementResources, type ProcurementResource } from "@/lib/cms/procurement-resources";
 
 
 
@@ -23,7 +25,7 @@ const bridgeSteps = [
   },
   {
     title: "Verify",
-    text: "Vet buyer companies and procurement rules.",
+    text: "Verify buyer companies and procurement rules.",
     icon: Check,
   },
   {
@@ -38,7 +40,7 @@ const bridgeSteps = [
   },
 ];
 
-export default function Home({ contentOverride, initialContent }: { contentOverride?: HomePageContent; initialContent?: HomePageContent } = {}) {
+export default function Home({ contentOverride, initialContent, resources = defaultProcurementResources.resources }: { contentOverride?: HomePageContent; initialContent?: HomePageContent; resources?: ProcurementResource[] } = {}) {
   const { language, tc } = useI18n();
   const cmsPage = contentOverride ?? initialContent ?? defaultHomePageContent;
   const cmsText = (text: string) => cmsPage.translations[language][text as keyof typeof cmsPage.translations.en] ?? tc(text);
@@ -116,7 +118,7 @@ export default function Home({ contentOverride, initialContent }: { contentOverr
           title={cmsText("A Rwanda-based partner connecting international suppliers with local entities.")}
           titleClassName="text-[22px] md:text-[28px]"
           introClassName="text-left md:text-justify"
-          intro={cmsText("Based in Rwanda, Lead Multichoice connects international manufacturers, authorised distributors and suppliers with purchasing entities, institutions and commercial organizations in Rwanda and the wider East African region.")}
+          intro={cmsText("Based in Rwanda, Lead Multi-choice connects international manufacturers, authorised distributors and suppliers with purchasing entities, institutions and commercial organizations in Rwanda and the wider East African region.")}
         />
         <div className="grid gap-5 sm:grid-cols-2">
           <article className="rounded border border-border bg-background p-6 md:p-7">
@@ -144,6 +146,23 @@ export default function Home({ contentOverride, initialContent }: { contentOverr
         </div>
       </section>
 
+      <section className="container-site py-4 md:py-6" aria-labelledby="procurement-models-heading">
+        <div className="mb-5 flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <p className="eyebrow">{cmsText("Procurement models")}</p>
+            <h2 id="procurement-models-heading" className="mt-2 font-display text-xl font-semibold tracking-tight md:text-2xl">{cmsText("Ways we support procurement and project needs.")}</h2>
+          </div>
+        </div>
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          {procurementModels.map((model) => (
+            <article key={model.id} className="h-full rounded-md border border-border bg-transparent p-4 md:p-5">
+              <h3 className="font-display text-base font-semibold text-foreground">{cmsText(model.name)}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{cmsText(model.description)}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
       <PhotoScrollSection
         image="/site/meeting.jpg"
         visualKey="home.marketAccess"
@@ -162,7 +181,7 @@ export default function Home({ contentOverride, initialContent }: { contentOverr
           </div>
           <ol className="mt-9 grid gap-3 sm:grid-cols-2 lg:mt-12 lg:grid-cols-4">
             {bridgeSteps.map(({ title, text, icon: Icon }, index) => (
-              <li key={title} className="rounded-lg border border-brand-white/30 bg-brand-primary/80 p-5 backdrop-blur-sm md:p-6">
+              <li key={title} className="min-w-0 rounded-lg border border-brand-white/30 bg-brand-primary/80 p-5 backdrop-blur-sm md:p-6">
                 <div className="flex items-center justify-between">
                   <Icon className="text-brass-light" size={23} aria-hidden />
                   <span className="font-display text-[13px] font-bold tabular-nums text-brass-light">
@@ -170,7 +189,7 @@ export default function Home({ contentOverride, initialContent }: { contentOverr
                   </span>
                 </div>
                 <h3 className="mt-5 text-[20px] text-brand-white">{cmsText(title)}</h3>
-                <p className="mt-2 text-[13px] text-brand-white/80 lg:whitespace-nowrap">{cmsText(text)}</p>
+                <p className="mt-2 text-xs leading-relaxed text-brand-white/85 [overflow-wrap:anywhere] md:text-[13px]">{cmsText(text)}</p>
               </li>
             ))}
           </ol>
@@ -224,21 +243,7 @@ export default function Home({ contentOverride, initialContent }: { contentOverr
               inverted
             />
           </div>
-          <div className="grid gap-4 sm:grid-cols-2">
-            {procurementResources.map((resource) => (
-              <article key={resource.id} className="rounded border border-border bg-background p-5">
-                <p className="eyebrow">{cmsText("Official procurement portal")}</p>
-                <h3 className="mt-3 text-[18px]">{resource.name}</h3>
-                <p className="mt-2 text-[14px] text-muted-foreground">{cmsText(resource.description)}</p>
-                <ExternalLink
-                  href={resource.url}
-                  className={btn("outline", "mt-5 min-h-10 px-4 py-2 text-[13px]")}
-                >
-                  {cmsText(resource.cta)}
-                </ExternalLink>
-              </article>
-            ))}
-          </div>
+          <ProcurementResourceCarousel resources={resources} />
         </div>
       </PhotoScrollSection>
 

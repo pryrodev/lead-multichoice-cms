@@ -12,6 +12,7 @@ import {
   LayoutDashboard,
   Images,
   ImagePlus,
+  Link as LinkIcon,
   Languages,
   Settings,
   Truck,
@@ -36,14 +37,16 @@ const overview = [
   { title: "Opportunities", url: "/admin/opportunities", icon: ClipboardList },
   { title: "Client requests", url: "/admin/client-requests", icon: UserRoundSearch },
   { title: "Engagements", url: "/admin/engagements", icon: Briefcase },
-  { title: "Tenders", url: "/admin/tenders", icon: Gavel },
+  { title: "Tender tracking", url: "/admin/tenders", icon: Gavel },
   { title: "Logistics", url: "/admin/logistics", icon: Truck },
 ] as const;
 
 const website = [
+  { title: "CMS dashboard", url: "/admin/content", icon: LayoutDashboard },
   { title: "Homepage editor", url: "/admin/content/home", icon: FilePenLine },
   { title: "Website copy", url: "/admin/content/copy", icon: Languages },
   { title: "Website images", url: "/admin/content/visuals", icon: ImagePlus },
+  { title: "Procurement resources", url: "/admin/content/resources", icon: LinkIcon },
   { title: "Media library", url: "/admin/content/media", icon: Images },
 ] as const;
 
@@ -63,7 +66,7 @@ export function AppSidebar({ staffMode = false }: { staffMode?: boolean }) {
         <div className="flex h-14 items-center justify-between gap-3 px-3">
           <Image
             src="/lead_multi-choice_logo.png"
-            alt="LEAD MULTICHOICE"
+            alt="LEAD MULTI-CHOICE ®"
             width={512}
             height={191}
             priority

@@ -38,7 +38,7 @@ const content: Record<Language, MarketAccessContent> = {
     ],
     neighborTitle: "A strategic link to eastern DRC",
     neighborText: "Rwanda has important commercial and geographic links with eastern Democratic Republic of Congo, a neighbouring market with substantial demand and business opportunities.",
-    supportTitle: "How LEAD MULTICHOICE supports market access",
+    supportTitle: "How LEAD MULTI-CHOICE ® supports market access",
     supportIntro: "We bridge international supply opportunities and local demand, helping suppliers understand the Rwandan business environment and build the relationships needed to access the market.",
     support: [
       { title: "Market intelligence and opportunity identification", text: "Identify sector opportunities, procurement requirements, investment prospects and potential demand across Rwanda and the region." },
@@ -65,7 +65,7 @@ const content: Record<Language, MarketAccessContent> = {
     ],
     neighborTitle: "Ihuza ry'ingenzi n'iburasirazuba bwa Kongo",
     neighborText: "U Rwanda rufitanye isano ikomeye y'ubucuruzi n'iy'ahantu n'iburasirazuba bwa Repubulika Iharanira Demokarasi ya Kongo, isoko ry'abaturanyi rifite ibyifuzo n'amahirwe menshi mu bucuruzi.",
-    supportTitle: "Uko LEAD MULTICHOICE ifasha kugera ku isoko",
+    supportTitle: "Uko LEAD MULTI-CHOICE ® ifasha kugera ku isoko",
     supportIntro: "Duhuza amahirwe y'ibicuruzwa mpuzamahanga n'ibikenewe ku isoko ryo mu karere, tugafasha abatanga ibicuruzwa gusobanukirwa ubucuruzi mu Rwanda no kubaka umubano ukenewe kugira ngo bagere ku isoko.",
     support: [
       { title: "Amakuru y'isoko no kumenya amahirwe", text: "Kumenya amahirwe mu nzego zitandukanye, ibisabwa mu masoko, amahirwe y'ishoramari n'ibikenewe mu Rwanda no mu karere." },
@@ -92,7 +92,7 @@ const content: Record<Language, MarketAccessContent> = {
     ],
     neighborTitle: "Un lien stratégique avec l'est de la RDC",
     neighborText: "Le Rwanda entretient des liens commerciaux et géographiques importants avec l'est de la République démocratique du Congo, un marché voisin où la demande et les possibilités commerciales sont considérables.",
-    supportTitle: "Comment LEAD MULTICHOICE facilite l'accès au marché",
+    supportTitle: "Comment LEAD MULTI-CHOICE ® facilite l'accès au marché",
     supportIntro: "Nous faisons le lien entre l'offre internationale et la demande locale. Nous aidons les fournisseurs à comprendre l'environnement commercial rwandais et à établir les relations nécessaires pour accéder au marché.",
     support: [
       { title: "Intelligence de marché et repérage des opportunités", text: "Repérer les possibilités sectorielles, les exigences des marchés publics, les perspectives d'investissement et la demande potentielle au Rwanda et dans la région." },
@@ -119,7 +119,7 @@ const content: Record<Language, MarketAccessContent> = {
     ],
     neighborTitle: "Kiungo muhimu na mashariki mwa DRC",
     neighborText: "Rwanda ina uhusiano muhimu wa kibiashara na kijiografia na mashariki mwa Jamhuri ya Kidemokrasia ya Kongo, soko jirani lenye mahitaji makubwa na fursa za biashara.",
-    supportTitle: "Jinsi LEAD MULTICHOICE inavyosaidia upatikanaji wa soko",
+    supportTitle: "Jinsi LEAD MULTI-CHOICE ® inavyosaidia upatikanaji wa soko",
     supportIntro: "Tunaunganisha fursa za ugavi wa kimataifa na mahitaji ya ndani. Tunawasaidia wauzaji kuelewa mazingira ya biashara ya Rwanda na kujenga mahusiano yanayohitajika kuingia sokoni.",
     support: [
       { title: "Taarifa za soko na kutambua fursa", text: "Tambua fursa za sekta, mahitaji ya ununuzi, matarajio ya uwekezaji na mahitaji yanayoweza kuwepo Rwanda na katika eneo hili." },

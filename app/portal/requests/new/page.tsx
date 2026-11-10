@@ -4,7 +4,7 @@ import { ClientRequestForm } from "@/components/client-portal/request-form";
 import { getSessionUser } from "@/lib/auth/session";
 import { PortalFrame } from "@/components/client-portal/portal-frame";
 
-export const metadata: Metadata = { title: "Submit a request — LEAD MULTICHOICE Ltd" };
+export const metadata: Metadata = { title: "Submit a request — LEAD MULTI-CHOICE ® Ltd" };
 
 export default async function NewClientRequestPage() {
   let user;

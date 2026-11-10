@@ -26,7 +26,7 @@ export default function About() {
           title={tc("Registered in Rwanda since 2015")}
         />
         <p className="mt-6 max-w-3xl leading-relaxed text-muted-foreground">
-          {tc("LEAD MULTICHOICE is a private limited company registered with the Rwanda Development Board and headquartered in Remera, Kigali.")}
+          {tc("LEAD MULTI-CHOICE ® is a private limited company registered with the Rwanda Development Board and headquartered in Remera, Kigali.")}
         </p>
       </section>
       <PhotoScrollSection image="/site/meeting.jpg" visualKey="about.mission" overlayClassName="bg-brand-primary/50" className="py-12 text-background md:py-16">

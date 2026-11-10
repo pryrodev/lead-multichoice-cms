@@ -1,15 +1,15 @@
 "use client";
 
 const heroImage = "/site/warehouse.jpg";
-import { procurementResources } from "@/content/site";
+import type { ProcurementResource } from "@/lib/cms/procurement-resources";
 import { ButtonLink, PageHero } from "@/components/site/ui";
-import { ProcurementResourceCard } from "@/components/site/sections";
+import { ProcurementResourceCarousel } from "@/components/site/ProcurementResourceCarousel";
 import { PhotoScrollSection } from "@/components/site/PhotoScrollSection";
 import { useI18n } from "@/i18n/I18nProvider";
 
 
 
-export default function Procurement() {
+export default function Procurement({ resources }: { resources: ProcurementResource[] }) {
   const { t, tc } = useI18n();
   return (
     <>
@@ -22,11 +22,7 @@ export default function Procurement() {
         alt="Organised warehouse shelves"
       />
       <section className="container-site py-12">
-        <div className="grid gap-6 md:grid-cols-2">
-          {procurementResources.map((r) => (
-            <ProcurementResourceCard key={r.id} r={r} />
-          ))}
-        </div>
+        <ProcurementResourceCarousel resources={resources} />
       </section>
       <PhotoScrollSection image="/site/hero-port.jpg" visualKey="procurement.portals" overlayClassName="bg-brand-white/88" className="py-12">
         <div className="container-site grid gap-12 lg:grid-cols-2 lg:gap-20">
@@ -42,7 +38,7 @@ export default function Procurement() {
             </p>
             <p>
               {tc(
-                "LEAD MULTICHOICE is not affiliated with or the owner of either portal, and this website is not connected to them. We cannot guarantee tender awards, approve bids or issue procurement decisions. Always rely on the official source for current information.",
+                "LEAD MULTI-CHOICE ® is not affiliated with or the owner of either portal, and this website is not connected to them. We cannot guarantee tender awards, approve bids or issue procurement decisions. Always rely on the official source for current information.",
               )}
             </p>
           </div>
@@ -54,7 +50,7 @@ export default function Procurement() {
           </h2>
           <p className="mt-4 text-background/75">
             {tc(
-              "Suppliers and institutional buyers can contact LEAD MULTICHOICE to discuss appropriate coordination support, from supplier introductions to logistics and delivery follow-up.",
+              "Suppliers and institutional buyers can contact LEAD MULTI-CHOICE ® to discuss appropriate coordination support, from supplier introductions to logistics and delivery follow-up.",
             )}
           </p>
           <ButtonLink href="/contact" variant="light" className="mt-8" arrow>

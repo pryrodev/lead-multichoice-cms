@@ -9,9 +9,11 @@ import { useMediaAssets, usePublishSiteVisuals, useSaveSiteVisualsDraft, useSite
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { ReusableTable, type DataTableColumn } from "@/components/data-table/reusable-table";
+
+type VisualField = (typeof SITE_VISUAL_FIELDS)[number];
 
 export function SiteVisualsEditor() {
   const saved = useSiteVisualsDraft();
@@ -45,6 +47,18 @@ export function SiteVisualsEditor() {
     setContent((current) => ({ ...current, [key]: image }));
   };
 
+  const columns: DataTableColumn<VisualField>[] = [
+    { id: "section", header: "Section", className: "min-w-52 font-medium", cell: (field) => field.label },
+    { id: "preview", header: "Current image", className: "w-28", cell: (field) => <div className="relative h-12 w-20 overflow-hidden rounded-md border bg-muted"><Image src={content[field.key] || field.fallback} alt="" fill unoptimized sizes="80px" className="object-cover" /></div> },
+    { id: "image", header: "Choose image", className: "min-w-64", cell: (field) => <Select value={content[field.key]} onValueChange={(image) => updateImage(field.key, image)}>
+      <SelectTrigger aria-label={`Choose image for ${field.label}`}><SelectValue placeholder="Choose an image" /></SelectTrigger>
+      <SelectContent>
+        <SelectItem value={field.fallback}>Use default image</SelectItem>
+        {media.map((asset) => <SelectItem key={asset.id} value={asset.secureUrl}>{asset.altText || asset.publicId}</SelectItem>)}
+      </SelectContent>
+    </Select> },
+  ];
+
   return (
     <div className="flex flex-col gap-5">
       <Card>
@@ -76,33 +90,7 @@ export function SiteVisualsEditor() {
         </TabsList>
         {pages.map((page) => (
           <TabsContent key={page} value={page} className="mt-4">
-            <div className="grid gap-4 lg:grid-cols-2">
-              {SITE_VISUAL_FIELDS.filter(({ key }) => key.startsWith(`${page}.`)).map(({ key, label, fallback }) => {
-                const value = content[key];
-                const id = `visual-${key.replaceAll(".", "-")}`;
-                return (
-                  <Card key={key}>
-                    <CardHeader className="pb-3"><CardTitle className="text-base">{label}</CardTitle></CardHeader>
-                    <CardContent className="grid gap-4 sm:grid-cols-[1fr_12rem] sm:items-end">
-                      <div className="flex flex-col gap-2">
-                        <Label htmlFor={id}>Image</Label>
-                        <Select value={value} onValueChange={(image) => updateImage(key, image)}>
-                          <SelectTrigger id={id}><SelectValue placeholder="Choose an image" /></SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value={fallback}>Use default image</SelectItem>
-                            {media.map((asset) => <SelectItem key={asset.id} value={asset.secureUrl}>{asset.altText || asset.publicId}</SelectItem>)}
-                          </SelectContent>
-                        </Select>
-                        <p className="text-xs text-muted-foreground">Use a clear, wide photo. The page overlay and text stay controlled by the design.</p>
-                      </div>
-                      <div className="relative aspect-[16/9] overflow-hidden rounded-md bg-muted">
-                        <Image src={value || fallback} alt={`${label} preview`} fill unoptimized sizes="192px" className="object-cover" />
-                      </div>
-                    </CardContent>
-                  </Card>
-                );
-              })}
-            </div>
+            <Card className="rounded-md shadow-none"><CardContent className="px-0 pb-0"><ReusableTable rows={SITE_VISUAL_FIELDS.filter(({ key }) => key.startsWith(`${page}.`))} columns={columns} getRowId={(field) => field.key} initialPageSize={10} pageSizeOptions={[10, 20, 50]} emptyMessage="No images are configured for this page." /></CardContent></Card>
           </TabsContent>
         ))}
       </Tabs>
