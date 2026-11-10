@@ -22,6 +22,7 @@ export const nav = [
   { to: "/leadership", label: "Leadership" },
   { to: "/procurement-opportunities", label: "Procurement Opportunities" },
   { to: "/blog", label: "Blog" },
+  { to: "/media", label: "Media" },
   { to: "/contact", label: "Contact" },
 ] as const;
 
@@ -30,7 +31,7 @@ export const headerNavigation = [
   { type: "group", label: "nav.companyGroup", links: ["/about", "/why-us", "/leadership"] },
   { type: "group", label: "nav.solutionsGroup", links: ["/services", "/industries"] },
   { type: "group", label: "nav.opportunitiesGroup", links: ["/market-access-investment", "/procurement-opportunities"] },
-  { type: "group", label: "nav.publicationsGroup", links: ["/blog"] },
+  { type: "group", label: "nav.publicationsGroup", links: ["/blog", "/media"] },
 ] as const;
 
 export const procurementResources = [

@@ -37,6 +37,7 @@ const navKeys: Record<(typeof nav)[number]["to"], MessageKey> = {
   "/leadership": "nav.leadership",
   "/procurement-opportunities": "nav.procurement",
   "/blog": "nav.blog",
+  "/media": "nav.media",
   "/contact": "nav.contact",
 };
 const getNavItem = (to: (typeof nav)[number]["to"]) => nav.find((item) => item.to === to)!;
