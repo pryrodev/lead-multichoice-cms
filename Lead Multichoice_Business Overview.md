@@ -1,4 +1,4 @@
-**Lead Multi-Choice ® Ltd**
+**Lead Multi-Choice ® **
 
 **Your Local Partner. Your Regional Advantage.**
 
@@ -8,7 +8,7 @@ We bridge the gap between international manufacturers, authorized distributors, 
 
 # **1. About Us**
 
-Lead Multi-Choice ® Ltd is a private limited company registered in 2015 with the Rwanda Development Board (RDB) under Rwanda’s applicable company laws, with its headquarters in Remera, Kigali, Rwanda.
+Lead Multi-Choice ® is a private limited company registered in 2015 with the Rwanda Development Board (RDB) under Rwanda’s applicable company laws, with its headquarters in Remera, Kigali, Rwanda.
 
 We specialize in trade facilitation and business representation, connecting international manufacturers, authorized distributors, and suppliers with purchasing entities, institutions, and commercial organizations in Rwanda and the wider East African region.
 
@@ -232,13 +232,13 @@ To become a trusted and respected regional partner for international manufacture
 
 # **9. Partner With Us**
 
-Whether you are an international manufacturer seeking local market access, an authorized distributor pursuing procurement opportunities, a purchasing entity seeking dependable supplier connections, or an organization requiring local operational support, Lead Multi-Choice ® Ltd is ready to facilitate your engagement.
+Whether you are an international manufacturer seeking local market access, an authorized distributor pursuing procurement opportunities, a purchasing entity seeking dependable supplier connections, or an organization requiring local operational support, Lead Multi-Choice ® is ready to facilitate your engagement.
 
 We bring together local market understanding, stakeholder relationships, procurement coordination, logistics support, and professional communication to help turn business opportunities into well-coordinated commercial outcomes.
 
 **From Market Opportunity to Successful Delivery.**
 
-_Lead Multi-Choice ® Ltd — Your Local Partner. Your Regional Advantage._
+_Lead Multi-Choice ® — Your Local Partner. Your Regional Advantage._
 
 **Contact us** via business Email: or via WhatsApp tel:+250 788 312 338 to discuss your business requirements and explore opportunities for collaboration in Rwanda.
 

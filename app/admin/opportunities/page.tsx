@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { OpportunityRegister } from "@/components/opportunities/opportunity-register";
 
-export const metadata: Metadata = { title: "Opportunities — Lead Multi-Choice ® Ltd" };
+export const metadata: Metadata = { title: "Opportunities — Lead Multi-Choice ® " };
 
 export default async function OpportunitiesPage({
   searchParams,

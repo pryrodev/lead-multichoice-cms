@@ -5,8 +5,8 @@ import "@/styles.css";
 
 export const metadata: Metadata = {
   title: {
-    default: "Lead Multi-Choice ® Ltd | Trade Facilitation in Rwanda",
-    template: "%s | Lead Multi-Choice ® Ltd",
+    default: "Lead Multi-Choice ® | Trade Facilitation in Rwanda",
+    template: "%s | Lead Multi-Choice ®",
   },
   description:
     "Rwanda-based trade facilitation, business representation, procurement coordination and supply chain support.",

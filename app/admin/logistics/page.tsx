@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Logistics } from "@/components/dashboard/sections";
 import { PageShell } from "@/components/layout/page";
 
-export const metadata: Metadata = { title: "Logistics — Lead Multi-Choice ® Ltd" };
+export const metadata: Metadata = { title: "Logistics — Lead Multi-Choice ® " };
 
 export default async function LogisticsPage({
   searchParams,

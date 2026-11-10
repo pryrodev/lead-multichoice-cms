@@ -3,7 +3,7 @@ import { AdminClientRequests } from "@/components/client-portal/admin-requests";
 import { PageShell } from "@/components/layout/page";
 import { getSessionUser } from "@/lib/auth/session";
 
-export const metadata: Metadata = { title: "Client requests — Lead Multi-Choice ® Ltd" };
+export const metadata: Metadata = { title: "Client requests — Lead Multi-Choice ® " };
 
 export default async function ClientRequestsPage({
   searchParams,

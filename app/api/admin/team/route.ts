@@ -8,7 +8,7 @@ import { getDb } from "@/lib/db";
 const staffSchema = z.object({
   name: z.string().trim().min(2).max(160),
   email: z.string().trim().email().max(254),
-  organization: z.string().trim().max(200).default("Lead Multi-Choice ® Ltd"),
+  organization: z.string().trim().max(200).default("Lead Multi-Choice ® "),
   password: z.string().min(14).max(128),
 });
 
@@ -35,7 +35,7 @@ export async function POST(request: Request) {
         id: randomBytes(16).toString("hex"),
         name: input.name,
         email: input.email.toLowerCase(),
-        organization: input.organization || "Lead Multi-Choice ® Ltd",
+        organization: input.organization || "Lead Multi-Choice ® ",
         role: "staff",
         canManageEngagements: false,
         passwordHash: await hashPassword(input.password),

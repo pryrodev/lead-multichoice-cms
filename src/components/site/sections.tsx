@@ -7,6 +7,14 @@ import type { ProcurementResource } from "@/lib/cms/procurement-resources";
 import { cn } from "@/lib/utils";
 import { CheckList, ExternalLink, btn } from "./ui";
 import { useI18n } from "@/i18n/I18nProvider";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 export function ProcessTimeline({ inverted }: { inverted?: boolean }) {
   const { tc } = useI18n();
@@ -98,27 +106,76 @@ export function LeadershipProfile({ full }: { full?: boolean }) {
       <div className="max-w-2xl">
         <p className="eyebrow">{leader.title}</p>
         <h3 className="mt-3 text-[30px] md:text-[36px]">{leader.name}</h3>
-        <div className="mt-6 space-y-5 text-charcoal">
-          {(full ? leader.bio : leader.bio.slice(0, 1)).map((p) => (
-            <p key={p.slice(0, 20)}>{tc(p)}</p>
+        <div className="mt-6 max-w-prose space-y-4 text-[15px] leading-7 text-charcoal text-justify">
+          {leader.summary.map((paragraph) => (
+            <p key={paragraph.slice(0, 32)}>{tc(paragraph)}</p>
           ))}
         </div>
         {full ? (
-          <div className="mt-10 border-t border-border pt-8">
-            <h4 className="eyebrow mb-4 text-steel">{t("leadership.expertise")}</h4>
+          <>
+          <Dialog>
+            <DialogTrigger asChild>
+              <button
+                type="button"
+                className="mt-6 inline-flex items-center gap-2 font-semibold text-brand-primary transition-colors hover:text-brand-primary/75 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-4"
+              >
+                {t("leadership.readMore")}
+                <ArrowRight size={16} aria-hidden="true" />
+              </button>
+            </DialogTrigger>
+            <DialogContent className="flex h-[min(90dvh,760px)] max-h-[90dvh] max-w-5xl flex-col gap-0 overflow-hidden rounded-md border-brand-primary/15 bg-warm p-0">
+              <DialogHeader className="gap-0 border-b border-brand-primary/15 px-5 py-3 pr-12 text-left sm:px-7">
+                <p className="eyebrow mb-1 text-brand-primary">{leader.title}</p>
+                <DialogTitle className="font-display text-xl text-charcoal sm:text-2xl">
+                  {leader.name}
+                </DialogTitle>
+                <DialogDescription className="sr-only">
+                  {t("leadership.expertise")} and {t("leadership.qualifications")}
+                </DialogDescription>
+              </DialogHeader>
+              <div className="grid min-h-0 flex-1 grid-rows-[auto_minmax(0,1fr)] overflow-hidden sm:grid-cols-[minmax(190px,0.72fr)_1.28fr] sm:grid-rows-1">
+                <aside className="border-b border-brand-primary/15 bg-brand-primary/[0.035] p-5 sm:overflow-hidden sm:border-b-0 sm:border-r sm:p-6">
+                  <PortraitPlaceholder className="aspect-[4/3] sm:aspect-[4/5]" />
+                </aside>
+                <div className="min-h-0 overscroll-contain overflow-y-auto p-6 sm:p-8">
+                  <div className="space-y-7">
+                    <div className="space-y-4 text-[15px] leading-7 text-charcoal text-justify">
+                      {leader.bio.map((paragraph, index) => (
+                        <p key={index}>{tc(paragraph)}</p>
+                      ))}
+                    </div>
+                    <section className="border-t border-brand-primary/15 pt-5">
+                      <h4 className="eyebrow mb-3 text-steel">{t("leadership.expertise")}</h4>
+                      <ul className="flex flex-wrap gap-2">
+                        {leader.tags.map((tag) => (
+                          <li key={tag} className="rounded-sm border border-brand-primary/15 bg-background px-3 py-1.5 text-[13px] text-charcoal">
+                            {tc(tag)}
+                          </li>
+                        ))}
+                      </ul>
+                    </section>
+                    <section className="border-t border-brand-primary/15 pt-5">
+                      <h4 className="eyebrow mb-3 text-steel">{t("leadership.qualifications")}</h4>
+                      <CheckList items={leader.credentials.map(tc)} />
+                    </section>
+                  </div>
+                </div>
+              </div>
+            </DialogContent>
+          </Dialog>
+          <div className="mt-8 border-t border-border pt-6">
+            <h4 className="eyebrow mb-3 text-steel">{t("leadership.expertise")}</h4>
             <ul className="flex flex-wrap gap-2">
-              {leader.tags.map((t) => (
-                <li
-                  key={t}
-                  className="rounded-sm border border-border bg-warm px-3 py-1.5 text-[13.5px] text-charcoal"
-                >
-                  {tc(t)}
+              {leader.tags.map((tag) => (
+                <li key={tag} className="rounded-sm border border-brand-primary/15 bg-background px-3 py-1.5 text-[13px] text-charcoal">
+                  {tc(tag)}
                 </li>
               ))}
             </ul>
-            <h4 className="eyebrow mb-4 mt-8 text-steel">{t("leadership.qualifications")}</h4>
+            <h4 className="eyebrow mb-3 mt-6 text-steel">{t("leadership.qualifications")}</h4>
             <CheckList items={leader.credentials.map(tc)} />
           </div>
+          </>
         ) : (
           <Link
             href="/leadership"

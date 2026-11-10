@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { EngagementWorkspace } from "@/components/dashboard/engagement-workspace";
 import { PageShell } from "@/components/layout/page";
 
-export const metadata: Metadata = { title: "Engagements — Lead Multi-Choice ® Ltd" };
+export const metadata: Metadata = { title: "Engagements — Lead Multi-Choice ® " };
 
 export default async function EngagementsPage({
   searchParams,

@@ -224,7 +224,7 @@ CREATE TABLE `admin_preferences` (
 -- CreateTable
 CREATE TABLE `company_settings` (
     `id` TINYINT UNSIGNED NOT NULL DEFAULT 1,
-    `legal_name` VARCHAR(200) NOT NULL DEFAULT 'LEAD MULTICHOICE Ltd',
+    `legal_name` VARCHAR(200) NOT NULL DEFAULT 'LEAD MULTICHOICE ',
     `tax_id` VARCHAR(80) NOT NULL DEFAULT '',
     `email` VARCHAR(254) NULL,
     `phone` VARCHAR(40) NOT NULL DEFAULT '+250 788 312 338',

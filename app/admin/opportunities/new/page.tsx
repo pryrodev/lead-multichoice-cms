@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { OpportunityForm } from "@/components/opportunities/opportunity-form";
 
-export const metadata: Metadata = { title: "New opportunity — Lead Multi-Choice ® Ltd" };
+export const metadata: Metadata = { title: "New opportunity — Lead Multi-Choice ® " };
 
 export default function NewOpportunityPage() {
   return (

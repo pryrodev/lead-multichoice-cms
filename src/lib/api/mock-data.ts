@@ -67,7 +67,7 @@ export const engagements: Engagement[] = [
     id: "e3",
     ref: "LMC-ENG-2026-018",
     title: "Medical imaging units supply",
-    buyer: "Rwanda Medical Supply Ltd",
+    buyer: "Rwanda Medical Supply ",
     supplier: "Siemens Healthineers",
     owner: "Grace Ingabire",
     stage: "introductions",

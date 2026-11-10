@@ -100,7 +100,7 @@ export function SectionHeading({
       )}
       <H
         className={cn(
-          H === "h1" ? "text-[38px] md:text-[56px] lg:text-[62px]" : "text-[30px] md:text-[42px]",
+          H === "h1" ? "text-[30px] md:text-[40px] lg:text-[58px]" : "text-[28px] md:text-[36px] lg:text-[48px]",
           "text-balance",
           titleClassName,
           inverted && "text-background",
@@ -263,7 +263,14 @@ export function CallToActionSection({
             {tc(text)}
           </p>
           <div className="mt-9 flex flex-wrap justify-center gap-3">
-          <ButtonLink href="/contact" variant={brandGradient ? "primary" : "light"} arrow>
+          <ButtonLink
+            href="/contact"
+            variant={brandGradient ? "primary" : "light"}
+            {...(!brandGradient
+              ? { className: "brand-rainbow-button header-join-button hover:bg-brass" }
+              : {})}
+            arrow
+          >
               {t("header.discussOpportunity")}
             </ButtonLink>
             <ButtonLink href="/contact" variant={brandGradient ? "outline" : "ghostLight"}>

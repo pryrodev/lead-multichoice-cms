@@ -202,6 +202,11 @@ html:has(.app-main-scroll) {
   scrollbar-gutter: auto;
 }
 
+/* Radix locks body scrolling while a dialog is open; avoid doubling the page gutter. */
+html:has(.dialog-scroll-lock-overlay) {
+  scrollbar-gutter: auto;
+}
+
 .app-main-scroll::-webkit-scrollbar {
   width: 12px;
 }

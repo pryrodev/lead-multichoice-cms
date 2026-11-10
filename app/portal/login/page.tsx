@@ -9,7 +9,7 @@ export const metadata: Metadata = {
     "Sign in to your Lead Multi-Choice ® client portal to follow sourcing requests and engagement updates.",
   robots: { index: false, follow: false },
   openGraph: {
-    title: "Client Portal Sign In | Lead Multi-Choice ® Ltd",
+    title: "Client Portal Sign In | Lead Multi-Choice ® ",
     description:
       "Access your Lead Multi-Choice ® client portal to follow requests and engagement updates.",
     type: "website",

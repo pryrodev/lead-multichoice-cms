@@ -213,21 +213,21 @@ export function SiteHeader() {
             </ul>
           </nav>
           <div className="flex items-center gap-2">
-            <RainbowButton asChild className="header-join-button hidden sm:inline-flex">
+            <RainbowButton asChild className="header-join-button hidden xl:inline-flex">
               <Link href="/portal/login">
                 {t("header.getStarted")}
               </Link>
             </RainbowButton>
             <ButtonLink
               href="/contact"
-              className="cta-attention hidden whitespace-nowrap sm:inline-flex hover:brightness-105 hover:shadow-lg"
+              className="cta-attention hidden whitespace-nowrap xl:inline-flex hover:brightness-105 hover:shadow-lg"
               arrow
             >
               {t("header.letsTalk")}
             </ButtonLink>
             <button
               type="button"
-              className="relative z-[70] inline-flex h-11 w-11 items-center justify-center rounded-full border border-border bg-background text-brand-primary xl:hidden"
+              className="relative z-[70] inline-flex h-11 w-11 items-center justify-center rounded-md border border-brand-primary/20 bg-background text-brand-primary transition-colors hover:bg-brand-primary/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary/30 xl:hidden"
               aria-expanded={open}
               aria-controls="mobile-nav"
               aria-label={open ? t("header.closeMenu") : t("header.openMenu")}
@@ -367,17 +367,16 @@ function MobileNavigation({
           transition={{ delay: 0.4 }}
           className="mt-8 space-y-4"
         >
-          <ButtonLink href="/contact" variant="light" className="w-full" onClick={onClose}>
-            {t("header.discussOpportunity")}
-          </ButtonLink>
-          <ButtonLink
-            href="/portal/login"
-            variant="ghostLight"
-            className="w-full"
-            onClick={onClose}
-          >
-            {t("header.getStarted")}
-          </ButtonLink>
+          <div className="grid grid-cols-1 gap-3 rounded bg-brand-white p-3 min-[400px]:grid-cols-2">
+            <RainbowButton asChild className="header-join-button w-full">
+              <Link href="/portal/login" onClick={onClose}>
+                {t("header.getStarted")}
+              </Link>
+            </RainbowButton>
+            <ButtonLink href="/contact" className="w-full" onClick={onClose} arrow>
+              {t("header.letsTalk")}
+            </ButtonLink>
+          </div>
           <a
             href={`tel:${company.phoneTel}`}
             className="block text-center text-sm text-background/70"

@@ -13,9 +13,10 @@ import { PhotoScrollSection } from "@/components/site/PhotoScrollSection";
 import { InsightsGrid } from "@/components/site/InsightsGrid";
 import { useI18n } from "@/i18n/I18nProvider";
 import { defaultHomePageContent, type HomePageContent } from "@/lib/cms/homepage";
-import { defaultProcurementResources, type ProcurementResource } from "@/lib/cms/procurement-resources";
-
-
+import {
+  defaultProcurementResources,
+  type ProcurementResource,
+} from "@/lib/cms/procurement-resources";
 
 const bridgeSteps = [
   {
@@ -40,10 +41,19 @@ const bridgeSteps = [
   },
 ];
 
-export default function Home({ contentOverride, initialContent, resources = defaultProcurementResources.resources }: { contentOverride?: HomePageContent; initialContent?: HomePageContent; resources?: ProcurementResource[] } = {}) {
+export default function Home({
+  contentOverride,
+  initialContent,
+  resources = defaultProcurementResources.resources,
+}: {
+  contentOverride?: HomePageContent;
+  initialContent?: HomePageContent;
+  resources?: ProcurementResource[];
+} = {}) {
   const { language, tc } = useI18n();
   const cmsPage = contentOverride ?? initialContent ?? defaultHomePageContent;
-  const cmsText = (text: string) => cmsPage.translations[language][text as keyof typeof cmsPage.translations.en] ?? tc(text);
+  const cmsText = (text: string) =>
+    cmsPage.translations[language][text as keyof typeof cmsPage.translations.en] ?? tc(text);
   const heroPort = cmsPage.heroImageUrl || "/site/hero-port.jpg";
   return (
     <>
@@ -86,7 +96,9 @@ export default function Home({ contentOverride, initialContent, resources = defa
               {cmsText("Market Access | Supplier Engagement | Trade Facilitation")}
             </motion.p>
             <h1 className="max-w-4xl text-[20px] leading-[1.04] text-background md:text-[40px] lg:text-[50px]">
-              {cmsText("Connecting international suppliers with purchasing entities across Rwanda and East Africa.")}
+              {cmsText(
+                "Connecting international suppliers with purchasing entities across Rwanda and East Africa.",
+              )}
             </h1>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -115,14 +127,21 @@ export default function Home({ contentOverride, initialContent, resources = defa
       <section className="container-site grid gap-8 py-12 md:py-16 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
         <SectionHeading
           eyebrow={cmsText("About Us")}
-          title={cmsText("A Rwanda-based partner connecting international suppliers with local entities.")}
-          titleClassName="text-[22px] md:text-[28px]"
+          title={cmsText(
+            "A Rwanda-based partner connecting international suppliers with local entities.",
+          )}
+          titleClassName="text-[16px] leading-snug md:text-[2.7rem] lg:text-[2.7rem]"
           introClassName="text-left md:text-justify"
-          intro={cmsText("Based in Rwanda, Lead Multi-choice connects international manufacturers, authorised distributors and suppliers with purchasing entities, institutions and commercial organizations in Rwanda and the wider East African region.")}
+          intro={cmsText(
+            "Based in Rwanda, Lead Multi-choice connects international manufacturers, authorised distributors and suppliers with purchasing entities, institutions and commercial organizations in Rwanda and the wider East African region.",
+          )}
         />
         <div className="grid gap-6 sm:grid-cols-2">
           <article className="group flex flex-col rounded-lg border border-border bg-background p-5 transition-all duration-200 hover:border-brand-primary/40 hover:shadow-sm sm:p-6">
-            <div className="relative aspect-[16/9] w-full shrink-0 overflow-hidden rounded-md bg-muted" aria-hidden="true">
+            <div
+              className="relative aspect-[16/9] w-full shrink-0 overflow-hidden rounded-md bg-muted"
+              aria-hidden="true"
+            >
               <Image
                 src="/site/warehouse.jpg"
                 alt=""
@@ -141,7 +160,10 @@ export default function Home({ contentOverride, initialContent, resources = defa
             </p>
           </article>
           <article className="group flex flex-col rounded-lg border border-border bg-background p-5 transition-all duration-200 hover:border-brand-primary/40 hover:shadow-sm sm:p-6">
-            <div className="relative aspect-[16/9] w-full shrink-0 overflow-hidden rounded-md bg-muted" aria-hidden="true">
+            <div
+              className="relative aspect-[16/9] w-full shrink-0 overflow-hidden rounded-md bg-muted"
+              aria-hidden="true"
+            >
               <Image
                 src="/site/meeting.jpg"
                 alt=""
@@ -166,14 +188,26 @@ export default function Home({ contentOverride, initialContent, resources = defa
         <div className="mb-5 flex flex-wrap items-end justify-between gap-3">
           <div>
             <p className="eyebrow">{cmsText("Procurement models")}</p>
-            <h2 id="procurement-models-heading" className="mt-2 font-display text-xl font-semibold tracking-tight md:text-2xl">{cmsText("Ways we support procurement and project needs.")}</h2>
+            <h2
+              id="procurement-models-heading"
+              className="mt-2 font-display text-xl font-semibold tracking-tight md:text-2xl"
+            >
+              {cmsText("Ways we support procurement and project needs.")}
+            </h2>
           </div>
         </div>
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {procurementModels.map((model) => (
-            <article key={model.id} className="h-full rounded-md border border-border bg-transparent p-4 md:p-5">
-              <h3 className="font-display text-base font-semibold text-foreground">{cmsText(model.name)}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{cmsText(model.description)}</p>
+            <article
+              key={model.id}
+              className="h-full rounded-md border border-border bg-transparent p-4 md:p-5"
+            >
+              <h3 className="font-display text-base font-semibold text-foreground">
+                {cmsText(model.name)}
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                {cmsText(model.description)}
+              </p>
             </article>
           ))}
         </div>
@@ -192,12 +226,17 @@ export default function Home({ contentOverride, initialContent, resources = defa
               {cmsText("From procurement opportunity to delivery acceptance and payment.")}
             </h2>
             <p className="mt-4 max-w-2xl text-[16px] text-brand-white/85 md:text-[18px]">
-              {cmsText("We identify relevant partners, facilitate introductions, and coordinate procurement, logistics, delivery and after-sales follow-up within the agreed scope.")}
+              {cmsText(
+                "We identify relevant partners, facilitate introductions, and coordinate procurement, logistics, delivery and after-sales follow-up within the agreed scope.",
+              )}
             </p>
           </div>
           <ol className="mt-9 grid gap-3 sm:grid-cols-2 lg:mt-12 lg:grid-cols-4">
             {bridgeSteps.map(({ title, text, icon: Icon }, index) => (
-              <li key={title} className="min-w-0 rounded-lg border border-brand-white/30 bg-brand-primary/80 p-5 backdrop-blur-sm md:p-6">
+              <li
+                key={title}
+                className="min-w-0 rounded-lg border border-brand-white/30 bg-brand-primary/80 p-5 backdrop-blur-sm md:p-6"
+              >
                 <div className="flex items-center justify-between">
                   <Icon className="text-brass-light" size={23} aria-hidden />
                   <span className="font-display text-[13px] font-bold tabular-nums text-brass-light">
@@ -205,7 +244,9 @@ export default function Home({ contentOverride, initialContent, resources = defa
                   </span>
                 </div>
                 <h3 className="mt-5 text-[20px] text-brand-white">{cmsText(title)}</h3>
-                <p className="mt-2 text-xs leading-relaxed text-brand-white/85 [overflow-wrap:anywhere] md:text-[13px]">{cmsText(text)}</p>
+                <p className="mt-2 text-xs leading-relaxed text-brand-white/85 [overflow-wrap:anywhere] md:text-[13px]">
+                  {cmsText(text)}
+                </p>
               </li>
             ))}
           </ol>
@@ -237,7 +278,9 @@ export default function Home({ contentOverride, initialContent, resources = defa
               <p className="font-display text-[13px] font-bold tabular-nums text-brass">
                 0{index + 1}
               </p>
-              <h3 className="mt-3 text-[20px] group-hover:text-corporate">{cmsText(service.title)}</h3>
+              <h3 className="mt-3 text-[20px] group-hover:text-corporate">
+                {cmsText(service.title)}
+              </h3>
             </Link>
           ))}
         </div>
@@ -255,7 +298,9 @@ export default function Home({ contentOverride, initialContent, resources = defa
               eyebrow={cmsText("Selected opportunities")}
               title={cmsText("Explore procurement opportunities.")}
               titleClassName="text-[23px] md:text-[30px]"
-              intro={cmsText("Review selected tender and consultancy listings published on Job in Rwanda.")}
+              intro={cmsText(
+                "Review selected tender and consultancy listings published on Job in Rwanda.",
+              )}
               inverted
             />
           </div>

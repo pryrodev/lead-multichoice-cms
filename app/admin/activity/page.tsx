@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { ActivityFeed } from "@/components/dashboard/sections";
 import { PageShell } from "@/components/layout/page";
 
-export const metadata: Metadata = { title: "Activity log — Lead Multi-Choice ® Ltd" };
+export const metadata: Metadata = { title: "Activity log — Lead Multi-Choice ® " };
 
 export default function ActivityPage() {
   return (

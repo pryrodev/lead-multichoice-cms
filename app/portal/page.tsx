@@ -4,7 +4,7 @@ import { ClientDashboard } from "@/components/client-portal/client-dashboard";
 import { getSessionUser } from "@/lib/auth/session";
 import { PortalFrame } from "@/components/client-portal/portal-frame";
 
-export const metadata: Metadata = { title: "My requests — Lead Multi-Choice ® Ltd" };
+export const metadata: Metadata = { title: "My requests — Lead Multi-Choice ® " };
 
 export default async function ClientPortalPage() {
   let user;

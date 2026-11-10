@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { TenderTable } from "@/components/dashboard/sections";
 import { PageShell } from "@/components/layout/page";
 
-export const metadata: Metadata = { title: "Tenders — Lead Multi-Choice ® Ltd" };
+export const metadata: Metadata = { title: "Tenders — Lead Multi-Choice ® " };
 
 export default async function TendersPage({
   searchParams,

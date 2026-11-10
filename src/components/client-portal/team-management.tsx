@@ -67,7 +67,7 @@ export function TeamManagement() {
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     try {
-      await create.mutateAsync({ ...form, organization: "Lead Multi-Choice ® Ltd" });
+      await create.mutateAsync({ ...form, organization: "Lead Multi-Choice ® " });
       setForm({ name: "", email: "", password: "" });
       toast.success("Staff account created", {
         description: "Engagement access is disabled until you grant it below.",
