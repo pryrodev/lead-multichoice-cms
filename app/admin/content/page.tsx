@@ -8,6 +8,8 @@ export const metadata: Metadata = {
   description: "Manage website content, publishing status, and media assets.",
 };
 
+export const dynamic = "force-dynamic";
+
 export default async function WebsiteCmsPage() {
   const items = await getCmsDashboardItems();
 

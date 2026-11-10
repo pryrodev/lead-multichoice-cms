@@ -6,7 +6,9 @@ import { defaultSiteVisuals, mergeSiteVisuals, type SiteVisuals } from "./site-v
 import { mergeSiteCopy, type SiteCopyContent } from "./site-copy";
 import { defaultProcurementResources, mergeProcurementResources, type ProcurementResourcesContent } from "./procurement-resources";
 
-export const getPublishedHomePage = unstable_cache(async (): Promise<HomePageContent> => {
+const isProductionBuild = () => process.env["NEXT_PHASE"] === "phase-production-build";
+
+const loadPublishedHomePage = async (): Promise<HomePageContent> => {
   try {
     const page = await getDb().sitePage.findUnique({ where: { slug: "home" }, select: { publishedContent: true } });
     const stored = page?.publishedContent;
@@ -16,9 +18,11 @@ export const getPublishedHomePage = unstable_cache(async (): Promise<HomePageCon
     console.error("Could not load published homepage content", error);
     return defaultHomePageContent;
   }
-}, ["published-home-page-v1"], { revalidate: 3600, tags: ["cms-homepage"] });
+};
+const cachedPublishedHomePage = unstable_cache(loadPublishedHomePage, ["published-home-page-v1"], { revalidate: 3600, tags: ["cms-homepage"] });
+export const getPublishedHomePage = () => isProductionBuild() ? Promise.resolve(defaultHomePageContent) : cachedPublishedHomePage();
 
-export const getPublishedSiteVisuals = unstable_cache(async (): Promise<SiteVisuals> => {
+const loadPublishedSiteVisuals = async (): Promise<SiteVisuals> => {
   try {
     const page = await getDb().sitePage.findUnique({ where: { slug: "site-visuals" }, select: { publishedContent: true } });
     const stored = page?.publishedContent;
@@ -28,9 +32,11 @@ export const getPublishedSiteVisuals = unstable_cache(async (): Promise<SiteVisu
     console.error("Could not load published site visuals", error);
     return defaultSiteVisuals;
   }
-}, ["published-site-visuals-v1"], { revalidate: 3600, tags: ["cms-site-visuals"] });
+};
+const cachedPublishedSiteVisuals = unstable_cache(loadPublishedSiteVisuals, ["published-site-visuals-v1"], { revalidate: 3600, tags: ["cms-site-visuals"] });
+export const getPublishedSiteVisuals = () => isProductionBuild() ? Promise.resolve(defaultSiteVisuals) : cachedPublishedSiteVisuals();
 
-export const getPublishedSiteCopy = unstable_cache(async (): Promise<SiteCopyContent | null> => {
+const loadPublishedSiteCopy = async (): Promise<SiteCopyContent | null> => {
   try {
     const page = await getDb().sitePage.findUnique({ where: { slug: "site-copy" }, select: { publishedContent: true } });
     const stored = page?.publishedContent;
@@ -40,9 +46,11 @@ export const getPublishedSiteCopy = unstable_cache(async (): Promise<SiteCopyCon
     console.error("Could not load published site copy", error);
     return null;
   }
-}, ["published-site-copy-v1"], { revalidate: 3600, tags: ["cms-site-copy"] });
+};
+const cachedPublishedSiteCopy = unstable_cache(loadPublishedSiteCopy, ["published-site-copy-v1"], { revalidate: 3600, tags: ["cms-site-copy"] });
+export const getPublishedSiteCopy = () => isProductionBuild() ? Promise.resolve(null) : cachedPublishedSiteCopy();
 
-export const getPublishedProcurementResources = unstable_cache(async (): Promise<ProcurementResourcesContent> => {
+const loadPublishedProcurementResources = async (): Promise<ProcurementResourcesContent> => {
   try {
     const page = await getDb().sitePage.findUnique({ where: { slug: "procurement-resources" }, select: { publishedContent: true } });
     const stored = page?.publishedContent;
@@ -52,4 +60,6 @@ export const getPublishedProcurementResources = unstable_cache(async (): Promise
     console.error("Could not load published procurement resources", error);
     return defaultProcurementResources;
   }
-}, ["published-procurement-resources-v1"], { revalidate: 3600, tags: ["cms-procurement-resources"] });
+};
+const cachedPublishedProcurementResources = unstable_cache(loadPublishedProcurementResources, ["published-procurement-resources-v1"], { revalidate: 3600, tags: ["cms-procurement-resources"] });
+export const getPublishedProcurementResources = () => isProductionBuild() ? Promise.resolve(defaultProcurementResources) : cachedPublishedProcurementResources();
