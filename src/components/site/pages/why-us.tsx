@@ -1,11 +1,9 @@
 "use client";
 
 const meeting = "/site/meeting.jpg";
-import { CallToActionSection, PageHero, SectionHeading } from "@/components/site/ui";
+import { PageHero, SectionHeading } from "@/components/site/ui";
 import { PhotoScrollSection } from "@/components/site/PhotoScrollSection";
 import { useI18n } from "@/i18n/I18nProvider";
-
-
 
 const points = [
   {
@@ -54,18 +52,26 @@ export default function WhyUs() {
           ))}
         </ol>
       </section>
-      <PhotoScrollSection image="/site/warehouse.jpg" visualKey="why.agency" overlayClassName="bg-brand-primary/75" className="py-12 md:py-16">
+      <PhotoScrollSection
+        image="/site/warehouse.jpg"
+        visualKey="why.agency"
+        overlayClassName="bg-brand-primary/75"
+        className="py-12 md:py-16"
+      >
         <div className="container-site">
           <SectionHeading
             inverted
             eyebrow={t("about.agencyModel")}
-            title={tc("Our agency model is built on transparency and clearly defined responsibilities.")}
+            title={tc(
+              "Our agency model is built on transparency and clearly defined responsibilities.",
+            )}
             titleClassName="font-semibold"
-            intro={tc("Where transactions are facilitated through our agency, the buyer and seller enter into their own commercial agreements and manage their contractual and payment obligations directly, unless otherwise agreed. LEAD MULTI-CHOICE ® supports the relationship through coordination, communication, follow-up, and operational assistance within the agreed scope of engagement.")}
+            intro={tc(
+              "Where transactions are facilitated through our agency, the buyer and seller enter into their own commercial agreements and manage their contractual and payment obligations directly, unless otherwise agreed. Lead Multi-Choice ® supports the relationship through coordination, communication, follow-up, and operational assistance within the agreed scope of engagement.",
+            )}
           />
         </div>
       </PhotoScrollSection>
-      <CallToActionSection visualKey="why.cta" />
     </>
   );
 }

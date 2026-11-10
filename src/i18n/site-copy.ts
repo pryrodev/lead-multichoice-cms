@@ -17,6 +17,18 @@ const rw: Record<string, string> = {
   "Procurement Resources": "Amakuru ku Masoko",
   "Stay connected to procurement opportunities.": "Komeza gukurikirana amahirwe y'amasoko.",
   "Why Work With Us": "Impamvu Mwakorana Natwe",
+  "Selected opportunities": "Amahirwe yatoranyijwe",
+  "Explore procurement opportunities.": "Shakisha amahirwe y'amasoko.",
+  "Review selected tender and consultancy listings published on Job in Rwanda.": "Reba amatangazo y'amasoko n'ubujyanama yashyizwe kuri Job in Rwanda.",
+  "Selected procurement opportunities.": "Amahirwe y'amasoko yatoranyijwe.",
+  "Browse selected tender and consultancy listings published on Job in Rwanda.": "Reba amatangazo y'amasoko n'ubujyanama yatoranyijwe kuri Job in Rwanda.",
+  "About these opportunity listings": "Ibyerekeye aya mahirwe",
+  "These listings are hosted by Job in Rwanda and link to individual consultancy and tender opportunities. Open each listing to review the full notice, requirements and deadline.": "Aya matangazo ari kuri Job in Rwanda kandi ajyana ku mahirwe yihariye y'amasoko n'ubujyanama. Fungura buri tangazo urebe ibisabwa n'itariki ntarengwa.",
+  "Lead Multi-Choice ® does not own or administer these listings and cannot guarantee an award or issue procurement decisions. Confirm the requirements, submission process and closing date in each original listing.": "Lead Multi-Choice ® ntabwo ari yo nyiri aya matangazo kandi ntishobora kwemeza ko uzatsinda cyangwa gufata ibyemezo by'amasoko. Reba ibisabwa, uko usaba n'itariki yo gusoza muri buri tangazo.",
+  "View opportunity": "Reba amahirwe",
+  "Terms of reference for hiring a consultancy firm to conduct a participant initial socio-economic analysis.": "Amabwiriza agenga gushaka ikigo cy'ubujyanama kizakora isesengura ry'ibanze ry'imibereho n'ubukungu by'abitabiriye.",
+  "Expression of interest for consultancy services covering hospital design, costing and environmental assessment.": "Itangazo ryo kugaragaza ubushake bwo gutanga serivisi z'ubujyanama ku mushinga w'ibitaro, ikiguzi no gusuzuma ingaruka ku bidukikije.",
+  "Tender for a two-year non-exclusive framework agreement for enterprise development training.": "Isoko ry'amasezerano y'imyaka ibiri yo guhugura mu guteza imbere ibigo.",
   "Local understanding. Professional coordination. Lasting relationships.":
     "Gusobanukirwa aho dukorera. Guhuza ibikorwa kinyamwuga. Ubufatanye burambye.",
   "Trade Facilitation | Procurement | Logistics": "Korohereza Ubucuruzi | Amasoko | Ubwikorezi",
@@ -176,6 +188,18 @@ const fr: Record<string, string> = {
   "Procurement Resources": "Ressources sur les achats",
   "Stay connected to procurement opportunities.": "Restez informé des opportunités d’achat.",
   "Why Work With Us": "Pourquoi travailler avec nous",
+  "Selected opportunities": "Opportunités sélectionnées",
+  "Explore procurement opportunities.": "Découvrez les opportunités d'approvisionnement.",
+  "Review selected tender and consultancy listings published on Job in Rwanda.": "Consultez les appels d'offres et missions de conseil publiés sur Job in Rwanda.",
+  "Selected procurement opportunities.": "Opportunités d'approvisionnement sélectionnées.",
+  "Browse selected tender and consultancy listings published on Job in Rwanda.": "Parcourez les appels d'offres et missions de conseil publiés sur Job in Rwanda.",
+  "About these opportunity listings": "À propos de ces opportunités",
+  "These listings are hosted by Job in Rwanda and link to individual consultancy and tender opportunities. Open each listing to review the full notice, requirements and deadline.": "Ces annonces sont hébergées par Job in Rwanda et renvoient vers des appels d'offres et missions de conseil. Consultez chaque annonce pour connaître les exigences et la date limite.",
+  "Lead Multi-Choice ® does not own or administer these listings and cannot guarantee an award or issue procurement decisions. Confirm the requirements, submission process and closing date in each original listing.": "Lead Multi-Choice ® ne possède ni ne gère ces annonces et ne peut garantir une attribution ni prendre de décision d'achat. Vérifiez les exigences, la procédure et la date limite dans chaque annonce.",
+  "View opportunity": "Voir l'opportunité",
+  "Terms of reference for hiring a consultancy firm to conduct a participant initial socio-economic analysis.": "Termes de référence pour recruter un cabinet chargé de réaliser une analyse socio-économique initiale des participants.",
+  "Expression of interest for consultancy services covering hospital design, costing and environmental assessment.": "Manifestation d'intérêt pour des services de conseil portant sur la conception d'un hôpital, le chiffrage et l'évaluation environnementale.",
+  "Tender for a two-year non-exclusive framework agreement for enterprise development training.": "Appel d'offres pour un accord-cadre non exclusif de deux ans portant sur la formation au développement des entreprises.",
   "Local understanding. Professional coordination. Lasting relationships.":
     "Connaissance locale. Coordination professionnelle. Relations durables.",
   "Trade Facilitation | Procurement | Logistics": "Facilitation des échanges | Achats | Logistique",
@@ -335,6 +359,18 @@ const sw: Record<string, string> = {
   "Procurement Resources": "Rasilimali za Ununuzi",
   "Stay connected to procurement opportunities.": "Endelea kufuatilia fursa za ununuzi.",
   "Why Work With Us": "Kwa Nini Ushirikiane Nasi",
+  "Selected opportunities": "Fursa zilizochaguliwa",
+  "Explore procurement opportunities.": "Gundua fursa za ununuzi.",
+  "Review selected tender and consultancy listings published on Job in Rwanda.": "Kagua matangazo ya zabuni na ushauri yaliyochapishwa kwenye Job in Rwanda.",
+  "Selected procurement opportunities.": "Fursa za ununuzi zilizochaguliwa.",
+  "Browse selected tender and consultancy listings published on Job in Rwanda.": "Vinjari matangazo ya zabuni na ushauri yaliyochapishwa kwenye Job in Rwanda.",
+  "About these opportunity listings": "Kuhusu matangazo haya ya fursa",
+  "These listings are hosted by Job in Rwanda and link to individual consultancy and tender opportunities. Open each listing to review the full notice, requirements and deadline.": "Matangazo haya yamewekwa kwenye Job in Rwanda na yanaunganisha na zabuni na kazi za ushauri. Fungua kila tangazo uangalie mahitaji na tarehe ya mwisho.",
+  "Lead Multi-Choice ® does not own or administer these listings and cannot guarantee an award or issue procurement decisions. Confirm the requirements, submission process and closing date in each original listing.": "Lead Multi-Choice ® haimiliki wala kusimamia matangazo haya na haiwezi kuhakikisha tuzo au kutoa maamuzi ya ununuzi. Thibitisha mahitaji, utaratibu wa kutuma na tarehe ya mwisho kwenye tangazo husika.",
+  "View opportunity": "Tazama fursa",
+  "Terms of reference for hiring a consultancy firm to conduct a participant initial socio-economic analysis.": "Masharti ya kuajiri kampuni ya ushauri kufanya uchambuzi wa awali wa kijamii na kiuchumi wa washiriki.",
+  "Expression of interest for consultancy services covering hospital design, costing and environmental assessment.": "Wito wa kuonyesha nia ya kutoa ushauri kuhusu usanifu wa hospitali, makadirio ya gharama na tathmini ya mazingira.",
+  "Tender for a two-year non-exclusive framework agreement for enterprise development training.": "Zabuni ya makubaliano ya miaka miwili yasiyo ya kipekee kwa mafunzo ya maendeleo ya biashara.",
   "Local understanding. Professional coordination. Lasting relationships.":
     "Uelewa wa ndani. Uratibu wa kitaalamu. Mahusiano ya kudumu.",
   "Trade Facilitation | Procurement | Logistics": "Uwezeshaji wa Biashara | Ununuzi | Usafirishaji",
@@ -490,12 +526,12 @@ Object.assign(rw, {
   "The role of external procurement portals": "Uruhare rw'imbuga zo hanze zigaragaza amasoko",
   "Official portals publish procurement notices, tender documents, deadlines and participation requirements. They are owned and operated by their respective institutions, and all submissions, evaluations and award decisions are handled through them.":
     "Imbuga zemewe zitangaza amasoko, inyandiko zayo, igihe ntarengwa n'ibisabwa kugira ngo uyitabire. Zicungwa n'inzego zazo, kandi inyandiko zitangwa, isuzuma n'ibyemezo by'abatsindiye amasoko bikorwa binyuze kuri izo nzego.",
-  "LEAD MULTI-CHOICE ® is not affiliated with or the owner of either portal, and this website is not connected to them. We cannot guarantee tender awards, approve bids or issue procurement decisions. Always rely on the official source for current information.":
-    "LEAD MULTI-CHOICE ® ntifitanye isano n'izo mbuga kandi ntizifite; n'uru rubuga ntiruzigenzura. Ntidushobora kwemeza uzatsinda isoko, kwemeza inyandiko z'ipiganwa cyangwa gufata ibyemezo by'amasoko. Buri gihe reba amakuru agezweho ku rubuga rwemewe.",
+  "Lead Multi-Choice ® is not affiliated with or the owner of either portal, and this website is not connected to them. We cannot guarantee tender awards, approve bids or issue procurement decisions. Always rely on the official source for current information.":
+    "Lead Multi-Choice ® ntifitanye isano n'izo mbuga kandi ntizifite; n'uru rubuga ntiruzigenzura. Ntidushobora kwemeza uzatsinda isoko, kwemeza inyandiko z'ipiganwa cyangwa gufata ibyemezo by'amasoko. Buri gihe reba amakuru agezweho ku rubuga rwemewe.",
   "Coordination support": "Gufasha guhuza ibikorwa",
   "Need help acting on an opportunity?": "Ukeneye ubufasha bwo gukurikirana amahirwe?",
-  "Suppliers and institutional buyers can contact LEAD MULTI-CHOICE ® to discuss appropriate coordination support, from supplier introductions to logistics and delivery follow-up.":
-    "Abatanga ibicuruzwa n'inzego z'abaguzi bashobora kuvugana na LEAD MULTI-CHOICE ® bakaganira ku bufasha bukwiye bwo guhuza ibikorwa, kuva ku guhuza abatanga ibicuruzwa kugeza ku bwikorezi no gukurikirana ishyikirizwa.",
+  "Suppliers and institutional buyers can contact Lead Multi-Choice ® to discuss appropriate coordination support, from supplier introductions to logistics and delivery follow-up.":
+    "Abatanga ibicuruzwa n'inzego z'abaguzi bashobora kuvugana na Lead Multi-Choice ® bakaganira ku bufasha bukwiye bwo guhuza ibikorwa, kuva ku guhuza abatanga ibicuruzwa kugeza ku bwikorezi no gukurikirana ishyikirizwa.",
 });
 Object.assign(fr, {
   "Lead Multi-choice": "Lead Multi-choice",
@@ -514,12 +550,12 @@ Object.assign(fr, {
   "The role of external procurement portals": "Rôle des portails d’achat externes",
   "Official portals publish procurement notices, tender documents, deadlines and participation requirements. They are owned and operated by their respective institutions, and all submissions, evaluations and award decisions are handled through them.":
     "Les portails officiels publient les avis d’achat, les dossiers d’appel d’offres, les échéances et les conditions de participation. Ils sont gérés par leurs institutions respectives, qui traitent les soumissions, évaluations et décisions d’attribution.",
-  "LEAD MULTI-CHOICE ® is not affiliated with or the owner of either portal, and this website is not connected to them. We cannot guarantee tender awards, approve bids or issue procurement decisions. Always rely on the official source for current information.":
-    "LEAD MULTI-CHOICE ® n’est affiliée à aucun de ces portails et ne les possède pas. Ce site n’y est pas non plus rattaché. Nous ne pouvons garantir l’attribution d’un marché, approuver une offre ni prendre de décision d’achat. Consultez toujours la source officielle pour obtenir les informations à jour.",
+  "Lead Multi-Choice ® is not affiliated with or the owner of either portal, and this website is not connected to them. We cannot guarantee tender awards, approve bids or issue procurement decisions. Always rely on the official source for current information.":
+    "Lead Multi-Choice ® n’est affiliée à aucun de ces portails et ne les possède pas. Ce site n’y est pas non plus rattaché. Nous ne pouvons garantir l’attribution d’un marché, approuver une offre ni prendre de décision d’achat. Consultez toujours la source officielle pour obtenir les informations à jour.",
   "Coordination support": "Appui à la coordination",
   "Need help acting on an opportunity?": "Besoin d’aide pour donner suite à une opportunité ?",
-  "Suppliers and institutional buyers can contact LEAD MULTI-CHOICE ® to discuss appropriate coordination support, from supplier introductions to logistics and delivery follow-up.":
-    "Les fournisseurs et acheteurs institutionnels peuvent contacter LEAD MULTI-CHOICE ® pour discuter d’un appui adapté, de la mise en relation avec des fournisseurs au suivi logistique et à la livraison.",
+  "Suppliers and institutional buyers can contact Lead Multi-Choice ® to discuss appropriate coordination support, from supplier introductions to logistics and delivery follow-up.":
+    "Les fournisseurs et acheteurs institutionnels peuvent contacter Lead Multi-Choice ® pour discuter d’un appui adapté, de la mise en relation avec des fournisseurs au suivi logistique et à la livraison.",
 });
 Object.assign(sw, {
   "Lead Multi-choice": "Lead Multi-choice",
@@ -537,12 +573,12 @@ Object.assign(sw, {
   "The role of external procurement portals": "Jukumu la tovuti za ununuzi za nje",
   "Official portals publish procurement notices, tender documents, deadlines and participation requirements. They are owned and operated by their respective institutions, and all submissions, evaluations and award decisions are handled through them.":
     "Tovuti rasmi huchapisha matangazo ya ununuzi, nyaraka za zabuni, tarehe za mwisho na masharti ya kushiriki. Taasisi husika huzimiliki na kuziendesha, na hushughulikia uwasilishaji, tathmini na maamuzi ya tuzo kupitia tovuti hizo.",
-  "LEAD MULTI-CHOICE ® is not affiliated with or the owner of either portal, and this website is not connected to them. We cannot guarantee tender awards, approve bids or issue procurement decisions. Always rely on the official source for current information.":
-    "LEAD MULTI-CHOICE ® haihusiani na wala haimiliki tovuti hizo, na tovuti hii haijaunganishwa nazo. Hatuwezi kuhakikisha ushindi wa zabuni, kuidhinisha zabuni au kutoa maamuzi ya ununuzi. Tumia chanzo rasmi kupata taarifa za sasa.",
+  "Lead Multi-Choice ® is not affiliated with or the owner of either portal, and this website is not connected to them. We cannot guarantee tender awards, approve bids or issue procurement decisions. Always rely on the official source for current information.":
+    "Lead Multi-Choice ® haihusiani na wala haimiliki tovuti hizo, na tovuti hii haijaunganishwa nazo. Hatuwezi kuhakikisha ushindi wa zabuni, kuidhinisha zabuni au kutoa maamuzi ya ununuzi. Tumia chanzo rasmi kupata taarifa za sasa.",
   "Coordination support": "Msaada wa uratibu",
   "Need help acting on an opportunity?": "Unahitaji msaada wa kufuatilia fursa?",
-  "Suppliers and institutional buyers can contact LEAD MULTI-CHOICE ® to discuss appropriate coordination support, from supplier introductions to logistics and delivery follow-up.":
-    "Wasambazaji na wanunuzi wa taasisi wanaweza kuwasiliana na LEAD MULTI-CHOICE ® kujadili msaada unaofaa wa uratibu, kuanzia kuwaunganisha na wasambazaji hadi kufuatilia usafirishaji na uwasilishaji.",
+  "Suppliers and institutional buyers can contact Lead Multi-Choice ® to discuss appropriate coordination support, from supplier introductions to logistics and delivery follow-up.":
+    "Wasambazaji na wanunuzi wa taasisi wanaweza kuwasiliana na Lead Multi-Choice ® kujadili msaada unaofaa wa uratibu, kuanzia kuwaunganisha na wasambazaji hadi kufuatilia usafirishaji na uwasilishaji.",
 });
 
 Object.assign(rw, {
@@ -731,7 +767,7 @@ Object.assign(rw, {
   "Could not save. Please try again.": "Ntibyabashije kubikwa. Ongera ugerageze.",
   "Saved.": "Byabitswe.",
   "Team access only": "Abakozi b'ikigo gusa",
-  "This area is for the LEAD MULTI-CHOICE ® team.": "Iki gice kigenewe ikipe ya LEAD MULTI-CHOICE ®.",
+  "This area is for the Lead Multi-Choice ® team.": "Iki gice kigenewe ikipe ya Lead Multi-Choice ®.",
   "Go to your dashboard →": "Jya ku rubuga rwawe →",
   Admin: "Ubuyobozi",
   "Registered clients": "Abakiriya biyandikishije",
@@ -791,8 +827,8 @@ Object.assign(fr, {
   "Could not save. Please try again.": "Enregistrement impossible. Veuillez réessayer.",
   "Saved.": "Enregistré.",
   "Team access only": "Réservé à l’équipe",
-  "This area is for the LEAD MULTI-CHOICE ® team.":
-    "Cet espace est réservé à l’équipe de LEAD MULTI-CHOICE ®.",
+  "This area is for the Lead Multi-Choice ® team.":
+    "Cet espace est réservé à l’équipe de Lead Multi-Choice ®.",
   "Go to your dashboard →": "Accéder à votre espace →",
   Admin: "Administration",
   "Registered clients": "Clients inscrits",
@@ -852,7 +888,7 @@ Object.assign(sw, {
   "Could not save. Please try again.": "Haikuweza kuhifadhiwa. Tafadhali jaribu tena.",
   "Saved.": "Imehifadhiwa.",
   "Team access only": "Timu pekee ndiyo inayoruhusiwa",
-  "This area is for the LEAD MULTI-CHOICE ® team.": "Sehemu hii ni ya timu ya LEAD MULTI-CHOICE ®.",
+  "This area is for the Lead Multi-Choice ® team.": "Sehemu hii ni ya timu ya Lead Multi-Choice ®.",
   "Go to your dashboard →": "Nenda kwenye dashibodi yako →",
   Admin: "Usimamizi",
   "Registered clients": "Wateja waliosajiliwa",
@@ -1067,9 +1103,9 @@ Object.assign(rw, {
     "Ubusabe bwiteguye ko hashakwa abatanga ibicuruzwa.",
   "29 Oct": "29 Ukwakira",
   "30 Oct": "30 Ukwakira",
-  "The LEAD MULTI-CHOICE ® team started the initial requirements review.":
-    "Ikipe ya LEAD MULTI-CHOICE ® yatangiye gusuzuma ibisabwa.",
-  "Updated by LEAD MULTI-CHOICE ® team": "Byavuguruwe n'ikipe ya LEAD MULTI-CHOICE ®",
+  "The Lead Multi-Choice ® team started the initial requirements review.":
+    "Ikipe ya Lead Multi-Choice ® yatangiye gusuzuma ibisabwa.",
+  "Updated by Lead Multi-Choice ® team": "Byavuguruwe n'ikipe ya Lead Multi-Choice ®",
   "Ask about this update": "Baza ibijyanye n'aya makuru",
   "Your next step": "Intambwe ikurikira",
   "Confirm the required pump capacity": "Emeza ubushobozi bw'ipompe bukenewe",
@@ -1145,9 +1181,9 @@ Object.assign(fr, {
     "La demande est prête pour la recherche de fournisseurs.",
   "29 Oct": "29 oct.",
   "30 Oct": "30 oct.",
-  "The LEAD MULTI-CHOICE ® team started the initial requirements review.":
-    "L'équipe de LEAD MULTI-CHOICE ® a commencé l'examen initial des besoins.",
-  "Updated by LEAD MULTI-CHOICE ® team": "Mis à jour par l'équipe de LEAD MULTI-CHOICE ®",
+  "The Lead Multi-Choice ® team started the initial requirements review.":
+    "L'équipe de Lead Multi-Choice ® a commencé l'examen initial des besoins.",
+  "Updated by Lead Multi-Choice ® team": "Mis à jour par l'équipe de Lead Multi-Choice ®",
   "Ask about this update": "Poser une question sur cette mise à jour",
   "Your next step": "Votre prochaine étape",
   "Confirm the required pump capacity": "Confirmer la capacité de pompe requise",
@@ -1221,9 +1257,9 @@ Object.assign(sw, {
   "The request is ready for supplier identification.": "Ombi liko tayari kwa kutambua wasambazaji.",
   "29 Oct": "29 Okt",
   "30 Oct": "30 Okt",
-  "The LEAD MULTI-CHOICE ® team started the initial requirements review.":
-    "Timu ya LEAD MULTI-CHOICE ® imeanza kupitia mahitaji ya awali.",
-  "Updated by LEAD MULTI-CHOICE ® team": "Imesasishwa na timu ya LEAD MULTI-CHOICE ®",
+  "The Lead Multi-Choice ® team started the initial requirements review.":
+    "Timu ya Lead Multi-Choice ® imeanza kupitia mahitaji ya awali.",
+  "Updated by Lead Multi-Choice ® team": "Imesasishwa na timu ya Lead Multi-Choice ®",
   "Ask about this update": "Uliza kuhusu taarifa hii",
   "Your next step": "Hatua yako inayofuata",
   "Confirm the required pump capacity": "Thibitisha uwezo wa pampu unaohitajika",
@@ -1254,9 +1290,9 @@ Object.assign(sw, {
 
 Object.assign(rw, {
   "Your Local Partner. Your Regional Advantage.": "Umufatanyabikorwa wawe wo mu karere. Inyungu yawe mu karere kose.",
-  "About LEAD MULTI-CHOICE ®": "Ibyerekeye LEAD MULTI-CHOICE ®",
+  "About Lead Multi-Choice ®": "Ibyerekeye Lead Multi-Choice ®",
   "A Rwanda-based bridge between buyers and global supply.": "Ikigo gihuza abaguzi bo mu Rwanda n'abatanga ibicuruzwa mpuzamahanga.",
-  "Based in Rwanda, LEAD MULTI-CHOICE ® connects local purchasing entities with credible international manufacturers and distributors, coordinating supplier verification, representation and procurement follow-through.": "LEAD MULTI-CHOICE ® ifite icyicaro mu Rwanda ihuza inzego zigura n'abakora n'abacuruzi mpuzamahanga bizewe, igahuza igenzura ry'abatanga ibicuruzwa, ubuhagararizi n'ibikorwa by'amasoko.",
+  "Based in Rwanda, Lead Multi-Choice ® connects local purchasing entities with credible international manufacturers and distributors, coordinating supplier verification, representation and procurement follow-through.": "Lead Multi-Choice ® ifite icyicaro mu Rwanda ihuza inzego zigura n'abakora n'abacuruzi mpuzamahanga bizewe, igahuza igenzura ry'abatanga ibicuruzwa, ubuhagararizi n'ibikorwa by'amasoko.",
   "Rwanda market access": "Kwinjira ku isoko ry'u Rwanda",
   "Local support from supplier search through delivery.": "Ubufasha bwo mu karere kuva ku gushaka uwatanga ibicuruzwa kugeza ku kubigeza aho bikenewe.",
   "Featured contracts & tenders": "Amasezerano n'amasoko by'ingenzi",
@@ -1268,9 +1304,9 @@ Object.assign(rw, {
 });
 Object.assign(fr, {
   "Your Local Partner. Your Regional Advantage.": "Votre partenaire local. Votre avantage régional.",
-  "About LEAD MULTI-CHOICE ®": "À propos de LEAD MULTI-CHOICE ®",
+  "About Lead Multi-Choice ®": "À propos de Lead Multi-Choice ®",
   "A Rwanda-based bridge between buyers and global supply.": "Un lien établi au Rwanda entre les acheteurs et les fournisseurs internationaux.",
-  "Based in Rwanda, LEAD MULTI-CHOICE ® connects local purchasing entities with credible international manufacturers and distributors, coordinating supplier verification, representation and procurement follow-through.": "Établie au Rwanda, LEAD MULTI-CHOICE ® met en relation les acheteurs locaux avec des fabricants et distributeurs internationaux fiables et coordonne la vérification des fournisseurs, la représentation et le suivi des achats.",
+  "Based in Rwanda, Lead Multi-Choice ® connects local purchasing entities with credible international manufacturers and distributors, coordinating supplier verification, representation and procurement follow-through.": "Établie au Rwanda, Lead Multi-Choice ® met en relation les acheteurs locaux avec des fabricants et distributeurs internationaux fiables et coordonne la vérification des fournisseurs, la représentation et le suivi des achats.",
   "Rwanda market access": "Accès au marché rwandais",
   "Local support from supplier search through delivery.": "Un accompagnement local, de la recherche de fournisseurs jusqu'à la livraison.",
   "Featured contracts & tenders": "Marchés et appels d'offres à découvrir",
@@ -1282,9 +1318,9 @@ Object.assign(fr, {
 });
 Object.assign(sw, {
   "Your Local Partner. Your Regional Advantage.": "Mshirika wako wa ndani. Faida yako ya kikanda.",
-  "About LEAD MULTI-CHOICE ®": "Kuhusu LEAD MULTI-CHOICE ®",
+  "About Lead Multi-Choice ®": "Kuhusu Lead Multi-Choice ®",
   "A Rwanda-based bridge between buyers and global supply.": "Kiungo chenye makao Rwanda kati ya wanunuzi na wasambazaji wa kimataifa.",
-  "Based in Rwanda, LEAD MULTI-CHOICE ® connects local purchasing entities with credible international manufacturers and distributors, coordinating supplier verification, representation and procurement follow-through.": "LEAD MULTI-CHOICE ® yenye makao Rwanda inaunganisha taasisi za ununuzi za ndani na watengenezaji na wasambazaji wa kimataifa wanaoaminika, na kuratibu uhakiki wa wasambazaji, uwakilishi na ufuatiliaji wa ununuzi.",
+  "Based in Rwanda, Lead Multi-Choice ® connects local purchasing entities with credible international manufacturers and distributors, coordinating supplier verification, representation and procurement follow-through.": "Lead Multi-Choice ® yenye makao Rwanda inaunganisha taasisi za ununuzi za ndani na watengenezaji na wasambazaji wa kimataifa wanaoaminika, na kuratibu uhakiki wa wasambazaji, uwakilishi na ufuatiliaji wa ununuzi.",
   "Rwanda market access": "Upatikanaji wa soko la Rwanda",
   "Local support from supplier search through delivery.": "Msaada wa ndani kuanzia kutafuta msambazaji hadi kufuatilia uwasilishaji.",
   "Featured contracts & tenders": "Mikataba na zabuni muhimu",
@@ -1351,7 +1387,7 @@ Object.assign(rw, {
   "Lead Multi-choice connects international manufacturers, authorized distributors and suppliers with purchasing entities in Rwanda and the wider East African region through trade facilitation, procurement coordination, logistics and delivery support.": "Lead Multi-choice ihuza abakora ibicuruzwa, ababikwirakwiza babifitiye uburenganzira n'ababitanga mpuzamahanga n'inzego z'amasoko mu Rwanda no muri Afurika y'Iburasirazuba, binyuze mu korohereza ubucuruzi, guhuza amasoko, ubwikorezi no gukurikirana ishyikirizwa.",
   "Connecting international suppliers with purchasing entities across Rwanda and East Africa.": "Guhuza abatanga ibicuruzwa mpuzamahanga n'inzego z'amasoko mu Rwanda no muri Afurika y'Iburasirazuba.",
   "We connect international manufacturers, authorised distributors and suppliers with purchasing entities in Rwanda and the wider East African region. We facilitate introductions and coordinate procurement, logistics, delivery and after-sales support.": "Duhuza abakora ibicuruzwa, ababikwirakwiza babifitiye uburenganzira n'ababitanga mpuzamahanga n'inzego z'amasoko mu Rwanda no muri Afurika y'Iburasirazuba. Dufasha impande kumenyana kandi tugahuza amasoko, ubwikorezi, ishyikirizwa n'ubufasha nyuma yo kugeza ibicuruzwa.",
-  "About LEAD MULTI-CHOICE ®": "Ibyerekeye LEAD MULTI-CHOICE ®",
+  "About Lead Multi-Choice ®": "Ibyerekeye Lead Multi-Choice ®",
   "A Rwanda-based partner connecting suppliers and purchasing entities.": "Umufatanyabikorwa ukorera mu Rwanda uhuza abatanga ibicuruzwa n'inzego z'amasoko.",
   "Based in Rwanda, Lead Multi-choice connects international manufacturers, authorised distributors and suppliers with purchasing entities, institutions and commercial organizations in Rwanda and the wider East African region.": "Lead Multi-choice ifite icyicaro mu Rwanda ihuza abakora ibicuruzwa, ababikwirakwiza babifitiye uburenganzira n'ababitanga mpuzamahanga n'inzego zigura, ibigo n'imiryango y'ubucuruzi mu Rwanda no muri Afurika y'Iburasirazuba.",
   "From procurement opportunity to delivery acceptance and payment.": "Kuva ku mahirwe y'amasoko kugeza ku kwemeza iyakirwa ry'ibyagejejwe no kwishyura.",
@@ -1376,7 +1412,7 @@ Object.assign(fr, {
   "Lead Multi-choice connects international manufacturers, authorized distributors and suppliers with purchasing entities in Rwanda and the wider East African region through trade facilitation, procurement coordination, logistics and delivery support.": "Lead Multi-choice met en relation les fabricants, distributeurs agréés et fournisseurs internationaux avec les entités acheteuses au Rwanda et dans l'ensemble de l'Afrique de l'Est, grâce à la facilitation des échanges, la coordination des achats, la logistique et le suivi des livraisons.",
   "Connecting international suppliers with purchasing entities across Rwanda and East Africa.": "Relier les fournisseurs internationaux aux entités acheteuses du Rwanda et de l'Afrique de l'Est.",
   "We connect international manufacturers, authorised distributors and suppliers with purchasing entities in Rwanda and the wider East African region. We facilitate introductions and coordinate procurement, logistics, delivery and after-sales support.": "Nous mettons en relation les fabricants, distributeurs agréés et fournisseurs internationaux avec les entités acheteuses du Rwanda et de l'ensemble de l'Afrique de l'Est. Nous facilitons les mises en relation et coordonnons les achats, la logistique, les livraisons et le suivi après-vente.",
-  "About LEAD MULTI-CHOICE ®": "À propos de LEAD MULTI-CHOICE ®",
+  "About Lead Multi-Choice ®": "À propos de Lead Multi-Choice ®",
   "A Rwanda-based partner connecting suppliers and purchasing entities.": "Un partenaire basé au Rwanda qui met en relation fournisseurs et acheteurs.",
   "Based in Rwanda, Lead Multi-choice connects international manufacturers, authorised distributors and suppliers with purchasing entities, institutions and commercial organizations in Rwanda and the wider East African region.": "Basée au Rwanda, Lead Multi-choice met en relation les fabricants, distributeurs agréés et fournisseurs internationaux avec les entités acheteuses, institutions et organisations commerciales du Rwanda et de l'ensemble de l'Afrique de l'Est.",
   "From procurement opportunity to delivery acceptance and payment.": "De l'opportunité d'achat à l'acceptation de la livraison et au paiement.",
@@ -1401,7 +1437,7 @@ Object.assign(sw, {
   "Lead Multi-choice connects international manufacturers, authorized distributors and suppliers with purchasing entities in Rwanda and the wider East African region through trade facilitation, procurement coordination, logistics and delivery support.": "Lead Multi-choice inaunganisha watengenezaji, wasambazaji walioidhinishwa na wauzaji wa kimataifa na taasisi za ununuzi nchini Rwanda na Afrika Mashariki kupitia urahisishaji wa biashara, uratibu wa ununuzi, usafirishaji na ufuatiliaji wa uwasilishaji.",
   "Connecting international suppliers with purchasing entities across Rwanda and East Africa.": "Kuunganisha wasambazaji wa kimataifa na taasisi za ununuzi nchini Rwanda na Afrika Mashariki.",
   "We connect international manufacturers, authorised distributors and suppliers with purchasing entities in Rwanda and the wider East African region. We facilitate introductions and coordinate procurement, logistics, delivery and after-sales support.": "Tunaunganisha watengenezaji, wasambazaji walioidhinishwa na wauzaji wa kimataifa na taasisi za ununuzi nchini Rwanda na Afrika Mashariki. Tunawezesha utambulisho wa washirika na kuratibu ununuzi, usafirishaji, uwasilishaji na msaada baada ya mauzo.",
-  "About LEAD MULTI-CHOICE ®": "Kuhusu LEAD MULTI-CHOICE ®",
+  "About Lead Multi-Choice ®": "Kuhusu Lead Multi-Choice ®",
   "A Rwanda-based partner connecting suppliers and purchasing entities.": "Mshirika aliye nchini Rwanda anayeunganisha wasambazaji na taasisi za ununuzi.",
   "Based in Rwanda, Lead Multi-choice connects international manufacturers, authorised distributors and suppliers with purchasing entities, institutions and commercial organizations in Rwanda and the wider East African region.": "Lead Multi-choice yenye makao yake Rwanda inaunganisha watengenezaji, wasambazaji walioidhinishwa na wauzaji wa kimataifa na taasisi za ununuzi, taasisi na mashirika ya kibiashara nchini Rwanda na Afrika Mashariki.",
   "From procurement opportunity to delivery acceptance and payment.": "Kuanzia fursa ya ununuzi hadi kukubali kupokea bidhaa na kufanya malipo.",
@@ -1509,27 +1545,27 @@ Object.assign(sw, {
 
 Object.assign(rw, {
   "Registered in Rwanda since 2015": "Yanditswe mu Rwanda mu 2015",
-  "LEAD MULTI-CHOICE ® is a private limited company registered with the Rwanda Development Board and headquartered in Remera, Kigali.": "LEAD MULTI-CHOICE ® ni ikigo cyigenga gifite uburyozwe bugarukira ku migabane, cyanditswe mu Rwego rw'Igihugu rw'Iterambere kandi gifite icyicaro i Remera, Kigali.",
+  "Lead Multi-Choice ® is a private limited company registered with the Rwanda Development Board and headquartered in Remera, Kigali.": "Lead Multi-Choice ® ni ikigo cyigenga gifite uburyozwe bugarukira ku migabane, cyanditswe mu Rwego rw'Igihugu rw'Iterambere kandi gifite icyicaro i Remera, Kigali.",
   "Independent commercial relationships.": "Imikoranire y'ubucuruzi yigenga.",
   "Buyers and suppliers manage their own contracts and payments; we coordinate the agreed work between them.": "Abaguzi n'abatanga ibicuruzwa bacunga amasezerano n'ubwishyu byabo; twe tugahuza ibikorwa bumvikanyeho.",
   "Our agency model is built on transparency and clearly defined responsibilities.": "Uburyo bwacu bwo guhagararira abandi bushingiye ku mucyo no ku nshingano zisobanutse.",
-  "Where transactions are facilitated through our agency, the buyer and seller enter into their own commercial agreements and manage their contractual and payment obligations directly, unless otherwise agreed. LEAD MULTI-CHOICE ® supports the relationship through coordination, communication, follow-up, and operational assistance within the agreed scope of engagement.": "Iyo dufashije mu bucuruzi nk'abahagarariye impande, umuguzi n'ugurisha bagirana amasezerano yabo kandi buri ruhande rugacunga inshingano zarwo z'amasezerano n'ubwishyu, keretse bumvikanye ukundi. LEAD MULTI-CHOICE ® ishyigikira ubwo bufatanye ihuza ibikorwa, itumanaho, ikurikirana ibyumvikanyweho kandi igatanga ubufasha mu mikorere iri mu nshingano yemeye.",
+  "Where transactions are facilitated through our agency, the buyer and seller enter into their own commercial agreements and manage their contractual and payment obligations directly, unless otherwise agreed. Lead Multi-Choice ® supports the relationship through coordination, communication, follow-up, and operational assistance within the agreed scope of engagement.": "Iyo dufashije mu bucuruzi nk'abahagarariye impande, umuguzi n'ugurisha bagirana amasezerano yabo kandi buri ruhande rugacunga inshingano zarwo z'amasezerano n'ubwishyu, keretse bumvikanye ukundi. Lead Multi-Choice ® ishyigikira ubwo bufatanye ihuza ibikorwa, itumanaho, ikurikirana ibyumvikanyweho kandi igatanga ubufasha mu mikorere iri mu nshingano yemeye.",
 });
 Object.assign(fr, {
   "Registered in Rwanda since 2015": "Enregistrée au Rwanda depuis 2015",
-  "LEAD MULTI-CHOICE ® is a private limited company registered with the Rwanda Development Board and headquartered in Remera, Kigali.": "LEAD MULTI-CHOICE ® est une société privée à responsabilité limitée, enregistrée auprès du Rwanda Development Board et basée à Remera, Kigali.",
+  "Lead Multi-Choice ® is a private limited company registered with the Rwanda Development Board and headquartered in Remera, Kigali.": "Lead Multi-Choice ® est une société privée à responsabilité limitée, enregistrée auprès du Rwanda Development Board et basée à Remera, Kigali.",
   "Independent commercial relationships.": "Des relations commerciales indépendantes.",
   "Buyers and suppliers manage their own contracts and payments; we coordinate the agreed work between them.": "Les acheteurs et fournisseurs gèrent leurs propres contrats et paiements ; nous coordonnons les activités convenues entre eux.",
   "Our agency model is built on transparency and clearly defined responsibilities.": "Notre modèle d'agence repose sur la transparence et des responsabilités clairement définies.",
-  "Where transactions are facilitated through our agency, the buyer and seller enter into their own commercial agreements and manage their contractual and payment obligations directly, unless otherwise agreed. LEAD MULTI-CHOICE ® supports the relationship through coordination, communication, follow-up, and operational assistance within the agreed scope of engagement.": "Lorsque nous facilitons une transaction en tant qu'agence, l'acheteur et le vendeur concluent leurs propres accords commerciaux et gèrent directement leurs obligations contractuelles et de paiement, sauf accord contraire. LEAD MULTI-CHOICE ® accompagne la relation par la coordination, la communication, le suivi et l'assistance opérationnelle dans le cadre convenu.",
+  "Where transactions are facilitated through our agency, the buyer and seller enter into their own commercial agreements and manage their contractual and payment obligations directly, unless otherwise agreed. Lead Multi-Choice ® supports the relationship through coordination, communication, follow-up, and operational assistance within the agreed scope of engagement.": "Lorsque nous facilitons une transaction en tant qu'agence, l'acheteur et le vendeur concluent leurs propres accords commerciaux et gèrent directement leurs obligations contractuelles et de paiement, sauf accord contraire. Lead Multi-Choice ® accompagne la relation par la coordination, la communication, le suivi et l'assistance opérationnelle dans le cadre convenu.",
 });
 Object.assign(sw, {
   "Registered in Rwanda since 2015": "Imesajiliwa Rwanda tangu 2015",
-  "LEAD MULTI-CHOICE ® is a private limited company registered with the Rwanda Development Board and headquartered in Remera, Kigali.": "LEAD MULTI-CHOICE ® ni kampuni binafsi yenye dhima ndogo iliyosajiliwa katika Bodi ya Maendeleo ya Rwanda na yenye makao yake Remera, Kigali.",
+  "Lead Multi-Choice ® is a private limited company registered with the Rwanda Development Board and headquartered in Remera, Kigali.": "Lead Multi-Choice ® ni kampuni binafsi yenye dhima ndogo iliyosajiliwa katika Bodi ya Maendeleo ya Rwanda na yenye makao yake Remera, Kigali.",
   "Independent commercial relationships.": "Mahusiano huru ya kibiashara.",
   "Buyers and suppliers manage their own contracts and payments; we coordinate the agreed work between them.": "Wanunuzi na wasambazaji husimamia mikataba na malipo yao; sisi huratibu kazi iliyokubaliwa kati yao.",
   "Our agency model is built on transparency and clearly defined responsibilities.": "Mfumo wetu wa uwakala unategemea uwazi na majukumu yaliyofafanuliwa wazi.",
-  "Where transactions are facilitated through our agency, the buyer and seller enter into their own commercial agreements and manage their contractual and payment obligations directly, unless otherwise agreed. LEAD MULTI-CHOICE ® supports the relationship through coordination, communication, follow-up, and operational assistance within the agreed scope of engagement.": "Tunapowezesha miamala kama wakala, mnunuzi na muuzaji huingia katika makubaliano yao ya kibiashara na kusimamia moja kwa moja wajibu wa mikataba na malipo, isipokuwa wakubaliane vinginevyo. LEAD MULTI-CHOICE ® huunga mkono uhusiano huo kwa uratibu, mawasiliano, ufuatiliaji na msaada wa kiutendaji ndani ya wigo uliokubaliwa.",
+  "Where transactions are facilitated through our agency, the buyer and seller enter into their own commercial agreements and manage their contractual and payment obligations directly, unless otherwise agreed. Lead Multi-Choice ® supports the relationship through coordination, communication, follow-up, and operational assistance within the agreed scope of engagement.": "Tunapowezesha miamala kama wakala, mnunuzi na muuzaji huingia katika makubaliano yao ya kibiashara na kusimamia moja kwa moja wajibu wa mikataba na malipo, isipokuwa wakubaliane vinginevyo. Lead Multi-Choice ® huunga mkono uhusiano huo kwa uratibu, mawasiliano, ufuatiliaji na msaada wa kiutendaji ndani ya wigo uliokubaliwa.",
 });
 
 const copy: Partial<Record<Language, Record<string, string>>> = { rw, fr, sw };

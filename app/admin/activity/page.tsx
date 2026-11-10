@@ -2,8 +2,14 @@ import type { Metadata } from "next";
 import { ActivityFeed } from "@/components/dashboard/sections";
 import { PageShell } from "@/components/layout/page";
 
-export const metadata: Metadata = { title: "Activity log — LEAD MULTI-CHOICE ® Ltd" };
+export const metadata: Metadata = { title: "Activity log — Lead Multi-Choice ® Ltd" };
 
 export default function ActivityPage() {
-  return <PageShell title="Activity log" subtitle="Dated updates, blockers, decisions and next actions"><div className="max-w-4xl"><ActivityFeed /></div></PageShell>;
+  return (
+    <PageShell title="Activity log" subtitle="Dated updates, blockers, decisions and next actions">
+      <div className="max-w-4xl">
+        <ActivityFeed />
+      </div>
+    </PageShell>
+  );
 }

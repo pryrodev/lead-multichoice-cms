@@ -1,7 +1,7 @@
 "use client";
 
 const heroImage = "/site/meeting.jpg";
-import { CallToActionSection, PageHero } from "@/components/site/ui";
+import { PageHero } from "@/components/site/ui";
 import { LeadershipProfile } from "@/components/site/sections";
 import { useI18n } from "@/i18n/I18nProvider";
 
@@ -21,7 +21,6 @@ export default function Leadership() {
       <section className="container-site py-12 md:py-16">
         <LeadershipProfile full />
       </section>
-      <CallToActionSection photoBackground="/site/hero-port.jpg" visualKey="leadership.cta" />
     </>
   );
 }

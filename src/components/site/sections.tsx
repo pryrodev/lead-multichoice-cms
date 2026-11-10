@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { leader, processStages } from "@/content/site";
-import { getResourceDomain, type ProcurementResource } from "@/lib/cms/procurement-resources";
+import type { ProcurementResource } from "@/lib/cms/procurement-resources";
 import { cn } from "@/lib/utils";
 import { CheckList, ExternalLink, btn } from "./ui";
 import { useI18n } from "@/i18n/I18nProvider";
@@ -53,10 +53,7 @@ export function ProcurementResourceCard({ r }: { r: ProcurementResource }) {
   return (
     <article className="flex h-full flex-col rounded border border-border bg-background p-5 sm:p-7">
       <div className="min-w-0">
-        <div className="flex min-w-0 items-center justify-between gap-3">
-          <p className="eyebrow shrink-0 whitespace-nowrap">{t("resources.external")}</p>
-          <span className="min-w-0 max-w-[45%] truncate text-right font-mono text-xs text-muted-foreground" title={getResourceDomain(r.url)}>{getResourceDomain(r.url)}</span>
-        </div>
+        <p className="eyebrow">{t("resources.external")}</p>
         <h3 className="mt-5 text-xl leading-snug [overflow-wrap:anywhere] sm:text-[22px]">{r.name}</h3>
         <p className="mt-3 text-[15px] leading-6 text-muted-foreground [overflow-wrap:anywhere]">{tc(r.description)}</p>
       </div>

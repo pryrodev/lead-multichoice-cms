@@ -1,7 +1,7 @@
 // Central company content. Update verified details here.
 export const company = {
-  name: "LEAD MULTI-CHOICE ® Ltd",
-  shortName: "LEAD MULTI-CHOICE ®",
+  name: "Lead Multi-Choice ® Ltd",
+  shortName: "Lead Multi-Choice ®",
   tagline: "Your Local Partner. Your Regional Advantage.",
   location: "Remera, Kigali, Rwanda",
   phoneDisplay: "+250 788 312 338",
@@ -36,22 +36,25 @@ export const headerNavigation = [
 
 export const procurementResources = [
   {
-    id: "rms",
-    name: "Rwanda Medical Supply",
-    description:
-      "Medical and healthcare supply tenders.",
-    cta: "Visit RMS Tenders",
-    url: "https://rms.rw/TenderPage",
-    domain: "rms.rw",
+    id: "job-in-rwanda-socio-economic-analysis",
+    name: "Participant Initial Socio-Economic Analysis",
+    description: "Terms of reference for hiring a consultancy firm to conduct a participant initial socio-economic analysis.",
+    cta: "View opportunity",
+    url: "https://www.jobinrwanda.com/job/terms-reference-hiring-consultancy-firm-conduct-participant-initial-socio-economic-analysis",
   },
   {
-    id: "umucyo",
-    name: "UMUCYO e-Procurement",
-    description:
-      "Rwanda's official government tenders portal.",
-    cta: "Visit UMUCYO Portal",
-    url: "https://umucyo.gov.rw/",
-    domain: "umucyo.gov.rw",
+    id: "job-in-rwanda-hospital-design",
+    name: "Hospital Design and Environmental Assessment",
+    description: "Expression of interest for consultancy services covering hospital design, costing and environmental assessment.",
+    cta: "View opportunity",
+    url: "https://www.jobinrwanda.com/job/expression-interest-consultancy-services-hospital-design-costing-environmental-assessment",
+  },
+  {
+    id: "job-in-rwanda-enterprise-development-training",
+    name: "Enterprise Development Training Framework",
+    description: "Tender for a two-year non-exclusive framework agreement for enterprise development training.",
+    cta: "View opportunity",
+    url: "https://www.jobinrwanda.com/job/tender-two-2-year-non-exclusive-framework-agreement-enterprise-development-training-through",
   },
 ];
 

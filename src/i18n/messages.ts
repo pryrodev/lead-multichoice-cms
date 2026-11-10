@@ -53,7 +53,7 @@ const en = {
   "about.coreValues": "Core Values",
   "about.agencyModel": "Agency Model",
   "resources.external": "External resource",
-  "resources.leaving": "You are leaving the LEAD MULTI-CHOICE ® website.",
+  "resources.leaving": "You are leaving the Lead Multi-Choice ® website.",
   "leadership.portraitAlt":
     "Portrait placeholder for Mr Ernest Mulisa, pending an authorized photograph",
   "leadership.portraitPending": "Authorized portrait to be supplied",
@@ -172,7 +172,7 @@ const rw: TranslationSet = {
   "about.coreValues": "Indangagaciro",
   "about.agencyModel": "Uburyo bwo Guhuza Ibikorwa",
   "resources.external": "Urubuga rwo hanze",
-  "resources.leaving": "Ugiye kuva ku rubuga rwa LEAD MULTI-CHOICE ®.",
+  "resources.leaving": "Ugiye kuva ku rubuga rwa Lead Multi-Choice ®.",
   "leadership.portraitAlt":
     "Aho ifoto ya Bwana Ernest Mulisa izashyirwa hamaze kuboneka ifoto yemewe",
   "leadership.portraitPending": "Hazatangwa ifoto yemewe",
@@ -288,7 +288,7 @@ const fr: TranslationSet = {
   "about.coreValues": "Valeurs fondamentales",
   "about.agencyModel": "Modèle d’intermédiation",
   "resources.external": "Ressource externe",
-  "resources.leaving": "Vous quittez le site de LEAD MULTI-CHOICE ®.",
+  "resources.leaving": "Vous quittez le site de Lead Multi-Choice ®.",
   "leadership.portraitAlt":
     "Emplacement réservé au portrait de M. Ernest Mulisa, en attente d’une photo autorisée",
   "leadership.portraitPending": "Portrait autorisé à fournir",
@@ -404,7 +404,7 @@ const sw: TranslationSet = {
   "about.coreValues": "Maadili Yetu",
   "about.agencyModel": "Mfumo wa Uratibu",
   "resources.external": "Rasilimali ya nje",
-  "resources.leaving": "Unaondoka kwenye tovuti ya LEAD MULTI-CHOICE ®.",
+  "resources.leaving": "Unaondoka kwenye tovuti ya Lead Multi-Choice ®.",
   "leadership.portraitAlt": "Nafasi ya picha ya Bw. Ernest Mulisa, ikisubiri picha iliyoidhinishwa",
   "leadership.portraitPending": "Picha iliyoidhinishwa itatolewa",
   "leadership.expertise": "Maeneo ya utaalamu",

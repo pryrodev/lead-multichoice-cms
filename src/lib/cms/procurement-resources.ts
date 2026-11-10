@@ -25,6 +25,10 @@ export function mergeProcurementResources(value: unknown): ProcurementResourcesC
     const row = item as Record<string, unknown>;
     return ["id", "name", "description", "cta", "url"].every((key) => typeof row[key] === "string");
   });
+  const legacyDefaultIds = new Set(["rms", "umucyo"]);
+  if (valid.length === 2 && valid.every((resource) => legacyDefaultIds.has(resource.id))) {
+    return defaultProcurementResources;
+  }
   return { resources: valid };
 }
 

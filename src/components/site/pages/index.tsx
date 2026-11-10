@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import Image from "next/image";
@@ -80,12 +80,12 @@ export default function Home({ contentOverride, initialContent, resources = defa
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="eyebrow mb-4 flex items-center gap-3 text-brass-light"
+              className="eyebrow mb-4 flex items-center gap-3 text-brass-light text-[16px]"
             >
               <span className="h-px w-8 bg-current" aria-hidden />
               {cmsText("Market Access | Supplier Engagement | Trade Facilitation")}
             </motion.p>
-            <h1 className="max-w-4xl text-[38px] leading-[1.04] text-background md:text-[56px] lg:text-[64px]">
+            <h1 className="max-w-4xl text-[20px] leading-[1.04] text-background md:text-[40px] lg:text-[50px]">
               {cmsText("Connecting international suppliers with purchasing entities across Rwanda and East Africa.")}
             </h1>
             <motion.div
@@ -93,7 +93,7 @@ export default function Home({ contentOverride, initialContent, resources = defa
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
             >
-              <p className="mt-5 max-w-2xl text-[16px] text-background/85 md:text-[18px]">
+              <p className="mt-5 max-w-2xl text-[16px] text-background/85 md:text-[18px] text-justify">
                 {cmsText(
                   "We connect international manufacturers, authorised distributors and suppliers with purchasing entities in Rwanda and the wider East African region. We facilitate introductions and coordinate procurement, logistics, delivery and after-sales support.",
                 )}
@@ -120,24 +120,40 @@ export default function Home({ contentOverride, initialContent, resources = defa
           introClassName="text-left md:text-justify"
           intro={cmsText("Based in Rwanda, Lead Multi-choice connects international manufacturers, authorised distributors and suppliers with purchasing entities, institutions and commercial organizations in Rwanda and the wider East African region.")}
         />
-        <div className="grid gap-5 sm:grid-cols-2">
-          <article className="rounded border border-border bg-background p-6 md:p-7">
-            <div className="relative h-14 w-24 shrink-0 overflow-hidden" aria-hidden="true">
-              <Image src="/site/warehouse.jpg" alt="" fill sizes="96px" className="object-cover" />
+        <div className="grid gap-6 sm:grid-cols-2">
+          <article className="group flex flex-col rounded-lg border border-border bg-background p-5 transition-all duration-200 hover:border-brand-primary/40 hover:shadow-sm sm:p-6">
+            <div className="relative aspect-[16/9] w-full shrink-0 overflow-hidden rounded-md bg-muted" aria-hidden="true">
+              <Image
+                src="/site/warehouse.jpg"
+                alt=""
+                fill
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 320px"
+                className="object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+              />
             </div>
-            <h3 className="mt-5 text-[20px]">{cmsText("For international suppliers")}</h3>
-            <p className="mt-3 text-justify text-[15.5px] text-muted-foreground">
+            <h3 className="mt-5 text-[20px] font-semibold leading-snug tracking-tight text-foreground">
+              {cmsText("For international suppliers")}
+            </h3>
+            <p className="mt-2.5 text-[15px] leading-relaxed text-muted-foreground">
               {cmsText(
                 "Understand Rwanda's procurement environment, identify relevant opportunities and reach purchasing entities through local representation.",
               )}
             </p>
           </article>
-          <article className="rounded border border-border bg-background p-6 md:p-7">
-            <div className="relative h-14 w-24 shrink-0 overflow-hidden" aria-hidden="true">
-              <Image src="/site/meeting.jpg" alt="" fill sizes="96px" className="object-cover" />
+          <article className="group flex flex-col rounded-lg border border-border bg-background p-5 transition-all duration-200 hover:border-brand-primary/40 hover:shadow-sm sm:p-6">
+            <div className="relative aspect-[16/9] w-full shrink-0 overflow-hidden rounded-md bg-muted" aria-hidden="true">
+              <Image
+                src="/site/meeting.jpg"
+                alt=""
+                fill
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 320px"
+                className="object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+              />
             </div>
-            <h3 className="mt-5 text-[20px]">{cmsText("For Rwanda's purchasing entities")}</h3>
-            <p className="mt-3 text-justify text-[15.5px] text-muted-foreground">
+            <h3 className="mt-5 text-[20px] font-semibold leading-snug tracking-tight text-foreground">
+              {cmsText("For Rwanda's purchasing entities")}
+            </h3>
+            <p className="mt-2.5 text-[15px] leading-relaxed text-muted-foreground">
               {cmsText(
                 "Expand access to credible manufacturers, authorised distributors and specialised service providers around the world through credible representatives.",
               )}
@@ -236,10 +252,10 @@ export default function Home({ contentOverride, initialContent, resources = defa
         <div className="container-site grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
           <div className="rounded-lg bg-brand-primary/85 p-5 text-brand-white backdrop-blur-sm md:p-6">
             <SectionHeading
-              eyebrow={cmsText("Official procurement portals")}
-              title={cmsText("Explore procurement notices at the source.")}
+              eyebrow={cmsText("Selected opportunities")}
+              title={cmsText("Explore procurement opportunities.")}
               titleClassName="text-[23px] md:text-[30px]"
-              intro={cmsText("Visit Rwanda's official procurement portals to review current notices, documents and deadlines.")}
+              intro={cmsText("Review selected tender and consultancy listings published on Job in Rwanda.")}
               inverted
             />
           </div>

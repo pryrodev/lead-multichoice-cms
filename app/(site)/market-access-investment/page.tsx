@@ -4,7 +4,7 @@ import MarketAccessInvestment from "@/components/site/pages/market-access-invest
 export const metadata: Metadata = {
   title: "Market Access & Investment",
   description:
-    "Explore Rwanda's regional market opportunities and how LEAD MULTI-CHOICE ® supports market entry, supplier engagement, procurement coordination and delivery.",
+    "Explore Rwanda's regional market opportunities and how Lead Multi-Choice ® supports market entry, supplier engagement, procurement coordination and delivery.",
 };
 
 export default function MarketAccessInvestmentPage() {

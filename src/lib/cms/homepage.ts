@@ -38,14 +38,9 @@ export const HOME_CMS_FIELDS = [
   { section: "Services", label: "Service 2 text", text: "Identify suppliers and coordinate procurement communication, order follow-up and delivery." },
   { section: "Services", label: "Service 3 heading", text: "Logistics, Distribution & Trade Compliance Support" },
   { section: "Services", label: "Service 3 text", text: "Coordinate transport, shipment tracking, customs liaison, import documents and delivery follow-up." },
-  { section: "Procurement resources", label: "Section label", text: "Official procurement portals" },
-  { section: "Procurement resources", label: "Heading", text: "Explore procurement notices at the source." },
-  { section: "Procurement resources", label: "Introduction", text: "Visit Rwanda's official procurement portals to review current notices, documents and deadlines." },
-  { section: "Procurement resources", label: "Portal link label", text: "Official procurement portal" },
-  { section: "Procurement resources", label: "RMS description", text: "Medical and healthcare supply tenders." },
-  { section: "Procurement resources", label: "RMS button", text: "Visit RMS Tenders" },
-  { section: "Procurement resources", label: "UMUCYO description", text: "Rwanda's official government tenders portal." },
-  { section: "Procurement resources", label: "UMUCYO button", text: "Visit UMUCYO Portal" },
+  { section: "Procurement resources", label: "Section label", text: "Selected opportunities" },
+  { section: "Procurement resources", label: "Heading", text: "Explore procurement opportunities." },
+  { section: "Procurement resources", label: "Introduction", text: "Review selected tender and consultancy listings published on Job in Rwanda." },
 ] as const;
 
 export type HomeCopyText = (typeof HOME_CMS_FIELDS)[number]["text"];

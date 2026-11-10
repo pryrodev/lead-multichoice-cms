@@ -34,7 +34,7 @@ export function RequestTracker() {
           Your request, moving forward.
         </h1>
         <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-brand-white/85 md:text-lg">
-          Check the latest progress shared by the LEAD MULTI-CHOICE ® team.
+          Check the latest progress shared by the Lead Multi-Choice ® team.
         </p>
 
         <Card className="mx-auto mt-9 max-w-4xl rounded-xl border-brand-white/30 bg-brand-white p-2 text-foreground shadow-none sm:p-3">
@@ -54,7 +54,7 @@ export function RequestTracker() {
           </CardContent>
         </Card>
 
-        <p className="mt-5 text-sm text-brand-white/75">Enter the Tracking ID shared by LEAD MULTI-CHOICE ®. No account or email is needed.</p>
+        <p className="mt-5 text-sm text-brand-white/75">Enter the Tracking ID shared by Lead Multi-Choice ®. No account or email is needed.</p>
       </div>
     </section>
   );

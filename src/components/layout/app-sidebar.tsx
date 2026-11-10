@@ -66,7 +66,7 @@ export function AppSidebar({ staffMode = false }: { staffMode?: boolean }) {
         <div className="flex h-14 items-center justify-between gap-3 px-3">
           <Image
             src="/lead_multi-choice_logo.png"
-            alt="LEAD MULTI-CHOICE ®"
+            alt="Lead Multi-Choice ®"
             width={512}
             height={191}
             priority
@@ -89,7 +89,10 @@ export function AppSidebar({ staffMode = false }: { staffMode?: boolean }) {
           {!staffMode && <SidebarGroupLabel>Overview</SidebarGroupLabel>}
           <SidebarGroupContent>
             <SidebarMenu>
-              {(staffMode ? overview.filter((i) => i.url === "/admin/client-requests") : overview).map((i) => (
+              {(staffMode
+                ? overview.filter((i) => i.url === "/admin/client-requests")
+                : overview
+              ).map((i) => (
                 <SidebarMenuItem key={i.url}>
                   <SidebarMenuButton asChild isActive={path === i.url} tooltip={i.title}>
                     <Link href={i.url}>
@@ -102,48 +105,63 @@ export function AppSidebar({ staffMode = false }: { staffMode?: boolean }) {
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
-        {!staffMode && <SidebarGroup>
-          <SidebarGroupLabel>Website CMS</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {website.map((item) => <SidebarMenuItem key={item.url}>
-                <SidebarMenuButton asChild isActive={path === item.url} tooltip={item.title}>
-                  <Link href={item.url}><item.icon /><span>{item.title}</span></Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>)}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>}
-        {!staffMode && <SidebarGroup>
-          <SidebarGroupLabel>Tools</SidebarGroupLabel>
-          <SidebarGroupContent>
+        {!staffMode && (
+          <SidebarGroup>
+            <SidebarGroupLabel>Website CMS</SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {website.map((item) => (
+                  <SidebarMenuItem key={item.url}>
+                    <SidebarMenuButton asChild isActive={path === item.url} tooltip={item.title}>
+                      <Link href={item.url}>
+                        <item.icon />
+                        <span>{item.title}</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        )}
+        {!staffMode && (
+          <SidebarGroup>
+            <SidebarGroupLabel>Tools</SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                <SidebarMenuItem>
+                  <SidebarMenuButton
+                    asChild
+                    isActive={path === "/admin/activity"}
+                    tooltip="Activity log"
+                  >
+                    <Link href="/admin/activity">
+                      <Activity />
+                      <span>Activity log</span>
+                    </Link>
+                  </SidebarMenuButton>
+                  <SidebarMenuBadge className="bg-destructive text-destructive-foreground">
+                    2
+                  </SidebarMenuBadge>
+                </SidebarMenuItem>
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        )}
+        {!staffMode && (
+          <SidebarGroup className="mt-auto">
             <SidebarMenu>
               <SidebarMenuItem>
-                <SidebarMenuButton asChild isActive={path === "/admin/activity"} tooltip="Activity log">
-                  <Link href="/admin/activity">
-                    <Activity />
-                    <span>Activity log</span>
+                <SidebarMenuButton asChild isActive={path === "/admin/settings"} tooltip="Settings">
+                  <Link href="/admin/settings">
+                    <Settings />
+                    <span>Settings</span>
                   </Link>
                 </SidebarMenuButton>
-                <SidebarMenuBadge className="bg-destructive text-destructive-foreground">
-                  2
-                </SidebarMenuBadge>
               </SidebarMenuItem>
             </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>}
-        {!staffMode && <SidebarGroup className="mt-auto">
-          <SidebarMenu>
-            <SidebarMenuItem>
-              <SidebarMenuButton asChild isActive={path === "/admin/settings"} tooltip="Settings">
-                <Link href="/admin/settings">
-                  <Settings />
-                  <span>Settings</span>
-                </Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-          </SidebarMenu>
-        </SidebarGroup>}
+          </SidebarGroup>
+        )}
       </SidebarContent>
     </Sidebar>
   );

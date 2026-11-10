@@ -4,7 +4,7 @@ import { requireUser } from "@/lib/auth/api";
 import { getDb } from "@/lib/db";
 
 const defaults = {
-  legalName: "LEAD MULTI-CHOICE ® Ltd",
+  legalName: "Lead Multi-Choice ® Ltd",
   taxId: "",
   email: "",
   phone: "+250 788 312 338",

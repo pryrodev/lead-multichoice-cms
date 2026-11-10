@@ -4,7 +4,7 @@ import { ClientDashboard } from "@/components/client-portal/client-dashboard";
 import { getSessionUser } from "@/lib/auth/session";
 import { PortalFrame } from "@/components/client-portal/portal-frame";
 
-export const metadata: Metadata = { title: "My requests — LEAD MULTI-CHOICE ® Ltd" };
+export const metadata: Metadata = { title: "My requests — Lead Multi-Choice ® Ltd" };
 
 export default async function ClientPortalPage() {
   let user;
@@ -15,5 +15,9 @@ export default async function ClientPortalPage() {
   }
   if (!user) redirect("/portal/login");
   if (user.role === "admin") redirect("/admin");
-  return <PortalFrame><ClientDashboard /></PortalFrame>;
+  return (
+    <PortalFrame>
+      <ClientDashboard />
+    </PortalFrame>
+  );
 }

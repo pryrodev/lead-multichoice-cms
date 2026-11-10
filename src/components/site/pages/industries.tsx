@@ -2,7 +2,7 @@
 
 const heroImage = "/site/truck.jpg";
 import { industries } from "@/content/services";
-import { CallToActionSection, CheckList, PageHero } from "@/components/site/ui";
+import { CheckList, PageHero } from "@/components/site/ui";
 import { PhotoScrollSection } from "@/components/site/PhotoScrollSection";
 import { useI18n } from "@/i18n/I18nProvider";
 
@@ -88,7 +88,6 @@ export default function Industries() {
           );
         })}
       </div>
-      <CallToActionSection photoBackground="/site/warehouse.jpg" visualKey="industries.cta" />
     </>
   );
 }

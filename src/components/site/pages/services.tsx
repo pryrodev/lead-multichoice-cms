@@ -2,7 +2,7 @@
 
 const port = "/site/hero-port.jpg";
 import { services } from "@/content/services";
-import { ButtonLink, CallToActionSection, CheckList, PageHero } from "@/components/site/ui";
+import { ButtonLink, CheckList, PageHero } from "@/components/site/ui";
 import { PhotoScrollSection } from "@/components/site/PhotoScrollSection";
 import { useI18n } from "@/i18n/I18nProvider";
 
@@ -113,7 +113,6 @@ export default function Services() {
           </section>
         );
       })}
-      <CallToActionSection photoBackground="/site/hero-port.jpg" visualKey="services.cta" />
     </>
   );
 }
