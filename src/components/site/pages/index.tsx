@@ -52,8 +52,14 @@ export default function Home({
 } = {}) {
   const { language, tc } = useI18n();
   const cmsPage = contentOverride ?? initialContent ?? defaultHomePageContent;
-  const cmsText = (text: string) =>
-    cmsPage.translations.en[text as keyof typeof cmsPage.translations.en] ?? tc(text);
+  const cmsText = (text: string) => {
+    if (language !== "en") {
+      const localized = (cmsPage.translations as Record<string, Record<string, string> | undefined>)?.[language]?.[text];
+      if (localized && localized.trim().length > 0) return localized;
+      return tc(text);
+    }
+    return cmsPage.translations.en?.[text as keyof typeof cmsPage.translations.en] ?? text;
+  };
   const heroPort = cmsPage.heroImageUrl || "/site/hero-port.jpg";
   return (
     <>
