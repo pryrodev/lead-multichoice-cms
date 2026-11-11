@@ -51,8 +51,8 @@ export function I18nProvider({
     () => ({
       language,
       setLanguage,
-      t: (key) => siteCopyOverrides?.translations.en[`message:${key}`] ?? messages[language][key] ?? messages.en[key],
-      tc: (text) => siteCopyOverrides?.translations.en[`copy:${text}`] ?? translateSiteCopy("en", text),
+      t: (key) => siteCopyOverrides?.translations[language as "en"]?.[`message:${key}`] ?? messages[language][key] ?? messages.en[key],
+      tc: (text) => siteCopyOverrides?.translations[language as "en"]?.[`copy:${text}`] ?? translateSiteCopy(language, text),
     }),
     [language, setLanguage, siteCopyOverrides],
   );
