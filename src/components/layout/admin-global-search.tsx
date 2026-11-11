@@ -69,7 +69,7 @@ export function AdminGlobalSearch({ staffMode = false }: { staffMode?: boolean }
         type="button"
         variant="outline"
         onClick={() => setOpen(true)}
-        className="hidden h-10 min-w-0 w-[min(30vw,420px)] justify-start gap-2 rounded-xl border-0 bg-muted/80 px-3 font-normal text-muted-foreground shadow-none hover:bg-muted lg:flex"
+        className="hidden h-10 min-w-0 w-[min(30vw,420px)] justify-start gap-2 rounded-md border border-input bg-background px-3 font-normal text-muted-foreground shadow-none hover:bg-background lg:flex"
         aria-label="Search admin pages and records"
       >
         <Search className="size-4 shrink-0" />

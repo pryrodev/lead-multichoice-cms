@@ -953,10 +953,24 @@ export default function Procurement({ resources }: { resources: ProcurementResou
       <PageHero
         eyebrow={copy.eyebrow}
         title={copy.heroTitle}
+        titleClassName="text-[clamp(1.5rem,2.6vw,2rem)] md:text-[clamp(1.75rem,2.8vw,2.25rem)] lg:text-[clamp(2rem,2.6vw,2.5rem)]"
         intro={copy.heroIntro}
+        headingClassName="max-w-none"
         image={heroImage}
         visualKey="procurement.hero"
         alt="Organised warehouse shelves"
+        aside={
+          <div className="aspect-video overflow-hidden rounded-md border border-white/30 bg-black/20">
+            <iframe
+              className="size-full"
+              src="https://www.youtube-nocookie.com/embed/ARf2O5hrU6w?autoplay=1&mute=1&controls=1&playsinline=1&loop=1&playlist=ARf2O5hrU6w&rel=0&modestbranding=1"
+              title="Lead Multi-Choice procurement and trade facilitation video"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
+            />
+          </div>
+        }
       />
 
       {/* Quick Nav Anchors */}
@@ -1099,6 +1113,7 @@ export default function Procurement({ resources }: { resources: ProcurementResou
         <SectionHeading
           eyebrow={copy.opportunitiesEyebrow}
           title={copy.opportunitiesTitle}
+          titleClassName="whitespace-nowrap text-[clamp(1rem,3vw,2rem)]"
           intro={copy.opportunitiesIntro}
         />
         <div className="mt-8">

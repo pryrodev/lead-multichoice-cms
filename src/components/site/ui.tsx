@@ -133,6 +133,7 @@ export function PageHero({
   image,
   alt,
   visualKey,
+  aside,
   children,
 }: {
   eyebrow: string;
@@ -144,6 +145,7 @@ export function PageHero({
   image?: string;
   alt?: string;
   visualKey?: SiteVisualKey;
+  aside?: ReactNode;
   children?: ReactNode;
 }) {
   const visuals = useSiteVisuals();
@@ -172,16 +174,19 @@ export function PageHero({
         </>
       )}
       <div className="container-site relative py-16 md:py-24">
-        <SectionHeading
-          as="h1"
-          eyebrow={eyebrow}
-          title={title}
-          className={headingClassName ?? ""}
-          titleClassName={titleClassName ?? ""}
-          intro={intro}
-          introClassName={introClassName ?? ""}
-          inverted={Boolean(heroImage)}
-        />
+        <div className={aside ? "grid items-center gap-8 lg:grid-cols-2 lg:gap-12" : undefined}>
+          <SectionHeading
+            as="h1"
+            eyebrow={eyebrow}
+            title={title}
+            className={headingClassName ?? ""}
+            titleClassName={titleClassName ?? ""}
+            intro={intro}
+            introClassName={introClassName ?? ""}
+            inverted={Boolean(heroImage)}
+          />
+          {aside && <div className="min-w-0">{aside}</div>}
+        </div>
         {children}
       </div>
     </section>

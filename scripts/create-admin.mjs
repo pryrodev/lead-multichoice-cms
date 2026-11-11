@@ -1,5 +1,6 @@
 import { randomBytes, scryptSync } from "node:crypto";
 import { existsSync, readFileSync } from "node:fs";
+import mariadb from "mariadb";
 import { PrismaMariaDb } from "@prisma/adapter-mariadb";
 import { PrismaClient } from "../src/generated/prisma/client.ts";
 
@@ -26,14 +27,17 @@ if (password.length < 14) {
   process.exit(1);
 }
 
-const adapter = new PrismaMariaDb({
+const pool = mariadb.createPool({
   host: process.env.MYSQL_HOST,
   port: Number(process.env.MYSQL_PORT ?? 3306),
   user: process.env.MYSQL_USER,
   password: process.env.MYSQL_PASSWORD ?? "",
   database: process.env.MYSQL_DATABASE,
   connectionLimit: 1,
+  connectTimeout: Number(process.env.MYSQL_CONNECT_TIMEOUT ?? 10000),
+  acquireTimeout: Number(process.env.MYSQL_ACQUIRE_TIMEOUT ?? 10000),
 });
+const adapter = new PrismaMariaDb(pool, { database: process.env.MYSQL_DATABASE, disposeExternalPool: true });
 const prisma = new PrismaClient({ adapter });
 
 try {
