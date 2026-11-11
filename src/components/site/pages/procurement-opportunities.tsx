@@ -1015,7 +1015,7 @@ export default function Procurement({ resources }: { resources: ProcurementResou
         </div>
 
         {/* 7-Step Process */}
-        <div className="mt-16 rounded-xl border border-border bg-warm/60 p-6 md:p-10">
+        <div className="mt-16">
           <SectionHeading
             as="h2"
             title={copy.processTitle}
