@@ -73,55 +73,55 @@ const content: Record<string, ProcurementContent> & { en: ProcurementContent } =
     principles: [
       {
         title: "Holistic Evaluation",
-        text: "Considers total cost of ownership, technical specifications, delivery reliability, sustainability, and innovation—not just the initial price tag.",
+        text: "Balance total cost, specifications, delivery, sustainability, and innovation.",
       },
       {
         title: "Data-Driven Decisions",
-        text: "Uses rigorous spend analysis, supplier capability matrices, and market research to negotiate from an informed commercial position.",
+        text: "Use spend, market, and supplier performance data to guide choices.",
       },
       {
         title: "Continuous Process",
-        text: "Encompasses ongoing supplier performance reviews, contract compliance monitoring, and proactive risk mitigation rather than one-off buying.",
+        text: "Review supplier performance, contracts, and market changes over time.",
       },
     ],
     processTitle: "Typical 7-Step Strategic Sourcing Process",
     processIntro:
-      "A structured roadmap that helps purchasing entities source goods, equipment, and services with predictable quality and cost savings.",
+      "A clear sequence for sourcing goods, equipment, and services.",
     steps: [
       {
         step: "01",
         title: "Analyse Spend and Requirements",
-        text: "Examine expenditure patterns, user specifications, required volumes, delivery schedules, and compliance standards.",
+        text: "Review spend, specifications, quantities, and delivery timelines.",
       },
       {
         step: "02",
         title: "Identify Supplier Market",
-        text: "Survey domestic, regional, and international manufacturer ecosystems to understand market dynamics and supply capacity.",
+        text: "Map local, regional, and international supplier options.",
       },
       {
         step: "03",
         title: "Develop Supplier Shortlist",
-        text: "Screen candidate suppliers for technical certifications, financial standing, production capacity, and track record.",
+        text: "Check supplier capability, certifications, finances, and track record.",
       },
       {
         step: "04",
         title: "Select Suppliers (RFP / RFQ)",
-        text: "Issue structured request-for-proposal or quote documents with transparent, multi-attribute evaluation criteria.",
+        text: "Compare proposals using clear, consistent evaluation criteria.",
       },
       {
         step: "05",
         title: "Negotiate and Finalise Contracts",
-        text: "Structure balanced commercial agreements covering pricing, warranties, delivery terms (Incoterms), SLAs, and penalties.",
+        text: "Agree on pricing, warranties, delivery terms, and service levels.",
       },
       {
         step: "06",
         title: "Implement & Manage Supplier Relationships",
-        text: "Coordinate in-country logistics, import clearance, acceptance testing, and supplier relationship management (SRM).",
+        text: "Coordinate logistics, customs clearance, acceptance, and supplier follow-up.",
       },
       {
         step: "07",
         title: "Review and Optimise Continuously",
-        text: "Evaluate ongoing vendor performance against KPIs, capture feedback, and identify opportunities for continuous value.",
+        text: "Review supplier performance and identify improvements.",
       },
     ],
     benefitsTitle: "Measurable Sourcing Benefits",
@@ -146,36 +146,36 @@ const content: Record<string, ProcurementContent> & { en: ProcurementContent } =
     supplierEyebrow: "Manufacturer & Distributor Perspective",
     supplierTitle: "Supplying Rwanda & Regional Markets: Key Considerations",
     supplierIntro:
-      "For international manufacturers and licensed distributors seeking to establish a lasting commercial presence and supply Rwandan purchasing entities.",
+      "A practical sequence for manufacturers and licensed distributors preparing to serve purchasing entities in Rwanda and the region.",
     considerations: [
       {
-        title: "Regulatory Compliance & Standards Certification",
-        text: "Navigating mandatory certifications with the Rwanda Standards Board (RSB), Rwanda FDA, and sector-specific statutory import authorizations.",
+        title: "Understand the market and buyer requirements",
+        text: "Identify relevant sectors, purchasing entities, demand, and the requirements that apply to your products or services.",
       },
       {
-        title: "Authorised Local Representation",
-        text: "Partnering with a credible, registered in-country representative who can legally represent your brand, participate in meetings, and manage commercial follow-up.",
+        title: "Confirm product approvals and compliance",
+        text: "Check applicable standards, product registrations, and import requirements, including RSB or Rwanda FDA requirements where relevant.",
       },
       {
-        title: "Public & Institutional Tender Requirements",
-        text: "Understanding eligibility criteria for the UMUCYO e-procurement system, bid securities, performance bonds, and framework contract standards.",
+        title: "Establish local representation",
+        text: "Choose a credible local representative to support introductions, communication, and follow-up with purchasing entities.",
       },
       {
-        title: "Logistics, Customs & Supply Chain Handling",
-        text: "Coordinating multi-modal freight to Kigali, bonded storage, customs clearance under EAC/COMESA tariff regimes, and final delivery logistics.",
+        title: "Prepare for procurement and tendering",
+        text: "Review buyer procedures, eligibility criteria, required documents, bid securities, and the terms of each opportunity.",
       },
       {
-        title: "After-Sales Support, Warranty & Maintenance",
-        text: "Establishing local technical capability, spare parts access, user training, and warranty fulfillment to ensure long-term client satisfaction and repeat orders.",
+        title: "Plan delivery and ongoing support",
+        text: "Coordinate freight, customs, in-country handling, delivery acceptance, warranty support, and maintenance where required.",
       },
     ],
     opportunitiesEyebrow: "Selected Opportunities",
     opportunitiesTitle: "Selected Procurement Opportunities",
     opportunitiesIntro:
-      "Review selected tender and consultancy listings published on official platforms such as Job in Rwanda and institutional procurement portals.",
+      "Browse selected tender and consultancy opportunities from relevant sources.",
     aboutTitle: "About these opportunity listings",
     aboutText1:
-      "These listings are hosted by Job in Rwanda and link to individual consultancy and tender opportunities. Open each listing to review the full notice, requirements, and deadline.",
+      "These links lead to individual tender and consultancy opportunities. Review each notice for its requirements and deadline.",
     aboutText2:
       "Lead Multi-Choice ® does not own or administer these listings and cannot guarantee an award or issue procurement decisions. Confirm the requirements, submission process, and closing date in each original listing.",
     coordinationEyebrow: "Coordination support",
@@ -298,10 +298,10 @@ const content: Record<string, ProcurementContent> & { en: ProcurementContent } =
     opportunitiesEyebrow: "Amahirwe Yatoranyijwe",
     opportunitiesTitle: "Amahirwe y'Amasoko Yatoranyijwe",
     opportunitiesIntro:
-      "Reba amatangazo y'amasoko n'ubujyanama yashyizwe ku mbuga zemewe nka Job in Rwanda n'imbuga z'ibigo bya leta.",
+      "Reba amahirwe yatoranyijwe y'amasoko n'ubujyanama aturutse mu masoko anyuranye.",
     aboutTitle: "Ibyerekeye aya mahirwe",
     aboutText1:
-      "Aya matangazo ari kuri Job in Rwanda kandi ajyana ku mahirwe yihariye y'amasoko n'ubujyanama. Fungura buri tangazo urebe ibisabwa n'itariki ntarengwa.",
+      "Izi linki zijyana ku mahirwe yihariye y'amasoko n'ubujyanama. Reba buri tangazo kugira ngo umenye ibisabwa n'itariki ntarengwa.",
     aboutText2:
       "Lead Multi-Choice ® ntabwo ari yo nyiri aya matangazo kandi ntishobora kwemeza ko uzatsinda cyangwa gufata ibyemezo by'amasoko. Reba ibisabwa, uko usaba n'itariki yo gusoza muri buri tangazo.",
     coordinationEyebrow: "Gufasha guhuza ibikorwa",
@@ -424,10 +424,10 @@ const content: Record<string, ProcurementContent> & { en: ProcurementContent } =
     opportunitiesEyebrow: "Opportunités sélectionnées",
     opportunitiesTitle: "Opportunités d'approvisionnement sélectionnées",
     opportunitiesIntro:
-      "Consultez les appels d'offres et missions de conseil publiés sur les plateformes officielles comme Job in Rwanda.",
+      "Consultez une sélection d'appels d'offres et de missions de conseil provenant de différentes sources.",
     aboutTitle: "À propos de ces opportunités",
     aboutText1:
-      "Ces annonces sont hébergées par Job in Rwanda et renvoient vers des appels d'offres et missions de conseil. Consultez chaque annonce pour connaître les exigences et la date limite.",
+      "Ces liens renvoient vers des appels d'offres et des missions de conseil. Consultez chaque avis pour connaître les exigences et la date limite.",
     aboutText2:
       "Lead Multi-Choice ® ne possède ni ne gère ces annonces et ne peut garantir une attribution ni prendre de décision d'achat. Vérifiez les exigences, la procédure et la date limite dans chaque annonce.",
     coordinationEyebrow: "Coordination et accompagnement",
@@ -550,10 +550,10 @@ const content: Record<string, ProcurementContent> & { en: ProcurementContent } =
     opportunitiesEyebrow: "Fursa Zilizochaguliwa",
     opportunitiesTitle: "Fursa za Ununuzi Zilizochaguliwa",
     opportunitiesIntro:
-      "Vinjari matangazo ya zabuni na ushauri yaliyochapishwa kwenye tovuti rasmi kama Job in Rwanda.",
+      "Vinjari zabuni na fursa za ushauri zilizochaguliwa kutoka vyanzo mbalimbali.",
     aboutTitle: "Kuhusu matangazo haya ya fursa",
     aboutText1:
-      "Matangazo haya yamewekwa kwenye Job in Rwanda na yanaunganisha na zabuni na kazi za ushauri. Fungua kila tangazo uangalie mahitaji na tarehe ya mwisho.",
+      "Viungo hivi vinaelekeza kwenye zabuni na fursa za ushauri. Soma kila tangazo ili kuona mahitaji na tarehe ya mwisho.",
     aboutText2:
       "Lead Multi-Choice ® haimiliki wala kusimamia matangazo haya na haiwezi kuhakikisha tuzo au kutoa maamuzi ya ununuzi. Thibitisha mahitaji, utaratibu wa kutuma na tarehe ya mwisho kwenye tangazo husika.",
     coordinationEyebrow: "Msaada wa Uratibu",
@@ -676,10 +676,10 @@ const content: Record<string, ProcurementContent> & { en: ProcurementContent } =
     opportunitiesEyebrow: "精选采购机会",
     opportunitiesTitle: "精选采购与招标机会",
     opportunitiesIntro:
-      "浏览发布在官方渠道（如 Job in Rwanda 及官方机构门户）上的最新咨询、招标及物资采购机会。",
+      "浏览来自相关渠道的精选招标和咨询机会。",
     aboutTitle: "关于这些机会列表",
     aboutText1:
-      "这些列表由 Job in Rwanda 托管，链接至各个咨询和招标机会。请打开每条列表查看完整公告、要求和截止日期。",
+      "这些链接指向具体的招标和咨询机会。请查看每则公告中的要求和截止日期。",
     aboutText2:
       "Lead Multi-Choice ® 不拥有或管理这些列表，也无法保证中标或发布采购决定。请在每条原始列表中确认要求、提交流程和截止日期。",
     coordinationEyebrow: "协调与支持服务",
@@ -802,10 +802,10 @@ const content: Record<string, ProcurementContent> & { en: ProcurementContent } =
     opportunitiesEyebrow: "Ausgewählte Möglichkeiten",
     opportunitiesTitle: "Ausgewählte Beschaffungsmöglichkeiten",
     opportunitiesIntro:
-      "Überprüfen Sie ausgewählte Ausschreibungen und Beratungsaufträge auf offiziellen Plattformen wie Job in Rwanda.",
+      "Entdecken Sie ausgewählte Ausschreibungen und Beratungsaufträge aus relevanten Quellen.",
     aboutTitle: "Über diese Angebotsseiten",
     aboutText1:
-      "Diese Angebote werden auf Job in Rwanda gehostet und verlinken zu einzelnen Beratungs- und Ausschreibungsmöglichkeiten. Öffnen Sie jedes Angebot, um die vollständige Bekanntmachung, Anforderungen und Frist einzusehen.",
+      "Diese Links führen zu einzelnen Ausschreibungen und Beratungsaufträgen. Die Anforderungen und Fristen finden Sie in der jeweiligen Bekanntmachung.",
     aboutText2:
       "Lead Multi-Choice ® ist nicht Eigentümer oder Verwalter dieser Angebote und kann keine Vergabe garantieren oder Beschaffungsentscheidungen treffen. Bestätigen Sie die Anforderungen, den Einreichungsprozess und das Schlussdatum im jeweiligen Originalangebot.",
     coordinationEyebrow: "Koordinationsunterstützung",
@@ -928,10 +928,10 @@ const content: Record<string, ProcurementContent> & { en: ProcurementContent } =
     opportunitiesEyebrow: "فرص مختارة",
     opportunitiesTitle: "فرص المشتريات المختارة",
     opportunitiesIntro:
-      "راجع قوائم المناقصات والاستشارات المختارة المنشورة على Job in Rwanda والبوابات الرسمية للمؤسسات.",
+      "تصفح مجموعة مختارة من المناقصات والفرص الاستشارية من مصادر مختلفة。",
     aboutTitle: "حول قوائم الفرص هذه",
     aboutText1:
-      "تستضيف هذه القوائم Job in Rwanda وترتبط بفرص استشارية ومناقصات فردية. افتح كل قائمة لمراجعة الإشعار الكامل والمتطلبات والموعد النهائي.",
+      "تؤدي هذه الروابط إلى مناقصات وفرص استشارية محددة. راجع كل إعلان لمعرفة المتطلبات والموعد النهائي.",
     aboutText2:
       "لا تملك Lead Multi-Choice ® هذه القوائم ولا تديرها ولا تستطيع ضمان الفوز بأي عقد أو إصدار قرارات المشتريات. تأكد من المتطلبات وعملية التقديم وتاريخ الإغلاق في كل قائمة أصلية.",
     coordinationEyebrow: "دعم التنسيق",
@@ -961,24 +961,24 @@ export default function Procurement({ resources }: { resources: ProcurementResou
 
       {/* Quick Nav Anchors */}
       <nav aria-label="Page navigation" className="sticky top-[84px] z-30 border-b border-border bg-background/95 backdrop-blur">
-        <div className="container-site flex flex-wrap items-center justify-center gap-3 py-3 text-xs md:text-sm">
+        <div className="container-site flex flex-wrap items-center justify-center gap-3 py-3 text-sm md:text-base">
           <a
             href="#purchasing-entities"
-            className="inline-flex items-center gap-1.5 rounded-full border border-border bg-surface px-4 py-1.5 font-medium text-foreground transition-colors hover:border-brand-primary hover:text-brand-primary"
+            className="inline-flex items-center gap-1.5 rounded-md border border-border bg-brand-white px-4 py-1.5 font-medium text-foreground transition-colors hover:border-brand-primary hover:text-brand-primary"
           >
             <Users size={14} className="text-brand-primary" />
             <span>{copy.tabsBuyer}</span>
           </a>
           <a
             href="#manufacturers-distributors"
-            className="inline-flex items-center gap-1.5 rounded-full border border-border bg-surface px-4 py-1.5 font-medium text-foreground transition-colors hover:border-brand-primary hover:text-brand-primary"
+            className="inline-flex items-center gap-1.5 rounded-md border border-border bg-brand-white px-4 py-1.5 font-medium text-foreground transition-colors hover:border-brand-primary hover:text-brand-primary"
           >
             <Factory size={14} className="text-brand-primary" />
             <span>{copy.tabsSupplier}</span>
           </a>
           <a
             href="#browse-opportunities"
-            className="inline-flex items-center gap-1.5 rounded-full border border-border bg-surface px-4 py-1.5 font-medium text-foreground transition-colors hover:border-brand-primary hover:text-brand-primary"
+            className="inline-flex items-center gap-1.5 rounded-md border border-border bg-brand-white px-4 py-1.5 font-medium text-foreground transition-colors hover:border-brand-primary hover:text-brand-primary"
           >
             <Compass size={14} className="text-brand-primary" />
             <span>{copy.tabsOpportunities}</span>
@@ -986,82 +986,59 @@ export default function Procurement({ resources }: { resources: ProcurementResou
         </div>
       </nav>
 
-      {/* Section 1: For Purchasing Entities & Strategic Sourcing */}
+      {/* Path 1: purchasing entity strategic sourcing */}
       <section id="purchasing-entities" className="scroll-mt-36 container-site py-12 md:py-16">
-        <SectionHeading
-          eyebrow={copy.principlesEyebrow}
-          title={copy.principlesTitle}
-          intro={copy.principlesIntro}
-        />
-
-        {/* 3 Core Principles */}
-        <div className="mt-8 grid gap-5 md:grid-cols-3">
-          {copy.principles.map((p, index) => {
-            const icons = [Layers, BarChart3, RefreshCw];
-            const Icon = icons[index] ?? Layers;
-            return (
-              <article
-                key={p.title}
-                className="rounded-lg border border-border bg-background p-6 shadow-xs transition-colors hover:border-brand-primary/40"
-              >
-                <div className="flex size-11 items-center justify-center rounded-md bg-brand-primary/10 text-brand-primary">
-                  <Icon size={22} aria-hidden="true" />
-                </div>
-                <h3 className="mt-5 text-lg font-semibold text-foreground">{p.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{p.text}</p>
-              </article>
-            );
-          })}
-        </div>
-
-        {/* 7-Step Process */}
-        <div className="mt-16">
+        <div>
           <SectionHeading
-            as="h2"
-            title={copy.processTitle}
-            intro={copy.processIntro}
-            titleClassName="text-xl md:text-2xl"
+            eyebrow={copy.tabsBuyer}
+            title={copy.principlesTitle}
+            intro={copy.principlesIntro}
+            className="max-w-none"
+            titleClassName="md:text-[32px] lg:whitespace-nowrap lg:text-[36px]"
           />
-
-          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {copy.steps.map((s, idx) => (
-              <div
-                key={s.step}
-                className={`relative flex flex-col justify-between rounded-lg border border-border bg-background p-5 shadow-xs transition-colors hover:border-brand-primary/40 ${
-                  idx === 6 ? "sm:col-span-2 lg:col-span-2" : ""
-                }`}
-              >
-                <div>
-                  <div className="flex items-center justify-between">
-                    <span className="font-display text-sm font-bold tracking-wider text-brass">
-                      STEP {s.step}
-                    </span>
-                    <span className="size-2 rounded-full bg-brand-primary" aria-hidden="true" />
-                  </div>
-                  <h4 className="mt-3 text-base font-semibold text-foreground">{s.title}</h4>
-                  <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{s.text}</p>
-                </div>
-              </div>
+          <div className="mt-7 grid gap-4 border-y border-border py-5 sm:grid-cols-3">
+            {copy.principles.map((principle) => (
+              <article key={principle.title} className="border-l-2 border-brand-gold pl-3">
+                <h3 className="text-base font-semibold text-foreground">{principle.title}</h3>
+                <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{principle.text}</p>
+              </article>
             ))}
           </div>
+        </div>
 
-          {/* Benefits strip */}
-          <div className="mt-10 border-t border-border pt-8">
-            <h4 className="text-sm font-bold uppercase tracking-wider text-brass">
-              {copy.benefitsTitle}
-            </h4>
-            <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {copy.benefits.map((b) => (
-                <div key={b.title} className="flex items-start gap-3">
-                  <CheckCircle2 size={18} className="shrink-0 text-brand-primary mt-0.5" />
-                  <div>
-                    <p className="text-sm font-semibold text-foreground">{b.title}</p>
-                    <p className="mt-1 text-xs text-muted-foreground">{b.text}</p>
-                  </div>
-                </div>
-              ))}
+        <div className="mt-10">
+          <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
+            <div>
+              <h2 className="mt-1 text-xl font-semibold text-foreground md:text-2xl">{copy.processTitle}</h2>
             </div>
+            <p className="max-w-xl text-base leading-relaxed text-muted-foreground">{copy.processIntro}</p>
           </div>
+          <ol className="grid gap-x-7 gap-y-6 sm:grid-cols-2 xl:grid-cols-4">
+            {copy.steps.map((step) => (
+              <li key={step.step} className="relative min-w-0 border-l border-brand-primary/25 pl-5">
+                <span className="absolute -left-[13px] top-0 flex size-6 items-center justify-center rounded-full border-2 border-background bg-brand-primary text-[10px] font-bold text-brand-white ring-1 ring-brand-primary/25">
+                  {step.step}
+                </span>
+                <h3 className="text-base font-semibold leading-snug text-foreground">{step.title}</h3>
+                <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{step.text}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+
+        <div className="mt-6 border-t border-border pt-5">
+          <h3 className="text-sm font-bold uppercase tracking-[0.14em] text-brand-gold">{copy.benefitsTitle}</h3>
+          <ul className="mt-4 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+            {copy.benefits.map((benefit) => (
+              <li key={benefit.title} className="flex items-start gap-2.5">
+                <CheckCircle2 size={16} className="mt-0.5 shrink-0 text-brand-primary" aria-hidden="true" />
+                <div>
+                  <p className="text-base font-semibold text-foreground">{benefit.title}</p>
+                  <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{benefit.text}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 
@@ -1080,35 +1057,32 @@ export default function Procurement({ resources }: { resources: ProcurementResou
             intro={copy.supplierIntro}
           />
 
-          <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-            {copy.considerations.map((item, idx) => {
-              const icons = [FileCheck2, Handshake, FileText, Truck, ShieldCheck];
-              const Icon = icons[idx] ?? FileCheck2;
-              return (
-                <article
-                  key={item.title}
-                  className="rounded-lg border border-border bg-background p-6 shadow-xs transition-colors hover:border-brand-primary/40"
-                >
-                  <div className="flex items-center justify-between">
-                    <div className="flex size-10 items-center justify-center rounded-md bg-brand-primary/10 text-brand-primary">
-                      <Icon size={20} aria-hidden="true" />
-                    </div>
-                    <span className="font-display text-xs font-bold text-brass">0{idx + 1}</span>
-                  </div>
-                  <h3 className="mt-4 text-base font-semibold text-foreground">{item.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{item.text}</p>
-                </article>
-              );
-            })}
+          <div className="mt-8 grid gap-8 lg:grid-cols-[1fr_17rem] lg:items-start">
+            <ol className="grid gap-x-8 gap-y-7 sm:grid-cols-2 xl:grid-cols-3">
+              {copy.considerations.map((item, idx) => {
+                const icons = [Compass, FileCheck2, Handshake, FileText, Truck];
+                const Icon = icons[idx] ?? ShieldCheck;
+                return (
+                  <li key={item.title} className="relative min-w-0 border-l border-brand-primary/30 pl-6">
+                    <span className="absolute -left-[16px] top-0 flex size-8 items-center justify-center rounded-full bg-brand-primary text-brand-white ring-4 ring-brand-white/80">
+                      <Icon size={15} aria-hidden="true" />
+                    </span>
+                    <p className="text-[10px] font-bold tracking-[0.16em] text-brand-gold">0{idx + 1}</p>
+                    <h3 className="mt-1 text-base font-semibold leading-snug text-foreground">{item.title}</h3>
+                    <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{item.text}</p>
+                  </li>
+                );
+              })}
+            </ol>
 
-            {/* In-country support CTA card */}
-            <div className="flex flex-col justify-between rounded-lg border border-brand-primary/30 bg-brand-primary p-6 text-brand-white shadow-sm">
+            {/* In-country support CTA */}
+            <div className="flex flex-col justify-between rounded-md border border-brand-primary/30 bg-brand-primary p-5 text-brand-white">
               <div>
-                <p className="text-xs font-bold uppercase tracking-wider text-brass-light">
+                <p className="text-sm font-bold uppercase tracking-wider text-brass-light">
                   {copy.coordinationEyebrow}
                 </p>
                 <h3 className="mt-2 text-lg font-bold text-brand-white">{copy.coordinationTitle}</h3>
-                <p className="mt-2 text-xs leading-relaxed text-brand-white/85">
+                <p className="mt-2 text-sm leading-relaxed text-brand-white/85">
                   {copy.coordinationText}
                 </p>
               </div>
@@ -1132,10 +1106,10 @@ export default function Procurement({ resources }: { resources: ProcurementResou
         </div>
 
         {/* Disclaimer / Notice */}
-        <aside className="mt-8 rounded-lg border border-border bg-warm/80 p-6 text-sm text-charcoal">
+        <aside className="mt-8 text-sm text-charcoal">
           <h4 className="font-semibold text-foreground">{copy.aboutTitle}</h4>
           <p className="mt-2 text-muted-foreground leading-relaxed">{copy.aboutText1}</p>
-          <p className="mt-2 text-xs text-muted-foreground leading-relaxed">{copy.aboutText2}</p>
+          <p className="mt-2 text-muted-foreground leading-relaxed">{copy.aboutText2}</p>
         </aside>
       </section>
     </>
