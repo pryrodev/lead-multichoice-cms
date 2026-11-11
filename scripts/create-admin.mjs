@@ -1,7 +1,7 @@
 import { randomBytes, scryptSync } from "node:crypto";
 import { existsSync, readFileSync } from "node:fs";
 import { PrismaMariaDb } from "@prisma/adapter-mariadb";
-import { PrismaClient } from "../src/generated/prisma/client.js";
+import { PrismaClient } from "../src/generated/prisma/client.ts";
 
 for (const envFile of [".env.local", ".env"]) {
   if (!existsSync(envFile)) continue;
