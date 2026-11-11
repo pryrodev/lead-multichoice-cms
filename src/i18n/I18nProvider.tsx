@@ -39,6 +39,7 @@ export function I18nProvider({
 
   useEffect(() => {
     document.documentElement.lang = language;
+    document.documentElement.dir = language === "ar" ? "rtl" : "ltr";
   }, [language]);
 
   const setLanguage = useCallback((next: Language) => {
@@ -50,8 +51,8 @@ export function I18nProvider({
     () => ({
       language,
       setLanguage,
-      t: (key) => siteCopyOverrides?.translations[language][`message:${key}`] ?? messages[language][key] ?? messages.en[key],
-      tc: (text) => siteCopyOverrides?.translations[language][`copy:${text}`] ?? translateSiteCopy(language, text),
+      t: (key) => siteCopyOverrides?.translations.en[`message:${key}`] ?? messages[language][key] ?? messages.en[key],
+      tc: (text) => siteCopyOverrides?.translations.en[`copy:${text}`] ?? translateSiteCopy("en", text),
     }),
     [language, setLanguage, siteCopyOverrides],
   );

@@ -1,11 +1,9 @@
-import type { Language } from "@/i18n/messages";
-
 export type MediaStory = {
   image: string;
-  alt: Record<Language, string>;
-  category: Record<Language, string>;
-  title: Record<Language, string>;
-  description: Record<Language, string>;
+  alt: Record<string, string>;
+  category: Record<string, string>;
+  title: Record<string, string>;
+  description: Record<string, string>;
 };
 
 // Illustrative editorial imagery for the company's work areas, not project claims.

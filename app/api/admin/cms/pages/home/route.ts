@@ -4,10 +4,11 @@ import { z } from "zod";
 import { requireUser } from "@/lib/auth/api";
 import { getDb } from "@/lib/db";
 import { HOME_CMS_FIELDS, defaultHomePageContent, mergeHomePageContent, type HomePageContent } from "@/lib/cms/homepage";
+import { cmsLanguages } from "@/i18n/messages";
 
-const translationsSchema = z.object({ en: z.record(z.string(), z.string().max(5000)), rw: z.record(z.string(), z.string().max(5000)), fr: z.record(z.string(), z.string().max(5000)), sw: z.record(z.string(), z.string().max(5000)) });
+const translationsSchema = z.object(Object.fromEntries(cmsLanguages.map((language) => [language, z.record(z.string(), z.string().max(5000))])) as unknown as Record<(typeof cmsLanguages)[number], z.ZodTypeAny>);
 const contentSchema = z.object({ translations: translationsSchema, heroImageUrl: z.string().max(1200) }).superRefine((content, context) => {
-  for (const language of ["en", "rw", "fr", "sw"] as const) {
+  for (const language of cmsLanguages) {
     for (const field of HOME_CMS_FIELDS) {
       if (!(field.text in content.translations[language])) context.addIssue({ code: "custom", path: ["translations", language, field.text], message: "A homepage field is missing." });
     }

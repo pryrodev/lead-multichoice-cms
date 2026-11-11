@@ -9,8 +9,8 @@ import { useI18n } from "@/i18n/I18nProvider";
 
 export default function BlogArticlePage({ slug }: { slug: string }) {
   const { language } = useI18n();
-  const article = insights[language].find((item) => item.slug === slug);
-  const copy = insightUi[language];
+  const article = (insights[language] ?? insights.en).find((item) => item.slug === slug);
+  const copy = insightUi[language] ?? insightUi.en;
   const visualKey = slug === "market-context"
     ? "blog.marketContext"
     : slug === "supplier-readiness"

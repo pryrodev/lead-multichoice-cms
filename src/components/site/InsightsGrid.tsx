@@ -10,8 +10,8 @@ import { useSiteVisuals } from "@/components/site/SiteVisualsProvider";
 export function InsightsGrid() {
   const { language } = useI18n();
   const visuals = useSiteVisuals();
-  const copy = insightUi[language];
-  const articles = insights[language];
+  const copy = insightUi[language] ?? insightUi.en;
+  const articles = insights[language] ?? insights.en;
 
   return (
     <section className="container-site py-12 md:py-16" aria-label={copy.eyebrow}>

@@ -1,4 +1,4 @@
-import type { Language } from "@/i18n/messages";
+import { cmsLanguages, type CmsLanguage } from "@/i18n/messages";
 import { translateSiteCopy } from "@/i18n/site-copy";
 
 export const HOME_CMS_FIELDS = [
@@ -45,16 +45,15 @@ export const HOME_CMS_FIELDS = [
 
 export type HomeCopyText = (typeof HOME_CMS_FIELDS)[number]["text"];
 export type HomePageContent = {
-  translations: Record<Language, Record<HomeCopyText, string>>;
+  translations: Record<CmsLanguage, Record<HomeCopyText, string>>;
   heroImageUrl: string;
 };
 
-const languages = ["en", "rw", "fr", "sw"] as const;
 const copyTexts = [...new Set(HOME_CMS_FIELDS.map((field) => field.text))] as HomeCopyText[];
 
 export const defaultHomePageContent: HomePageContent = {
   translations: Object.fromEntries(
-    languages.map((language) => [
+    cmsLanguages.map((language) => [
       language,
       Object.fromEntries(copyTexts.map((text) => [
         text,
@@ -71,9 +70,9 @@ export function mergeHomePageContent(value: unknown): HomePageContent {
 
   const stored = value as {
     heroImageUrl?: unknown;
-    translations?: Partial<Record<Language, unknown>>;
+    translations?: Partial<Record<CmsLanguage, unknown>>;
   };
-  const translations = Object.fromEntries(languages.map((language) => {
+  const translations = Object.fromEntries(cmsLanguages.map((language) => {
     const savedLanguage = stored.translations?.[language];
     const savedCopy = savedLanguage && typeof savedLanguage === "object"
       ? savedLanguage as Record<string, string>

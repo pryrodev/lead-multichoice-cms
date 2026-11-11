@@ -53,7 +53,7 @@ export default function Home({
   const { language, tc } = useI18n();
   const cmsPage = contentOverride ?? initialContent ?? defaultHomePageContent;
   const cmsText = (text: string) =>
-    cmsPage.translations[language][text as keyof typeof cmsPage.translations.en] ?? tc(text);
+    cmsPage.translations.en[text as keyof typeof cmsPage.translations.en] ?? tc(text);
   const heroPort = cmsPage.heroImageUrl || "/site/hero-port.jpg";
   return (
     <>

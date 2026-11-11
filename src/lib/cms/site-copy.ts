@@ -1,21 +1,21 @@
 import { company, enquiryTypes, nav, processStages, procurementModels, procurementResources, leader } from "@/content/site";
 import { industries, services, values, whyUs } from "@/content/services";
 import { insights } from "@/content/insights";
-import { languages, messages, type Language, type MessageKey } from "@/i18n/messages";
+import { cmsLanguages, messages, type CmsLanguage, type MessageKey } from "@/i18n/messages";
 import { siteCopySourceTexts, translateSiteCopy } from "@/i18n/site-copy";
 
 export type SiteCopyField = {
   id: string;
   source: string;
   group: string;
-  defaults: Record<Language, string>;
+  defaults: Record<CmsLanguage, string>;
 };
 
 const messageFields: SiteCopyField[] = (Object.keys(messages.en) as MessageKey[]).map((key) => ({
   id: `message:${key}`,
   source: messages.en[key],
   group: `Shared · ${key.split(".")[0]}`,
-  defaults: Object.fromEntries(languages.map((language) => [language, messages[language][key]])) as Record<Language, string>,
+  defaults: Object.fromEntries(cmsLanguages.map((language) => [language, messages[language][key]])) as Record<CmsLanguage, string>,
 }));
 
 const copySources = new Map<string, string>();
@@ -53,14 +53,14 @@ const pageCopyFields: SiteCopyField[] = [...copySources].map(([source, group]) =
   id: `copy:${source}`,
   source,
   group,
-  defaults: Object.fromEntries(languages.map((language) => [language, translateSiteCopy(language, source)])) as Record<Language, string>,
+  defaults: Object.fromEntries(cmsLanguages.map((language) => [language, translateSiteCopy(language, source)])) as Record<CmsLanguage, string>,
 }));
 
 export const SITE_COPY_FIELDS = [...messageFields, ...pageCopyFields];
-export type SiteCopyContent = { translations: Record<Language, Record<string, string>> };
+export type SiteCopyContent = { translations: Record<CmsLanguage, Record<string, string>> };
 
 export const defaultSiteCopyContent: SiteCopyContent = {
-  translations: Object.fromEntries(languages.map((language) => [
+  translations: Object.fromEntries(cmsLanguages.map((language) => [
     language,
     Object.fromEntries(SITE_COPY_FIELDS.map((field) => [field.id, field.defaults[language]])),
   ])) as SiteCopyContent["translations"],
@@ -70,7 +70,7 @@ export function mergeSiteCopy(value: unknown): SiteCopyContent {
   if (!value || typeof value !== "object" || Array.isArray(value)) return defaultSiteCopyContent;
   const source = value as { translations?: Record<string, Record<string, unknown>> };
   return {
-    translations: Object.fromEntries(languages.map((language) => [
+    translations: Object.fromEntries(cmsLanguages.map((language) => [
       language,
       Object.fromEntries(SITE_COPY_FIELDS.map((field) => {
         const saved = source.translations?.[language]?.[field.id];

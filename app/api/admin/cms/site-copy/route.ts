@@ -4,15 +4,11 @@ import { z } from "zod";
 import { requireUser } from "@/lib/auth/api";
 import { getDb } from "@/lib/db";
 import { defaultSiteCopyContent, SITE_COPY_FIELDS, mergeSiteCopy } from "@/lib/cms/site-copy";
+import { cmsLanguages } from "@/i18n/messages";
 
-const translationsSchema = z.object({
-  en: z.record(z.string(), z.string().max(5000)),
-  rw: z.record(z.string(), z.string().max(5000)),
-  fr: z.record(z.string(), z.string().max(5000)),
-  sw: z.record(z.string(), z.string().max(5000)),
-});
+const translationsSchema = z.object(Object.fromEntries(cmsLanguages.map((language) => [language, z.record(z.string(), z.string().max(5000))])) as unknown as Record<(typeof cmsLanguages)[number], z.ZodTypeAny>);
 const contentSchema = z.object({ translations: translationsSchema }).superRefine((content, context) => {
-  for (const language of ["en", "rw", "fr", "sw"] as const) {
+  for (const language of cmsLanguages) {
     for (const field of SITE_COPY_FIELDS) {
       if (!(field.id in content.translations[language])) {
         context.addIssue({ code: "custom", path: ["translations", language, field.id], message: "A website text is missing." });

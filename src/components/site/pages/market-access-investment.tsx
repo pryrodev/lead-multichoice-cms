@@ -4,7 +4,6 @@ import { Globe2, Handshake, Search, Truck, Users, ClipboardCheck } from "lucide-
 import { ButtonLink, PageHero, SectionHeading } from "@/components/site/ui";
 import { useI18n } from "@/i18n/I18nProvider";
 import { PhotoScrollSection } from "@/components/site/PhotoScrollSection";
-import type { Language } from "@/i18n/messages";
 
 type MarketAccessContent = {
   eyebrow: string;
@@ -24,7 +23,7 @@ type MarketAccessContent = {
   contact: string;
 };
 
-const content: Record<Language, MarketAccessContent> = {
+const content: Record<string, MarketAccessContent> & { en: MarketAccessContent } = {
   en: {
     eyebrow: "Market Access & Investment",
     heroTitle: "Rwanda: Your Gateway to Regional and Continental Opportunities",
@@ -251,7 +250,7 @@ const supportIcons = [Search, Users, Handshake, Truck, ClipboardCheck];
 
 export default function MarketAccessInvestment() {
   const { language } = useI18n();
-  const copy = content[language];
+  const copy = content[language] ?? content["en"];
 
   return (
     <>

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Languages, Save, Search, Send } from "lucide-react";
 import { toast } from "sonner";
 import { SITE_COPY_FIELDS, type SiteCopyContent } from "@/lib/cms/site-copy";
-import { languageOptions, type Language } from "@/i18n/messages";
+import { cmsLanguageOptions, type CmsLanguage } from "@/i18n/messages";
 import { usePublishSiteCopy, useSaveSiteCopyDraft, useSiteCopyDraft } from "@/lib/api/hooks";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -15,7 +15,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import { ReusableTable, type DataTableColumn } from "@/components/data-table/reusable-table";
 
-const languageFlags: Record<Language, string> = { en: "🇬🇧", rw: "🇷🇼", fr: "🇫🇷", sw: "🇹🇿" };
+const languageFlags: Record<CmsLanguage, string> = { en: "🇬🇧", rw: "🇷🇼", fr: "🇫🇷", sw: "🇹🇿" };
 
 export function SiteCopyEditor() {
   const saved = useSiteCopyDraft();
@@ -45,7 +45,7 @@ export function SiteCopyEditor() {
     }
   };
 
-  const updateTranslation = (language: Language, fieldId: string, value: string) => {
+  const updateTranslation = (language: CmsLanguage, fieldId: string, value: string) => {
     setContent((current) => ({
       ...current,
       translations: {
@@ -90,9 +90,9 @@ export function SiteCopyEditor() {
           <TabsContent key={group} value={group} className="mt-4">
             <Tabs defaultValue="en">
               <TabsList className="mb-4">
-                {languageOptions.map(({ code, name }) => <TabsTrigger key={code} value={code}>{languageFlags[code]} {name}</TabsTrigger>)}
+                {cmsLanguageOptions.map(({ code, name }) => <TabsTrigger key={code} value={code}>{languageFlags[code]} {name}</TabsTrigger>)}
               </TabsList>
-              {languageOptions.map(({ code }) => (
+              {cmsLanguageOptions.map(({ code }) => (
                 <TabsContent key={code} value={code} className="mt-0">
                   <CopyFields
                     language={code}
@@ -117,10 +117,10 @@ function CopyFields({
   content,
   onChange,
 }: {
-  language: Language;
+  language: CmsLanguage;
   fields: typeof SITE_COPY_FIELDS;
   content: SiteCopyContent;
-  onChange: (language: Language, fieldId: string, value: string) => void;
+  onChange: (language: CmsLanguage, fieldId: string, value: string) => void;
 }) {
   const columns: DataTableColumn<(typeof SITE_COPY_FIELDS)[number]>[] = [
     { id: "source", header: "English source", className: "min-w-64 max-w-md", cell: (field) => <div><p className="text-sm leading-relaxed">{field.source}</p><p className="mt-1 font-mono text-xs text-muted-foreground">{field.id}</p></div> },

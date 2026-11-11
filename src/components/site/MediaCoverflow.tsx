@@ -178,7 +178,7 @@ export function MediaCoverflow() {
             >
               <Image
                 src={story.image}
-                alt={story.alt[language]}
+                alt={story.alt[language] ?? story.alt["en"] ?? ""}
                 fill
                 sizes="(max-width: 640px) 80vw, 380px"
                 className="object-cover"
@@ -199,13 +199,13 @@ export function MediaCoverflow() {
               {/* Card textual content */}
               <div className="absolute inset-x-0 bottom-0 p-5 text-white sm:p-6">
                 <p className="mb-2 text-xs font-bold uppercase tracking-[0.16em] text-[#F7B616]">
-                  {story.category[language]}
+                  {story.category[language] ?? story.category["en"] ?? ""}
                 </p>
                 <h3 className="text-xl font-bold leading-snug sm:text-2xl">
-                  {story.title[language]}
+                  {story.title[language] ?? story.title["en"] ?? ""}
                 </h3>
                 <p className="mt-2 line-clamp-3 text-xs leading-relaxed text-white/85 sm:text-sm">
-                  {story.description[language]}
+                  {story.description[language] ?? story.description["en"] ?? ""}
                 </p>
               </div>
             </motion.article>
@@ -239,7 +239,7 @@ export function MediaCoverflow() {
           <button
             key={story.image}
             type="button"
-            aria-label={`${t("media.goToSlide")} ${index + 1}: ${story.title[language]}`}
+                aria-label={`${t("media.goToSlide")} ${index + 1}: ${story.title[language] ?? story.title["en"] ?? ""}`}
             aria-pressed={index === activeIndex}
             onClick={() => setActiveIndex(index)}
             className={`rounded-full transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#0091D7] ${

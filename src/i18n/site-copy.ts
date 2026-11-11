@@ -1,4 +1,4 @@
-import type { Language } from "./messages";
+import type { CmsLanguage, Language } from "./messages";
 
 // Business copy is keyed by its English source string so existing content data stays easy to edit.
 const rw: Record<string, string> = {
@@ -1568,12 +1568,12 @@ Object.assign(sw, {
   "Where transactions are facilitated through our agency, the buyer and seller enter into their own commercial agreements and manage their contractual and payment obligations directly, unless otherwise agreed. Lead Multi-Choice ® supports the relationship through coordination, communication, follow-up, and operational assistance within the agreed scope of engagement.": "Tunapowezesha miamala kama wakala, mnunuzi na muuzaji huingia katika makubaliano yao ya kibiashara na kusimamia moja kwa moja wajibu wa mikataba na malipo, isipokuwa wakubaliane vinginevyo. Lead Multi-Choice ® huunga mkono uhusiano huo kwa uratibu, mawasiliano, ufuatiliaji na msaada wa kiutendaji ndani ya wigo uliokubaliwa.",
 });
 
-const copy: Partial<Record<Language, Record<string, string>>> = { rw, fr, sw };
+const copy: Partial<Record<Language | CmsLanguage, Record<string, string>>> = { rw, fr, sw };
 export const siteCopySourceTexts = [...new Set([...Object.keys(rw), ...Object.keys(fr), ...Object.keys(sw)])];
 const siteCopyAliases: Record<string, string> = {
   "Local support from supplier search through delivery.": "From procurement opportunity to delivery acceptance.",
 };
-export function translateSiteCopy(language: Language, text: string) {
+export function translateSiteCopy(language: Language | CmsLanguage, text: string) {
   const canonicalText = siteCopyAliases[text] ?? text;
   return language === "en" ? canonicalText : (copy[language]?.[canonicalText] ?? copy[language]?.[text] ?? canonicalText);
 }

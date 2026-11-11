@@ -1,4 +1,4 @@
-﻿import type { Language } from "@/i18n/messages";
+﻿import { languages, type Language } from "@/i18n/messages";
 
 export type InsightArticle = {
   slug: string;
@@ -10,7 +10,7 @@ export type InsightArticle = {
   imageAlt: string;
 };
 
-export const insights: Record<Language, InsightArticle[]> = {
+const insightSource: Record<string, InsightArticle[]> = {
   en: [
     { slug: "market-context", category: "Market access", title: "Start with a clear view of the market", summary: "Understand who buys, what they source and how local introductions can help.", body: "Before approaching a new market, suppliers need context: buyer priorities, relevant procurement channels and the right local contacts. Structured market research and representation can turn broad interest into focused conversations.", image: "/site/hero-port.jpg", imageAlt: "Cargo ship carrying containers through a port" },
     { slug: "supplier-readiness", category: "Supplier readiness", title: "Verification makes introductions more useful", summary: "Clear capabilities, credentials and requirements help both sides prepare for a conversation.", body: "A well-prepared supplier profile records identity, product range, relevant authorizations and the ability to meet a request. Buyers can compare offers using consistent information, while suppliers know what to clarify before the next step.", image: "/site/warehouse.jpg", imageAlt: "Warehouse operations and logistics" },
@@ -32,18 +32,27 @@ export const insights: Record<Language, InsightArticle[]> = {
     { slug: "delivery-coordination", category: "Uratibu wa ugavi", title: "Endelea kuratibu baada ya uamuzi", summary: "Nyaraka, taarifa za shehena na uthibitisho wa uwasilishaji bado huhitaji uratibu baada ya kuchagua msambazaji.", body: "Baada ya uamuzi wa ununuzi, wahusika kadhaa wanaweza kuhitaji kuratibu nyaraka, uthibitisho wa oda, usafirishaji na ufuatiliaji wa uwasilishaji. Wajibu ulio wazi na taarifa za maendeleo husaidia kuona ucheleweshaji mapema na kufuatilia kazi.", image: "/site/hero-port.jpg", imageAlt: "Mizigo ikisafirishwa kupitia bandari ya kimataifa" },
   ],
 };
+export const insights = Object.fromEntries(
+  languages.map((language) => [language, insightSource[language] ?? insightSource["en"] ?? []]),
+) as Record<Language, InsightArticle[]>;
 
-export const insightUi: Record<Language, { eyebrow: string; title: string; intro: string; read: string; all: string }> = {
+const insightUiSource: Record<string, { eyebrow: string; title: string; intro: string; read: string; all: string }> = {
   en: { eyebrow: "Blog", title: "Practical notes on trade and sourcing", intro: "Ideas to help buyers and international suppliers work together with clarity.", read: "Read article", all: "View all articles" },
   rw: { eyebrow: "Blogu", title: "Inama ngiro ku bucuruzi no gushaka ibicuruzwa", intro: "Ibitekerezo bifasha abaguzi n'abatanga ibicuruzwa mpuzamahanga gukorana bisobanutse.", read: "Soma inkuru", all: "Reba inkuru zose" },
   fr: { eyebrow: "Blog", title: "Rep\u00e8res pratiques sur le commerce et l'approvisionnement", intro: "Des id\u00e9es pour aider acheteurs et fournisseurs internationaux \u00e0 collaborer clairement.", read: "Lire l'article", all: "Voir tous les articles" },
   sw: { eyebrow: "Blogu", title: "Mawazo ya vitendo kuhusu biashara na ununuzi", intro: "Mawazo ya kuwasaidia wanunuzi na wasambazaji wa kimataifa kushirikiana kwa uwazi.", read: "Soma makala", all: "Tazama makala zote" },
 };
+export const insightUi = Object.fromEntries(
+  languages.map((language) => [language, insightUiSource[language] ?? insightUiSource["en"]]),
+) as Record<Language, { eyebrow: string; title: string; intro: string; read: string; all: string }>;
 
-export const partnerTickerLabels: Record<Language, string> = {
+const partnerTickerLabelSource: Record<string, string> = {
   en: "Partners",
   rw: "Abafatanyabikorwa",
   fr: "Partenaires",
   sw: "Washirika",
 };
+export const partnerTickerLabels = Object.fromEntries(
+  languages.map((language) => [language, partnerTickerLabelSource[language] ?? partnerTickerLabelSource["en"]]),
+) as Record<Language, string>;
 

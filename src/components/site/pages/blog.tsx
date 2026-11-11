@@ -7,7 +7,7 @@ import { insightUi } from "@/content/insights";
 
 export default function BlogPage() {
   const { language } = useI18n();
-  const copy = insightUi[language];
+  const copy = insightUi[language] ?? insightUi.en;
   return (
     <>
       <PageHero

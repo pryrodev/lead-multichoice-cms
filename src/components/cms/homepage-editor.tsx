@@ -6,7 +6,7 @@ import { useState } from "react";
 import { Eye, ExternalLink, ImagePlus, Languages, Save, Send } from "lucide-react";
 import { toast } from "sonner";
 import { HOME_CMS_FIELDS, defaultHomePageContent, type HomePageContent } from "@/lib/cms/homepage";
-import { languageOptions, type Language } from "@/i18n/messages";
+import { cmsLanguageOptions, type CmsLanguage } from "@/i18n/messages";
 import { useAdminHomePage, useMediaAssets, usePublishHomePage, useSaveHomePageDraft } from "@/lib/api/hooks";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -18,7 +18,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 
 const PREVIEW_STORAGE_KEY = "lead-multichoice-homepage-preview";
-const languageFlags: Record<Language, string> = { en: "🇬🇧", rw: "🇷🇼", fr: "🇫🇷", sw: "🇹🇿" };
+const languageFlags: Record<CmsLanguage, string> = { en: "🇬🇧", rw: "🇷🇼", fr: "🇫🇷", sw: "🇹🇿" };
 
 export function HomepageEditor() {
   const saved = useAdminHomePage();
@@ -29,7 +29,7 @@ export function HomepageEditor() {
   const isDirty = JSON.stringify(content) !== JSON.stringify(saved.content);
   const sections = [...new Set(HOME_CMS_FIELDS.map((field) => field.section))];
 
-  const updateTranslation = (language: Language, source: string, value: string) => {
+  const updateTranslation = (language: CmsLanguage, source: string, value: string) => {
     setContent((current) => ({
       ...current,
       translations: {
@@ -68,7 +68,7 @@ export function HomepageEditor() {
       <CardHeader className="flex flex-row flex-wrap items-center justify-between gap-4">
         <div>
           <CardTitle>Homepage</CardTitle>
-          <CardDescription className="mt-1">Edit each section in all four website languages. Draft changes stay private until published.</CardDescription>
+          <CardDescription className="mt-1">Edit each section in the four CMS languages. Draft changes stay private until published.</CardDescription>
         </div>
         <div className="flex flex-wrap gap-2">
           <Button variant="outline" onClick={preview}><Eye data-icon="inline-start" /> Preview draft</Button>
@@ -113,9 +113,9 @@ export function HomepageEditor() {
               <CardContent>
             <Tabs defaultValue="en">
               <TabsList className="mb-5">
-                {languageOptions.map(({ code, name }) => <TabsTrigger key={code} value={code}>{languageFlags[code]} {name}</TabsTrigger>)}
+                {cmsLanguageOptions.map(({ code, name }) => <TabsTrigger key={code} value={code}>{languageFlags[code]} {name}</TabsTrigger>)}
               </TabsList>
-                {languageOptions.map(({ code }) => <TabsContent key={code} value={code} className="mt-0">
+                {cmsLanguageOptions.map(({ code }) => <TabsContent key={code} value={code} className="mt-0">
                 <div className="grid items-start gap-x-5 gap-y-6 md:grid-cols-2">
                   {HOME_CMS_FIELDS.filter((field) => field.section === section).map((field) => {
                     const fieldId = `${section}-${code}-${HOME_CMS_FIELDS.indexOf(field)}`;
