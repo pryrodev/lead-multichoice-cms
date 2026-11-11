@@ -8,6 +8,20 @@ import { defaultProcurementResources, mergeProcurementResources, type Procuremen
 
 const isProductionBuild = () => process.env["NEXT_PHASE"] === "phase-production-build";
 
+const handleCmsDbError = (context: string, error: unknown) => {
+  const message = error instanceof Error ? error.message : String(error);
+  if (
+    message.includes("pool failed to retrieve a connection") ||
+    message.includes("ECONNREFUSED") ||
+    message.includes("Can't reach database server") ||
+    message.includes("45028")
+  ) {
+    console.warn(`[CMS] Database not reachable (${context}). Using fallback default content.`);
+  } else {
+    console.error(`[CMS] Could not load ${context}:`, error);
+  }
+};
+
 const loadPublishedHomePage = async (): Promise<HomePageContent> => {
   try {
     const page = await getDb().sitePage.findUnique({ where: { slug: "home" }, select: { publishedContent: true } });
@@ -15,7 +29,7 @@ const loadPublishedHomePage = async (): Promise<HomePageContent> => {
     if (typeof stored === "string") return mergeHomePageContent(JSON.parse(stored));
     return stored ? mergeHomePageContent(stored) : defaultHomePageContent;
   } catch (error) {
-    console.error("Could not load published homepage content", error);
+    handleCmsDbError("published homepage content", error);
     return defaultHomePageContent;
   }
 };
@@ -29,7 +43,7 @@ const loadPublishedSiteVisuals = async (): Promise<SiteVisuals> => {
     const content = typeof stored === "string" ? JSON.parse(stored) as unknown : stored;
     return content ? mergeSiteVisuals(content) : defaultSiteVisuals;
   } catch (error) {
-    console.error("Could not load published site visuals", error);
+    handleCmsDbError("published site visuals", error);
     return defaultSiteVisuals;
   }
 };
@@ -43,7 +57,7 @@ const loadPublishedSiteCopy = async (): Promise<SiteCopyContent | null> => {
     const content = typeof stored === "string" ? JSON.parse(stored) as unknown : stored;
     return content ? mergeSiteCopy(content) : null;
   } catch (error) {
-    console.error("Could not load published site copy", error);
+    handleCmsDbError("published site copy", error);
     return null;
   }
 };
@@ -57,7 +71,7 @@ const loadPublishedProcurementResources = async (): Promise<ProcurementResources
     const content = typeof stored === "string" ? JSON.parse(stored) as unknown : stored;
     return content ? mergeProcurementResources(content) : defaultProcurementResources;
   } catch (error) {
-    console.error("Could not load published procurement resources", error);
+    handleCmsDbError("published procurement resources", error);
     return defaultProcurementResources;
   }
 };
