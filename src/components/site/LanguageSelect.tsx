@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { ChevronDown, Languages } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -42,7 +42,21 @@ function Flag({ code }: { code: Language }) {
 
   if (code === "zh") return <svg {...common}><rect width="20" height="14" fill="#DE2910" /><path fill="#FFDE00" d="m4 1 .48 1.45H6l-1.23.9.47 1.46L4 3.91l-1.24.9.47-1.46L2 2.45h1.52z" /></svg>;
   if (code === "de") return <svg {...common}><rect width="20" height="4.67" fill="#000" /><rect y="4.67" width="20" height="4.66" fill="#DD0000" /><rect y="9.33" width="20" height="4.67" fill="#FFCE00" /></svg>;
-  if (code === "ar") return <span className="shrink-0 text-base leading-none" aria-hidden="true">🇸🇦</span>;
+  if (code === "ar") return (
+    <svg {...common}>
+      {/* Saudi Arabia: green background with white emblem (simplified) */}
+      <rect width="20" height="14" fill="#006C35" />
+      {/* Simplified white horizontal band representing the sword */}
+      <rect x="2" y="9.5" width="16" height="1.2" rx="0.4" fill="#fff" />
+      {/* Palm tree trunk */}
+      <rect x="9.5" y="3.5" width="1" height="6" fill="#fff" />
+      {/* Palm fronds */}
+      <path d="M10 3.5 Q7 2 6 3.5 Q8 3 10 4z" fill="#fff" />
+      <path d="M10 3.5 Q13 2 14 3.5 Q12 3 10 4z" fill="#fff" />
+      <path d="M10 4.5 Q8 4 7.5 5.5 Q9 4.5 10 5z" fill="#fff" />
+      <path d="M10 4.5 Q12 4 12.5 5.5 Q11 4.5 10 5z" fill="#fff" />
+    </svg>
+  );
 
   return <svg {...common}><rect width="20" height="14" fill="#012169" /><path stroke="#fff" strokeWidth="4" d="m0 0 20 14M20 0 0 14" /><path stroke="#C8102E" strokeWidth="1.4" d="m0 0 20 14M20 0 0 14" /><path stroke="#fff" strokeWidth="5" d="M10 0v14M0 7h20" /><path stroke="#C8102E" strokeWidth="2.7" d="M10 0v14M0 7h20" /></svg>;
 }
