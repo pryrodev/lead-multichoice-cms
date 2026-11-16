@@ -975,7 +975,7 @@ export default function Procurement({ resources }: { resources: ProcurementResou
   return (
     <>
       {/* Hero with dynamic background video on one side and content on the other */}
-      <section className="relative isolate flex min-h-[520px] items-center overflow-hidden border-b border-border bg-charcoal text-brand-white md:min-h-[60vh] lg:min-h-[65vh]">
+      <section className="group relative isolate flex min-h-[520px] items-center overflow-hidden border-b border-border bg-charcoal text-brand-white md:min-h-[60vh] lg:min-h-[65vh]">
         {/* Background video on one side */}
         <div className="pointer-events-none absolute inset-y-0 w-full overflow-hidden ltr:right-0 rtl:left-0 lg:w-1/2">
           <video
@@ -989,44 +989,40 @@ export default function Procurement({ resources }: { resources: ProcurementResou
           >
             <source src="/video/rwanda-business-opportunities.mp4" type="video/mp4" />
           </video>
-          {/* Subtle gradient blends */}
-          <div className="absolute inset-0 hidden bg-gradient-to-r from-charcoal via-charcoal/30 to-transparent ltr:block rtl:hidden" />
-          <div className="absolute inset-0 hidden bg-gradient-to-l from-charcoal via-charcoal/30 to-transparent rtl:block ltr:hidden" />
+          {/* Subtle gradient blends — lighter to let the video breathe */}
+          <div className="absolute inset-0 hidden bg-gradient-to-r from-charcoal via-charcoal/15 to-transparent ltr:block rtl:hidden" />
+          <div className="absolute inset-0 hidden bg-gradient-to-l from-charcoal via-charcoal/15 to-transparent rtl:block ltr:hidden" />
           <div className="absolute inset-0 bg-charcoal/75 lg:hidden" />
-          <div className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-charcoal/70 to-transparent" />
-          <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-charcoal/70 to-transparent" />
+          <div className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-charcoal/40 to-transparent" />
+          <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-charcoal/40 to-transparent" />
         </div>
 
-        {/* Content on the other side */}
+        {/* Content */}
         <div className="container-site relative z-10 py-16 md:py-24">
-          <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-12">
-            <div className="max-w-xl">
-              <p className="eyebrow mb-4 flex items-center gap-3 text-brand-gold">
-                <span className="h-px w-8 bg-current" aria-hidden="true" />
-                {copy.eyebrow}
-              </p>
-              <h1 className="font-display text-[clamp(1.75rem,2.8vw,2.5rem)] font-bold leading-tight tracking-tight text-brand-white">
-                {copy.heroTitle}
-              </h1>
-              <p className="mt-5 text-base leading-relaxed text-brand-white/85 sm:text-lg">
-                {copy.heroIntro}
-              </p>
-            </div>
-
-            {/* Audio control button */}
-            <div className="pointer-events-auto flex items-end justify-end self-end lg:pr-2">
-              <button
-                type="button"
-                onClick={toggleAudio}
-                className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-charcoal/75 px-4 py-2 text-xs font-semibold text-brand-white shadow-lg backdrop-blur-md transition-all hover:border-white/40 hover:bg-charcoal"
-                aria-label={isMuted ? soundLabel.unmute : soundLabel.mute}
-              >
-                {isMuted ? <VolumeX size={15} /> : <Volume2 size={15} className="text-brand-gold" />}
-                <span>{isMuted ? soundLabel.unmute : soundLabel.mute}</span>
-              </button>
-            </div>
+          <div className="max-w-xl">
+            <p className="eyebrow mb-4 flex items-center gap-3 text-brand-gold">
+              <span className="h-px w-8 bg-current" aria-hidden="true" />
+              {copy.eyebrow}
+            </p>
+            <h1 className="font-display text-[clamp(1.75rem,2.8vw,2.5rem)] font-bold leading-tight tracking-tight text-brand-white">
+              {copy.heroTitle}
+            </h1>
+            <p className="mt-5 text-base leading-relaxed text-brand-white/85 sm:text-lg">
+              {copy.heroIntro}
+            </p>
           </div>
         </div>
+
+        {/* Audio toggle — bottom-right, visible on hover */}
+        <button
+          type="button"
+          onClick={toggleAudio}
+          className="pointer-events-auto absolute bottom-4 z-20 inline-flex items-center gap-2 rounded-full border border-white/20 bg-charcoal/75 px-4 py-2 text-xs font-semibold text-brand-white opacity-0 shadow-lg backdrop-blur-md transition-all duration-300 hover:border-white/40 hover:bg-charcoal group-hover:opacity-100 ltr:right-4 rtl:left-4"
+          aria-label={isMuted ? soundLabel.unmute : soundLabel.mute}
+        >
+          {isMuted ? <VolumeX size={15} /> : <Volume2 size={15} className="text-brand-gold" />}
+          <span>{isMuted ? soundLabel.unmute : soundLabel.mute}</span>
+        </button>
       </section>
 
       {/* Quick Nav Anchors */}
