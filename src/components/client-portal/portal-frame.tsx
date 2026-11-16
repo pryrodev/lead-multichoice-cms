@@ -22,8 +22,8 @@ export function PortalFrame({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <div className="min-h-svh bg-warm">
-      <header className="sticky top-0 z-20 border-b border-border bg-brand-white/95 backdrop-blur">
+    <div className="min-h-svh bg-white">
+      <header className="sticky top-0 z-20 border-b border-border bg-white/95 backdrop-blur">
         <div aria-hidden="true" className="h-0.5 bg-gradient-to-r from-brand-primary via-brand-primary to-brand-gold" />
         <div className="mx-auto flex min-h-16 max-w-7xl items-center justify-between gap-2 px-3 sm:gap-6 sm:px-6">
           <div className="flex min-w-0 items-center gap-2.5 sm:gap-5">

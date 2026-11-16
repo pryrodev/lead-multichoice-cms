@@ -37,7 +37,7 @@ export function RequestTrackingDetails({ reference }: { reference: string }) {
   }
 
   return (
-    <div className="min-h-[65vh] bg-warm">
+    <div className="min-h-[65vh] bg-white">
       <div className="border-b border-brand-primary/10 bg-charcoal text-brand-white">
         <div className="container-site flex min-h-[70px] flex-wrap items-center justify-between gap-3 py-3">
           <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
