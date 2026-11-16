@@ -1,5 +1,6 @@
 "use client";
 
+import { useRef, useState } from "react";
 import {
   BarChart3,
   CheckCircle2,
@@ -18,6 +19,8 @@ import {
   TrendingUp,
   Truck,
   Users,
+  Volume2,
+  VolumeX,
 } from "lucide-react";
 import type { ProcurementResource } from "@/lib/cms/procurement-resources";
 import { ButtonLink, PageHero, SectionHeading } from "@/components/site/ui";
@@ -942,36 +945,89 @@ const content: Record<string, ProcurementContent> & { en: ProcurementContent } =
   },
 };
 
-const heroImage = "/site/warehouse.jpg";
+const defaultSoundLabel = { unmute: "Unmute audio", mute: "Mute audio" };
+const audioLabels: Record<string, { unmute: string; mute: string }> = {
+  en: defaultSoundLabel,
+  rw: { unmute: "Fungura ijwi", mute: "Funga ijwi" },
+  fr: { unmute: "Activer le son", mute: "Couper le son" },
+  sw: { unmute: "Washa sauti", mute: "Zima sauti" },
+  zh: { unmute: "开启声音", mute: "静音" },
+  de: { unmute: "Ton einschalten", mute: "Ton ausschalten" },
+  ar: { unmute: "تشغيل الصوت", mute: "كتم الصوت" },
+};
 
 export default function Procurement({ resources }: { resources: ProcurementResource[] }) {
   const { language } = useI18n();
   const copy = content[language] ?? content.en;
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [isMuted, setIsMuted] = useState(true);
+
+  const toggleAudio = () => {
+    if (videoRef.current) {
+      const nextMuted = !videoRef.current.muted;
+      videoRef.current.muted = nextMuted;
+      setIsMuted(nextMuted);
+    }
+  };
+
+  const soundLabel = audioLabels[language] ?? defaultSoundLabel;
 
   return (
     <>
-      <PageHero
-        eyebrow={copy.eyebrow}
-        title={copy.heroTitle}
-        titleClassName="text-[clamp(1.5rem,2.6vw,2rem)] md:text-[clamp(1.75rem,2.8vw,2.25rem)] lg:text-[clamp(2rem,2.6vw,2.5rem)]"
-        intro={copy.heroIntro}
-        headingClassName="max-w-none"
-        image={heroImage}
-        visualKey="procurement.hero"
-        alt="Organised warehouse shelves"
-        aside={
-          <div className="aspect-video overflow-hidden rounded-md border border-white/30 bg-black/20">
-            <iframe
-              className="size-full"
-              src="https://www.youtube-nocookie.com/embed/ARf2O5hrU6w?autoplay=1&mute=1&controls=1&playsinline=1&loop=1&playlist=ARf2O5hrU6w&rel=0&modestbranding=1"
-              title="Lead Multi-Choice procurement and trade facilitation video"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              referrerPolicy="strict-origin-when-cross-origin"
-              allowFullScreen
-            />
+      {/* Hero with dynamic background video on one side and content on the other */}
+      <section className="relative isolate flex min-h-[520px] items-center overflow-hidden border-b border-border bg-charcoal text-brand-white md:min-h-[60vh] lg:min-h-[65vh]">
+        {/* Background video on one side */}
+        <div className="pointer-events-none absolute inset-y-0 w-full overflow-hidden ltr:right-0 rtl:left-0 lg:w-1/2">
+          <video
+            ref={videoRef}
+            autoPlay
+            muted={isMuted}
+            loop
+            playsInline
+            preload="auto"
+            className="size-full object-cover"
+          >
+            <source src="/video/rwanda-business-opportunities.mp4" type="video/mp4" />
+          </video>
+          {/* Subtle gradient blends */}
+          <div className="absolute inset-0 hidden bg-gradient-to-r from-charcoal via-charcoal/30 to-transparent ltr:block rtl:hidden" />
+          <div className="absolute inset-0 hidden bg-gradient-to-l from-charcoal via-charcoal/30 to-transparent rtl:block ltr:hidden" />
+          <div className="absolute inset-0 bg-charcoal/75 lg:hidden" />
+          <div className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-charcoal/70 to-transparent" />
+          <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-charcoal/70 to-transparent" />
+        </div>
+
+        {/* Content on the other side */}
+        <div className="container-site relative z-10 py-16 md:py-24">
+          <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-12">
+            <div className="max-w-xl">
+              <p className="eyebrow mb-4 flex items-center gap-3 text-brand-gold">
+                <span className="h-px w-8 bg-current" aria-hidden="true" />
+                {copy.eyebrow}
+              </p>
+              <h1 className="font-display text-[clamp(1.75rem,2.8vw,2.5rem)] font-bold leading-tight tracking-tight text-brand-white">
+                {copy.heroTitle}
+              </h1>
+              <p className="mt-5 text-base leading-relaxed text-brand-white/85 sm:text-lg">
+                {copy.heroIntro}
+              </p>
+            </div>
+
+            {/* Audio control button */}
+            <div className="pointer-events-auto flex items-end justify-end self-end lg:pr-2">
+              <button
+                type="button"
+                onClick={toggleAudio}
+                className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-charcoal/75 px-4 py-2 text-xs font-semibold text-brand-white shadow-lg backdrop-blur-md transition-all hover:border-white/40 hover:bg-charcoal"
+                aria-label={isMuted ? soundLabel.unmute : soundLabel.mute}
+              >
+                {isMuted ? <VolumeX size={15} /> : <Volume2 size={15} className="text-brand-gold" />}
+                <span>{isMuted ? soundLabel.unmute : soundLabel.mute}</span>
+              </button>
+            </div>
           </div>
-        }
-      />
+        </div>
+      </section>
 
       {/* Quick Nav Anchors */}
       <nav aria-label="Page navigation" className="sticky top-[84px] z-30 border-b border-border bg-background/95 backdrop-blur">
