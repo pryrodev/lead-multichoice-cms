@@ -989,12 +989,12 @@ export default function Procurement({ resources }: { resources: ProcurementResou
           >
             <source src="/video/rwanda-business-opportunities.mp4" type="video/mp4" />
           </video>
-          {/* Subtle gradient blends — lighter to let the video breathe */}
-          <div className="absolute inset-0 hidden bg-gradient-to-r from-brand-primary via-brand-primary/15 to-transparent ltr:block rtl:hidden" />
-          <div className="absolute inset-0 hidden bg-gradient-to-l from-brand-primary via-brand-primary/15 to-transparent rtl:block ltr:hidden" />
-          <div className="absolute inset-0 bg-brand-primary/75 lg:hidden" />
-          <div className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-brand-primary/40 to-transparent" />
-          <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-brand-primary/40 to-transparent" />
+          {/* Subtle gradient blends — just enough to blend into the left */}
+          <div className="absolute inset-0 hidden bg-gradient-to-r from-brand-primary via-brand-primary/5 to-transparent ltr:block rtl:hidden" />
+          <div className="absolute inset-0 hidden bg-gradient-to-l from-brand-primary via-brand-primary/5 to-transparent rtl:block ltr:hidden" />
+          <div className="absolute inset-0 bg-brand-primary/60 lg:hidden" />
+          <div className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-brand-primary/20 to-transparent" />
+          <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-brand-primary/20 to-transparent" />
         </div>
 
         {/* Content */}
