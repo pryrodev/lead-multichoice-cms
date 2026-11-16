@@ -233,7 +233,7 @@ html:has(.dialog-scroll-lock-overlay) {
   font-weight: 600;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--muted-foreground);
+  color: var(--steel);
 }
 
 @utility container-site {
