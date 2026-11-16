@@ -55,11 +55,7 @@ export function ClientDashboard() {
         <div aria-hidden="true" className="pointer-events-none absolute -right-12 -top-20 size-64 rounded-full bg-brand-primary/5 blur-2xl" />
         <div className="relative grid gap-6 sm:gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
           <div className="max-w-2xl">
-            <div className="flex items-center gap-2">
-              <span className="size-1.5 rounded-full bg-brand-gold" />
-              <p className="eyebrow text-steel">Your trade desk</p>
-            </div>
-            <h1 id="portal-welcome-title" className="mt-2 font-display text-2xl font-bold tracking-tight text-charcoal sm:text-3xl">Welcome back, {firstName}.</h1>
+            <h1 id="portal-welcome-title" className="font-display text-2xl font-bold tracking-tight text-charcoal sm:text-3xl">Welcome back, {firstName}.</h1>
             <p className="mt-2 max-w-xl text-sm leading-relaxed text-steel sm:text-base">Follow each request from first review to delivery. Your team’s latest updates are gathered here.</p>
           </div>
           <div className="flex flex-wrap items-center gap-6 lg:justify-end">
