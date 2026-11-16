@@ -107,7 +107,7 @@ function RequestSummary({ result }: { result: PublicRequestTracking }) {
         <CardTitle className="text-xl leading-snug text-charcoal">{result.title}</CardTitle>
       </CardHeader>
       <CardContent className="space-y-5 px-0 md:px-6">
-        <div className="rounded-lg border-l-2 border-brand-primary bg-surface/60 p-4">
+        <div className="rounded-lg border border-brand-primary/30 bg-surface/60 p-4">
           <p className="text-[11px] font-semibold uppercase tracking-wider text-brand-primary">Current status</p>
           <div className="mt-2 flex items-center gap-2 text-sm font-semibold text-charcoal"><PackageCheck className="size-4 text-brand-primary" />{currentStatus?.name ?? fallbackStatus}</div>
           <p className="mt-2 text-sm leading-relaxed text-steel">

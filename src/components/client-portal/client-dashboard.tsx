@@ -166,7 +166,7 @@ function FeaturedRequest({ request, milestones }: { request: ClientRequest; mile
           </ol>}
         </div>
 
-        {request.nextAction && <div className="mt-6 flex items-start gap-3 rounded-lg border-l-2 border-brand-primary bg-surface/70 px-4 py-3.5">
+        {request.nextAction && <div className="mt-6 flex items-start gap-3 rounded-lg border border-brand-primary/30 bg-surface/70 px-4 py-3.5">
           <Clock3 className="mt-0.5 size-4 shrink-0 text-brand-primary" />
           <div className="min-w-0"><p className="text-[11px] font-semibold uppercase tracking-wider text-brand-primary">Next from our team</p><p className="mt-1 text-sm font-medium leading-relaxed text-charcoal">{request.nextAction}{request.nextActionDue ? <span className="font-normal text-steel"> · Due {formatDate(request.nextActionDue)}</span> : null}</p></div>
         </div>}
