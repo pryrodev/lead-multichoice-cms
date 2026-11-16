@@ -22,13 +22,10 @@ export function PortalFrame({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <div className="min-h-svh bg-warm">
-      <header className="sticky top-0 z-20 border-b border-brand-primary/10 bg-brand-white/95 backdrop-blur">
-        <div aria-hidden="true" className="h-1 bg-brand-primary">
-          <div className="h-full w-1/5 bg-brand-gold" />
-        </div>
-        <div className="mx-auto flex min-h-16 max-w-7xl items-center justify-between gap-3 px-4 sm:gap-6 sm:px-6">
-          <div className="flex min-w-0 items-center gap-3 sm:gap-5">
+    <div className="min-h-svh bg-slate-50/50">
+      <header className="sticky top-0 z-20 border-b border-border bg-background/95 backdrop-blur">
+        <div className="mx-auto flex min-h-16 max-w-7xl items-center justify-between gap-2 px-3 sm:gap-6 sm:px-6">
+          <div className="flex min-w-0 items-center gap-2.5 sm:gap-5">
             <Link
               href="/portal"
               aria-label="Lead Multi-Choice ® client portal"
@@ -40,38 +37,43 @@ export function PortalFrame({ children }: { children: React.ReactNode }) {
                 width={512}
                 height={191}
                 priority
-                className="h-8 w-auto sm:h-9"
+                className="h-7 w-auto sm:h-9"
               />
             </Link>
             <span className="hidden h-8 border-l border-border sm:block" aria-hidden="true" />
-            <span className="hidden text-[11px] font-semibold uppercase tracking-[0.16em] text-muted-foreground md:block">
+            <span className="hidden text-[11px] font-semibold uppercase tracking-[0.16em] text-muted-foreground lg:block">
               Client trade desk
             </span>
           </div>
-          <nav aria-label="Client portal" className="flex items-center gap-1 sm:gap-2">
+          <nav aria-label="Client portal" className="flex shrink-0 items-center gap-1 sm:gap-2">
             <Link
               href="/portal"
               aria-current={pathname === "/portal" ? "page" : undefined}
-              className={`rounded-md px-2.5 py-2 text-xs font-semibold transition-colors sm:px-3 sm:text-sm ${pathname === "/portal" ? "bg-surface text-brand-primary" : "text-charcoal/75 hover:bg-surface hover:text-brand-primary"}`}
+              className={`whitespace-nowrap rounded-md px-3 py-1.5 text-xs font-medium transition-colors sm:text-sm ${
+                pathname === "/portal"
+                  ? "bg-muted font-semibold text-foreground"
+                  : "text-muted-foreground hover:bg-muted/60 hover:text-foreground"
+              }`}
             >
-              My requests
+              <span className="sm:hidden">Requests</span>
+              <span className="hidden sm:inline">My requests</span>
             </Link>
-            <Button asChild size="sm" className="h-9 px-2.5 sm:px-3">
-              <Link href="/portal/requests/new">
+            <Button asChild size="sm" className="h-8 bg-slate-900 px-3 text-white shadow-xs hover:bg-slate-800 sm:h-9">
+              <Link href="/portal/requests/new" aria-label="Create a new request" title="Create a new request">
                 <Plus data-icon="inline-start" />
-                New request
+                <span className="hidden sm:inline">New request</span>
               </Link>
             </Button>
           </nav>
           <div className="flex shrink-0 items-center gap-2 sm:gap-3">
             <span
               aria-hidden="true"
-              className="hidden size-8 items-center justify-center rounded-full bg-brand-gold text-xs font-bold text-charcoal sm:flex"
+              className="flex size-7 items-center justify-center rounded-full border border-border bg-muted text-xs font-semibold text-foreground sm:size-8"
             >
               {data?.user?.name?.trim().charAt(0).toUpperCase() ?? "C"}
             </span>
             <div className="hidden text-right sm:block">
-              <p className="max-w-36 truncate text-xs font-semibold">
+              <p className="max-w-36 truncate text-xs font-semibold text-foreground">
                 {data?.user?.name ?? "Client account"}
               </p>
               <p className="text-[11px] capitalize text-muted-foreground">

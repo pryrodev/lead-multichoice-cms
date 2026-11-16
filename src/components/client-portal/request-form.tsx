@@ -85,17 +85,17 @@ export function ClientRequestForm() {
           </Card>
         </div>
 
-        <aside className="rounded-xl bg-brand-primary p-5 text-brand-white lg:sticky lg:top-24">
-          <p className="eyebrow text-brand-gold">What happens next</p>
+        <aside className="rounded-xl border border-border bg-card p-5 text-card-foreground shadow-xs lg:sticky lg:top-24">
+          <p className="eyebrow">What happens next</p>
           <ol className="mt-5 space-y-5">
             {["We review the details", "A team member coordinates with you", "Follow progress with your Tracking ID"].map((item, index) => (
               <li key={item} className="flex gap-3">
-                <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-brand-gold text-xs font-bold text-charcoal">{index < 2 ? <Check className="size-3.5" /> : "3"}</span>
-                <span className="pt-0.5 text-sm leading-relaxed text-brand-white/90">{item}</span>
+                <span className="flex size-6 shrink-0 items-center justify-center rounded-full border border-border bg-muted text-xs font-bold text-foreground">{index < 2 ? <Check className="size-3.5 text-emerald-600" /> : "3"}</span>
+                <span className="pt-0.5 text-sm leading-relaxed text-muted-foreground">{item}</span>
               </li>
             ))}
           </ol>
-          <div className="mt-6 border-t border-brand-white/20 pt-4"><p className="text-xs leading-relaxed text-brand-white/75">Your request and its updates stay together in your trade desk.</p></div>
+          <div className="mt-6 border-t border-border pt-4"><p className="text-xs leading-relaxed text-muted-foreground">Your request and its updates stay together in your trade desk.</p></div>
         </aside>
       </div>
     </div>

@@ -1,4 +1,4 @@
-import { createHash } from "node:crypto";
+import { createHash, randomBytes, scryptSync } from "node:crypto";
 import { existsSync, readFileSync } from "node:fs";
 import mariadb from "mariadb";
 import { PrismaMariaDb } from "@prisma/adapter-mariadb";
@@ -23,6 +23,11 @@ if (missing.length) {
   console.error(`Missing environment variables: ${missing.join(", ")}`);
   process.exit(1);
 }
+const demoClientPassword = process.env.DEMO_CLIENT_PASSWORD;
+if (!demoClientPassword || demoClientPassword.length < 10 || demoClientPassword.length > 128) {
+  console.error("Set DEMO_CLIENT_PASSWORD in .env.local to a password between 10 and 128 characters before seeding demo data.");
+  process.exit(1);
+}
 
 const pool = mariadb.createPool({
   host: process.env.MYSQL_HOST,
@@ -37,6 +42,7 @@ const pool = mariadb.createPool({
 const prisma = new PrismaClient({ adapter: new PrismaMariaDb(pool, { database: process.env.MYSQL_DATABASE, disposeExternalPool: true }) });
 const stableId = (key) => createHash("sha256").update(`lmc-demo-${key}`).digest("hex").slice(0, 32);
 const refSuffix = (key) => createHash("sha256").update(`lmc-demo-ref-${key}`).digest("hex").slice(0, 24).toUpperCase();
+const demoClientEmail = "demo.buyer@leadmultichoice.test";
 
 // Demo status catalogs mirror the different journeys clients may track.
 const statusFlows = {
@@ -109,6 +115,28 @@ const samples = [
 ];
 
 try {
+  const passwordSalt = randomBytes(16).toString("hex");
+  const passwordKey = scryptSync(demoClientPassword, passwordSalt, 64).toString("hex");
+  const demoClient = await prisma.user.upsert({
+    where: { id: stableId("client-user") },
+    create: {
+      id: stableId("client-user"),
+      name: "Demo Buyer",
+      email: demoClientEmail,
+      organization: "Kigali District Cooperative",
+      role: "buyer",
+      passwordHash: `scrypt:${passwordSalt}:${passwordKey}`,
+    },
+    update: {
+      name: "Demo Buyer",
+      email: demoClientEmail,
+      organization: "Kigali District Cooperative",
+      role: "buyer",
+      isActive: true,
+      passwordHash: `scrypt:${passwordSalt}:${passwordKey}`,
+    },
+  });
+
   const trackingStatusIds = new Map();
   for (const [requestType, flow] of Object.entries(statusFlows)) {
     for (let index = 0; index < flow.length; index++) {
@@ -130,10 +158,10 @@ try {
     const requestReference = `LMC-REQ-${refSuffix(sample.key)}`;
     const engagementReference = `LMC-ENG-${refSuffix(sample.key)}`;
     const requestData = {
-      submittedBy: null,
+      submittedBy: sample.key === "buying" ? demoClient.id : null,
       clientName,
       organization,
-      clientEmail: null,
+      clientEmail: sample.key === "buying" ? demoClient.email : null,
       clientPhone: null,
       requestType: sample.type,
       title: sample.title,
@@ -145,7 +173,7 @@ try {
     await prisma.clientRequest.upsert({ where: { reference: requestReference }, create: { id: requestId, reference: requestReference, ...requestData }, update: requestData });
     const engagementData = {
       requestId,
-      clientUserId: null,
+      clientUserId: sample.key === "buying" ? demoClient.id : null,
       title: sample.title,
       stage: sample.stage,
       status: sample.key === "other" ? "completed" : "active",
@@ -171,6 +199,7 @@ try {
     }
     console.log(`${sample.type.padEnd(12)} ${requestReference}  ${sample.title}`);
   }
+  console.log(`Demo client login: ${demoClient.email} (password from DEMO_CLIENT_PASSWORD).`);
   console.log(`${Object.values(statusFlows).reduce((total, flow) => total + flow.length, 0)} request-specific tracking statuses seeded.`);
   console.log("Seeded 8 demo client requests and engagement timelines with varied progress histories.");
 } finally {
