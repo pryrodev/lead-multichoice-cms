@@ -975,7 +975,7 @@ export default function Procurement({ resources }: { resources: ProcurementResou
   return (
     <>
       {/* Hero with dynamic background video on one side and content on the other */}
-      <section className="group relative isolate flex min-h-[520px] items-center overflow-hidden border-b border-border bg-charcoal text-brand-white md:min-h-[60vh] lg:min-h-[65vh]">
+      <section className="group relative isolate flex min-h-[520px] items-center overflow-hidden border-b border-border bg-brand-primary text-brand-white md:min-h-[60vh] lg:min-h-[65vh]">
         {/* Background video on one side */}
         <div className="pointer-events-none absolute inset-y-0 w-full overflow-hidden ltr:right-0 rtl:left-0 lg:w-1/2">
           <video
@@ -990,11 +990,11 @@ export default function Procurement({ resources }: { resources: ProcurementResou
             <source src="/video/rwanda-business-opportunities.mp4" type="video/mp4" />
           </video>
           {/* Subtle gradient blends — lighter to let the video breathe */}
-          <div className="absolute inset-0 hidden bg-gradient-to-r from-charcoal via-charcoal/15 to-transparent ltr:block rtl:hidden" />
-          <div className="absolute inset-0 hidden bg-gradient-to-l from-charcoal via-charcoal/15 to-transparent rtl:block ltr:hidden" />
-          <div className="absolute inset-0 bg-charcoal/75 lg:hidden" />
-          <div className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-charcoal/40 to-transparent" />
-          <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-charcoal/40 to-transparent" />
+          <div className="absolute inset-0 hidden bg-gradient-to-r from-brand-primary via-brand-primary/15 to-transparent ltr:block rtl:hidden" />
+          <div className="absolute inset-0 hidden bg-gradient-to-l from-brand-primary via-brand-primary/15 to-transparent rtl:block ltr:hidden" />
+          <div className="absolute inset-0 bg-brand-primary/75 lg:hidden" />
+          <div className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-brand-primary/40 to-transparent" />
+          <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-brand-primary/40 to-transparent" />
         </div>
 
         {/* Content */}
@@ -1017,7 +1017,7 @@ export default function Procurement({ resources }: { resources: ProcurementResou
         <button
           type="button"
           onClick={toggleAudio}
-          className="pointer-events-auto absolute bottom-4 z-20 inline-flex items-center gap-2 rounded-full border border-white/20 bg-charcoal/75 px-4 py-2 text-xs font-semibold text-brand-white opacity-0 shadow-lg backdrop-blur-md transition-all duration-300 hover:border-white/40 hover:bg-charcoal group-hover:opacity-100 ltr:right-4 rtl:left-4"
+          className="pointer-events-auto absolute bottom-4 z-20 inline-flex items-center gap-2 rounded-full border border-white/20 bg-brand-primary/75 px-4 py-2 text-xs font-semibold text-brand-white opacity-0 shadow-lg backdrop-blur-md transition-all duration-300 hover:border-white/40 hover:bg-brand-primary group-hover:opacity-100 ltr:right-4 rtl:left-4"
           aria-label={isMuted ? soundLabel.unmute : soundLabel.mute}
         >
           {isMuted ? <VolumeX size={15} /> : <Volume2 size={15} className="text-brand-gold" />}
