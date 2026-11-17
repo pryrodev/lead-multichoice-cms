@@ -108,7 +108,24 @@ export interface Shipment {
   progress: number;
   eta: string;
   clearance: "pending" | "in_review" | "cleared" | "held";
+  clientRequest: {
+    id: string;
+    reference: string;
+    title: string;
+    clientName: string;
+  } | null;
   milestones: ShipmentMilestone[];
+}
+
+export type CreateShipmentInput = Omit<Shipment, "id" | "ref" | "clientRequest"> & {
+  clientRequestId: string | null;
+};
+
+export interface ShipmentRequestOption {
+  id: string;
+  reference: string;
+  title: string;
+  clientName: string;
 }
 
 export type ActivityKind = "update" | "blocker" | "next_action" | "decision";
@@ -174,6 +191,7 @@ export interface StaffMember {
 
 export interface MediaAsset {
   id: string;
+  resourceType: "image" | "video";
   publicId: string;
   secureUrl: string;
   format: string;

@@ -236,6 +236,7 @@ export function Logistics({ initialSearch = "" }: { initialSearch?: string }) {
   const shipments = useShipments();
   const columns: DataTableColumn<Shipment>[] = [
     { id: "cargo", header: "Shipment", className: "min-w-56", cell: (shipment) => <div><p className="font-medium">{shipment.cargo}</p><p className="mt-1 font-mono text-xs text-muted-foreground">{shipment.ref}</p></div> },
+    { id: "request", header: "Client request", className: "min-w-56", cell: (shipment) => shipment.clientRequest ? <div><p className="font-medium">{shipment.clientRequest.title}</p><p className="mt-1 font-mono text-xs text-muted-foreground">{shipment.clientRequest.reference} · {shipment.clientRequest.clientName}</p></div> : <span className="text-sm text-muted-foreground">Not linked</span> },
     { id: "route", header: "Route", className: "min-w-44", cell: (shipment) => <div><p>{shipment.origin} → {shipment.destination}</p><p className="mt-1 text-xs text-muted-foreground">{shipment.corridor}</p></div> },
     { id: "progress", header: "Progress", className: "min-w-36", cell: (shipment) => <div className="flex items-center gap-2"><Progress value={shipment.progress} className="h-2 min-w-16" /><span className="text-xs tabular-nums">{shipment.progress}%</span></div> },
     { id: "clearance", header: "Clearance", cell: (shipment) => <Badge variant="outline" className={cn("capitalize", clearanceStyle[shipment.clearance])}>{shipment.clearance.replace("_", " ")}</Badge> },
@@ -245,7 +246,7 @@ export function Logistics({ initialSearch = "" }: { initialSearch?: string }) {
   return (
     <Card>
       <CardHeader className="flex-row flex-wrap items-center justify-between gap-3"><CardTitle className="font-display">Regional corridor logistics</CardTitle><AddShipmentDialog /></CardHeader>
-      <CardContent className="px-0 pb-0"><ReusableTable rows={shipments} columns={columns} getRowId={(shipment) => shipment.id} initialSearch={initialSearch} getSearchText={(shipment) => [shipment.ref, shipment.cargo, shipment.corridor, shipment.origin, shipment.destination].join(" ")} emptyMessage="No shipments match this search." /></CardContent>
+      <CardContent className="px-0 pb-0"><ReusableTable rows={shipments} columns={columns} getRowId={(shipment) => shipment.id} initialSearch={initialSearch} getSearchText={(shipment) => [shipment.ref, shipment.cargo, shipment.corridor, shipment.origin, shipment.destination, shipment.clientRequest?.reference, shipment.clientRequest?.title, shipment.clientRequest?.clientName].join(" ")} emptyMessage="No shipments match this search." /></CardContent>
     </Card>
   );
 }

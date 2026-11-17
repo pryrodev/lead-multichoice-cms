@@ -309,6 +309,7 @@ export const shipments: Shipment[] = [
     progress: 62,
     eta: "2026-11-06",
     clearance: "in_review",
+    clientRequest: null,
     milestones: [
       { label: "Vessel arrival Mombasa", date: "2026-10-14", done: true },
       { label: "Single Customs Territory entry", date: "2026-10-18", done: true },
@@ -326,6 +327,7 @@ export const shipments: Shipment[] = [
     progress: 35,
     eta: "2026-11-18",
     clearance: "pending",
+    clientRequest: null,
     milestones: [
       { label: "Vessel arrival Dar es Salaam", date: "2026-10-24", done: true },
       { label: "TRA release", date: null, done: false },
@@ -343,6 +345,7 @@ export const shipments: Shipment[] = [
     progress: 100,
     eta: "2026-10-12",
     clearance: "cleared",
+    clientRequest: null,
     milestones: [
       { label: "Departure DXB", date: "2026-10-09", done: true },
       { label: "Arrival KGL", date: "2026-10-10", done: true },

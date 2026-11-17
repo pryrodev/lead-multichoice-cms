@@ -17,6 +17,7 @@ export const opportunitiesQuery = queryOptions({
   queryFn: api.getOpportunities,
 });
 export const shipmentsQuery = queryOptions({ queryKey: ["shipments"], queryFn: api.getShipments });
+export const shipmentRequestOptionsQuery = queryOptions({ queryKey: ["shipments", "request-options"], queryFn: api.getShipmentRequestOptions, staleTime: 60_000 });
 export const activitiesQuery = queryOptions({
   queryKey: ["activities"],
   queryFn: api.getActivities,
@@ -28,6 +29,7 @@ export const useEngagements = () => useSuspenseQuery(engagementsQuery).data;
 export const useTenders = () => useSuspenseQuery(tendersQuery).data;
 export const useOpportunities = () => useSuspenseQuery(opportunitiesQuery).data;
 export const useShipments = () => useSuspenseQuery(shipmentsQuery).data;
+export const useShipmentRequestOptions = (enabled = true) => useQuery({ ...shipmentRequestOptionsQuery, enabled });
 export const useActivities = () => useSuspenseQuery(activitiesQuery).data;
 
 export const adminSearchQuery = (query: string) => queryOptions({

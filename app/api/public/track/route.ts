@@ -14,6 +14,23 @@ async function findRequest(reference: string) {
       status: true,
       createdAt: true,
       updatedAt: true,
+      shipments: {
+        orderBy: { createdAt: "desc" },
+        select: {
+          reference: true,
+          cargo: true,
+          corridor: true,
+          origin: true,
+          destination: true,
+          progress: true,
+          eta: true,
+          clearance: true,
+          milestones: {
+            orderBy: { sortOrder: "asc" },
+            select: { label: true, eventDate: true, isComplete: true },
+          },
+        },
+      },
       engagement: {
         select: {
           stage: true,
@@ -57,6 +74,21 @@ async function findRequest(reference: string) {
     status: result.status,
     createdAt: result.createdAt.toISOString(),
     updatedAt: (result.engagement?.updatedAt ?? result.updatedAt).toISOString(),
+    shipments: result.shipments.map((shipment) => ({
+      reference: shipment.reference,
+      cargo: shipment.cargo,
+      corridor: shipment.corridor,
+      origin: shipment.origin,
+      destination: shipment.destination,
+      progress: shipment.progress,
+      eta: shipment.eta?.toISOString().slice(0, 10) ?? null,
+      clearance: shipment.clearance,
+      milestones: shipment.milestones.map((milestone) => ({
+        label: milestone.label,
+        date: milestone.eventDate?.toISOString().slice(0, 10) ?? null,
+        done: milestone.isComplete,
+      })),
+    })),
     engagement: result.engagement ? {
       stage: result.engagement.stage,
       status: result.engagement.status,

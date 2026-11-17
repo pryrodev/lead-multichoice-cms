@@ -2,13 +2,14 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { ArrowLeft, Check, Circle, Clock3, Copy, PackageCheck } from "lucide-react";
+import { ArrowLeft, Check, Circle, Clock3, Copy, MapPin, PackageCheck, Truck } from "lucide-react";
 import { toast } from "sonner";
 import { useTrackedClientRequest } from "@/features/client-portal/hooks";
 import type { PublicRequestTracking, TrackingStatus } from "@/features/client-portal/types";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Progress } from "@/components/ui/progress";
 
 const requestStatusLabels: Record<string, string> = {
   submitted: "Request received",
@@ -66,6 +67,7 @@ export function RequestTrackingDetails({ reference }: { reference: string }) {
           <>
             <section aria-labelledby="request-details-heading" className="space-y-6">
               <RequestSummary result={query.data} />
+              {query.data.shipments.length > 0 && <LinkedShipments shipments={query.data.shipments} />}
               {query.data.engagement?.updates.length ? (
                 <Card className="rounded-xl border border-brand-primary/15 bg-brand-white shadow-xs">
                   <CardHeader className="px-0 md:px-6"><CardTitle className="text-base text-charcoal">Updates from the team</CardTitle></CardHeader>
@@ -92,6 +94,42 @@ export function RequestTrackingDetails({ reference }: { reference: string }) {
         ) : null}
       </main>
     </div>
+  );
+}
+
+function LinkedShipments({ shipments }: { shipments: PublicRequestTracking["shipments"] }) {
+  return (
+    <Card className="rounded-xl border border-brand-primary/15 bg-brand-white shadow-xs">
+      <CardHeader className="px-0 md:px-6">
+        <div className="flex items-center gap-2 text-brand-primary"><Truck className="size-4" /><CardTitle className="text-base text-charcoal">Shipment progress</CardTitle></div>
+        <p className="text-sm text-steel">Shipments recorded by the team for this request.</p>
+      </CardHeader>
+      <CardContent className="space-y-5 px-0 md:px-6">
+        {shipments.map((shipment) => (
+          <article key={shipment.reference} className="space-y-3 border-t border-border pt-4 first:border-0 first:pt-0">
+            <div className="flex flex-wrap items-start justify-between gap-2">
+              <div className="min-w-0">
+                <h3 className="font-semibold text-charcoal">{shipment.cargo}</h3>
+                <p className="mt-1 font-mono text-xs text-steel">{shipment.reference}</p>
+              </div>
+              <Badge variant="outline" className="capitalize">{shipment.clearance.replaceAll("_", " ")}</Badge>
+            </div>
+            <div className="flex items-start gap-2 text-sm text-steel">
+              <MapPin className="mt-0.5 size-4 shrink-0 text-brand-primary" />
+              <span>{shipment.origin} <span aria-hidden="true">→</span> {shipment.destination}{shipment.corridor ? <span className="block text-xs">{shipment.corridor}</span> : null}</span>
+            </div>
+            <div>
+              <div className="mb-1.5 flex items-center justify-between gap-2 text-xs"><span className="font-medium text-charcoal">Shipment progress</span><span className="tabular-nums text-steel">{shipment.progress}%</span></div>
+              <Progress value={shipment.progress} aria-label={`${shipment.reference} shipment progress ${shipment.progress}%`} className="h-2 bg-brand-primary/15 [&>div]:bg-brand-primary" />
+            </div>
+            <div className="flex flex-wrap items-center justify-between gap-3 text-xs text-steel">
+              <span>{shipment.milestones.filter((milestone) => milestone.done).length} of {shipment.milestones.length} milestones complete</span>
+              {shipment.eta && <time>Estimated arrival {new Intl.DateTimeFormat("en", { dateStyle: "medium", timeZone: "Africa/Kigali" }).format(new Date(`${shipment.eta}T00:00:00`))}</time>}
+            </div>
+          </article>
+        ))}
+      </CardContent>
+    </Card>
   );
 }
 

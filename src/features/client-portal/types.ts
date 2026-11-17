@@ -79,6 +79,17 @@ export interface PublicRequestTracking {
   status: ClientRequestStatus;
   createdAt: string;
   updatedAt: string;
+  shipments: {
+    reference: string;
+    cargo: string;
+    corridor: string;
+    origin: string;
+    destination: string;
+    progress: number;
+    eta: string | null;
+    clearance: "pending" | "in_review" | "cleared" | "held";
+    milestones: { label: string; date: string | null; done: boolean }[];
+  }[];
   engagement: {
     stage: EngagementStage;
     status: "active" | "on_hold" | "completed" | "cancelled";

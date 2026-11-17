@@ -1,4 +1,4 @@
-import { randomBytes } from "node:crypto";
+import { randomBytes, timingSafeEqual } from "node:crypto";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { requireUser } from "@/lib/auth/api";
@@ -8,6 +8,7 @@ import { cloudinaryConfig, cloudinarySignature } from "@/lib/cloudinary";
 export const runtime = "nodejs";
 const maxUploadBytes = 10 * 1024 * 1024;
 const allowedTypes = new Set(["image/jpeg", "image/png", "image/webp", "image/avif"]);
+const allowedVideoFormats = new Set(["mp4", "webm", "ogv"]);
 
 export async function GET() {
   const auth = await requireUser(["admin"]); if ("response" in auth) return auth.response;
@@ -19,6 +20,36 @@ export async function GET() {
 
 export async function POST(request: Request) {
   const auth = await requireUser(["admin"]); if ("response" in auth) return auth.response;
+  if (request.headers.get("content-type")?.includes("application/json")) {
+    const input = await request.json().catch(() => null) as {
+      public_id?: unknown; secure_url?: unknown; resource_type?: unknown; format?: unknown;
+      bytes?: unknown; width?: unknown; height?: unknown; version?: unknown; signature?: unknown; altText?: unknown;
+    } | null;
+    let cloudName: string;
+    let apiSecret: string;
+    try { ({ cloudName, apiSecret } = cloudinaryConfig()); }
+    catch { return NextResponse.json({ error: "Set the Cloudinary environment variables to enable video uploads." }, { status: 503 }); }
+    if (!input || input.resource_type !== "video" || typeof input.public_id !== "string" || typeof input.secure_url !== "string" || typeof input.format !== "string" || !allowedVideoFormats.has(input.format.toLowerCase()) || typeof input.version !== "number" || typeof input.signature !== "string") {
+      return NextResponse.json({ error: "Cloudinary returned invalid video details." }, { status: 400 });
+    }
+    let url: URL;
+    try { url = new URL(input.secure_url); } catch { return NextResponse.json({ error: "The uploaded video URL is not valid." }, { status: 400 }); }
+    if (url.hostname !== "res.cloudinary.com" || !url.pathname.includes(`/${cloudName}/video/upload/`)) return NextResponse.json({ error: "The uploaded video URL is not valid." }, { status: 400 });
+    const expected = cloudinarySignature({ public_id: input.public_id, version: String(input.version) }, apiSecret);
+    const expectedBuffer = Buffer.from(expected, "hex");
+    const actualBuffer = Buffer.from(input.signature, "hex");
+    if (actualBuffer.length !== expectedBuffer.length || !timingSafeEqual(actualBuffer, expectedBuffer)) return NextResponse.json({ error: "Could not verify the uploaded video." }, { status: 400 });
+    const altText = z.string().trim().max(500).safeParse(input.altText ?? "");
+    if (!altText.success) return NextResponse.json({ error: "Video title must be 500 characters or fewer." }, { status: 400 });
+    if (typeof input.bytes !== "number" || input.bytes <= 0 || input.bytes > 100 * 1024 * 1024) return NextResponse.json({ error: "Videos must be 100 MB or smaller." }, { status: 413 });
+    const asset = await getDb().mediaAsset.create({ data: {
+      id: randomBytes(16).toString("hex"), resourceType: "video", publicId: input.public_id,
+      secureUrl: input.secure_url, format: input.format, bytes: Number(input.bytes) || 0,
+      width: Number(input.width) || 0, height: Number(input.height) || 0,
+      altText: altText.data, uploadedBy: auth.user.id,
+    } });
+    return NextResponse.json({ id: asset.id, resourceType: asset.resourceType, publicId: asset.publicId, secureUrl: asset.secureUrl, format: asset.format, bytes: asset.bytes, width: asset.width, height: asset.height, altText: asset.altText, createdAt: asset.createdAt.toISOString() }, { status: 201 });
+  }
   let form: FormData;
   try { form = await request.formData(); } catch { return NextResponse.json({ error: "Choose an image to upload." }, { status: 400 }); }
   const file = form.get("file");
@@ -47,8 +78,8 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Cloudinary could not process this image." }, { status: 502 });
     }
     const id = randomBytes(16).toString("hex");
-    const asset = await getDb().mediaAsset.create({ data: { id, publicId: uploaded.public_id, secureUrl: uploaded.secure_url, format: uploaded.format ?? "", bytes: uploaded.bytes ?? file.size, width: uploaded.width ?? 0, height: uploaded.height ?? 0, altText: altText.data, uploadedBy: auth.user.id } });
-    return NextResponse.json({ id: asset.id, publicId: asset.publicId, secureUrl: asset.secureUrl, format: asset.format, bytes: asset.bytes, width: asset.width, height: asset.height, altText: asset.altText, createdAt: asset.createdAt.toISOString() }, { status: 201 });
+    const asset = await getDb().mediaAsset.create({ data: { id, resourceType: "image", publicId: uploaded.public_id, secureUrl: uploaded.secure_url, format: uploaded.format ?? "", bytes: uploaded.bytes ?? file.size, width: uploaded.width ?? 0, height: uploaded.height ?? 0, altText: altText.data, uploadedBy: auth.user.id } });
+    return NextResponse.json({ id: asset.id, resourceType: asset.resourceType, publicId: asset.publicId, secureUrl: asset.secureUrl, format: asset.format, bytes: asset.bytes, width: asset.width, height: asset.height, altText: asset.altText, createdAt: asset.createdAt.toISOString() }, { status: 201 });
   } catch (error) {
     if (error instanceof Error && error.message === "Cloudinary is not configured.") return NextResponse.json({ error: "Set the Cloudinary environment variables to enable media uploads." }, { status: 503 });
     console.error("Media upload failed", error);

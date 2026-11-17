@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Plus } from "lucide-react";
 import { toast } from "sonner";
-import { useCreateShipment, useCreateTender } from "@/lib/api/hooks";
+import { useCreateShipment, useCreateTender, useShipmentRequestOptions } from "@/lib/api/hooks";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -43,17 +43,20 @@ export function AddTenderDialog() {
 export function AddShipmentDialog() {
   const [open, setOpen] = useState(false);
   const create = useCreateShipment();
+  const requestOptions = useShipmentRequestOptions(open);
   const [clearance, setClearance] = useState<Shipment["clearance"]>("pending");
+  const [clientRequestId, setClientRequestId] = useState("none");
   const submit = (form: FormData) => {
     const progress = Number(form.get("progress") || 0);
-    create.mutate({ cargo: String(form.get("cargo") || ""), corridor: String(form.get("corridor") || ""), origin: String(form.get("origin") || ""), destination: String(form.get("destination") || ""), progress, eta: String(form.get("eta") || ""), clearance, milestones: [] }, {
-      onSuccess: () => { toast.success("Shipment saved"); setOpen(false); },
+    create.mutate({ cargo: String(form.get("cargo") || ""), corridor: String(form.get("corridor") || ""), origin: String(form.get("origin") || ""), destination: String(form.get("destination") || ""), progress, eta: String(form.get("eta") || ""), clearance, clientRequestId: clientRequestId === "none" ? null : clientRequestId, milestones: [] }, {
+      onSuccess: () => { toast.success(clientRequestId === "none" ? "Shipment saved" : "Shipment linked to the client request"); setOpen(false); setClientRequestId("none"); },
       onError: () => toast.error("Could not save the shipment"),
     });
   };
-  return <Dialog open={open} onOpenChange={setOpen}><DialogTrigger asChild><Button><Plus className="mr-2 h-4 w-4" /> Add shipment</Button></DialogTrigger><DialogContent className="sm:max-w-xl"><DialogHeader><DialogTitle>Add shipment</DialogTitle><DialogDescription>Record a shipment and its current route and clearance status.</DialogDescription></DialogHeader><form action={submit} className="space-y-4">
-    <div className="grid gap-3 sm:grid-cols-2"><Field name="cargo" label="Cargo" required /><Field name="corridor" label="Corridor" /><Field name="origin" label="Origin" required /><Field name="destination" label="Destination" required /><Field name="progress" label="Progress (%)" type="number" min="0" max="100" /><Field name="eta" label="Estimated arrival" type="date" /></div>
-    <div className="space-y-1.5"><Label>Clearance</Label><Select value={clearance} onValueChange={(v) => setClearance(v as Shipment["clearance"])}><SelectTrigger><SelectValue /></SelectTrigger><SelectContent>{([["pending", "Pending"], ["in_review", "In review"], ["cleared", "Cleared"], ["held", "Held"]] as const).map(([v, label]) => <SelectItem key={v} value={v}>{label}</SelectItem>)}</SelectContent></Select></div>
+  return <Dialog open={open} onOpenChange={setOpen}><DialogTrigger asChild><Button><Plus className="mr-2 h-4 w-4" /> Add shipment</Button></DialogTrigger><DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-2xl"><DialogHeader><DialogTitle>Add shipment</DialogTitle><DialogDescription>Record shipment movement and link it to a client request so it appears in that request’s Tracking ID history.</DialogDescription></DialogHeader><form action={submit} className="space-y-4">
+    <div className="grid gap-3 sm:grid-cols-2"><Field name="cargo" label="Cargo" placeholder="e.g. Water treatment chemicals" required className="rounded-md shadow-none" /><Field name="corridor" label="Corridor" placeholder="e.g. Mombasa → Kigali" className="rounded-md shadow-none" /><Field name="origin" label="Origin" placeholder="e.g. Mombasa Port, Kenya" required className="rounded-md shadow-none" /><Field name="destination" label="Destination" placeholder="e.g. Kigali, Rwanda" required className="rounded-md shadow-none" /><Field name="progress" label="Progress (%)" type="number" min="0" max="100" placeholder="e.g. 25" className="rounded-md shadow-none" /><Field name="eta" label="Estimated arrival" type="date" placeholder="Select expected arrival date" className="rounded-md shadow-none" /></div>
+    <div className="space-y-1.5"><Label htmlFor="shipment-client-request">Client request <span className="font-normal text-muted-foreground">(optional)</span></Label><Select value={clientRequestId} onValueChange={setClientRequestId} disabled={requestOptions.isPending || requestOptions.isError}><SelectTrigger id="shipment-client-request" className="rounded-md shadow-none"><SelectValue placeholder={requestOptions.isPending ? "Loading client requests…" : "Choose a request to link"} /></SelectTrigger><SelectContent><SelectItem value="none">No linked request</SelectItem>{requestOptions.data?.map((request) => <SelectItem key={request.id} value={request.id}>{request.reference} · {request.title} · {request.clientName}</SelectItem>)}</SelectContent></Select>{requestOptions.isError ? <p className="text-xs text-destructive">Could not load requests; this shipment can be saved without a link.</p> : <p className="text-xs text-muted-foreground">Linked shipments appear on the client’s request tracking page.</p>}</div>
+    <div className="space-y-1.5"><Label htmlFor="shipment-clearance">Clearance</Label><Select value={clearance} onValueChange={(v) => setClearance(v as Shipment["clearance"])}><SelectTrigger id="shipment-clearance" className="rounded-md shadow-none"><SelectValue placeholder="Select clearance status" /></SelectTrigger><SelectContent>{([["pending", "Pending"], ["in_review", "In review"], ["cleared", "Cleared"], ["held", "Held"]] as const).map(([v, label]) => <SelectItem key={v} value={v}>{label}</SelectItem>)}</SelectContent></Select></div>
     <DialogFooter><Button type="submit" disabled={create.isPending}>{create.isPending ? "Saving…" : "Save shipment"}</Button></DialogFooter>
   </form></DialogContent></Dialog>;
 }

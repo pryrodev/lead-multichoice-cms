@@ -219,6 +219,7 @@ model ClientRequest {
   submitter   User?              @relation(fields: [submittedBy], references: [id], onDelete: SetNull, map: "fk_client_requests_user")
   engagement  Engagement?
   messages    RequestMessage[]
+  shipments   Shipment[]
 
   @@index([submittedBy, createdAt], map: "idx_client_requests_user_created")
   @@index([status, createdAt], map: "idx_client_requests_status_created")
@@ -342,6 +343,7 @@ model Tender {
 model Shipment {
   id          String            @id @db.Char(32)
   reference   String            @unique(map: "reference") @db.VarChar(32)
+  clientRequestId String?       @map("client_request_id") @db.Char(32)
   cargo       String            @db.VarChar(220)
   corridor    String            @default("") @db.VarChar(180)
   origin      String            @db.VarChar(160)
@@ -353,8 +355,10 @@ model Shipment {
   createdAt   DateTime          @default(now()) @map("created_at") @db.DateTime(0)
   updatedAt   DateTime          @default(now()) @updatedAt @map("updated_at") @db.DateTime(0)
   creator     User?             @relation(fields: [createdBy], references: [id], onDelete: SetNull, map: "fk_shipments_creator")
+  clientRequest ClientRequest?  @relation(fields: [clientRequestId], references: [id], onDelete: SetNull, map: "fk_shipments_client_request")
   milestones  ShipmentMilestone[]
 
+  @@index([clientRequestId], map: "idx_shipments_client_request")
   @@index([clearance, eta], map: "idx_shipments_clearance_eta")
   @@map("shipments")
 }
@@ -416,6 +420,7 @@ model CompanySettings {
 
 model MediaAsset {
   id        String   @id @db.Char(32)
+  resourceType String @default("image") @map("resource_type") @db.VarChar(10)
   publicId  String   @unique(map: "public_id") @map("public_id") @db.VarChar(255)
   secureUrl String   @map("secure_url") @db.VarChar(1200)
   format    String   @db.VarChar(20)

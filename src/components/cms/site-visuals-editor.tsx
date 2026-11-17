@@ -12,7 +12,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ReusableTable, type DataTableColumn } from "@/components/data-table/reusable-table";
 
@@ -52,6 +51,8 @@ export function SiteVisualsEditor() {
   const updateVideo = (key: SiteVideoKey, source: string) => {
     setContent((current) => ({ ...current, [key]: source }));
   };
+  const mediaVideos = media.filter((asset) => asset.resourceType === "video");
+  const mediaImages = media.filter((asset) => asset.resourceType === "image");
 
   const columns: DataTableColumn<VisualField>[] = [
     { id: "section", header: "Section", className: "min-w-52 font-medium", cell: (field) => field.label },
@@ -60,7 +61,7 @@ export function SiteVisualsEditor() {
       <SelectTrigger aria-label={`Choose image for ${field.label}`}><SelectValue placeholder="Choose an image" /></SelectTrigger>
       <SelectContent>
         <SelectItem value={field.fallback}>Restore original image</SelectItem>
-        {media.filter((asset) => asset.secureUrl !== field.fallback).map((asset) => <SelectItem key={asset.id} value={asset.secureUrl}>{asset.altText || asset.publicId}</SelectItem>)}
+        {mediaImages.filter((asset) => asset.secureUrl !== field.fallback).map((asset) => <SelectItem key={asset.id} value={asset.secureUrl}>{asset.altText || asset.publicId}</SelectItem>)}
       </SelectContent>
     </Select> },
   ];
@@ -89,27 +90,21 @@ export function SiteVisualsEditor() {
       <Card className="rounded-md shadow-none">
         <CardHeader>
           <CardTitle className="text-base">Hero background videos</CardTitle>
-          <CardDescription>Paste a direct MP4, WebM, or Ogg URL hosted on Cloudinary or another media host. Clear it to show only the hero image.</CardDescription>
+          <CardDescription>Choose a video from the media library. The hero image remains visible as a fallback.</CardDescription>
         </CardHeader>
         <CardContent className="grid gap-5 md:grid-cols-2">
           {SITE_VIDEO_FIELDS.map((field) => (
             <div key={field.key} className="flex min-w-0 flex-col gap-2">
               <Label htmlFor={field.key}>{field.label}</Label>
-              <div className="flex min-w-0 gap-2">
-                <Input
-                  id={field.key}
-                  value={content[field.key]}
-                  onChange={(event) => updateVideo(field.key, event.target.value)}
-                  placeholder="https://…/background-video.mp4"
-                  maxLength={1200}
-                  autoComplete="url"
-                  className="min-w-0 shadow-none"
-                />
-                <Button type="button" variant="outline" onClick={() => updateVideo(field.key, field.fallback)}>Default</Button>
-              </div>
-              <p className="truncate text-xs text-muted-foreground" title={content[field.key]}>
-                {content[field.key] || "Video disabled"}
-              </p>
+              <Select value={content[field.key] === field.fallback ? "__default__" : content[field.key] || "__disabled__"} onValueChange={(value) => updateVideo(field.key, value === "__default__" ? field.fallback : value === "__disabled__" ? "" : value)}>
+                <SelectTrigger id={field.key} aria-label={`Choose video for ${field.label}`}><SelectValue placeholder="Choose a video from the media library" /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="__default__">Use default video</SelectItem>
+                  <SelectItem value="__disabled__">No background video</SelectItem>
+                  {content[field.key] && content[field.key] !== field.fallback && !mediaVideos.some((asset) => asset.secureUrl === content[field.key]) && <SelectItem value={content[field.key]}>Previously configured video</SelectItem>}
+                  {mediaVideos.map((asset) => <SelectItem key={asset.id} value={asset.secureUrl}>{asset.altText || asset.publicId}</SelectItem>)}
+                </SelectContent>
+              </Select>
               {content[field.key] && (
                 <video
                   src={content[field.key]}
@@ -117,16 +112,16 @@ export function SiteVisualsEditor() {
                   muted
                   playsInline
                   preload="none"
-                  className="mt-1 aspect-video w-full max-w-md bg-muted object-cover"
+                  className="mt-1 aspect-video w-full max-w-md rounded-md border bg-muted object-cover"
                 />
               )}
             </div>
           ))}
           <p className="flex items-center gap-2 text-sm text-muted-foreground md:col-span-2">
-            <Video className="size-4 shrink-0" /> Hero videos require a direct file URL; YouTube watch links are not supported. The homepage and procurement hero images remain visible if video playback is unavailable.
+            <Video className="size-4 shrink-0" /> Upload an MP4, WebM, or Ogg video in the <Link href="/admin/content/media" className="font-medium text-primary underline-offset-4 hover:underline">Media Library</Link>, then choose it here. YouTube links are not supported.
           </p>
           <p className="flex items-center gap-2 text-sm text-muted-foreground md:col-span-2">
-            <Images className="size-4 shrink-0" /> Upload still images in the <Link href="/admin/content/media" className="font-medium text-primary underline-offset-4 hover:underline">Media Library</Link>, then choose them in the page tabs below.
+            <Images className="size-4 shrink-0" /> Still images can also be uploaded in the Media Library and assigned to page sections in the tabs below.
           </p>
         </CardContent>
       </Card>

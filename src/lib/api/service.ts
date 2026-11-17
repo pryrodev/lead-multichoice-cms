@@ -1,5 +1,5 @@
 import * as db from "./mock-data";
-import type { Profile, CompanySettings, Settings, Activity, ActivityKind, AdminHomePage, AdminSearchResult, Engagement, Kpis, MediaAsset, Opportunity, Shipment, Stage, Tender, StaffMember } from "./types";
+import type { Profile, CompanySettings, Settings, Activity, ActivityKind, AdminHomePage, AdminSearchResult, CreateShipmentInput, Engagement, Kpis, MediaAsset, Opportunity, Shipment, ShipmentRequestOption, Stage, Tender, StaffMember } from "./types";
 import type { HomePageContent } from "@/lib/cms/homepage";
 import type { SiteVisuals } from "@/lib/cms/site-visuals";
 import type { SiteCopyContent } from "@/lib/cms/site-copy";
@@ -34,7 +34,8 @@ export const api = {
   createOpportunity: async (input: Omit<Opportunity, "id" | "ref" | "createdAt">): Promise<Opportunity> =>
     requestJson("/api/opportunities", { method: "POST", body: JSON.stringify(input) }),
   getShipments: (): Promise<Shipment[]> => requestJson("/api/admin/shipments"),
-  createShipment: (input: Omit<Shipment, "id" | "ref">): Promise<Shipment> =>
+  getShipmentRequestOptions: (): Promise<ShipmentRequestOption[]> => requestJson("/api/admin/shipments/requests"),
+  createShipment: (input: CreateShipmentInput): Promise<Shipment> =>
     requestJson("/api/admin/shipments", { method: "POST", body: JSON.stringify(input) }),
   getActivities: (): Promise<Activity[]> => requestJson("/api/admin/activities"),
   getKpis: (): Promise<Kpis> => requestJson("/api/admin/kpis"),
@@ -55,9 +56,26 @@ export const api = {
   addActivity: (input: { kind: ActivityKind; ref: string; message: string }): Promise<Activity> =>
     requestJson("/api/admin/activities", { method: "POST", body: JSON.stringify(input) }),
   getMediaAssets: (): Promise<MediaAsset[]> => requestJson("/api/admin/media"),
-  uploadMedia: (file: File, altText: string): Promise<MediaAsset> => {
-    const form = new FormData(); form.set("file", file); form.set("altText", altText);
-    return requestForm("/api/admin/media", form);
+  uploadMedia: async (file: File, altText: string): Promise<MediaAsset> => {
+    if (!file.type.startsWith("video/")) {
+      const form = new FormData(); form.set("file", file); form.set("altText", altText);
+      return requestForm("/api/admin/media", form);
+    }
+
+    const signed = await requestJson<{ cloudName: string; apiKey: string; timestamp: string; folder: string; publicId: string; signature: string }>("/api/admin/media/video-signature", { method: "POST" });
+    const form = new FormData();
+    form.set("file", file);
+    form.set("api_key", signed.apiKey);
+    form.set("timestamp", signed.timestamp);
+    form.set("folder", signed.folder);
+    form.set("public_id", signed.publicId);
+    form.set("signature", signed.signature);
+    const response = await fetch(`https://api.cloudinary.com/v1_1/${signed.cloudName}/video/upload`, { method: "POST", body: form });
+    const uploaded = await response.json().catch(() => ({})) as Record<string, unknown> & { error?: { message?: string } };
+    if (!response.ok || uploaded["resource_type"] !== "video" || typeof uploaded["secure_url"] !== "string") {
+      throw new Error(uploaded.error?.message ?? "The video could not be uploaded to Cloudinary.");
+    }
+    return requestJson("/api/admin/media", { method: "POST", body: JSON.stringify({ ...uploaded, altText }) });
   },
   deleteMedia: (id: string): Promise<{ deleted: boolean }> =>
     requestJson(`/api/admin/media/${encodeURIComponent(id)}`, { method: "DELETE" }),
