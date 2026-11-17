@@ -5,6 +5,7 @@ import type { SiteVisuals } from "@/lib/cms/site-visuals";
 import type { SiteCopyContent } from "@/lib/cms/site-copy";
 import type { ProcurementResourcesContent } from "@/lib/cms/procurement-resources";
 import type { PartnersContent } from "@/lib/cms/partners";
+import type { BlogContent } from "@/lib/cms/blog";
 
 async function requestJson<T>(url: string, init?: RequestInit): Promise<T> {
   const response = await fetch(url, {
@@ -105,4 +106,9 @@ export const api = {
     requestJson("/api/admin/cms/partners", { method: "PUT", body: JSON.stringify(content) }),
   publishPartners: (): Promise<{ published: boolean; publishedAt: string }> =>
     requestJson("/api/admin/cms/partners/publish", { method: "POST" }),
+  getBlog: (): Promise<import("./types").AdminBlog> => requestJson("/api/admin/cms/blog"),
+  saveBlogDraft: (content: BlogContent): Promise<Pick<import("./types").AdminBlog, "content" | "hasDraft">> =>
+    requestJson("/api/admin/cms/blog", { method: "PUT", body: JSON.stringify(content) }),
+  publishBlog: (): Promise<{ published: boolean; publishedAt: string }> =>
+    requestJson("/api/admin/cms/blog/publish", { method: "POST" }),
 };

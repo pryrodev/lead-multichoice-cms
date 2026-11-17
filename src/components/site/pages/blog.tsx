@@ -4,8 +4,9 @@ import { PageHero } from "@/components/site/ui";
 import { InsightsGrid } from "@/components/site/InsightsGrid";
 import { useI18n } from "@/i18n/I18nProvider";
 import { insightUi } from "@/content/insights";
+import type { InsightArticle } from "@/content/insights";
 
-export default function BlogPage() {
+export default function BlogPage({ articles }: { articles?: InsightArticle[] }) {
   const { language } = useI18n();
   const copy = insightUi[language] ?? insightUi.en;
   return (
@@ -21,7 +22,7 @@ export default function BlogPage() {
         visualKey="blog.hero"
         alt="Colleagues discussing business and sourcing information"
       />
-      <InsightsGrid />
+      <InsightsGrid {...(articles ? { articles } : {})} />
     </>
   );
 }

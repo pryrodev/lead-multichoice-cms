@@ -25,6 +25,7 @@ const contentIcons = {
   "site-visuals": ImagePlus,
   "procurement-resources": LinkIcon,
   partners: Handshake,
+  blog: FilePenLine,
   media: Images,
 } as const;
 

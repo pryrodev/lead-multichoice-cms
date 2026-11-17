@@ -6,10 +6,11 @@ import { insights, insightUi } from "@/content/insights";
 import { PageHero } from "@/components/site/ui";
 import { useSiteVisuals } from "@/components/site/SiteVisualsProvider";
 import { useI18n } from "@/i18n/I18nProvider";
+import type { InsightArticle } from "@/content/insights";
 
-export default function BlogArticlePage({ slug }: { slug: string }) {
+export default function BlogArticlePage({ slug, article: articleOverride }: { slug: string; article?: InsightArticle }) {
   const { language } = useI18n();
-  const article = (insights[language] ?? insights.en).find((item) => item.slug === slug);
+  const article = articleOverride ?? (insights[language] ?? insights.en).find((item) => item.slug === slug);
   const copy = insightUi[language] ?? insightUi.en;
   const visualKey = slug === "market-context"
     ? "blog.marketContext"
@@ -37,14 +38,18 @@ export default function BlogArticlePage({ slug }: { slug: string }) {
         title={article.title}
         intro={article.summary}
         image={article.image}
-        visualKey={visualKey}
+        {...(articleOverride ? {} : { visualKey })}
         alt={article.imageAlt}
       />
       <article className="container-site max-w-4xl py-12 md:py-16">
         <Link href="/blog" className="mb-8 inline-flex items-center gap-2 text-sm font-semibold text-brand-primary hover:underline">
           <ArrowLeft size={16} aria-hidden="true" /> {copy.all}
         </Link>
-        <p className="text-[17px] leading-8 text-charcoal md:text-lg">{article.body}</p>
+        <div className="space-y-5 text-[17px] leading-8 text-charcoal md:text-lg">
+          {article.body.split(/\n\s*\n/).filter(Boolean).map((paragraph, index) => (
+            <p key={`${article.slug}-${index}`}>{paragraph.trim()}</p>
+          ))}
+        </div>
       </article>
     </>
   );

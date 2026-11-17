@@ -3,7 +3,7 @@ import "server-only";
 import { getDb } from "@/lib/db";
 
 export interface CmsContentItem {
-  id: "home" | "site-copy" | "site-visuals" | "procurement-resources" | "partners" | "media";
+  id: "home" | "site-copy" | "site-visuals" | "procurement-resources" | "partners" | "blog" | "media";
   title: string;
   description: string;
   href: string;
@@ -19,6 +19,7 @@ const contentSections = [
   { id: "site-visuals", slug: "site-visuals", title: "Website media", description: "Hero videos and page background images", href: "/admin/content/visuals" },
   { id: "procurement-resources", slug: "procurement-resources", title: "Procurement resources", description: "External procurement and tender links", href: "/admin/content/resources" },
   { id: "partners", slug: "partners", title: "Partners", description: "Logos and links shown in the homepage partner ticker", href: "/admin/content/partners" },
+  { id: "blog", slug: "blog", title: "Blog", description: "Create and publish articles for the public blog", href: "/admin/content/blog" },
 ] as const;
 
 function contentStatus(draft: unknown, published: unknown): CmsContentItem["status"] {

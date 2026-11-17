@@ -6,12 +6,13 @@ import { ArrowUpRight } from "lucide-react";
 import { insights, insightUi } from "@/content/insights";
 import { useI18n } from "@/i18n/I18nProvider";
 import { useSiteVisuals } from "@/components/site/SiteVisualsProvider";
+import type { InsightArticle } from "@/content/insights";
 
-export function InsightsGrid({ id }: { id?: string }) {
+export function InsightsGrid({ id, articles: articleOverride }: { id?: string; articles?: InsightArticle[] }) {
   const { language } = useI18n();
   const visuals = useSiteVisuals();
   const copy = insightUi[language] ?? insightUi.en;
-  const articles = insights[language] ?? insights.en;
+  const articles = articleOverride ?? insights[language] ?? insights.en;
 
   return (
     <section id={id} className="container-site scroll-mt-28 py-12 md:py-16" aria-label={copy.eyebrow}>
@@ -44,7 +45,7 @@ export function InsightsGrid({ id }: { id?: string }) {
                   : article.slug === "supplier-readiness"
                     ? "blog.supplierReadiness"
                     : "blog.deliveryCoordination";
-              const image = visuals[visualKey] || article.image;
+              const image = articleOverride ? article.image : visuals[visualKey] || article.image;
               return (
                 <Link
                   href={`/blog/${article.slug}`}

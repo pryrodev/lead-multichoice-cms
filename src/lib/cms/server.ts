@@ -6,6 +6,7 @@ import { defaultSiteVisuals, mergeSiteVisuals, type SiteVisuals } from "./site-v
 import { mergeSiteCopy, type SiteCopyContent } from "./site-copy";
 import { defaultProcurementResources, mergeProcurementResources, type ProcurementResourcesContent } from "./procurement-resources";
 import { defaultPartners, mergePartners, type PartnersContent } from "./partners";
+import { defaultBlogContent, mergeBlogContent, type BlogContent } from "./blog";
 
 const isProductionBuild = () => process.env["NEXT_PHASE"] === "phase-production-build";
 
@@ -92,3 +93,17 @@ const loadPublishedPartners = async (): Promise<PartnersContent> => {
 };
 const cachedPublishedPartners = unstable_cache(loadPublishedPartners, ["published-partners-v1"], { revalidate: 3600, tags: ["cms-partners"] });
 export const getPublishedPartners = () => isProductionBuild() ? Promise.resolve(defaultPartners) : cachedPublishedPartners();
+
+const loadPublishedBlog = async (): Promise<BlogContent> => {
+  try {
+    const page = await getDb().sitePage.findUnique({ where: { slug: "blog" }, select: { publishedContent: true } });
+    const stored = page?.publishedContent;
+    const content = typeof stored === "string" ? JSON.parse(stored) as unknown : stored;
+    return content ? mergeBlogContent(content) : defaultBlogContent;
+  } catch (error) {
+    handleCmsDbError("published blog articles", error);
+    return defaultBlogContent;
+  }
+};
+const cachedPublishedBlog = unstable_cache(loadPublishedBlog, ["published-blog-v1"], { revalidate: 3600, tags: ["cms-blog"] });
+export const getPublishedBlog = () => isProductionBuild() ? Promise.resolve(defaultBlogContent) : cachedPublishedBlog();

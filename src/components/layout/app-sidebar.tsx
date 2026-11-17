@@ -47,6 +47,7 @@ const website = [
   { title: "Website copy", url: "/admin/content/copy", icon: Languages },
   { title: "Website images", url: "/admin/content/visuals", icon: ImagePlus },
   { title: "Procurement resources", url: "/admin/content/resources", icon: LinkIcon },
+  { title: "Blog", url: "/admin/content/blog", icon: FilePenLine },
   { title: "Media library", url: "/admin/content/media", icon: Images },
 ] as const;
 

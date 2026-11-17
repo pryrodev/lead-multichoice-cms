@@ -19,6 +19,7 @@ import {
   type ProcurementResource,
 } from "@/lib/cms/procurement-resources";
 import { defaultPartners, type WebsitePartner } from "@/lib/cms/partners";
+import type { InsightArticle } from "@/content/insights";
 
 const bridgeSteps = [
   {
@@ -48,11 +49,13 @@ export default function Home({
   initialContent,
   resources = defaultProcurementResources.resources,
   partners = defaultPartners.partners,
+  articles,
 }: {
   contentOverride?: HomePageContent;
   initialContent?: HomePageContent;
   resources?: ProcurementResource[];
   partners?: WebsitePartner[];
+  articles?: InsightArticle[];
 } = {}) {
   const { language, tc } = useI18n();
   const visuals = useSiteVisuals();
@@ -325,7 +328,7 @@ export default function Home({
         </div>
       </PhotoScrollSection>
 
-      <InsightsGrid id="home-blog" />
+      <InsightsGrid id="home-blog" {...(articles ? { articles } : {})} />
 
       <CallToActionSection id="home-contact" visualKey="home.cta" photoBackground="/site/hero-port.jpg" />
     </>

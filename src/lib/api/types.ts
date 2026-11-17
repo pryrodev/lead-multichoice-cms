@@ -236,3 +236,10 @@ export interface AdminPartners {
   publishedAt: string | null;
   updatedAt: string | null;
 }
+
+export interface AdminBlog {
+  content: import("@/lib/cms/blog").BlogContent;
+  hasDraft: boolean;
+  publishedAt: string | null;
+  updatedAt: string | null;
+}

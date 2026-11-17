@@ -1,10 +1,11 @@
 import { queryOptions, useMutation, useQuery, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
 import { api } from "./service";
-import type { AdminPartners, AdminProcurementResources, AdminSiteCopy, AdminSiteVisuals, CompanySettings, MediaAsset, StaffMember } from "./types";
+import type { AdminBlog, AdminPartners, AdminProcurementResources, AdminSiteCopy, AdminSiteVisuals, CompanySettings, MediaAsset, StaffMember } from "./types";
 import type { SiteVisuals } from "@/lib/cms/site-visuals";
 import type { SiteCopyContent } from "@/lib/cms/site-copy";
 import type { ProcurementResourcesContent } from "@/lib/cms/procurement-resources";
 import type { PartnersContent } from "@/lib/cms/partners";
+import type { BlogContent } from "@/lib/cms/blog";
 
 export const kpisQuery = queryOptions({ queryKey: ["kpis"], queryFn: api.getKpis });
 export const stagesQuery = queryOptions({ queryKey: ["stages"], queryFn: api.getStages });
@@ -162,6 +163,32 @@ export function usePublishPartners() {
   return useMutation({
     mutationFn: api.publishPartners,
     onSuccess: (published) => qc.setQueryData<AdminPartners>(partnersQuery.queryKey, (current) => current ? {
+      ...current,
+      hasDraft: false,
+      publishedAt: published.publishedAt,
+    } : current),
+  });
+}
+
+export const blogQuery = queryOptions({ queryKey: ["admin", "cms", "blog"], queryFn: api.getBlog });
+export const useBlogDraft = () => useSuspenseQuery(blogQuery).data;
+export function useSaveBlogDraft() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (content: BlogContent) => api.saveBlogDraft(content),
+    onSuccess: (saved) => qc.setQueryData<AdminBlog>(blogQuery.queryKey, (current) => ({
+      content: saved.content,
+      hasDraft: saved.hasDraft,
+      publishedAt: current?.publishedAt ?? null,
+      updatedAt: new Date().toISOString(),
+    })),
+  });
+}
+export function usePublishBlog() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: api.publishBlog,
+    onSuccess: (published) => qc.setQueryData<AdminBlog>(blogQuery.queryKey, (current) => current ? {
       ...current,
       hasDraft: false,
       publishedAt: published.publishedAt,
