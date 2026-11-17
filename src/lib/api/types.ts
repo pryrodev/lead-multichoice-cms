@@ -243,3 +243,10 @@ export interface AdminBlog {
   publishedAt: string | null;
   updatedAt: string | null;
 }
+
+export interface AdminIndustries {
+  content: import("@/lib/cms/industries").IndustriesContent;
+  hasDraft: boolean;
+  publishedAt: string | null;
+  updatedAt: string | null;
+}

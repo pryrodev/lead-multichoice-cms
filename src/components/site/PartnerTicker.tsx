@@ -38,7 +38,7 @@ export function PartnerTicker({ organizations }: { organizations: WebsitePartner
 
   return (
     <div className="container-site relative z-10 pb-8 pt-4 md:pb-10 md:pt-6">
-      <section id="home-partners" className="scroll-mt-28" aria-label={partnerTickerLabels[language] ?? partnerTickerLabels.en}>
+      <section className="scroll-mt-28" aria-label={partnerTickerLabels[language] ?? partnerTickerLabels.en}>
         <div className="mx-auto mb-4 flex max-w-5xl items-center gap-4 md:mb-5 md:gap-6">
           <span className="h-px flex-1 bg-brand-white/35" aria-hidden="true" />
           <p className="eyebrow whitespace-nowrap text-brand-white/80">{partnerTickerLabels[language] ?? partnerTickerLabels.en}</p>

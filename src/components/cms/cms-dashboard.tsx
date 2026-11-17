@@ -5,6 +5,7 @@ import {
   ArrowUpRight,
   Eye,
   FilePenLine,
+  Factory,
   Handshake,
   ImagePlus,
   Images,
@@ -26,6 +27,7 @@ const contentIcons = {
   "procurement-resources": LinkIcon,
   partners: Handshake,
   blog: FilePenLine,
+  industries: Factory,
   media: Images,
 } as const;
 

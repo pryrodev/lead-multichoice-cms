@@ -21,6 +21,7 @@ const pageLinks = [
   { title: "Website images", description: "Manage page imagery", href: "/admin/content/visuals" },
   { title: "Procurement resources", description: "Manage public procurement links", href: "/admin/content/resources" },
   { title: "Blog", description: "Create and publish website articles", href: "/admin/content/blog" },
+  { title: "Industries", description: "Edit public industry page content", href: "/admin/content/industries" },
   { title: "Media library", description: "Uploaded website assets", href: "/admin/content/media" },
   { title: "Settings", description: "Company and account settings", href: "/admin/settings" },
 ];

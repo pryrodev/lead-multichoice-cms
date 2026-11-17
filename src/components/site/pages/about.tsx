@@ -37,6 +37,29 @@ export default function About() {
           </p>
         </div>
       </section>
+      <section className="container-site pb-12 md:pb-16" aria-label={tc("Who we support")}>
+        <h2 className="mb-6 font-display text-2xl font-semibold tracking-tight md:text-[28px]">
+          {tc("Who we support")}
+        </h2>
+        <div className="grid gap-8 md:grid-cols-2 md:gap-12">
+          <article>
+            <h3 className="font-display text-xl font-semibold tracking-tight">
+              {tc("For international suppliers")}
+            </h3>
+            <p className="mt-3 max-w-prose leading-relaxed text-muted-foreground">
+              {tc("We help international suppliers understand Rwanda's procurement environment, identify relevant opportunities, and connect with Rwanda's purchasing entities through our offices.")}
+            </p>
+          </article>
+          <article>
+            <h3 className="font-display text-xl font-semibold tracking-tight">
+              {tc("For Rwanda's purchasing entities")}
+            </h3>
+            <p className="mt-3 max-w-prose leading-relaxed text-muted-foreground">
+              {tc("We connect Rwanda's purchasing entities with international manufacturers, authorised distributors, and specialised service providers worldwide.")}
+            </p>
+          </article>
+        </div>
+      </section>
       <PhotoScrollSection
         image="/site/meeting.jpg"
         visualKey="about.mission"

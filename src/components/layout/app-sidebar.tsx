@@ -8,6 +8,7 @@ import {
   Briefcase,
   ClipboardList,
   FilePenLine,
+  Factory,
   Gavel,
   LayoutDashboard,
   Images,
@@ -48,6 +49,7 @@ const website = [
   { title: "Website images", url: "/admin/content/visuals", icon: ImagePlus },
   { title: "Procurement resources", url: "/admin/content/resources", icon: LinkIcon },
   { title: "Blog", url: "/admin/content/blog", icon: FilePenLine },
+  { title: "Industries", url: "/admin/content/industries", icon: Factory },
   { title: "Media library", url: "/admin/content/media", icon: Images },
 ] as const;
 

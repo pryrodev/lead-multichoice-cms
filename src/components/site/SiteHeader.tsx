@@ -27,6 +27,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import Image from "next/image";
+import type { MouseEvent } from "react";
 
 const navKeys: Record<(typeof nav)[number]["to"], MessageKey> = {
   "/": "nav.home",
@@ -42,6 +43,13 @@ const navKeys: Record<(typeof nav)[number]["to"], MessageKey> = {
   "/contact": "nav.contact",
 };
 const getNavItem = (to: (typeof nav)[number]["to"]) => nav.find((item) => item.to === to)!;
+
+function selectHomeSection(event: MouseEvent<HTMLAnchorElement>, sectionId: string, anchor: string) {
+  if (window.location.pathname !== "/") return;
+  event.preventDefault();
+  window.history.pushState(null, "", `/#${anchor}`);
+  window.dispatchEvent(new CustomEvent("home-section-change", { detail: { sectionId } }));
+}
 
 export function SiteHeader({ homePageContent = defaultHomePageContent }: { homePageContent?: HomePageContent } = {}) {
   const [open, setOpen] = useState(false);
@@ -189,7 +197,7 @@ export function SiteHeader({ homePageContent = defaultHomePageContent }: { homeP
                           >
                             {homeMenuItems.map((section) => (
                               <DropdownMenuItem key={section.id} asChild>
-                                <Link href={`/#${section.anchor}`} className="cursor-pointer px-3 py-2.5 text-charcoal">
+                                <Link href={`/#${section.anchor}`} onClick={(event) => selectHomeSection(event, section.id, section.anchor)} className="cursor-pointer px-3 py-2.5 text-charcoal">
                                   {homeMenuLabel(section.id)}
                                 </Link>
                               </DropdownMenuItem>
@@ -378,7 +386,7 @@ function MobileNavigation({
                             <li key={section.id}>
                               <Link
                                 href={`/#${section.anchor}`}
-                                onClick={onClose}
+                                onClick={(event) => { selectHomeSection(event, section.id, section.anchor); onClose(); }}
                                 className="block rounded py-2 text-base text-background/80 transition-colors hover:text-brass-light"
                               >
                                 {homeMenuLabel(section.id)}

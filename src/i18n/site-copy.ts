@@ -508,6 +508,15 @@ const sw: Record<string, string> = {
 };
 
 Object.assign(rw, {
+  "Procurement and deal acceleration.": "Amasoko no kwihutisha amasezerano y'ubucuruzi.",
+  "Market Access": "Kwinjira ku isoko",
+  "Connect purchasing entities with manufacturers.": "Huza ibigo bigura ibicuruzwa n'ababikora.",
+  "Supply chain coordination": "Guhuza uruhererekane rw'ibicuruzwa",
+  "Coordinate procurement, supplier communication, and delivery.": "Huza amasoko, itumanaho n'abatanga ibicuruzwa n'ishyikirizwa.",
+  "Ground handling and trade compliance support": "Gufasha ibikorwa byo mu gihugu no kubahiriza amategeko y'ubucuruzi",
+  "Coordinate in-country handling and support trade compliance.": "Huza ibikorwa byo mu gihugu kandi ufashe mu kubahiriza amategeko y'ubucuruzi.",
+  "We identify relevant opportunities, connect with manufacturers, and coordinate procurement, logistics, delivery, and after-sales services.":
+    "Tumenya amahirwe akwiye, tugahuza n'abakora ibicuruzwa, kandi tugahuza amasoko, ubwikorezi, ishyikirizwa na serivisi zo gufasha nyuma yo kugurisha.",
   "Lead Multi-choice": "Lead Multi-choice",
   "is a private limited company registered in 2015 with the Rwanda Development Board (RDB). Our headquarters are in Remera, Kigali, Rwanda.": "ni ikigo cyigenga gifite uburyozwe bugarukira ku migabane cyanditswe mu 2015 mu Rwego rw'Igihugu rw'Iterambere (RDB). Icyicaro cyacu kiri i Remera, Kigali, mu Rwanda.",
   to: "mu",
@@ -534,6 +543,15 @@ Object.assign(rw, {
     "Abatanga ibicuruzwa n'inzego z'abaguzi bashobora kuvugana na Lead Multi-Choice ® bakaganira ku bufasha bukwiye bwo guhuza ibikorwa, kuva ku guhuza abatanga ibicuruzwa kugeza ku bwikorezi no gukurikirana ishyikirizwa.",
 });
 Object.assign(fr, {
+  "Procurement and deal acceleration.": "Achats et accélération des transactions.",
+  "Market Access": "Accès au marché",
+  "Connect purchasing entities with manufacturers.": "Mettre les acheteurs en relation avec les fabricants.",
+  "Supply chain coordination": "Coordination de la chaîne d'approvisionnement",
+  "Coordinate procurement, supplier communication, and delivery.": "Coordonner les achats, les échanges avec les fournisseurs et la livraison.",
+  "Ground handling and trade compliance support": "Assistance locale et conformité commerciale",
+  "Coordinate in-country handling and support trade compliance.": "Coordonner les opérations locales et soutenir la conformité commerciale.",
+  "We identify relevant opportunities, connect with manufacturers, and coordinate procurement, logistics, delivery, and after-sales services.":
+    "Nous identifions les opportunités pertinentes, mettons en relation avec les fabricants et coordonnons les achats, la logistique, la livraison et les services après-vente.",
   "Lead Multi-choice": "Lead Multi-choice",
   "is a private limited company registered in 2015 with the Rwanda Development Board (RDB). Our headquarters are in Remera, Kigali, Rwanda.": "est une société privée à responsabilité limitée, enregistrée en 2015 auprès du Rwanda Development Board (RDB). Son siège se trouve à Remera, Kigali, au Rwanda.",
   "Trusted local representation. Accountable coordination.":
@@ -558,6 +576,15 @@ Object.assign(fr, {
     "Les fournisseurs et acheteurs institutionnels peuvent contacter Lead Multi-Choice ® pour discuter d’un appui adapté, de la mise en relation avec des fournisseurs au suivi logistique et à la livraison.",
 });
 Object.assign(sw, {
+  "Procurement and deal acceleration.": "Ununuzi na kuharakisha mikataba ya biashara.",
+  "Market Access": "Upatikanaji wa soko",
+  "Connect purchasing entities with manufacturers.": "Unganisha taasisi za ununuzi na watengenezaji.",
+  "Supply chain coordination": "Uratibu wa mnyororo wa ugavi",
+  "Coordinate procurement, supplier communication, and delivery.": "Ratibu ununuzi, mawasiliano na wasambazaji, na uwasilishaji.",
+  "Ground handling and trade compliance support": "Uratibu wa shughuli nchini na usaidizi wa uzingatiaji wa biashara",
+  "Coordinate in-country handling and support trade compliance.": "Ratibu shughuli nchini na kusaidia uzingatiaji wa biashara.",
+  "We identify relevant opportunities, connect with manufacturers, and coordinate procurement, logistics, delivery, and after-sales services.":
+    "Tunatambua fursa zinazofaa, tunaunganisha na watengenezaji, na kuratibu ununuzi, usafirishaji, uwasilishaji na huduma baada ya mauzo.",
   "Lead Multi-choice": "Lead Multi-choice",
   "is a private limited company registered in 2015 with the Rwanda Development Board (RDB). Our headquarters are in Remera, Kigali, Rwanda.": "ni kampuni binafsi yenye dhima ndogo iliyosajiliwa mwaka 2015 katika Bodi ya Maendeleo ya Rwanda (RDB). Makao yake makuu yako Remera, Kigali, Rwanda.",
   "Trusted local representation. Accountable coordination.":
@@ -582,7 +609,7 @@ Object.assign(sw, {
 });
 
 Object.assign(rw, {
-  "Let's move your business into Rwanda.": "Tugufashe guteza imbere ubucuruzi bwawe mu Rwanda.",
+  "Let's connect to do business in Rwanda and beyond.": "Duhuze dukorere ubucuruzi mu Rwanda no hanze yarwo.",
   "Manufacturer, Distributor — Let's connect for business in Rwanda and beyond.":
     "Abakora ibicuruzwa, ababikwirakwiza — duhurire ku bucuruzi mu Rwanda no hanze yarwo.",
   "Week 1": "Icyumweru cya 1",
@@ -607,7 +634,7 @@ Object.assign(rw, {
     "Ubu ni Umuyobozi ushinzwe Ikoranabuhanga mu Bigo muri Cenfri. Afite impamyabumenyi y'icyiciro cya kabiri cya kaminuza mu Masoko n'Uruhererekane rw'Ibicuruzwa, ni MCILT kandi ari muri CIPS.",
 });
 Object.assign(fr, {
-  "Let's move your business into Rwanda.": "Développons votre activité au Rwanda.",
+  "Let's connect to do business in Rwanda and beyond.": "Connectons-nous pour faire des affaires au Rwanda et au-delà.",
   "Manufacturer, Distributor — Let's connect for business in Rwanda and beyond.":
     "Fabricants, distributeurs — échangeons pour développer les affaires au Rwanda et au-delà.",
   "Week 1": "Semaine 1",
@@ -632,7 +659,7 @@ Object.assign(fr, {
     "Il est aujourd’hui responsable de la numérisation des entreprises chez Cenfri. Il est titulaire d’un master en achats et chaîne d’approvisionnement, membre MCILT et membre du CIPS.",
 });
 Object.assign(sw, {
-  "Let's move your business into Rwanda.": "Tusaidie kukuza biashara yako nchini Rwanda.",
+  "Let's connect to do business in Rwanda and beyond.": "Tuungane kufanya biashara nchini Rwanda na kwingineko.",
   "Manufacturer, Distributor — Let's connect for business in Rwanda and beyond.":
     "Watengenezaji, wasambazaji — tuungane kwa biashara nchini Rwanda na kwingineko.",
   "Week 1": "Wiki ya 1",
@@ -1473,8 +1500,8 @@ Object.assign(sw, {
 
 Object.assign(rw, {
   "Procurement models": "Uburyo bw'amasoko",
-  "Ways we support procurement and project needs.": "Uburyo dufashamo mu masoko no mu byo imishinga ikeneye.",
-  "Hardware Supply": "Gutanga ibikoresho",
+  "Support for procurement and project needs.": "Ubufasha ku masoko n'ibikenewe mu mishinga.",
+  "Supply contract": "Amasezerano yo gutanga ibicuruzwa",
   "Sourcing and supply of equipment and goods to defined specifications.": "Gushaka no gutanga ibikoresho n'ibicuruzwa hakurikijwe ibisabwa.",
   "Framework contracts": "Amasezerano rusange y'amasoko",
   "Supply under agreed terms and call-off requirements.": "Gutanga ibicuruzwa hakurikijwe amasezerano n'ibyo abakiriya basabye.",
@@ -1485,8 +1512,8 @@ Object.assign(rw, {
 });
 Object.assign(fr, {
   "Procurement models": "Modèles d'approvisionnement",
-  "Ways we support procurement and project needs.": "Nos différentes formes d'appui aux achats et aux projets.",
-  "Hardware Supply": "Fourniture de matériel",
+  "Support for procurement and project needs.": "Un appui aux besoins d'approvisionnement et aux projets.",
+  "Supply contract": "Contrat de fourniture",
   "Sourcing and supply of equipment and goods to defined specifications.": "Recherche et fourniture d'équipements et de biens selon des spécifications définies.",
   "Framework contracts": "Accords-cadres",
   "Supply under agreed terms and call-off requirements.": "Fourniture selon des conditions convenues et les besoins exprimés au fur et à mesure.",
@@ -1497,8 +1524,8 @@ Object.assign(fr, {
 });
 Object.assign(sw, {
   "Procurement models": "Aina za huduma za ununuzi",
-  "Ways we support procurement and project needs.": "Njia tunazotumia kusaidia mahitaji ya ununuzi na miradi.",
-  "Hardware Supply": "Ugavi wa vifaa",
+  "Support for procurement and project needs.": "Usaidizi kwa mahitaji ya ununuzi na miradi.",
+  "Supply contract": "Mkataba wa ugavi",
   "Sourcing and supply of equipment and goods to defined specifications.": "Kutafuta na kusambaza vifaa na bidhaa kulingana na mahitaji yaliyobainishwa.",
   "Framework contracts": "Mikataba ya mfumo wa ugavi",
   "Supply under agreed terms and call-off requirements.": "Ugavi kwa masharti yaliyokubaliwa na mahitaji yanapoibuka.",
@@ -2004,6 +2031,15 @@ const ar: Record<string, string> = {
 };
 
 Object.assign(zh, {
+  "Procurement and deal acceleration.": "采购与交易提速",
+  "Market Access": "市场准入",
+  "Connect purchasing entities with manufacturers.": "对接采购机构与制造商。",
+  "Supply chain coordination": "供应链协调",
+  "Coordinate procurement, supplier communication, and delivery.": "协调采购、供应商沟通和交付。",
+  "Ground handling and trade compliance support": "本地操作与贸易合规支持",
+  "Coordinate in-country handling and support trade compliance.": "协调境内操作并提供贸易合规支持。",
+  "We identify relevant opportunities, connect with manufacturers, and coordinate procurement, logistics, delivery, and after-sales services.":
+    "我们识别相关机会、对接制造商，并协调采购、物流、交付和售后服务。",
   "Market Access | Supplier Engagement | Trade Facilitation": "市场准入 | 供应商对接 | 贸易便利化",
   "Connecting International Suppliers with Purchasing Entities across Rwanda and East Africa": "连接国际供应商与卢旺达及东非采购机构",
   "Connecting international suppliers with purchasing entities across Rwanda and East Africa.": "连接国际供应商与卢旺达及东非各地的采购实体。",
@@ -2023,8 +2059,8 @@ Object.assign(zh, {
   "For Rwanda's purchasing entities": "面向卢旺达采购实体",
   "Expand access to credible manufacturers, authorised distributors and specialised service providers around the world through credible representatives.": "通过值得信赖的代表，拓宽接触全球可靠制造商、授权分销商和专业服务提供商的渠道。",
   "Procurement models": "采购模式",
-  "Ways we support procurement and project needs.": "我们支持采购与项目需求的方式。",
-  "Hardware Supply": "物资与设备供应",
+  "Support for procurement and project needs.": "为采购和项目需求提供支持。",
+  "Supply contract": "供应合同",
   "Sourcing and supply of equipment and goods to defined specifications.": "按明确技术规格寻源并供应设备与物资。",
   "Framework contracts": "框架协议",
   "Supply under agreed terms and call-off requirements.": "根据约定的条款和分批提货要求进行供货。",
@@ -2073,6 +2109,15 @@ Object.assign(zh, {
 });
 
 Object.assign(de, {
+  "Procurement and deal acceleration.": "Beschaffung und beschleunigte Geschäftsabschlüsse.",
+  "Market Access": "Marktzugang",
+  "Connect purchasing entities with manufacturers.": "Beschaffungsstellen mit Herstellern verbinden.",
+  "Supply chain coordination": "Lieferkettenkoordination",
+  "Coordinate procurement, supplier communication, and delivery.": "Beschaffung, Lieferantenkommunikation und Lieferung koordinieren.",
+  "Ground handling and trade compliance support": "Abwicklung vor Ort und Unterstützung bei der Handelskonformität",
+  "Coordinate in-country handling and support trade compliance.": "Abwicklung im Land koordinieren und die Einhaltung der Handelsvorschriften unterstützen.",
+  "We identify relevant opportunities, connect with manufacturers, and coordinate procurement, logistics, delivery, and after-sales services.":
+    "Wir identifizieren passende Chancen, vermitteln Kontakte zu Herstellern und koordinieren Beschaffung, Logistik, Lieferung und Kundendienst.",
   "Market Access | Supplier Engagement | Trade Facilitation": "Marktzugang | Lieferanteneinbindung | Handelerleichterung",
   "Connecting International Suppliers with Purchasing Entities across Rwanda and East Africa": "Verbindung internationaler Lieferanten mit Beschaffungsstellen in Ruanda und Ostafrika",
   "Connecting international suppliers with purchasing entities across Rwanda and East Africa.": "Verbindung internationaler Lieferanten mit Beschaffungsstellen in ganz Ruanda und Ostafrika.",
@@ -2092,8 +2137,8 @@ Object.assign(de, {
   "For Rwanda's purchasing entities": "Für Beschaffungsstellen in Ruanda",
   "Expand access to credible manufacturers, authorised distributors and specialised service providers around the world through credible representatives.": "Erweitern Sie den Zugang zu verlässlichen Herstellern, autorisierten Händlern und spezialisierten Dienstleistern weltweit durch glaubwürdige Repräsentanten.",
   "Procurement models": "Beschaffungsmodelle",
-  "Ways we support procurement and project needs.": "Wie wir Beschaffungs- und Projektanforderungen unterstützen.",
-  "Hardware Supply": "Hardware- & Materialbeschaffung",
+  "Support for procurement and project needs.": "Unterstützung bei Beschaffungs- und Projektanforderungen.",
+  "Supply contract": "Liefervertrag",
   "Sourcing and supply of equipment and goods to defined specifications.": "Beschaffung und Lieferung von Ausrüstung und Gütern nach definierten Vorgaben.",
   "Framework contracts": "Rahmenverträge",
   "Supply under agreed terms and call-off requirements.": "Lieferung zu vereinbarten Bedingungen und Abrufvorgaben.",
@@ -2142,6 +2187,15 @@ Object.assign(de, {
 });
 
 Object.assign(ar, {
+  "Procurement and deal acceleration.": "المشتريات وتسريع الصفقات",
+  "Market Access": "الوصول إلى السوق",
+  "Connect purchasing entities with manufacturers.": "ربط جهات الشراء بالمصنعين.",
+  "Supply chain coordination": "تنسيق سلسلة التوريد",
+  "Coordinate procurement, supplier communication, and delivery.": "تنسيق المشتريات والتواصل مع الموردين والتسليم.",
+  "Ground handling and trade compliance support": "المناولة المحلية ودعم الامتثال التجاري",
+  "Coordinate in-country handling and support trade compliance.": "تنسيق المناولة داخل البلد ودعم الامتثال التجاري.",
+  "We identify relevant opportunities, connect with manufacturers, and coordinate procurement, logistics, delivery, and after-sales services.":
+    "نحدد الفرص المناسبة، ونربط العملاء بالمصنعين، ونتولى تنسيق المشتريات والخدمات اللوجستية والتسليم وخدمات ما بعد البيع.",
   "Market Access | Supplier Engagement | Trade Facilitation": "الوصول إلى السوق | إشراك الموردين | تيسير التجارة",
   "Connecting International Suppliers with Purchasing Entities across Rwanda and East Africa": "ربط الموردين الدوليين بجهات الشراء في رواندا وشرق أفريقيا",
   "Connecting international suppliers with purchasing entities across Rwanda and East Africa.": "ربط الموردين الدوليين بجهات الشراء في رواندا وشرق أفريقيا.",
@@ -2161,8 +2215,8 @@ Object.assign(ar, {
   "For Rwanda's purchasing entities": "لجهات الشراء في رواندا",
   "Expand access to credible manufacturers, authorised distributors and specialised service providers around the world through credible representatives.": "وسّع نطاق وصولك إلى مصنعين وموزعين معتمدين ومقدمي خدمات متخصصين وموثوقين حول العالم من خلال ممثلين محليين ذوي مصداقية.",
   "Procurement models": "نماذج المشتريات",
-  "Ways we support procurement and project needs.": "طرق دعمنا لاحتياجات المشتريات والمشاريع.",
-  "Hardware Supply": "توريد المعدات والمواد",
+  "Support for procurement and project needs.": "دعم احتياجات المشتريات والمشاريع.",
+  "Supply contract": "عقد توريد",
   "Sourcing and supply of equipment and goods to defined specifications.": "استيراد وتوريد المعدات والسلع وفقاً لمواصفات محددة.",
   "Framework contracts": "عقود الإطار",
   "Supply under agreed terms and call-off requirements.": "التوريد بموجب الشروط المتفق عليها وجداول الطلب.",
@@ -2208,6 +2262,49 @@ Object.assign(ar, {
   "Official procurement portals": "بوابات المشتريات الرسمية",
   "Explore procurement notices at the source.": "استكشف إشعارات المشتريات مباشرة من المصدر.",
   "Visit Rwanda's official procurement portals to review current notices, documents and deadlines.": "قم بزيارة بوابات المشتريات الرسمية في رواندا للاطلاع على المناقصات الحالية والوثائق والمواعيد النهائية.",
+});
+
+Object.assign(rw, {
+  "Who we support": "Abo dufasha",
+  "We help international suppliers understand Rwanda's procurement environment, identify relevant opportunities, and connect with Rwanda's purchasing entities through our offices.":
+    "Dufasha abatanga ibicuruzwa mpuzamahanga gusobanukirwa amasoko yo mu Rwanda, kumenya amahirwe ahari no guhuza n'ibigo byo mu Rwanda bigura ibicuruzwa binyuze ku biro byacu.",
+  "We connect Rwanda's purchasing entities with international manufacturers, authorised distributors, and specialised service providers worldwide.":
+    "Duhuza ibigo byo mu Rwanda bigura ibicuruzwa n'abakora ibicuruzwa mpuzamahanga, ababikwirakwiza babifitiye uburenganzira n'abatanga serivisi zihariye ku isi.",
+});
+Object.assign(fr, {
+  "Who we support": "Qui nous accompagnons",
+  "We help international suppliers understand Rwanda's procurement environment, identify relevant opportunities, and connect with Rwanda's purchasing entities through our offices.":
+    "Nous aidons les fournisseurs internationaux à comprendre les marchés publics au Rwanda, à repérer les opportunités pertinentes et à entrer en contact avec les acheteurs rwandais par l'intermédiaire de nos bureaux.",
+  "We connect Rwanda's purchasing entities with international manufacturers, authorised distributors, and specialised service providers worldwide.":
+    "Nous mettons les acheteurs rwandais en relation avec des fabricants internationaux, des distributeurs agréés et des prestataires spécialisés du monde entier.",
+});
+Object.assign(sw, {
+  "Who we support": "Tunawasaidia",
+  "We help international suppliers understand Rwanda's procurement environment, identify relevant opportunities, and connect with Rwanda's purchasing entities through our offices.":
+    "Tunawasaidia wasambazaji wa kimataifa kuelewa mazingira ya ununuzi nchini Rwanda, kutambua fursa na kuwasiliana na taasisi za ununuzi za Rwanda kupitia ofisi zetu.",
+  "We connect Rwanda's purchasing entities with international manufacturers, authorised distributors, and specialised service providers worldwide.":
+    "Tunaunganisha taasisi za ununuzi za Rwanda na watengenezaji wa kimataifa, wasambazaji walioidhinishwa na watoa huduma maalumu duniani kote.",
+});
+Object.assign(zh, {
+  "Who we support": "我们的服务对象",
+  "We help international suppliers understand Rwanda's procurement environment, identify relevant opportunities, and connect with Rwanda's purchasing entities through our offices.":
+    "我们帮助国际供应商了解卢旺达采购环境、发现相关机会，并通过我们的办公室对接卢旺达采购机构。",
+  "We connect Rwanda's purchasing entities with international manufacturers, authorised distributors, and specialised service providers worldwide.":
+    "我们为卢旺达采购机构对接全球制造商、授权分销商和专业服务提供商。",
+});
+Object.assign(de, {
+  "Who we support": "Wen wir unterstützen",
+  "We help international suppliers understand Rwanda's procurement environment, identify relevant opportunities, and connect with Rwanda's purchasing entities through our offices.":
+    "Wir unterstützen internationale Lieferanten dabei, Ruandas Beschaffungsumfeld zu verstehen, passende Chancen zu erkennen und über unsere Büros Kontakte zu ruandischen Beschaffungsstellen aufzubauen.",
+  "We connect Rwanda's purchasing entities with international manufacturers, authorised distributors, and specialised service providers worldwide.":
+    "Wir verbinden ruandische Beschaffungsstellen mit internationalen Herstellern, autorisierten Händlern und spezialisierten Dienstleistern weltweit.",
+});
+Object.assign(ar, {
+  "Who we support": "من نخدم",
+  "We help international suppliers understand Rwanda's procurement environment, identify relevant opportunities, and connect with Rwanda's purchasing entities through our offices.":
+    "نساعد الموردين الدوليين على فهم بيئة المشتريات في رواندا وتحديد الفرص المناسبة والتواصل مع جهات الشراء الرواندية من خلال مكاتبنا.",
+  "We connect Rwanda's purchasing entities with international manufacturers, authorised distributors, and specialised service providers worldwide.":
+    "نربط جهات الشراء في رواندا بالمصنعين الدوليين والموزعين المعتمدين ومقدمي الخدمات المتخصصة حول العالم.",
 });
 
 const copy: Partial<Record<Language | CmsLanguage, Record<string, string>>> = { rw, fr, sw, zh, de, ar };

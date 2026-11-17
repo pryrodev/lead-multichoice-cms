@@ -7,6 +7,7 @@ import { mergeSiteCopy, type SiteCopyContent } from "./site-copy";
 import { defaultProcurementResources, mergeProcurementResources, type ProcurementResourcesContent } from "./procurement-resources";
 import { defaultPartners, mergePartners, type PartnersContent } from "./partners";
 import { defaultBlogContent, mergeBlogContent, type BlogContent } from "./blog";
+import { defaultIndustriesContent, mergeIndustriesContent, type IndustriesContent } from "./industries";
 
 const isProductionBuild = () => process.env["NEXT_PHASE"] === "phase-production-build";
 
@@ -107,3 +108,17 @@ const loadPublishedBlog = async (): Promise<BlogContent> => {
 };
 const cachedPublishedBlog = unstable_cache(loadPublishedBlog, ["published-blog-v1"], { revalidate: 3600, tags: ["cms-blog"] });
 export const getPublishedBlog = () => isProductionBuild() ? Promise.resolve(defaultBlogContent) : cachedPublishedBlog();
+
+const loadPublishedIndustries = async (): Promise<IndustriesContent> => {
+  try {
+    const page = await getDb().sitePage.findUnique({ where: { slug: "industries" }, select: { publishedContent: true } });
+    const stored = page?.publishedContent;
+    const content = typeof stored === "string" ? JSON.parse(stored) as unknown : stored;
+    return content ? mergeIndustriesContent(content) : defaultIndustriesContent;
+  } catch (error) {
+    handleCmsDbError("published industries content", error);
+    return defaultIndustriesContent;
+  }
+};
+const cachedPublishedIndustries = unstable_cache(loadPublishedIndustries, ["published-industries-v1"], { revalidate: 3600, tags: ["cms-industries"] });
+export const getPublishedIndustries = () => isProductionBuild() ? Promise.resolve(defaultIndustriesContent) : cachedPublishedIndustries();

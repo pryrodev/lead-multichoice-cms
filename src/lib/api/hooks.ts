@@ -1,11 +1,12 @@
 import { queryOptions, useMutation, useQuery, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
 import { api } from "./service";
-import type { AdminBlog, AdminPartners, AdminProcurementResources, AdminSiteCopy, AdminSiteVisuals, CompanySettings, MediaAsset, StaffMember } from "./types";
+import type { AdminBlog, AdminIndustries, AdminPartners, AdminProcurementResources, AdminSiteCopy, AdminSiteVisuals, CompanySettings, MediaAsset, StaffMember } from "./types";
 import type { SiteVisuals } from "@/lib/cms/site-visuals";
 import type { SiteCopyContent } from "@/lib/cms/site-copy";
 import type { ProcurementResourcesContent } from "@/lib/cms/procurement-resources";
 import type { PartnersContent } from "@/lib/cms/partners";
 import type { BlogContent } from "@/lib/cms/blog";
+import type { IndustriesContent } from "@/lib/cms/industries";
 
 export const kpisQuery = queryOptions({ queryKey: ["kpis"], queryFn: api.getKpis });
 export const stagesQuery = queryOptions({ queryKey: ["stages"], queryFn: api.getStages });
@@ -189,6 +190,32 @@ export function usePublishBlog() {
   return useMutation({
     mutationFn: api.publishBlog,
     onSuccess: (published) => qc.setQueryData<AdminBlog>(blogQuery.queryKey, (current) => current ? {
+      ...current,
+      hasDraft: false,
+      publishedAt: published.publishedAt,
+    } : current),
+  });
+}
+
+export const industriesQuery = queryOptions({ queryKey: ["admin", "cms", "industries"], queryFn: api.getIndustries });
+export const useIndustriesDraft = () => useSuspenseQuery(industriesQuery).data;
+export function useSaveIndustriesDraft() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (content: IndustriesContent) => api.saveIndustriesDraft(content),
+    onSuccess: (saved) => qc.setQueryData<AdminIndustries>(industriesQuery.queryKey, (current) => ({
+      content: saved.content,
+      hasDraft: saved.hasDraft,
+      publishedAt: current?.publishedAt ?? null,
+      updatedAt: new Date().toISOString(),
+    })),
+  });
+}
+export function usePublishIndustries() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: api.publishIndustries,
+    onSuccess: (published) => qc.setQueryData<AdminIndustries>(industriesQuery.queryKey, (current) => current ? {
       ...current,
       hasDraft: false,
       publishedAt: published.publishedAt,

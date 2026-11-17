@@ -195,7 +195,7 @@ export function PageHero({
 
 export function CallToActionSection({
   id,
-  title = "Let's move your business into Rwanda.",
+  title = "Let's connect to do business in Rwanda and beyond.",
   text = "Manufacturer, Distributor — Let's connect for business in Rwanda and beyond.",
   brandGradient = false,
   photoBackground = "/site/hero-port.jpg",

@@ -1,21 +1,22 @@
 "use client";
 
 const heroImage = "/site/truck.jpg";
-import { industries } from "@/content/services";
+import { defaultIndustriesContent, type IndustriesContent } from "@/lib/cms/industries";
 import { CheckList, PageHero } from "@/components/site/ui";
 import { PhotoScrollSection } from "@/components/site/PhotoScrollSection";
 import { useI18n } from "@/i18n/I18nProvider";
 
 
 
-export default function Industries() {
+export default function Industries({ content = defaultIndustriesContent }: { content?: IndustriesContent }) {
   const { t, tc } = useI18n();
+  const industries = content.sectors;
   return (
     <>
       <PageHero
         eyebrow={t("nav.industries")}
-        title={tc("Sector knowledge. Coordinated execution.")}
-        intro={tc("We coordinate, source and represent — across five sectors.")}
+        title={tc(content.heroTitle)}
+        intro={tc(content.heroIntro)}
         image={heroImage}
         visualKey="industries.hero"
         alt="Cargo truck on the road for regional trade"
@@ -63,14 +64,13 @@ export default function Industries() {
           );
 
           if (i % 2 === 1) {
-            const visualKey = ind.id === "energy" ? "industries.energy" as const : "industries.logistics" as const;
-            const image = ind.id === "energy" ? "/site/warehouse.jpg" : "/site/truck.jpg";
+            const visualKey = ind.id === "energy" ? "industries.energy" as const : ind.id === "logistics" ? "industries.logistics" as const : undefined;
             return (
               <PhotoScrollSection
                 key={ind.id}
                 id={ind.id}
-                image={image}
-                visualKey={visualKey}
+                image={ind.image}
+                {...(visualKey ? { visualKey } : {})}
                 overlayClassName="bg-brand-white/88"
                 className="py-12 md:py-16"
               >

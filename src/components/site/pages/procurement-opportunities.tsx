@@ -24,6 +24,7 @@ import {
   VolumeX,
 } from "lucide-react";
 import type { ProcurementResource } from "@/lib/cms/procurement-resources";
+import { procurementModels } from "@/content/site";
 import { ButtonLink, PageHero, SectionHeading } from "@/components/site/ui";
 import { ProcurementResourceCarousel } from "@/components/site/ProcurementResourceCarousel";
 import { PhotoScrollSection } from "@/components/site/PhotoScrollSection";
@@ -959,7 +960,7 @@ const audioLabels: Record<string, { unmute: string; mute: string }> = {
 };
 
 export default function Procurement({ resources }: { resources: ProcurementResource[] }) {
-  const { language } = useI18n();
+  const { language, tc } = useI18n();
   const visuals = useSiteVisuals();
   const copy = content[language] ?? content.en;
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -1082,23 +1083,19 @@ export default function Procurement({ resources }: { resources: ProcurementResou
         </div>
 
         <div className="mt-10">
-          <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
-            <div>
-              <h2 className="mt-1 text-xl font-semibold text-foreground md:text-2xl">{copy.processTitle}</h2>
-            </div>
-            <p className="max-w-xl text-base leading-relaxed text-muted-foreground">{copy.processIntro}</p>
-          </div>
-          <ol className="grid gap-x-7 gap-y-6 sm:grid-cols-2 xl:grid-cols-4">
-            {copy.steps.map((step) => (
-              <li key={step.step} className="relative min-w-0 border-l border-brand-primary/25 pl-5">
-                <span className="absolute -left-[13px] top-0 flex size-6 items-center justify-center rounded-full border-2 border-background bg-brand-primary text-[10px] font-bold text-brand-white ring-1 ring-brand-primary/25">
-                  {step.step}
-                </span>
-                <h3 className="text-base font-semibold leading-snug text-foreground">{step.title}</h3>
-                <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{step.text}</p>
-              </li>
+          <SectionHeading
+            eyebrow={copy.tabsBuyer}
+            title={tc("Procurement models")}
+            className="max-w-none"
+          />
+          <div className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+            {procurementModels.map((model) => (
+              <article key={model.id} className="h-full rounded-md border border-border bg-transparent p-4 md:p-5">
+                <h3 className="font-display text-base font-semibold text-foreground">{tc(model.name)}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{tc(model.description)}</p>
+              </article>
             ))}
-          </ol>
+          </div>
         </div>
 
         <div className="mt-6 border-t border-border pt-5">

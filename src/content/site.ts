@@ -61,7 +61,7 @@ export const procurementResources = [
 export const procurementModels = [
   {
     id: "hardware-supply",
-    name: "Hardware Supply",
+    name: "Supply contract",
     description: "Sourcing and supply of equipment and goods to defined specifications.",
   },
   {

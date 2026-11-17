@@ -9,9 +9,8 @@ const it = "/site/it-equipment.jpg";
 export const services = [
   {
     id: "market-access",
-    title: "Market Access & Trade Facilitation",
-    summary:
-      "Identify relevant opportunities and purchasing entities, facilitate introductions and provide local representation.",
+    title: "Market Access",
+    summary: "Connect purchasing entities with manufacturers.",
     image: meeting,
     alt: "Business professionals reviewing procurement documents in a Kigali meeting room",
     items: [
@@ -23,9 +22,9 @@ export const services = [
   },
   {
     id: "procurement",
-    title: "Procurement & Supply Chain Coordination",
+    title: "Supply chain coordination",
     summary:
-      "Identify suppliers and coordinate procurement communication, order follow-up and delivery.",
+      "Coordinate procurement, supplier communication, and delivery.",
     image: warehouse,
     alt: "Warehouse operator scanning palletised cartons in a distribution centre",
     items: [
@@ -37,9 +36,9 @@ export const services = [
   },
   {
     id: "logistics",
-    title: "Logistics, Distribution & Trade Compliance Support",
+    title: "Ground handling and trade compliance support",
     summary:
-      "Coordinate transport, shipment tracking, customs liaison, import documents and delivery follow-up.",
+      "Coordinate in-country handling and support trade compliance.",
     image: truck,
     alt: "Container truck travelling along a hillside highway in Rwanda",
     note: "Approvals remain with the relevant authorities.",
