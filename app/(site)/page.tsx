@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Home from "@/components/site/pages/index";
-import { getPublishedHomePage, getPublishedProcurementResources } from "@/lib/cms/server";
+import { getPublishedHomePage, getPublishedPartners, getPublishedProcurementResources } from "@/lib/cms/server";
 
 export async function generateMetadata(): Promise<Metadata> {
   const content = await getPublishedHomePage();
@@ -11,6 +11,6 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function Homepage() {
-  const [content, resourceContent] = await Promise.all([getPublishedHomePage(), getPublishedProcurementResources()]);
-  return <Home initialContent={content} resources={resourceContent.resources} />;
+  const [content, resourceContent, partnerContent] = await Promise.all([getPublishedHomePage(), getPublishedProcurementResources(), getPublishedPartners()]);
+  return <Home initialContent={content} resources={resourceContent.resources} partners={partnerContent.partners} />;
 }

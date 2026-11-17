@@ -1,9 +1,10 @@
 import { queryOptions, useMutation, useQuery, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
 import { api } from "./service";
-import type { AdminProcurementResources, AdminSiteCopy, AdminSiteVisuals, CompanySettings, MediaAsset, StaffMember } from "./types";
+import type { AdminPartners, AdminProcurementResources, AdminSiteCopy, AdminSiteVisuals, CompanySettings, MediaAsset, StaffMember } from "./types";
 import type { SiteVisuals } from "@/lib/cms/site-visuals";
 import type { SiteCopyContent } from "@/lib/cms/site-copy";
 import type { ProcurementResourcesContent } from "@/lib/cms/procurement-resources";
+import type { PartnersContent } from "@/lib/cms/partners";
 
 export const kpisQuery = queryOptions({ queryKey: ["kpis"], queryFn: api.getKpis });
 export const stagesQuery = queryOptions({ queryKey: ["stages"], queryFn: api.getStages });
@@ -135,6 +136,32 @@ export function usePublishProcurementResources() {
   return useMutation({
     mutationFn: api.publishProcurementResources,
     onSuccess: (published) => qc.setQueryData<AdminProcurementResources>(procurementResourcesQuery.queryKey, (current) => current ? {
+      ...current,
+      hasDraft: false,
+      publishedAt: published.publishedAt,
+    } : current),
+  });
+}
+
+export const partnersQuery = queryOptions({ queryKey: ["admin", "cms", "partners"], queryFn: api.getPartners });
+export const usePartnersDraft = () => useSuspenseQuery(partnersQuery).data;
+export function useSavePartnersDraft() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (content: PartnersContent) => api.savePartnersDraft(content),
+    onSuccess: (saved) => qc.setQueryData<AdminPartners>(partnersQuery.queryKey, (current) => ({
+      content: saved.content,
+      hasDraft: saved.hasDraft,
+      publishedAt: current?.publishedAt ?? null,
+      updatedAt: new Date().toISOString(),
+    })),
+  });
+}
+export function usePublishPartners() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: api.publishPartners,
+    onSuccess: (published) => qc.setQueryData<AdminPartners>(partnersQuery.queryKey, (current) => current ? {
       ...current,
       hasDraft: false,
       publishedAt: published.publishedAt,

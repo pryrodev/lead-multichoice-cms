@@ -229,3 +229,10 @@ export interface AdminProcurementResources {
   publishedAt: string | null;
   updatedAt: string | null;
 }
+
+export interface AdminPartners {
+  content: import("@/lib/cms/partners").PartnersContent;
+  hasDraft: boolean;
+  publishedAt: string | null;
+  updatedAt: string | null;
+}

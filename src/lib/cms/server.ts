@@ -5,6 +5,7 @@ import { defaultHomePageContent, mergeHomePageContent, type HomePageContent } fr
 import { defaultSiteVisuals, mergeSiteVisuals, type SiteVisuals } from "./site-visuals";
 import { mergeSiteCopy, type SiteCopyContent } from "./site-copy";
 import { defaultProcurementResources, mergeProcurementResources, type ProcurementResourcesContent } from "./procurement-resources";
+import { defaultPartners, mergePartners, type PartnersContent } from "./partners";
 
 const isProductionBuild = () => process.env["NEXT_PHASE"] === "phase-production-build";
 
@@ -77,3 +78,17 @@ const loadPublishedProcurementResources = async (): Promise<ProcurementResources
 };
 const cachedPublishedProcurementResources = unstable_cache(loadPublishedProcurementResources, ["published-procurement-resources-v1"], { revalidate: 3600, tags: ["cms-procurement-resources"] });
 export const getPublishedProcurementResources = () => isProductionBuild() ? Promise.resolve(defaultProcurementResources) : cachedPublishedProcurementResources();
+
+const loadPublishedPartners = async (): Promise<PartnersContent> => {
+  try {
+    const page = await getDb().sitePage.findUnique({ where: { slug: "partners" }, select: { publishedContent: true } });
+    const stored = page?.publishedContent;
+    const content = typeof stored === "string" ? JSON.parse(stored) as unknown : stored;
+    return content ? mergePartners(content) : defaultPartners;
+  } catch (error) {
+    handleCmsDbError("published website partners", error);
+    return defaultPartners;
+  }
+};
+const cachedPublishedPartners = unstable_cache(loadPublishedPartners, ["published-partners-v1"], { revalidate: 3600, tags: ["cms-partners"] });
+export const getPublishedPartners = () => isProductionBuild() ? Promise.resolve(defaultPartners) : cachedPublishedPartners();

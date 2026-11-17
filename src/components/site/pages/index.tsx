@@ -18,6 +18,7 @@ import {
   defaultProcurementResources,
   type ProcurementResource,
 } from "@/lib/cms/procurement-resources";
+import { defaultPartners, type WebsitePartner } from "@/lib/cms/partners";
 
 const bridgeSteps = [
   {
@@ -46,10 +47,12 @@ export default function Home({
   contentOverride,
   initialContent,
   resources = defaultProcurementResources.resources,
+  partners = defaultPartners.partners,
 }: {
   contentOverride?: HomePageContent;
   initialContent?: HomePageContent;
   resources?: ProcurementResource[];
+  partners?: WebsitePartner[];
 } = {}) {
   const { language, tc } = useI18n();
   const visuals = useSiteVisuals();
@@ -132,7 +135,7 @@ export default function Home({
             </motion.div>
           </div>
         </div>
-        <PartnerTicker />
+        <PartnerTicker organizations={partners} />
       </section>
 
       <section className="container-site grid gap-8 py-12 md:py-16 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
@@ -148,7 +151,7 @@ export default function Home({
           )}
         />
         <div className="grid gap-6 sm:grid-cols-2">
-          <article className="group flex flex-col rounded-lg border border-border bg-background p-5 transition-all duration-200 hover:border-brand-primary/40 hover:shadow-sm sm:p-6">
+          <article className="group flex flex-col rounded-lg border border-border bg-background p-5 transition-colors duration-200 hover:border-brand-primary/40 sm:p-6">
             <div
               className="relative aspect-[16/9] w-full shrink-0 overflow-hidden rounded-md bg-muted"
               aria-hidden="true"
@@ -170,7 +173,7 @@ export default function Home({
               )}
             </p>
           </article>
-          <article className="group flex flex-col rounded-lg border border-border bg-background p-5 transition-all duration-200 hover:border-brand-primary/40 hover:shadow-sm sm:p-6">
+          <article className="group flex flex-col rounded-lg border border-border bg-background p-5 transition-colors duration-200 hover:border-brand-primary/40 sm:p-6">
             <div
               className="relative aspect-[16/9] w-full shrink-0 overflow-hidden rounded-md bg-muted"
               aria-hidden="true"

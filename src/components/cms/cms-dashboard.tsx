@@ -5,6 +5,7 @@ import {
   ArrowUpRight,
   Eye,
   FilePenLine,
+  Handshake,
   ImagePlus,
   Images,
   Languages,
@@ -23,6 +24,7 @@ const contentIcons = {
   "site-copy": Languages,
   "site-visuals": ImagePlus,
   "procurement-resources": LinkIcon,
+  partners: Handshake,
   media: Images,
 } as const;
 

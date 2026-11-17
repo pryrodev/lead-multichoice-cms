@@ -5,56 +5,9 @@ import { motion, useAnimationControls, useReducedMotion } from "motion/react";
 import { useEffect } from "react";
 import { partnerTickerLabels } from "@/content/insights";
 import { useI18n } from "@/i18n/I18nProvider";
+import type { WebsitePartner } from "@/lib/cms/partners";
 
-const ecosystemOrganizations = [
-  {
-    name: "Rwanda Public Procurement Authority",
-    href: "https://www.rppa.gov.rw/",
-    logo: "https://www.rppa.gov.rw/fileadmin/user_upload/RPPA/News_Images/New_replace_Logo_123.jpg",
-  },
-  {
-    name: "Rwanda Development Board",
-    href: "https://rdb.rw/",
-    logo: "https://images.squarespace-cdn.com/content/v1/55ed8436e4b038f693789ca0/7f50683b-b00b-4fc4-8746-aab7d56cf8c9/RDB1.png",
-  },
-  {
-    name: "Private Sector Federation",
-    href: "https://psf.org.rw/",
-    logo: "/psf.png",
-  },
-  {
-    name: "Rwanda Food and Drugs Authority",
-    href: "https://www.rwandafda.gov.rw/",
-    logo: "https://www.rwandafda.gov.rw/fileadmin/user_upload/RwandaFDA/rwandafda_logo.png",
-  },
-  {
-    name: "Rwanda Standards Board",
-    href: "https://www.rsb.gov.rw/",
-    logo: "https://www.rsb.gov.rw/fileadmin/user_upload/Icons_logo/Logo-01.png",
-  },
-  {
-    name: "Rwanda Revenue Authority",
-    href: "https://www.rra.gov.rw/",
-    logo: "https://www.rra.gov.rw/typo3conf/ext/rra_ui/Resources/Public/images/Rwanda-Revenue-Authority-logo.png",
-  },
-  {
-    name: "National Bank of Rwanda",
-    href: "https://www.bnr.rw/",
-    logo: "https://www.bnr.rw/static/media/bnr-logo.7633d18322b2e9a1c715.png",
-  },
-  {
-    name: "Bank of Kigali",
-    href: "https://www.bk.rw/",
-    logo: "https://www.rwandainkenya.gov.rw/fileadmin/user_upload/Kenya_user_upload/news_pictures/bk.png",
-  },
-  {
-    name: "MTN Rwanda",
-    href: "https://www.mtn.co.rw/",
-    logo: "https://www.mtn.co.rw/wp-content/uploads/2023/07/new-mtn-logo.jpg",
-  },
-];
-
-export function PartnerTicker() {
+export function PartnerTicker({ organizations }: { organizations: WebsitePartner[] }) {
   const { language } = useI18n();
   const controls = useAnimationControls();
   const shouldReduceMotion = useReducedMotion();
@@ -72,6 +25,8 @@ export function PartnerTicker() {
 
     return () => controls.stop();
   }, [controls, shouldReduceMotion]);
+
+  if (organizations.length === 0) return null;
 
   function resumeMarquee() {
     if (shouldReduceMotion) return;
@@ -111,7 +66,7 @@ export function PartnerTicker() {
                 aria-hidden={copy === 1}
                 className="flex w-max shrink-0 items-center gap-8 pr-8"
               >
-                {ecosystemOrganizations.map((organization) => (
+                {organizations.map((organization) => (
                   <li key={`${copy}-${organization.name}`} className="shrink-0">
                     <a
                       href={organization.href}
