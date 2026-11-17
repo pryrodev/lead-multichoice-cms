@@ -115,7 +115,7 @@ export function AdminOverview() {
           <Badge
             variant="outline"
             radius="full"
-            className={`max-w-40 truncate capitalize ${getTrackingStatusTone(label, tone)}`}
+            className={`inline-flex min-w-0 max-w-full shrink truncate capitalize ${getTrackingStatusTone(label, tone)}`}
           >
             {label}
           </Badge>

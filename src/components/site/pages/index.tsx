@@ -11,6 +11,7 @@ import { ProcurementResourceCarousel } from "@/components/site/ProcurementResour
 import { PartnerTicker } from "@/components/site/PartnerTicker";
 import { PhotoScrollSection } from "@/components/site/PhotoScrollSection";
 import { InsightsGrid } from "@/components/site/InsightsGrid";
+import { useSiteVisuals } from "@/components/site/SiteVisualsProvider";
 import { useI18n } from "@/i18n/I18nProvider";
 import { defaultHomePageContent, type HomePageContent } from "@/lib/cms/homepage";
 import {
@@ -51,6 +52,7 @@ export default function Home({
   resources?: ProcurementResource[];
 } = {}) {
   const { language, tc } = useI18n();
+  const visuals = useSiteVisuals();
   const cmsPage = contentOverride ?? initialContent ?? defaultHomePageContent;
   const cmsText = (text: string) => {
     if (language !== "en") {
@@ -61,6 +63,7 @@ export default function Home({
     return cmsPage.translations.en?.[text as keyof typeof cmsPage.translations.en] ?? text;
   };
   const heroPort = cmsPage.heroImageUrl || "/site/hero-port.jpg";
+  const heroVideo = visuals["home.heroVideo"];
   return (
     <>
       <section
@@ -76,18 +79,20 @@ export default function Home({
             fetchPriority="high"
             className="photo-parallax-image"
           />
-          <video
-            className="photo-parallax-video"
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="metadata"
-            poster={heroPort}
-            aria-hidden="true"
-          >
-            <source src="/video/hero-logistics-web.mp4" type="video/mp4" />
-          </video>
+          {heroVideo && (
+            <video
+              className="photo-parallax-video"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              poster={heroPort}
+              aria-hidden="true"
+            >
+              <source src={heroVideo} />
+            </video>
+          )}
         </div>
         <div className="photo-parallax-shade absolute inset-0 -z-10" aria-hidden />
         <div className="container-site pb-12 pt-24 md:pb-14 md:pt-28">

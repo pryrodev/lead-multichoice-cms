@@ -31,17 +31,26 @@ export const SITE_VISUAL_FIELDS = [
   { key: "tracking.hero", label: "Tracking · Request tracking page", fallback: "/site/hero-port.jpg" },
 ] as const;
 
+export const SITE_VIDEO_FIELDS = [
+  { key: "home.heroVideo", label: "Home · Hero background video", fallback: "/video/hero-logistics-web.mp4" },
+  { key: "procurement.heroVideo", label: "Procurement · Hero background video", fallback: "/video/rwanda-business-opportunities.mp4" },
+] as const;
+
 export type SiteVisualKey = (typeof SITE_VISUAL_FIELDS)[number]["key"];
-export type SiteVisuals = Record<SiteVisualKey, string>;
+export type SiteVideoKey = (typeof SITE_VIDEO_FIELDS)[number]["key"];
+export type SiteVisuals = Record<SiteVisualKey | SiteVideoKey, string>;
 
 export const defaultSiteVisuals = Object.fromEntries(
-  SITE_VISUAL_FIELDS.map(({ key, fallback }) => [key, fallback]),
+  [...SITE_VISUAL_FIELDS, ...SITE_VIDEO_FIELDS].map(({ key, fallback }) => [key, fallback]),
 ) as SiteVisuals;
 
 export function mergeSiteVisuals(value: unknown): SiteVisuals {
   if (!value || typeof value !== "object" || Array.isArray(value)) return defaultSiteVisuals;
   const source = value as Record<string, unknown>;
   return Object.fromEntries(
-    SITE_VISUAL_FIELDS.map(({ key, fallback }) => [key, typeof source[key] === "string" && source[key] ? source[key] : fallback]),
+    [...SITE_VISUAL_FIELDS, ...SITE_VIDEO_FIELDS].map(({ key, fallback }) => [
+      key,
+      typeof source[key] === "string" ? source[key] : fallback,
+    ]),
   ) as SiteVisuals;
 }

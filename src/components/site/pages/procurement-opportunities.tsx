@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useRef, useState } from "react";
 import {
   BarChart3,
@@ -27,6 +28,7 @@ import { ButtonLink, PageHero, SectionHeading } from "@/components/site/ui";
 import { ProcurementResourceCarousel } from "@/components/site/ProcurementResourceCarousel";
 import { PhotoScrollSection } from "@/components/site/PhotoScrollSection";
 import { useI18n } from "@/i18n/I18nProvider";
+import { useSiteVisuals } from "@/components/site/SiteVisualsProvider";
 
 type ProcurementContent = {
   eyebrow: string;
@@ -958,6 +960,7 @@ const audioLabels: Record<string, { unmute: string; mute: string }> = {
 
 export default function Procurement({ resources }: { resources: ProcurementResource[] }) {
   const { language } = useI18n();
+  const visuals = useSiteVisuals();
   const copy = content[language] ?? content.en;
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isMuted, setIsMuted] = useState(true);
@@ -971,6 +974,8 @@ export default function Procurement({ resources }: { resources: ProcurementResou
   };
 
   const soundLabel = audioLabels[language] ?? defaultSoundLabel;
+  const heroVideo = visuals["procurement.heroVideo"];
+  const heroImage = visuals["procurement.hero"];
 
   return (
     <>
@@ -978,17 +983,21 @@ export default function Procurement({ resources }: { resources: ProcurementResou
       <section className="group relative isolate flex min-h-[520px] items-center overflow-hidden border-b border-border bg-brand-primary text-brand-white md:min-h-[60vh] lg:min-h-[65vh]">
         {/* Background video on one side */}
         <div className="pointer-events-none absolute inset-y-0 w-full overflow-hidden ltr:right-0 rtl:left-0 lg:w-1/2">
-          <video
-            ref={videoRef}
-            autoPlay
-            muted={isMuted}
-            loop
-            playsInline
-            preload="auto"
-            className="size-full object-cover"
-          >
-            <source src="/video/rwanda-business-opportunities.mp4" type="video/mp4" />
-          </video>
+          <Image src={heroImage} alt="" fill unoptimized sizes="50vw" className="object-cover" />
+          {heroVideo && (
+            <video
+              ref={videoRef}
+              autoPlay
+              muted={isMuted}
+              loop
+              playsInline
+              preload="metadata"
+              poster={heroImage}
+              className="absolute inset-0 size-full object-cover"
+            >
+              <source src={heroVideo} />
+            </video>
+          )}
           {/* Subtle gradient blends — just enough to blend into the left */}
           <div className="absolute inset-0 hidden bg-gradient-to-r from-brand-primary via-brand-primary/5 to-transparent ltr:block rtl:hidden" />
           <div className="absolute inset-0 hidden bg-gradient-to-l from-brand-primary via-brand-primary/5 to-transparent rtl:block ltr:hidden" />
@@ -1014,7 +1023,7 @@ export default function Procurement({ resources }: { resources: ProcurementResou
         </div>
 
         {/* Audio toggle — bottom-right, visible on hover */}
-        <button
+        {heroVideo && <button
           type="button"
           onClick={toggleAudio}
           className="pointer-events-auto absolute bottom-4 z-20 inline-flex items-center gap-2 rounded-full border border-white/20 bg-brand-primary/75 px-4 py-2 text-xs font-semibold text-brand-white opacity-0 shadow-lg backdrop-blur-md transition-all duration-300 hover:border-white/40 hover:bg-brand-primary group-hover:opacity-100 ltr:right-4 rtl:left-4"
@@ -1022,7 +1031,7 @@ export default function Procurement({ resources }: { resources: ProcurementResou
         >
           {isMuted ? <VolumeX size={15} /> : <Volume2 size={15} className="text-brand-gold" />}
           <span>{isMuted ? soundLabel.unmute : soundLabel.mute}</span>
-        </button>
+        </button>}
       </section>
 
       {/* Quick Nav Anchors */}

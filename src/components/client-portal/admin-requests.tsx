@@ -376,7 +376,7 @@ function RequestProgressBadge({ request }: { request: AdminClientRequest }) {
       title={label}
       variant="outline"
       radius="full"
-      className={`max-w-36 truncate capitalize ${tone}`}
+      className={`inline-flex min-w-0 max-w-full shrink truncate capitalize ${tone}`}
     >
       {label}
     </Badge>
@@ -515,7 +515,7 @@ export function AdminClientRequests({ initialSearch = "" }: { initialSearch?: st
       {
         id: "progress",
         header: "Progress",
-        className: "min-w-36",
+        className: "min-w-44",
         cell: (request) => <RequestProgressBadge request={request} />,
       },
       {

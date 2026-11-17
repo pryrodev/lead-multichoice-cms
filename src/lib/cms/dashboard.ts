@@ -16,7 +16,7 @@ export interface CmsContentItem {
 const contentSections = [
   { id: "home", slug: "home", title: "Homepage", description: "Page sections, text, and hero image", href: "/admin/content/home" },
   { id: "site-copy", slug: "site-copy", title: "Website copy", description: "Shared page text and translations", href: "/admin/content/copy" },
-  { id: "site-visuals", slug: "site-visuals", title: "Website images", description: "Hero and parallax backgrounds", href: "/admin/content/visuals" },
+  { id: "site-visuals", slug: "site-visuals", title: "Website media", description: "Hero videos and page background images", href: "/admin/content/visuals" },
   { id: "procurement-resources", slug: "procurement-resources", title: "Procurement resources", description: "External procurement and tender links", href: "/admin/content/resources" },
 ] as const;
 

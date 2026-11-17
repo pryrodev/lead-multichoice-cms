@@ -1,16 +1,19 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
-import { Eye, Images, Save, Send } from "lucide-react";
+import { Eye, Images, Save, Send, Video } from "lucide-react";
 import { toast } from "sonner";
-import { SITE_VISUAL_FIELDS, type SiteVisualKey, type SiteVisuals } from "@/lib/cms/site-visuals";
+import { SITE_VIDEO_FIELDS, SITE_VISUAL_FIELDS, type SiteVideoKey, type SiteVisualKey, type SiteVisuals } from "@/lib/cms/site-visuals";
 import { useMediaAssets, usePublishSiteVisuals, useSaveSiteVisualsDraft, useSiteVisualsDraft } from "@/lib/api/hooks";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { ReusableTable, type DataTableColumn } from "@/components/data-table/reusable-table";
 
 type VisualField = (typeof SITE_VISUAL_FIELDS)[number];
@@ -27,9 +30,9 @@ export function SiteVisualsEditor() {
   const save = async () => {
     try {
       await saveDraft.mutateAsync(content);
-      toast.success("Website image draft saved");
+      toast.success("Website media draft saved");
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : "Could not save website images");
+      toast.error(error instanceof Error ? error.message : "Could not save website media");
     }
   };
 
@@ -37,14 +40,17 @@ export function SiteVisualsEditor() {
     try {
       if (isDirty || !saved.hasDraft) await saveDraft.mutateAsync(content);
       await publishVisuals.mutateAsync();
-      toast.success("Website images published");
+      toast.success("Website media published");
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : "Could not publish website images");
+      toast.error(error instanceof Error ? error.message : "Could not publish website media");
     }
   };
 
   const updateImage = (key: SiteVisualKey, image: string) => {
     setContent((current) => ({ ...current, [key]: image }));
+  };
+  const updateVideo = (key: SiteVideoKey, source: string) => {
+    setContent((current) => ({ ...current, [key]: source }));
   };
 
   const columns: DataTableColumn<VisualField>[] = [
@@ -53,8 +59,8 @@ export function SiteVisualsEditor() {
     { id: "image", header: "Choose image", className: "min-w-64", cell: (field) => <Select value={content[field.key]} onValueChange={(image) => updateImage(field.key, image)}>
       <SelectTrigger aria-label={`Choose image for ${field.label}`}><SelectValue placeholder="Choose an image" /></SelectTrigger>
       <SelectContent>
-        <SelectItem value={field.fallback}>Use default image</SelectItem>
-        {media.map((asset) => <SelectItem key={asset.id} value={asset.secureUrl}>{asset.altText || asset.publicId}</SelectItem>)}
+        <SelectItem value={field.fallback}>Restore original image</SelectItem>
+        {media.filter((asset) => asset.secureUrl !== field.fallback).map((asset) => <SelectItem key={asset.id} value={asset.secureUrl}>{asset.altText || asset.publicId}</SelectItem>)}
       </SelectContent>
     </Select> },
   ];
@@ -64,8 +70,8 @@ export function SiteVisualsEditor() {
       <Card>
         <CardHeader className="flex flex-row flex-wrap items-center justify-between gap-4">
           <div>
-            <CardTitle>Website images</CardTitle>
-            <CardDescription className="mt-1">Choose the fixed background and hero images used across public pages. Drafts stay private until published.</CardDescription>
+          <CardTitle>Website media</CardTitle>
+          <CardDescription className="mt-1">Manage hero videos and the images used across public pages. Drafts stay private until published.</CardDescription>
           </div>
           <div className="flex flex-wrap gap-2">
             <Button variant="outline" onClick={() => window.open("/", "_blank", "noopener,noreferrer")}><Eye data-icon="inline-start" />Preview site</Button>
@@ -80,9 +86,50 @@ export function SiteVisualsEditor() {
         </CardContent>
       </Card>
 
-      <div className="flex items-center gap-2 text-sm text-muted-foreground">
-        <Images className="size-4" /> Upload files in the Media Library, then assign them to the site sections below.
-      </div>
+      <Card className="rounded-md shadow-none">
+        <CardHeader>
+          <CardTitle className="text-base">Hero background videos</CardTitle>
+          <CardDescription>Paste a direct MP4, WebM, or Ogg URL hosted on Cloudinary or another media host. Clear it to show only the hero image.</CardDescription>
+        </CardHeader>
+        <CardContent className="grid gap-5 md:grid-cols-2">
+          {SITE_VIDEO_FIELDS.map((field) => (
+            <div key={field.key} className="flex min-w-0 flex-col gap-2">
+              <Label htmlFor={field.key}>{field.label}</Label>
+              <div className="flex min-w-0 gap-2">
+                <Input
+                  id={field.key}
+                  value={content[field.key]}
+                  onChange={(event) => updateVideo(field.key, event.target.value)}
+                  placeholder="https://…/background-video.mp4"
+                  maxLength={1200}
+                  autoComplete="url"
+                  className="min-w-0 shadow-none"
+                />
+                <Button type="button" variant="outline" onClick={() => updateVideo(field.key, field.fallback)}>Default</Button>
+              </div>
+              <p className="truncate text-xs text-muted-foreground" title={content[field.key]}>
+                {content[field.key] || "Video disabled"}
+              </p>
+              {content[field.key] && (
+                <video
+                  src={content[field.key]}
+                  controls
+                  muted
+                  playsInline
+                  preload="none"
+                  className="mt-1 aspect-video w-full max-w-md bg-muted object-cover"
+                />
+              )}
+            </div>
+          ))}
+          <p className="flex items-center gap-2 text-sm text-muted-foreground md:col-span-2">
+            <Video className="size-4 shrink-0" /> Hero videos require a direct file URL; YouTube watch links are not supported. The homepage and procurement hero images remain visible if video playback is unavailable.
+          </p>
+          <p className="flex items-center gap-2 text-sm text-muted-foreground md:col-span-2">
+            <Images className="size-4 shrink-0" /> Upload still images in the <Link href="/admin/content/media" className="font-medium text-primary underline-offset-4 hover:underline">Media Library</Link>, then choose them in the page tabs below.
+          </p>
+        </CardContent>
+      </Card>
 
       <Tabs defaultValue={pages[0] ?? "home"}>
         <TabsList className="h-auto max-w-full justify-start overflow-x-auto">

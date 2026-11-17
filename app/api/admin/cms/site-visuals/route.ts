@@ -3,14 +3,21 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { requireUser } from "@/lib/auth/api";
 import { getDb } from "@/lib/db";
-import { SITE_VISUAL_FIELDS, defaultSiteVisuals, mergeSiteVisuals } from "@/lib/cms/site-visuals";
+import { SITE_VIDEO_FIELDS, SITE_VISUAL_FIELDS, defaultSiteVisuals, mergeSiteVisuals } from "@/lib/cms/site-visuals";
 
 const imageSchema = z.string().min(1).max(1200).refine(
   (value) => value.startsWith("/") || /^https:\/\//i.test(value),
   "Choose a local image or HTTPS media URL.",
 );
+const videoSchema = z.string().max(1200).refine(
+  (value) => !value || value.startsWith("/") || (/^https:\/\//i.test(value) && /\.(mp4|webm|ogv)(?:$|[?#])/i.test(value)),
+  "Use a direct MP4, WebM, or Ogg video URL, or leave it empty to disable the video.",
+);
 const contentSchema = z.object(Object.fromEntries(
-  SITE_VISUAL_FIELDS.map(({ key }) => [key, imageSchema]),
+  [
+    ...SITE_VISUAL_FIELDS.map(({ key }) => [key, imageSchema]),
+    ...SITE_VIDEO_FIELDS.map(({ key }) => [key, videoSchema]),
+  ],
 ) as z.ZodRawShape);
 
 export async function GET() {
@@ -40,7 +47,7 @@ export async function PUT(request: Request) {
   if ("response" in auth) return auth.response;
   const parsed = contentSchema.safeParse(await request.json().catch(() => null));
   if (!parsed.success) {
-    return NextResponse.json({ error: "Choose a valid image for each website background." }, { status: 400 });
+    return NextResponse.json({ error: "Check the image and video sources and try again." }, { status: 400 });
   }
   try {
     await getDb().sitePage.upsert({
