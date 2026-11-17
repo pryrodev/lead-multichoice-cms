@@ -150,14 +150,14 @@ function ProgressTimeline({ result }: { result: PublicRequestTracking }) {
           return (
             <li key={status.id} className="relative flex gap-4 pb-7 last:pb-0">
               {index < statuses.length - 1 && <span className={`absolute bottom-0 left-[13px] top-7 w-px ${isComplete ? "bg-brand-primary/60" : "bg-border"}`} aria-hidden="true" />}
-              <span className={`relative z-10 flex size-7 shrink-0 items-center justify-center rounded-full border ${isComplete ? "border-brand-primary/30 bg-surface text-brand-primary" : isCurrent ? "border-brand-primary bg-brand-primary text-brand-white ring-4 ring-brand-primary/15" : "border-steel/25 bg-brand-white text-steel/60"}`}>
+              <span className={`relative z-10 flex size-7 shrink-0 items-center justify-center rounded-full border ${isComplete ? "border-brand-primary/30 bg-surface text-brand-primary" : isCurrent ? "border-brand-gold bg-brand-gold text-charcoal ring-4 ring-brand-gold/20" : "border-steel/25 bg-brand-white text-steel/60"}`}>
                 {isComplete ? <Check className="size-4" /> : isCurrent ? <span className="size-2 rounded-full bg-brand-white" /> : <Circle className="size-2.5" />}
               </span>
               <div className="pt-0.5">
                 <p className={`text-sm ${isCurrent ? "font-bold text-charcoal" : isUpcoming ? "text-steel/70" : "font-medium text-charcoal"}`}>{status.name}</p>
                 <p className="mt-1 text-sm text-steel">{status.description || "Progress updates for this status will appear here."}</p>
                 {statusUpdate && <time className="mt-1.5 block text-xs text-steel/70">{new Date(statusUpdate.createdAt).toLocaleString()}</time>}
-                {isCurrent && <Badge className="mt-2 bg-brand-primary text-brand-white hover:bg-brand-primary/90">{completed ? "Completed" : "Current status"}</Badge>}
+                {isCurrent && <Badge className={`mt-2 ${completed ? "bg-brand-primary text-brand-white hover:bg-brand-primary/90" : "bg-brand-gold text-charcoal hover:bg-brand-gold"}`}>{completed ? "Completed" : "Current status"}</Badge>}
               </div>
             </li>
           );

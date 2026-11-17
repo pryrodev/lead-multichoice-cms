@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Skeleton } from "@/components/ui/skeleton";
+import { ClientRequestConversationSheet } from "@/components/client-portal/client-request-conversation-sheet";
 import { useClientOverview } from "@/features/client-portal/hooks";
 import type { ClientRequest, ClientRequestStatus, EngagementStage } from "@/features/client-portal/types";
 
@@ -145,7 +146,7 @@ function FeaturedRequest({ request, milestones }: { request: ClientRequest; mile
             <span className="flex size-9 shrink-0 items-center justify-center rounded-lg border border-brand-primary/20 bg-surface text-brand-primary"><Waypoints className="size-4" /></span>
             <div className="min-w-0"><p className="text-[11px] font-semibold uppercase tracking-wider text-steel">Tracking ID</p><p className="truncate font-mono text-sm font-bold text-charcoal">{request.reference}</p></div>
           </div>
-          <Badge variant="outline" className={completed ? "border-emerald-300 bg-emerald-50 text-emerald-800 font-semibold" : "border-brand-primary/30 bg-surface text-brand-primary font-semibold"}>{currentStatus}</Badge>
+          <Badge variant="outline" className={completed ? "border-brand-gold/50 bg-brand-gold/15 text-charcoal font-semibold" : "border-brand-primary/30 bg-surface text-brand-primary font-semibold"}>{currentStatus}</Badge>
         </div>
       </div>
       <div className="px-5 py-5 sm:px-6 sm:py-6">
@@ -161,7 +162,7 @@ function FeaturedRequest({ request, milestones }: { request: ClientRequest; mile
             {stages.map((item, index) => {
               const done = completed || index < stageIndex;
               const current = !completed && index === stageIndex;
-              return <li key={item} className={`text-[10px] leading-tight sm:text-xs ${current ? "font-bold text-brand-primary" : done ? "font-medium text-charcoal" : "text-steel/60"}`}><span className={`mb-1 block h-1 rounded-full ${done || current ? "bg-brand-primary" : "bg-border"}`} />{item === "introductions" ? "Introductions" : item === "procurement" ? "Procurement" : item === "delivery" ? "Delivery" : item === "bidding" ? "Bidding" : "Review"}</li>;
+              return <li key={item} className={`text-[10px] leading-tight sm:text-xs ${current ? "font-bold text-charcoal" : done ? "font-medium text-charcoal" : "text-steel/60"}`}><span className={`mb-1 block h-1 rounded-full ${current ? "bg-brand-gold" : done ? "bg-brand-primary" : "bg-border"}`} />{item === "introductions" ? "Introductions" : item === "procurement" ? "Procurement" : item === "delivery" ? "Delivery" : item === "bidding" ? "Bidding" : "Review"}</li>;
             })}
           </ol>}
         </div>
@@ -176,10 +177,13 @@ function FeaturedRequest({ request, milestones }: { request: ClientRequest; mile
         </div>}
 
         <div className="mt-6 flex flex-wrap items-center justify-between gap-3 border-t border-border pt-4">
-          <p className="text-xs text-steel">Last request activity is shared in your updates.</p>
-          <Button asChild variant="outline" className="border-brand-primary/30 text-brand-primary hover:bg-surface">
-            <Link href={`/track/${encodeURIComponent(request.reference)}`}>Open request <ArrowUpRight data-icon="inline-end" /></Link>
-          </Button>
+          <p className="text-xs text-steel">Follow progress or message our team about this request.</p>
+          <div className="flex flex-wrap gap-2">
+            <Button asChild variant="outline" className="border-brand-primary/30 text-brand-primary hover:bg-surface">
+              <Link href={`/track/${encodeURIComponent(request.reference)}`}>View progress <ArrowUpRight data-icon="inline-end" /></Link>
+            </Button>
+            <ClientRequestConversationSheet reference={request.reference} title={request.title} />
+          </div>
         </div>
       </div>
     </article>
@@ -190,16 +194,19 @@ function RequestLine({ request }: { request: ClientRequest }) {
   const status = request.engagementStatus === "completed" ? "Completed" : request.engagementStatus === "on_hold" ? "On hold" : requestStatus[request.status];
   const reference = request.reference;
   return (
-    <Link href={`/track/${encodeURIComponent(reference)}`} className="group flex flex-wrap items-center justify-between gap-3 py-4 transition-colors hover:bg-surface/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary">
-      <div className="flex min-w-0 items-start gap-3">
-        <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-brand-primary" />
-        <div className="min-w-0"><p className="font-semibold leading-snug text-charcoal group-hover:text-brand-primary">{request.title}</p><p className="mt-1 text-xs text-steel">{reference} <span className="px-1 text-steel/30">·</span> {request.category} <span className="px-1 text-steel/30">·</span> {formatDate(request.createdAt)}</p></div>
-      </div>
-      <div className="flex items-center gap-2 pl-5">
-        <Badge variant="outline" className="border-brand-primary/20 bg-surface/60 text-charcoal">{status}</Badge>
-        <ArrowRight className="size-4 text-steel transition-transform group-hover:translate-x-1 group-hover:text-brand-primary" />
-      </div>
-    </Link>
+    <div className="flex flex-wrap items-center justify-between gap-3 py-4">
+      <Link href={`/track/${encodeURIComponent(reference)}`} className="group flex min-w-0 flex-1 flex-wrap items-center justify-between gap-3 rounded-md transition-colors hover:bg-surface/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary">
+        <div className="flex min-w-0 items-start gap-3">
+          <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-brand-primary" />
+          <div className="min-w-0"><p className="font-semibold leading-snug text-charcoal group-hover:text-brand-primary">{request.title}</p><p className="mt-1 text-xs text-steel">{reference} <span className="px-1 text-steel/30">·</span> {request.category} <span className="px-1 text-steel/30">·</span> {formatDate(request.createdAt)}</p></div>
+        </div>
+        <div className="flex items-center gap-2 pl-5">
+          <Badge variant="outline" className="border-brand-primary/20 bg-surface/60 text-charcoal">{status}</Badge>
+          <ArrowRight className="size-4 text-steel transition-transform group-hover:translate-x-1 group-hover:text-brand-primary" />
+        </div>
+      </Link>
+      <ClientRequestConversationSheet compact reference={reference} title={request.title} />
+    </div>
   );
 }
 

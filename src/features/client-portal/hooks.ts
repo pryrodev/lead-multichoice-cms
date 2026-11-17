@@ -45,6 +45,26 @@ export const useTrackedClientRequest = (reference: string) => useQuery({
   retry: false,
 });
 
+export const useRequestMessages = (scope: "client" | "admin", id: string) => useQuery({
+  queryKey: portalKeys.conversation(scope, id),
+  queryFn: () => api.getRequestMessages(scope, id),
+  enabled: Boolean(id),
+  refetchInterval: 30_000,
+  refetchOnWindowFocus: true,
+  retry: false,
+});
+
+export function useSendRequestMessage(scope: "client" | "admin", id: string) {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (message: string) => api.sendRequestMessage(scope, id, message),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: portalKeys.conversation(scope, id) });
+      if (scope === "admin") await queryClient.invalidateQueries({ queryKey: portalKeys.adminRequests });
+    },
+  });
+}
+
 export function useCreateClientRequest() {
   const queryClient = useQueryClient();
   return useMutation({

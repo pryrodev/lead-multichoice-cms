@@ -1,4 +1,4 @@
-import type { AdminClientRequest, ClientOverview, CreateAdminClientRequest, NewClientRequest, PortalUser, PublicRequestTracking } from "./types";
+import type { AdminClientRequest, ClientOverview, CreateAdminClientRequest, NewClientRequest, PortalUser, PublicRequestTracking, RequestMessage } from "./types";
 
 async function requestJson<T>(url: string, init?: RequestInit): Promise<T> {
   const response = await fetch(url, {
@@ -20,6 +20,17 @@ export const createClientRequest = (input: NewClientRequest) =>
   });
 export const getTrackedClientRequest = (reference: string) =>
   requestJson<PublicRequestTracking>(`/api/public/track?reference=${encodeURIComponent(reference)}`);
+export const getRequestMessages = (scope: "client" | "admin", id: string) =>
+  requestJson<{ messages: RequestMessage[] }>(scope === "admin"
+    ? `/api/admin/requests/${encodeURIComponent(id)}/messages`
+    : `/api/client/requests/${encodeURIComponent(id)}/messages`);
+export const sendRequestMessage = (scope: "client" | "admin", id: string, message: string) =>
+  requestJson<{ message: RequestMessage }>(scope === "admin"
+    ? `/api/admin/requests/${encodeURIComponent(id)}/messages`
+    : `/api/client/requests/${encodeURIComponent(id)}/messages`, {
+      method: "POST",
+      body: JSON.stringify({ message }),
+    });
 export const login = (input: { email: string; password: string }) =>
   requestJson<{ user: PortalUser }>("/api/auth/login", { method: "POST", body: JSON.stringify(input) });
 export const register = (input: { name: string; email: string; organization: string; phone: string; role: "buyer" | "supplier"; password: string }) =>

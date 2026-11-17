@@ -77,6 +77,10 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  --color-invert-foreground: var(--invert-foreground);
+  --color-invert: var(--invert);
+  --color-info-foreground: var(--info-foreground);
+  --color-info: var(--info);
 }
 
 :root {
@@ -128,6 +132,10 @@
   --sidebar-accent-foreground: oklch(0.32 0.06 245);
   --sidebar-border: oklch(0.92 0.01 245);
   --sidebar-ring: oklch(0.58 0.09 240);
+  --info: var(--color-violet-500);
+  --info-foreground: var(--color-violet-900);
+  --invert: var(--color-zinc-900);
+  --invert-foreground: var(--color-zinc-50);
 }
 
 .dark {
@@ -167,6 +175,10 @@
   --sidebar-accent-foreground: oklch(0.984 0.003 247.858);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.551 0.027 264.364);
+  --info: var(--color-violet-500);
+  --info-foreground: var(--color-violet-600);
+  --invert: var(--color-zinc-700);
+  --invert-foreground: var(--color-zinc-50);
 }
 
 @layer base {

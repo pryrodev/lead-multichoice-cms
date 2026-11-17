@@ -40,6 +40,14 @@ export interface EngagementUpdate {
   authorName: string | null;
 }
 
+export interface RequestMessage {
+  id: string;
+  senderType: "client" | "team";
+  senderName: string;
+  message: string;
+  createdAt: string;
+}
+
 export interface ClientMilestone {
   id: string;
   engagementId: string;

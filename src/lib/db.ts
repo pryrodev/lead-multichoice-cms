@@ -1,5 +1,4 @@
 import "server-only";
-import mariadb from "mariadb";
 import { PrismaMariaDb } from "@prisma/adapter-mariadb";
 import { PrismaClient } from "@/generated/prisma/client";
 
@@ -11,10 +10,12 @@ declare global {
 function createPrismaClient() {
   const { MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DATABASE } = process.env;
   if (!MYSQL_HOST || !MYSQL_USER || !MYSQL_DATABASE) {
-    throw new Error("MySQL is not configured. Set MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD and MYSQL_DATABASE.");
+    throw new Error(
+      "MySQL is not configured. Set MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD and MYSQL_DATABASE.",
+    );
   }
 
-  const pool = mariadb.createPool({
+  const adapter = new PrismaMariaDb({
     host: MYSQL_HOST,
     port: Number(process.env["MYSQL_PORT"] ?? 3306),
     user: MYSQL_USER,
@@ -24,13 +25,29 @@ function createPrismaClient() {
     connectTimeout: Number(process.env["MYSQL_CONNECT_TIMEOUT"] ?? 10000),
     acquireTimeout: Number(process.env["MYSQL_ACQUIRE_TIMEOUT"] ?? 10000),
   });
-  const adapter = new PrismaMariaDb(pool, { database: MYSQL_DATABASE, disposeExternalPool: true });
   return new PrismaClient({ adapter });
 }
 
 export function getDb() {
-  if (globalThis.leadMultiChoicePrisma) return globalThis.leadMultiChoicePrisma;
+  const cached = globalThis.leadMultiChoicePrisma;
+  if (cached && typeof cached.requestMessage !== "undefined") return cached;
+
+  // Next.js can retain this global Prisma instance through HMR after `prisma generate`.
+  // Recreate it when the generated schema adds a model that the cached client lacks.
+  if (cached) {
+    console.warn("Discarding stale Prisma client after schema generation.");
+    globalThis.leadMultiChoicePrisma = undefined;
+    void cached.$disconnect().catch((error) => {
+      console.error("Could not close stale Prisma client", error);
+    });
+  }
+
   const prisma = createPrismaClient();
+  if (typeof prisma.requestMessage === "undefined") {
+    throw new Error(
+      "The generated Prisma client is missing the requestMessage model. Run prisma generate and restart Next.js.",
+    );
+  }
   globalThis.leadMultiChoicePrisma = prisma;
   return prisma;
 }

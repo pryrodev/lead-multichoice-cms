@@ -86,6 +86,13 @@ enum UpdateVisibility {
   internal
 }
 
+enum RequestMessageSender {
+  client
+  team
+
+  @@map("request_message_sender")
+}
+
 enum EngagementUpdateType {
   progress
   milestone
@@ -132,6 +139,7 @@ model User {
   sessions          AuthSession[]
   opportunities     Opportunity[]
   clientRequests     ClientRequest[]
+  requestMessages    RequestMessage[]
   engagements       Engagement[] @relation("EngagementClient")
   authoredUpdates   EngagementUpdate[]
   tenders           Tender[]
@@ -210,6 +218,7 @@ model ClientRequest {
   updatedAt   DateTime           @default(now()) @updatedAt @map("updated_at") @db.DateTime(0)
   submitter   User?              @relation(fields: [submittedBy], references: [id], onDelete: SetNull, map: "fk_client_requests_user")
   engagement  Engagement?
+  messages    RequestMessage[]
 
   @@index([submittedBy, createdAt], map: "idx_client_requests_user_created")
   @@index([status, createdAt], map: "idx_client_requests_status_created")
@@ -274,6 +283,22 @@ model EngagementUpdate {
   @@index([engagementId, visibility, createdAt], map: "idx_updates_engagement_visibility_date")
   @@index([trackingStatusId], map: "idx_updates_tracking_status")
   @@map("engagement_updates")
+}
+
+model RequestMessage {
+  id           String               @id @db.Char(32)
+  requestId    String               @map("request_id") @db.Char(32)
+  senderUserId String?              @map("sender_user_id") @db.Char(32)
+  senderType   RequestMessageSender @map("sender_type")
+  senderName   String               @map("sender_name") @db.VarChar(160)
+  message      String               @db.Text
+  createdAt    DateTime             @default(now()) @map("created_at") @db.DateTime(0)
+  request      ClientRequest        @relation(fields: [requestId], references: [id], onDelete: Cascade, map: "fk_request_messages_request")
+  sender       User?                @relation(fields: [senderUserId], references: [id], onDelete: SetNull, map: "fk_request_messages_sender")
+
+  @@index([requestId, createdAt], map: "idx_request_messages_request_created")
+  @@index([senderUserId], map: "idx_request_messages_sender")
+  @@map("request_messages")
 }
 
 model TrackingStatus {
