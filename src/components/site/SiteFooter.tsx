@@ -50,7 +50,7 @@ export function SiteFooter() {
           <Logo inverted className="rounded-md bg-background px-3 py-2" />
           <p className="mt-6 max-w-sm text-[15px]">
             {tc(
-              "Rwanda-based trade facilitation, business representation, procurement coordination and supply chain support, connecting international business to Rwanda and the wider East African region.",
+              "Rwanda-based trade facilitation, business representation, procurement coordination and supply chain support, connecting international business to Rwanda and beyond.",
             )}
           </p>
           <ul className="mt-6 space-y-3 text-[15px]">

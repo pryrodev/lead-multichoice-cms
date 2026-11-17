@@ -13,6 +13,7 @@ import { RainbowButton } from "@/components/ui/rainbow-button";
 import { LanguageSelect } from "./LanguageSelect";
 import { useI18n } from "@/i18n/I18nProvider";
 import type { MessageKey } from "@/i18n/messages";
+import { defaultHomePageContent, HOME_SECTION_NAV_ITEMS, type HomePageContent } from "@/lib/cms/homepage";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -42,14 +43,19 @@ const navKeys: Record<(typeof nav)[number]["to"], MessageKey> = {
 };
 const getNavItem = (to: (typeof nav)[number]["to"]) => nav.find((item) => item.to === to)!;
 
-export function SiteHeader() {
+export function SiteHeader({ homePageContent = defaultHomePageContent }: { homePageContent?: HomePageContent } = {}) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const hoverCloseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const pathname = usePathname();
-  const { t } = useI18n();
+  const { t, tc } = useI18n();
   const reduceMotion = useReducedMotion();
+  const homeMenuItems = HOME_SECTION_NAV_ITEMS.filter((section) =>
+    homePageContent.homeMenuEnabledIds.includes(section.id),
+  );
+  const homeMenuLabel = (id: (typeof HOME_SECTION_NAV_ITEMS)[number]["id"]) =>
+    tc(homePageContent.homeMenuLabels[id] || HOME_SECTION_NAV_ITEMS.find((section) => section.id === id)?.label || id);
 
   const cancelHoverClose = () => {
     if (hoverCloseTimer.current !== null) {
@@ -146,6 +152,53 @@ export function SiteHeader() {
               {headerNavigation.map((item) => {
                 if (item.type === "link") {
                   const active = item.to === "/" ? pathname === "/" : pathname.startsWith(item.to);
+                  if (item.to === "/") {
+                    return (
+                      <li
+                        key={item.to}
+                        onPointerEnter={(event) => event.pointerType === "mouse" && openDropdownOnHover("home-sections")}
+                        onPointerLeave={(event) => event.pointerType === "mouse" && closeDropdownAfterHover("home-sections")}
+                      >
+                        <DropdownMenu
+                          modal={false}
+                          open={openDropdown === "home-sections"}
+                          onOpenChange={(nextOpen) => {
+                            cancelHoverClose();
+                            setOpenDropdown(nextOpen ? "home-sections" : null);
+                          }}
+                        >
+                          <DropdownMenuTrigger asChild>
+                            <button
+                              type="button"
+                              aria-current={active ? "page" : undefined}
+                              className={`relative inline-flex h-10 items-center gap-1 whitespace-nowrap rounded-md px-2 text-[14px] font-medium text-charcoal/80 transition-colors hover:bg-surface hover:text-brand-primary focus-visible:outline-none data-[state=open]:bg-surface data-[state=open]:text-brand-primary [&[data-state=open]>svg]:rotate-180 ${active ? "text-brand-primary" : ""}`}
+                            >
+                              {t(navKeys[item.to])}
+                              <ChevronDown className="size-3.5 transition-transform" aria-hidden="true" />
+                              {active && <motion.span layoutId="site-nav-active-indicator" aria-hidden="true" className="pointer-events-none absolute bottom-0 left-2 right-2 h-0.5 rounded-full bg-brand-primary" />}
+                            </button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent
+                            align="start"
+                            side="bottom"
+                            sideOffset={8}
+                            collisionPadding={12}
+                            onPointerEnter={cancelHoverClose}
+                            onPointerLeave={() => closeDropdownAfterHover("home-sections")}
+                            className="w-64 max-w-[calc(100vw-1.5rem)]"
+                          >
+                            {homeMenuItems.map((section) => (
+                              <DropdownMenuItem key={section.id} asChild>
+                                <Link href={`/#${section.anchor}`} className="cursor-pointer px-3 py-2.5 text-charcoal">
+                                  {homeMenuLabel(section.id)}
+                                </Link>
+                              </DropdownMenuItem>
+                            ))}
+                          </DropdownMenuContent>
+                        </DropdownMenu>
+                      </li>
+                    );
+                  }
                   return (
                     <li key={item.to} className="relative">
                       <Link href={item.to} aria-current={active ? "page" : undefined} className={`site-nav-link block whitespace-nowrap px-2 py-3 text-[14px] font-medium text-charcoal/80 ${active ? "text-brand-primary" : ""}`}>
@@ -246,6 +299,8 @@ export function SiteHeader() {
               pathname={pathname}
               signedIn={false}
               t={t}
+              homeMenuItems={homeMenuItems}
+              homeMenuLabel={homeMenuLabel}
             />
           )}
         </AnimatePresence>
@@ -265,11 +320,15 @@ function MobileNavigation({
   pathname,
   signedIn,
   t,
+  homeMenuItems,
+  homeMenuLabel,
 }: {
   onClose: () => void;
   pathname: string;
   signedIn: boolean;
   t: (key: MessageKey) => string;
+  homeMenuItems: (typeof HOME_SECTION_NAV_ITEMS)[number][];
+  homeMenuLabel: (id: (typeof HOME_SECTION_NAV_ITEMS)[number]["id"]) => string;
 }) {
   return (
     <motion.div
@@ -298,6 +357,40 @@ function MobileNavigation({
           {headerNavigation.map((item, i) => {
             if (item.type === "link") {
               const active = item.to === "/" ? pathname === "/" : pathname.startsWith(item.to);
+              if (item.to === "/") {
+                return (
+                  <motion.div
+                    key={item.to}
+                    initial={{ opacity: 0, y: 18 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.05 + i * 0.04, duration: 0.35 }}
+                  >
+                    <AccordionItem value="home-sections" className="border-background/15">
+                      <AccordionTrigger className={`py-4 font-display text-2xl font-semibold hover:no-underline [&>svg]:text-background/60 ${active ? "text-brass-light" : "text-background"}`}>
+                        <span className="flex items-baseline gap-4">
+                          <span className="text-xs tabular-nums text-background/50">0{i + 1}</span>
+                          {t(navKeys[item.to])}
+                        </span>
+                      </AccordionTrigger>
+                      <AccordionContent className="pb-3 pl-9">
+                        <ul className="space-y-1">
+                          {homeMenuItems.map((section) => (
+                            <li key={section.id}>
+                              <Link
+                                href={`/#${section.anchor}`}
+                                onClick={onClose}
+                                className="block rounded py-2 text-base text-background/80 transition-colors hover:text-brass-light"
+                              >
+                                {homeMenuLabel(section.id)}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      </AccordionContent>
+                    </AccordionItem>
+                  </motion.div>
+                );
+              }
               return (
                 <motion.div
                   key={item.to}

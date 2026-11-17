@@ -103,11 +103,11 @@ export const leader = {
   title: "Managing Director",
   summary: [
     "Ernest Mulisa is a seasoned business leader with over 18 years of experience in international trade facilitation, strategic sourcing, global supply chain optimisation, enterprise digitalisation, and business development.",
-    "As Managing Director of Lead Multichoice Rwanda since 2015, he leads efforts to connect international manufacturers, suppliers, investors, and service providers with business opportunities across Rwanda and the wider East African region.",
+    "As Managing Director of Lead Multichoice Rwanda since 2015, he leads efforts to connect international manufacturers, suppliers, investors, and service providers with business opportunities across Rwanda and beyond.",
   ],
   bio: [
     "Ernest Mulisa is a seasoned business leader with over 18 years of experience in international trade facilitation, strategic sourcing, global supply chain optimisation, enterprise digitalisation, and business development.",
-    "As Managing Director of Lead Multi-Choice Rwanda since 2015, he provides strategic leadership in connecting international manufacturers, suppliers, investors, and service providers with viable business opportunities across Rwanda and the wider East African region.",
+    "As Managing Director of Lead Multi-Choice Rwanda since 2015, he provides strategic leadership in connecting international manufacturers, suppliers, investors, and service providers with viable business opportunities across Rwanda and beyond.",
     "Drawing on extensive global supply chain experience and market intelligence gained through professional engagements with Heineken BV, Ericsson AB, African Towers, the International Trade Centre (ITC – United Nations), and Cenfri, Ernest brings strong expertise in strategic procurement, international business representation, market entry strategy, enterprise digitalisation, stakeholder relationship management, and operational excellence.",
     "He holds a Master’s degree in Procurement and Supply Chain Management (MSc), is an ICC Incoterms® 2020 Certified Trainer, and is a Chartered Member of the Chartered Institute of Logistics and Transport (CILT) and a Member of the Chartered Institute of Procurement & Supply (CIPS).",
     "Ernest is committed to bridging global manufacturers and service providers with local and regional opportunities through trusted partnerships, competitive sourcing, strategic market intelligence, innovative business solutions, and sustainable value creation.",

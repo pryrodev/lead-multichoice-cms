@@ -3,15 +3,35 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { requireUser } from "@/lib/auth/api";
 import { getDb } from "@/lib/db";
-import { HOME_CMS_FIELDS, defaultHomePageContent, mergeHomePageContent, type HomePageContent } from "@/lib/cms/homepage";
+import { HOME_CMS_FIELDS, HOME_SECTION_NAV_ITEMS, defaultHomePageContent, mergeHomePageContent, type HomePageContent } from "@/lib/cms/homepage";
 import { cmsLanguages } from "@/i18n/messages";
 
 const translationsSchema = z.object(Object.fromEntries(cmsLanguages.map((language) => [language, z.record(z.string(), z.string().max(5000))])) as unknown as Record<(typeof cmsLanguages)[number], z.ZodTypeAny>);
-const contentSchema = z.object({ translations: translationsSchema, heroImageUrl: z.string().max(1200) }).superRefine((content, context) => {
-  for (const language of cmsLanguages) {
-    for (const field of HOME_CMS_FIELDS) {
-      if (!(field.text in content.translations[language])) context.addIssue({ code: "custom", path: ["translations", language, field.text], message: "A homepage field is missing." });
+const homeMenuLabelsSchema = z.record(z.string(), z.string().trim().min(1).max(80));
+const contentSchema = z.object({
+  translations: translationsSchema,
+  homeMenuLabels: homeMenuLabelsSchema,
+  heroImageUrl: z.string().max(1200),
+  homeMenuEnabledIds: z.array(z.string()).max(HOME_SECTION_NAV_ITEMS.length),
+}).superRefine((content, context) => {
+  if (content.homeMenuEnabledIds.length === 0) {
+    context.addIssue({ code: "custom", path: ["homeMenuEnabledIds"], message: "Keep at least one homepage section in the Home menu." });
+  }
+  const validMenuIds = new Set(HOME_SECTION_NAV_ITEMS.map((item) => item.id));
+  content.homeMenuEnabledIds.forEach((id, index) => {
+    if (!validMenuIds.has(id as (typeof HOME_SECTION_NAV_ITEMS)[number]["id"])) {
+      context.addIssue({ code: "custom", path: ["homeMenuEnabledIds", index], message: "Unknown homepage section." });
     }
+  });
+  for (const language of cmsLanguages) {
+    for (const text of [
+      ...HOME_CMS_FIELDS.map((field) => field.text),
+    ]) {
+      if (!(text in content.translations[language])) context.addIssue({ code: "custom", path: ["translations", language, text], message: "A homepage field is missing." });
+    }
+  }
+  for (const item of HOME_SECTION_NAV_ITEMS) {
+    if (!(item.id in content.homeMenuLabels)) context.addIssue({ code: "custom", path: ["homeMenuLabels", item.id], message: "A homepage menu label is missing." });
   }
 });
 

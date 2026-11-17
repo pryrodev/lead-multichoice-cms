@@ -194,12 +194,14 @@ export function PageHero({
 }
 
 export function CallToActionSection({
+  id,
   title = "Let's move your business into Rwanda.",
   text = "Manufacturer, Distributor — Let's connect for business in Rwanda and beyond.",
   brandGradient = false,
   photoBackground = "/site/hero-port.jpg",
   visualKey,
 }: {
+  id?: string;
   title?: string;
   text?: string;
   brandGradient?: boolean;
@@ -211,8 +213,9 @@ export function CallToActionSection({
   const ctaImage = visualKey ? visuals[visualKey] || photoBackground : photoBackground;
   return (
     <section
+      id={id}
       className={cn(
-        "relative overflow-hidden bg-brand-primary text-background",
+        "relative scroll-mt-28 overflow-hidden bg-brand-primary text-background",
         "photo-parallax isolate",
       )}
       style={

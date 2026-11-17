@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { Eye, ExternalLink, ImagePlus, Languages, Save, Send } from "lucide-react";
 import { toast } from "sonner";
-import { HOME_CMS_FIELDS, defaultHomePageContent, type HomePageContent } from "@/lib/cms/homepage";
+import { HOME_CMS_FIELDS, HOME_SECTION_NAV_ITEMS, defaultHomePageContent, type HomePageContent } from "@/lib/cms/homepage";
 import { cmsLanguageOptions, type CmsLanguage } from "@/i18n/messages";
 import { useAdminHomePage, useMediaAssets, usePublishHomePage, useSaveHomePageDraft } from "@/lib/api/hooks";
 import { Badge } from "@/components/ui/badge";
@@ -16,6 +16,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
+import { Checkbox } from "@/components/ui/checkbox";
 
 const PREVIEW_STORAGE_KEY = "lead-multichoice-homepage-preview";
 const languageFlags: Record<CmsLanguage, string> = { en: "🇬🇧", rw: "🇷🇼", fr: "🇫🇷", sw: "🇹🇿" };
@@ -27,7 +28,7 @@ export function HomepageEditor() {
   const publishPage = usePublishHomePage();
   const [content, setContent] = useState<HomePageContent>(saved.content);
   const isDirty = JSON.stringify(content) !== JSON.stringify(saved.content);
-  const sections = [...new Set(HOME_CMS_FIELDS.map((field) => field.section))];
+  const sections = [...new Set([...HOME_CMS_FIELDS.map((field) => field.section), "Home menu"])];
 
   const updateTranslation = (language: CmsLanguage, source: string, value: string) => {
     setContent((current) => ({
@@ -35,6 +36,24 @@ export function HomepageEditor() {
       translations: {
         ...current.translations,
         [language]: { ...current.translations[language], [source]: value },
+      },
+    }));
+  };
+
+  const toggleHomeMenuItem = (id: string, enabled: boolean) => {
+    setContent((current) => ({
+      ...current,
+      homeMenuEnabledIds: enabled
+        ? [...current.homeMenuEnabledIds, id]
+        : current.homeMenuEnabledIds.filter((itemId) => itemId !== id),
+    }));
+  };
+  const updateHomeMenuLabel = (id: (typeof HOME_SECTION_NAV_ITEMS)[number]["id"], value: string) => {
+    setContent((current) => ({
+      ...current,
+      homeMenuLabels: {
+        ...current.homeMenuLabels,
+        [id]: value,
       },
     }));
   };
@@ -109,12 +128,52 @@ export function HomepageEditor() {
       </TabsList>
       {sections.map((section) => <TabsContent key={section} value={section} className="mt-0">
         <Card className="rounded-md shadow-none">
-          <CardHeader><CardTitle>{section}</CardTitle><CardDescription>Edit the text visitors see in each language.</CardDescription></CardHeader>
-              <CardContent>
-            <Tabs defaultValue="en">
-              <TabsList className="mb-5">
-                {cmsLanguageOptions.map(({ code, name }) => <TabsTrigger key={code} value={code}>{languageFlags[code]} {name}</TabsTrigger>)}
-              </TabsList>
+          <CardHeader>
+            <CardTitle>{section}</CardTitle>
+            <CardDescription>
+              {section === "Home menu"
+                ? "Choose visible homepage sections and edit their menu labels."
+                : "Edit the text visitors see in each language."}
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            {section === "Home menu" ? (
+              <div>
+                <div className="divide-y rounded-md border">
+                  {HOME_SECTION_NAV_ITEMS.map((item) => {
+                    const fieldId = `home-menu-${item.id}`;
+                    return (
+                      <div key={item.id} className="grid gap-3 p-3 sm:grid-cols-[minmax(0,1fr)_minmax(12rem,1.5fr)] sm:items-center">
+                        <div className="flex items-center gap-3">
+                          <Checkbox
+                            id={`${fieldId}-enabled`}
+                            checked={content.homeMenuEnabledIds.includes(item.id)}
+                            disabled={content.homeMenuEnabledIds.length === 1 && content.homeMenuEnabledIds.includes(item.id)}
+                            onCheckedChange={(checked) => toggleHomeMenuItem(item.id, checked === true)}
+                          />
+                          <Label htmlFor={`${fieldId}-enabled`} className="font-medium">
+                            {item.label}
+                          </Label>
+                        </div>
+                        <Input
+                          id={fieldId}
+                          aria-label={`${item.label} menu label`}
+                          value={content.homeMenuLabels[item.id] ?? item.label}
+                          onChange={(event) => updateHomeMenuLabel(item.id, event.target.value)}
+                          maxLength={80}
+                          placeholder={item.label}
+                          disabled={!content.homeMenuEnabledIds.includes(item.id)}
+                        />
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            ) : (
+              <Tabs defaultValue="en">
+                <TabsList className="mb-5">
+                  {cmsLanguageOptions.map(({ code, name }) => <TabsTrigger key={code} value={code}>{languageFlags[code]} {name}</TabsTrigger>)}
+                </TabsList>
                 {cmsLanguageOptions.map(({ code }) => <TabsContent key={code} value={code} className="mt-0">
                 <div className="grid items-start gap-x-5 gap-y-6 md:grid-cols-2">
                   {HOME_CMS_FIELDS.filter((field) => field.section === section).map((field) => {
@@ -131,7 +190,8 @@ export function HomepageEditor() {
                   })}
                 </div>
               </TabsContent>)}
-            </Tabs>
+              </Tabs>
+            )}
           </CardContent>
         </Card>
       </TabsContent>)}

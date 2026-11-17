@@ -42,26 +42,15 @@ export const defaultPartners: PartnersContent = {
       href: "https://www.rra.gov.rw/",
       logo: "https://www.rra.gov.rw/typo3conf/ext/rra_ui/Resources/Public/images/Rwanda-Revenue-Authority-logo.png",
     },
-    {
-      id: "bnr",
-      name: "National Bank of Rwanda",
-      href: "https://www.bnr.rw/",
-      logo: "https://www.bnr.rw/static/media/bnr-logo.7633d18322b2e9a1c715.png",
-    },
-    {
-      id: "bk",
-      name: "Bank of Kigali",
-      href: "https://www.bk.rw/",
-      logo: "https://www.rwandainkenya.gov.rw/fileadmin/user_upload/Kenya_user_upload/news_pictures/bk.png",
-    },
-    {
-      id: "mtn",
-      name: "MTN Rwanda",
-      href: "https://www.mtn.co.rw/",
-      logo: "https://www.mtn.co.rw/wp-content/uploads/2023/07/new-mtn-logo.jpg",
-    },
   ],
 };
+
+const excludedPartnerIds = new Set(["bk", "bnr", "mtn"]);
+const excludedPartnerNames = new Set([
+  "bank of kigali",
+  "national bank of rwanda",
+  "mtn rwanda",
+]);
 
 export function mergePartners(value: unknown): PartnersContent {
   if (!value || typeof value !== "object" || Array.isArray(value)) return defaultPartners;
@@ -72,5 +61,11 @@ export function mergePartners(value: unknown): PartnersContent {
     const row = item as Record<string, unknown>;
     return ["id", "name", "href", "logo"].every((key) => typeof row[key] === "string");
   });
-  return { partners: valid };
+  return {
+    partners: valid.filter(
+      (partner) =>
+        !excludedPartnerIds.has(partner.id.trim().toLowerCase()) &&
+        !excludedPartnerNames.has(partner.name.trim().toLowerCase()),
+    ),
+  };
 }

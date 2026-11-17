@@ -30,7 +30,7 @@ export default function About() {
             {tc("Lead Multi-Choice ® Ltd is a private limited company registered in 2015 with the Rwanda Development Board (RDB) under Rwanda’s applicable company laws, with its headquarters in Remera, Kigali, Rwanda.")}
           </p>
           <p>
-            {tc("We specialize in trade facilitation and business representation, connecting international manufacturers, authorized distributors, and suppliers with purchasing entities, institutions, and commercial organizations in Rwanda and the wider East African region.")}
+            {tc("We specialize in trade facilitation and business representation, connecting international manufacturers, authorized distributors, and suppliers with purchasing entities, institutions, and commercial organizations in Rwanda and beyond.")}
           </p>
           <p>
             {tc("Our role is to bridge the gap between international businesses and the local market by identifying business opportunities, facilitating introductions, coordinating communication, supporting procurement processes, and helping parties navigate local operating requirements. We provide a coordinated local point of contact throughout the business engagement, from market intelligence and opportunity identification to procurement coordination, regulatory liaison, delivery monitoring, and post-delivery support.")}
@@ -60,7 +60,7 @@ export default function About() {
             </h2>
             <p className="mt-4 max-w-prose text-[18px] font-medium leading-relaxed md:text-xl text-justify">
               {tc(
-                "To become a trusted and respected regional partner for international manufacturers, distributors and businesses seeking dependable market access, compliant trade facilitation and effective supply-chain coordination in Rwanda and the wider East African region.",
+                "To become a trusted and respected regional partner for international manufacturers, distributors and businesses seeking dependable market access, compliant trade facilitation and effective supply-chain coordination in Rwanda and beyond.",
               )}
             </p>
           </div>

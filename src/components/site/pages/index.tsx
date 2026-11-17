@@ -70,8 +70,9 @@ export default function Home({
   return (
     <>
       <section
+        id="home-hero"
         data-no-reveal
-        className="photo-parallax relative isolate flex min-h-[540px] flex-col justify-end overflow-visible bg-brand-primary md:min-h-[70vh]"
+        className="photo-parallax relative isolate flex min-h-[540px] scroll-mt-28 flex-col justify-end overflow-visible bg-brand-primary md:min-h-[70vh]"
       >
         <div className="photo-parallax-window" aria-hidden>
           <img
@@ -121,7 +122,7 @@ export default function Home({
             >
               <p className="mt-5 max-w-2xl text-[16px] text-background/85 md:text-[18px] text-justify">
                 {cmsText(
-                  "We connect international manufacturers, authorised distributors and suppliers with purchasing entities in Rwanda and the wider East African region. We facilitate introductions and coordinate procurement, logistics, delivery and after-sales support.",
+                  "We connect international manufacturers, authorised distributors and suppliers with purchasing entities in Rwanda and beyond. We facilitate introductions and coordinate procurement, logistics, delivery and after-sales support.",
                 )}
               </p>
               <div className="mt-7 flex flex-wrap gap-3">
@@ -138,7 +139,7 @@ export default function Home({
         <PartnerTicker organizations={partners} />
       </section>
 
-      <section className="container-site grid gap-8 py-12 md:py-16 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
+      <section id="home-about" className="container-site scroll-mt-28 grid gap-8 py-12 md:py-16 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
         <SectionHeading
           eyebrow={cmsText("About Us")}
           title={cmsText(
@@ -147,7 +148,7 @@ export default function Home({
           titleClassName="text-[16px] leading-snug md:text-[2.7rem] lg:text-[2.7rem]"
           introClassName="text-left md:text-justify"
           intro={cmsText(
-            "Based in Rwanda, Lead Multi-choice connects international manufacturers, authorised distributors and suppliers with purchasing entities, institutions and commercial organizations in Rwanda and the wider East African region.",
+            "Based in Rwanda, Lead Multi-choice connects international manufacturers, authorised distributors and suppliers with purchasing entities, institutions and commercial organizations in Rwanda and beyond.",
           )}
         />
         <div className="grid gap-6 sm:grid-cols-2">
@@ -198,7 +199,7 @@ export default function Home({
         </div>
       </section>
 
-      <section className="container-site py-4 md:py-6" aria-labelledby="procurement-models-heading">
+      <section id="home-models" className="container-site scroll-mt-28 py-4 md:py-6" aria-labelledby="procurement-models-heading">
         <div className="mb-5 flex flex-wrap items-end justify-between gap-3">
           <div>
             <p className="eyebrow">{cmsText("Procurement models")}</p>
@@ -228,10 +229,11 @@ export default function Home({
       </section>
 
       <PhotoScrollSection
+        id="home-market-access"
         image="/site/meeting.jpg"
         visualKey="home.marketAccess"
         overlayClassName="bg-brand-primary/55"
-        className="py-14 text-brand-white md:py-20"
+        className="scroll-mt-28 py-14 text-brand-white md:py-20"
       >
         <div className="container-site">
           <div className="max-w-3xl">
@@ -267,7 +269,7 @@ export default function Home({
         </div>
       </PhotoScrollSection>
 
-      <section className="container-site py-12 md:py-16">
+      <section id="home-services" className="container-site scroll-mt-28 py-12 md:py-16">
         <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
           <SectionHeading
             eyebrow={cmsText("What we do")}
@@ -301,10 +303,11 @@ export default function Home({
       </section>
 
       <PhotoScrollSection
+        id="home-opportunities"
         image="/site/warehouse.jpg"
         visualKey="home.tenders"
         overlayClassName="bg-brand-primary/20"
-        className="bg-warm py-10 md:py-12"
+        className="scroll-mt-28 bg-warm py-10 md:py-12"
       >
         <div className="container-site grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
           <div className="rounded-lg bg-brand-primary/85 p-5 text-brand-white backdrop-blur-sm md:p-6">
@@ -322,9 +325,9 @@ export default function Home({
         </div>
       </PhotoScrollSection>
 
-      <InsightsGrid />
+      <InsightsGrid id="home-blog" />
 
-      <CallToActionSection visualKey="home.cta" photoBackground="/site/hero-port.jpg" />
+      <CallToActionSection id="home-contact" visualKey="home.cta" photoBackground="/site/hero-port.jpg" />
     </>
   );
 }

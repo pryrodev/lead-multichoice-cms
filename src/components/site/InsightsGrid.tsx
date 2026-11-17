@@ -7,14 +7,14 @@ import { insights, insightUi } from "@/content/insights";
 import { useI18n } from "@/i18n/I18nProvider";
 import { useSiteVisuals } from "@/components/site/SiteVisualsProvider";
 
-export function InsightsGrid() {
+export function InsightsGrid({ id }: { id?: string }) {
   const { language } = useI18n();
   const visuals = useSiteVisuals();
   const copy = insightUi[language] ?? insightUi.en;
   const articles = insights[language] ?? insights.en;
 
   return (
-    <section className="container-site py-12 md:py-16" aria-label={copy.eyebrow}>
+    <section id={id} className="container-site scroll-mt-28 py-12 md:py-16" aria-label={copy.eyebrow}>
       <div className="mb-7 flex flex-wrap items-end justify-between gap-4">
         <div className="min-w-0 flex-1">
           <p className="eyebrow mb-3 text-brass">{copy.eyebrow}</p>
