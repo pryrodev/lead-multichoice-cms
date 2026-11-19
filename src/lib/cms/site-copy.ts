@@ -3,11 +3,13 @@ import { industries, services, values, whyUs } from "@/content/services";
 import { insights } from "@/content/insights";
 import { cmsLanguages, messages, type CmsLanguage, type MessageKey } from "@/i18n/messages";
 import { siteCopySourceTexts, translateSiteCopy } from "@/i18n/site-copy";
+import { marketAccessContent } from "@/content/market-access-investment";
 
 export type SiteCopyField = {
   id: string;
   source: string;
   group: string;
+  locales?: CmsLanguage[];
   defaults: Record<CmsLanguage, string>;
 };
 
@@ -18,8 +20,8 @@ const messageFields: SiteCopyField[] = (Object.keys(messages.en) as MessageKey[]
   defaults: Object.fromEntries(cmsLanguages.map((language) => [language, messages[language][key]])) as Record<CmsLanguage, string>,
 }));
 
-const copySources = new Map<string, string>();
-for (const source of siteCopySourceTexts) copySources.set(source, "Page copy");
+const copySources = new Map<string, { group: string; locales?: CmsLanguage[] }>();
+for (const source of siteCopySourceTexts) copySources.set(source, { group: "Page copy" });
 
 function collectFields(value: unknown, group: string): void {
   if (Array.isArray(value)) {
@@ -29,7 +31,7 @@ function collectFields(value: unknown, group: string): void {
   if (!value || typeof value !== "object") return;
   for (const [key, child] of Object.entries(value as Record<string, unknown>)) {
     if (typeof child === "string" && ["title", "summary", "body", "text", "alt", "imageAlt", "category", "intro", "name", "description", "cta", "tagline", "note", "location", "label"].includes(key)) {
-      copySources.set(child, group);
+      copySources.set(child, { group });
     } else if (typeof child === "object") {
       collectFields(child, group);
     }
@@ -49,11 +51,36 @@ collectFields(company, "Company");
 collectFields(nav, "Navigation");
 collectFields(insights.en, "Blog");
 
-const pageCopyFields: SiteCopyField[] = [...copySources].map(([source, group]) => ({
+function collectMarketAccessCopy(value: unknown, language: CmsLanguage): void {
+  if (Array.isArray(value)) {
+    value.forEach((item) => collectMarketAccessCopy(item, language));
+    return;
+  }
+  if (!value || typeof value !== "object") return;
+  for (const child of Object.values(value as Record<string, unknown>)) {
+    if (typeof child === "string") {
+      const existing = copySources.get(child);
+      if (!existing) copySources.set(child, { group: "Market Access & Investment", locales: [language] });
+      else if (existing.group === "Market Access & Investment" && !existing.locales?.includes(language)) {
+        existing.locales = [...(existing.locales ?? []), language];
+      }
+    } else if (typeof child === "object") {
+      collectMarketAccessCopy(child, language);
+    }
+  }
+}
+
+for (const language of cmsLanguages) collectMarketAccessCopy(marketAccessContent[language], language);
+
+const pageCopyFields: SiteCopyField[] = [...copySources].map(([source, metadata]) => ({
   id: `copy:${source}`,
   source,
-  group,
-  defaults: Object.fromEntries(cmsLanguages.map((language) => [language, translateSiteCopy(language, source)])) as Record<CmsLanguage, string>,
+  group: metadata.group,
+  ...(metadata.locales ? { locales: metadata.locales } : {}),
+  defaults: Object.fromEntries(cmsLanguages.map((language) => [
+    language,
+    metadata.locales?.includes(language) ? source : translateSiteCopy(language, source),
+  ])) as Record<CmsLanguage, string>,
 }));
 
 export const SITE_COPY_FIELDS = [...messageFields, ...pageCopyFields];

@@ -15,7 +15,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import { ReusableTable, type DataTableColumn } from "@/components/data-table/reusable-table";
 
-const languageFlags: Record<CmsLanguage, string> = { en: "🇬🇧", rw: "🇷🇼", fr: "🇫🇷", sw: "🇹🇿" };
+const languageFlags: Record<CmsLanguage, string> = { en: "🇬🇧", fr: "🇫🇷", zh: "🇨🇳", de: "🇩🇪", ar: "🇸🇦" };
 
 export function SiteCopyEditor() {
   const saved = useSiteCopyDraft();
@@ -63,7 +63,7 @@ export function SiteCopyEditor() {
         <CardHeader className="flex flex-row flex-wrap items-center justify-between gap-4">
           <div>
             <CardTitle>Website copy and translations</CardTitle>
-            <CardDescription className="mt-1">Edit shared labels and public page copy in English, Kinyarwanda, French, and Swahili.</CardDescription>
+            <CardDescription className="mt-1">Edit shared labels and public page copy in English, French, Chinese, German, and Arabic.</CardDescription>
           </div>
           <div className="flex flex-wrap gap-2">
             <Button variant="outline" onClick={save} disabled={!isDirty || saveDraft.isPending}><Save data-icon="inline-start" />Save draft</Button>
@@ -96,7 +96,7 @@ export function SiteCopyEditor() {
                 <TabsContent key={code} value={code} className="mt-0">
                   <CopyFields
                     language={code}
-                    fields={SITE_COPY_FIELDS.filter((field) => field.group === group && (!lowerSearch || `${field.source} ${field.id}`.toLowerCase().includes(lowerSearch)))}
+                    fields={SITE_COPY_FIELDS.filter((field) => field.group === group && (!field.locales || field.locales.includes(code)) && (!lowerSearch || `${field.source} ${field.id}`.toLowerCase().includes(lowerSearch)))}
                     content={content}
                     onChange={updateTranslation}
                   />

@@ -51,7 +51,7 @@ export function IndustriesEditor() {
     event.preventDefault();
     if (!editing) return;
     const sector = { ...editing, id: makeId(editing.id || editing.title), title: editing.title.trim(), text: editing.text.trim(), alt: editing.alt.trim(), points: editing.points.map((point) => point.trim()).filter(Boolean) };
-    if (!sector.id || !sector.title || !sector.text || !sector.image || !sector.alt || sector.points.length === 0) {
+    if (!sector.id || !sector.title || !sector.image || !sector.alt || sector.points.length === 0) {
       toast.error("Complete the industry details and add at least one support area.");
       return;
     }
@@ -107,7 +107,7 @@ export function IndustriesEditor() {
             <div className="grid gap-2"><Label htmlFor="industry-title">Title</Label><Input id="industry-title" required maxLength={180} value={editing.title} onChange={(event) => setEditing({ ...editing, title: event.target.value })} placeholder="e.g. Pharmaceuticals & Healthcare" /></div>
             <div className="grid gap-2"><Label htmlFor="industry-id">Section URL id</Label><Input id="industry-id" required maxLength={100} value={editing.id} onChange={(event) => setEditing({ ...editing, id: makeId(event.target.value) })} placeholder="e.g. healthcare" /></div>
           </div>
-          <div className="grid gap-2"><Label htmlFor="industry-description">Description</Label><Textarea id="industry-description" required maxLength={600} rows={2} value={editing.text} onChange={(event) => setEditing({ ...editing, text: event.target.value })} placeholder="Summarize the company's work in this sector." /></div>
+          <div className="grid gap-2"><Label htmlFor="industry-description">Subheading (optional)</Label><Textarea id="industry-description" maxLength={600} rows={2} value={editing.text} onChange={(event) => setEditing({ ...editing, text: event.target.value })} placeholder="Add a short sector description, if needed." /></div>
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="grid gap-2"><Label htmlFor="industry-image">Image</Label><Select value={editing.image} onValueChange={(image) => setEditing({ ...editing, image })}><SelectTrigger id="industry-image"><SelectValue placeholder="Choose an image" /></SelectTrigger><SelectContent>{editing.image && !media.some((asset) => asset.secureUrl === editing.image) && <SelectItem value={editing.image}>Keep current image</SelectItem>}{media.map((asset) => <SelectItem key={asset.id} value={asset.secureUrl}>{asset.altText || asset.publicId}</SelectItem>)}</SelectContent></Select><p className="text-xs text-muted-foreground">Upload images in the <Link className="text-primary underline-offset-4 hover:underline" href="/admin/content/media">Media Library</Link>.</p></div>
             <div className="grid gap-2"><Label htmlFor="industry-alt">Image description</Label><Input id="industry-alt" required maxLength={300} value={editing.alt} onChange={(event) => setEditing({ ...editing, alt: event.target.value })} placeholder="Describe the image" /></div>

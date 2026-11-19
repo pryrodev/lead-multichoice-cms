@@ -59,11 +59,15 @@ export function SiteHeader({ homePageContent = defaultHomePageContent }: { homeP
   const pathname = usePathname();
   const { t, tc } = useI18n();
   const reduceMotion = useReducedMotion();
+  const enabledHomeMenuIds = Array.isArray(homePageContent?.homeMenuEnabledIds)
+    ? homePageContent.homeMenuEnabledIds
+    : HOME_SECTION_NAV_ITEMS.map((section) => section.id);
+  const homeMenuLabels = homePageContent?.homeMenuLabels ?? {};
   const homeMenuItems = HOME_SECTION_NAV_ITEMS.filter((section) =>
-    homePageContent.homeMenuEnabledIds.includes(section.id),
+    enabledHomeMenuIds.includes(section.id),
   );
   const homeMenuLabel = (id: (typeof HOME_SECTION_NAV_ITEMS)[number]["id"]) =>
-    tc(homePageContent.homeMenuLabels[id] || HOME_SECTION_NAV_ITEMS.find((section) => section.id === id)?.label || id);
+    tc(homeMenuLabels[id] || HOME_SECTION_NAV_ITEMS.find((section) => section.id === id)?.label || id);
 
   const cancelHoverClose = () => {
     if (hoverCloseTimer.current !== null) {

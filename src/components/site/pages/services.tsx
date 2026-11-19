@@ -32,7 +32,7 @@ export default function Services() {
     <>
       <PageHero
         eyebrow={t("nav.services")}
-        title={tc("Five services. One local point of coordination.")}
+        title={tc("Five Services. One Local Gateway. Your Regional Advantage.")}
         intro={tc("From first opportunity to after-sales — one partner.")}
         image={port}
         visualKey="services.hero"

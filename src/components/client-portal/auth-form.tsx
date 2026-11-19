@@ -11,7 +11,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Separator } from "@/components/ui/separator";
 import { Stepper, StepperDescription, StepperIndicator, StepperItem, StepperSeparator, StepperTitle } from "@/components/ui/stepper";
 import { usePortalLogin, usePortalRegister } from "@/features/client-portal/hooks";
 
@@ -56,7 +55,7 @@ export function PortalAuthForm() {
   }
 
   return (
-    <section className="photo-parallax relative isolate flex min-h-[calc(100svh-6rem)] items-center overflow-hidden bg-brand-primary py-12 md:py-16">
+    <section className="portal-auth-view photo-parallax relative isolate flex h-full min-h-0 items-center overflow-hidden bg-brand-primary py-3 md:py-6">
       <div className="photo-parallax-window" aria-hidden="true">
         <Image src="/site/hero-port.jpg" alt="" fill priority sizes="100vw" className="photo-parallax-image" />
       </div>
@@ -71,7 +70,7 @@ export function PortalAuthForm() {
           <p className="mt-5 max-w-md text-base leading-relaxed text-background/80">
             Sign in to manage your company details and follow request updates, or track a request with its reference.
           </p>
-          <Button asChild variant="outline" className="mt-6 border-brand-white/60 bg-brand-white text-brand-primary hover:bg-brand-white/90 hover:text-brand-primary">
+          <Button asChild variant="outline" className="mt-6 h-12 w-full justify-center rounded-sm border-brand-gold bg-brand-gold text-base font-semibold text-charcoal hover:bg-brand-gold/90 hover:text-charcoal">
             <Link href="/track">Track a request <ArrowRightIcon data-icon="inline-end" /></Link>
           </Button>
         </section>
@@ -117,15 +116,6 @@ export function PortalAuthForm() {
             {formError && <p id="portal-login-error" role="alert" className="mt-3 flex items-start gap-2 rounded-md border border-destructive/25 bg-destructive/5 px-3 py-2.5 text-sm text-destructive"><AlertCircle aria-hidden="true" className="mt-0.5 size-4 shrink-0" />{formError}</p>}
             {formNotice && <p role="status" className="mt-3 text-center text-sm text-muted-foreground">{formNotice}</p>}
             {mode === "login" && <>
-              <div className="my-5 flex items-center gap-3 text-xs uppercase tracking-widest text-muted-foreground">
-                <Separator className="flex-1" />
-                <span>or</span>
-                <Separator className="flex-1" />
-              </div>
-              <Button type="button" variant="outline" className="relative h-11 w-full rounded-[4px] border-primary/25 font-semibold text-primary hover:border-primary hover:bg-primary/5 hover:text-primary" onClick={() => { setFormError(null); setFormNotice("Google sign-in is not configured yet."); }}>
-                <GoogleMark />
-                Continue with Google
-              </Button>
               <div className="mt-5 text-center">
                 <Button type="button" variant="link" className="h-auto p-0 font-semibold text-primary" onClick={() => { setFormError(null); setFormNotice("Password reset is not available yet. Please contact our team for help."); }}>Forgot password?</Button>
               </div>
@@ -139,21 +129,5 @@ export function PortalAuthForm() {
         </Card>
       </div>
     </section>
-  );
-}
-
-function GoogleMark() {
-  return (
-    <svg
-      aria-hidden="true"
-      className="absolute left-4 size-[18px]"
-      viewBox="0 0 48 48"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path fill="#4285F4" d="M43.6 24.5c0-1.4-.1-2.8-.4-4.1H24v7.8h11a9.4 9.4 0 0 1-4.1 6.2v5.1h6.6c3.9-3.6 6.1-8.8 6.1-15Z" />
-      <path fill="#34A853" d="M24 44c5.5 0 10.1-1.8 13.5-4.8l-6.6-5.1c-1.8 1.2-4.1 2-6.9 2-5.3 0-9.8-3.6-11.4-8.4H5.8v5.2A20 20 0 0 0 24 44Z" />
-      <path fill="#FBBC05" d="M12.6 27.7a12 12 0 0 1 0-7.4v-5.2H5.8a20 20 0 0 0 0 17.8l6.8-5.2Z" />
-      <path fill="#EA4335" d="M24 11.9c3 0 5.7 1 7.8 3.1l5.8-5.8C34.1 5.9 29.5 4 24 4A20 20 0 0 0 5.8 15.1l6.8 5.2c1.6-4.8 6.1-8.4 11.4-8.4Z" />
-    </svg>
   );
 }

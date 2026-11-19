@@ -51,7 +51,7 @@ export default function Industries({ content = defaultIndustriesContent }: { con
                   0{i + 1}
                 </span>
                 <h2 className="mt-3 text-[28px] md:text-[36px]">{tc(ind.title)}</h2>
-                <p className="mt-4 text-charcoal">{tc(ind.text)}</p>
+                {ind.text && <p className="mt-4 text-charcoal">{tc(ind.text)}</p>}
                 <h3 className="eyebrow mb-4 mt-8 text-steel">{t("industries.howSupport")}</h3>
                 <CheckList items={ind.points.map(tc)} />
               </div>

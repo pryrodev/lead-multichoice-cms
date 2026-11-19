@@ -200,6 +200,7 @@ export function CallToActionSection({
   brandGradient = false,
   photoBackground = "/site/hero-port.jpg",
   visualKey,
+  compact = false,
 }: {
   id?: string;
   title?: string;
@@ -207,6 +208,7 @@ export function CallToActionSection({
   brandGradient?: boolean;
   photoBackground?: string;
   visualKey?: SiteVisualKey;
+  compact?: boolean;
 }) {
   const { t, tc } = useI18n();
   const visuals = useSiteVisuals();
@@ -215,8 +217,9 @@ export function CallToActionSection({
     <section
       id={id}
       className={cn(
-        "relative scroll-mt-28 overflow-hidden bg-brand-primary text-background",
+        "relative overflow-hidden bg-brand-primary text-background",
         "photo-parallax isolate",
+        compact && "flex h-full min-h-0 items-center",
       )}
       style={
         brandGradient
@@ -243,7 +246,7 @@ export function CallToActionSection({
         }}
         aria-hidden
       />
-      <div className="container-site relative py-16 md:py-20">
+      <div className={cn("container-site relative", compact ? "py-4 md:py-6" : "py-16 md:py-20")}>
         <div
           className={cn(
             "mx-auto max-w-3xl text-center",
@@ -261,16 +264,16 @@ export function CallToActionSection({
           </p>
           <h2
             className={cn(
-              "text-[30px] md:text-[44px]",
+              compact ? "text-[clamp(1.75rem,4vw,2.75rem)]" : "text-[30px] md:text-[44px]",
               brandGradient ? "text-brand-primary" : "text-background",
             )}
           >
             {tc(title)}
           </h2>
-          <p className={cn("mt-5", brandGradient ? "text-charcoal" : "text-background/75")}>
+          <p className={cn(compact ? "mt-3" : "mt-5", brandGradient ? "text-charcoal" : "text-background/75")}>
             {tc(text)}
           </p>
-          <div className="mt-9 flex flex-wrap justify-center gap-3">
+          <div className={cn("flex flex-wrap justify-center gap-3", compact ? "mt-5" : "mt-9")}>
           <ButtonLink
             href="/contact"
             variant={brandGradient ? "primary" : "light"}

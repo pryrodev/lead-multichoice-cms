@@ -56,16 +56,16 @@ export function ProcessTimeline({ inverted }: { inverted?: boolean }) {
   );
 }
 
-export function ProcurementResourceCard({ r }: { r: ProcurementResource }) {
+export function ProcurementResourceCard({ r, compact = false }: { r: ProcurementResource; compact?: boolean }) {
   const { t, tc } = useI18n();
   return (
-    <article className="flex h-full flex-col rounded border border-border bg-background p-5 sm:p-7">
+    <article className={cn("flex h-full flex-col rounded-md border border-border bg-background", compact ? "p-3 sm:p-4" : "p-5 sm:p-7")}>
       <div className="min-w-0">
         <p className="eyebrow">{t("resources.external")}</p>
-        <h3 className="mt-5 text-xl leading-snug [overflow-wrap:anywhere] sm:text-[22px]">{r.name}</h3>
-        <p className="mt-3 text-[15px] leading-6 text-muted-foreground [overflow-wrap:anywhere]">{tc(r.description)}</p>
+        <h3 className={cn("leading-snug [overflow-wrap:anywhere]", compact ? "mt-2 text-base font-semibold sm:text-lg" : "mt-5 text-xl sm:text-[22px]")}>{r.name}</h3>
+        <p className={cn("text-muted-foreground [overflow-wrap:anywhere]", compact ? "mt-2 line-clamp-3 text-sm leading-snug" : "mt-3 text-[15px] leading-6")}>{tc(r.description)}</p>
       </div>
-      <div className="mt-5">
+      <div className={compact ? "mt-3" : "mt-5"}>
         <ExternalLink href={r.url} className={btn("primary", "max-w-full whitespace-normal text-center [overflow-wrap:anywhere]")}>
           {tc(r.cta)}
         </ExternalLink>

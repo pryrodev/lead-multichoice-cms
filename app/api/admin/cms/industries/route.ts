@@ -8,7 +8,7 @@ import { defaultIndustriesContent, mergeIndustriesContent } from "@/lib/cms/indu
 const sectorSchema = z.object({
   id: z.string().trim().min(1).max(100).regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/),
   title: z.string().trim().min(1).max(180),
-  text: z.string().trim().min(1).max(600),
+  text: z.string().trim().max(600),
   image: z.string().trim().min(1).max(1200),
   alt: z.string().trim().min(1).max(300),
   points: z.array(z.string().trim().min(1).max(200)).max(12),
