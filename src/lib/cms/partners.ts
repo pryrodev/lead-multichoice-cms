@@ -41,13 +41,7 @@ export const defaultPartners: PartnersContent = {
       name: "Rwanda Revenue Authority",
       href: "https://www.rra.gov.rw/",
       logo: "https://www.rra.gov.rw/typo3conf/ext/rra_ui/Resources/Public/images/Rwanda-Revenue-Authority-logo.png",
-    },
-    {
-      id: "wafa",
-      name: "West African Fertilizer Association (WAFA)",
-      href: "https://wafafertilizer.org/en/",
-      logo: "https://cdn.brandfetch.io/id_woz8FmG/w/350/h/350/theme/dark/logo.png?c=1bxid64Mup7aczewSAYMX",
-    },
+    }
   ],
 };
 
