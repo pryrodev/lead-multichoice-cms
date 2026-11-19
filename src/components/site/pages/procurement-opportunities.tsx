@@ -1,23 +1,15 @@
-"use client";
+﻿"use client";
 
 import Image from "next/image";
 import { useRef, useState } from "react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
-  BarChart3,
-  CheckCircle2,
-  ChevronRight,
-  ClipboardCheck,
   Compass,
   Factory,
   FileCheck2,
   FileText,
   Handshake,
-  Layers,
-  RefreshCw,
-  Search,
   ShieldCheck,
-  Sparkles,
-  TrendingUp,
   Truck,
   Users,
   Volume2,
@@ -25,9 +17,8 @@ import {
 } from "lucide-react";
 import type { ProcurementResource } from "@/lib/cms/procurement-resources";
 import { procurementModels } from "@/content/site";
-import { ButtonLink, PageHero, SectionHeading } from "@/components/site/ui";
+import { ButtonLink, SectionHeading } from "@/components/site/ui";
 import { ProcurementResourceCarousel } from "@/components/site/ProcurementResourceCarousel";
-import { PhotoScrollSection } from "@/components/site/PhotoScrollSection";
 import { useI18n } from "@/i18n/I18nProvider";
 import { useSiteVisuals } from "@/components/site/SiteVisualsProvider";
 
@@ -90,7 +81,7 @@ const content: Record<string, ProcurementContent> & { en: ProcurementContent } =
         text: "Review supplier performance, contracts, and market changes over time.",
       },
     ],
-    processTitle: "Typical 7-Step Strategic Sourcing Process",
+    processTitle: "Guide to the Procurement Sourcing Process",
     processIntro:
       "A clear sequence for sourcing goods, equipment, and services.",
     steps: [
@@ -156,23 +147,23 @@ const content: Record<string, ProcurementContent> & { en: ProcurementContent } =
     considerations: [
       {
         title: "Understand the market and buyer requirements",
-        text: "Identify relevant sectors, purchasing entities, demand, and the requirements that apply to your products or services.",
+        text: "Map target sectors, buyers, and product requirements.",
       },
       {
         title: "Confirm product approvals and compliance",
-        text: "Check applicable standards, product registrations, and import requirements, including RSB or Rwanda FDA requirements where relevant.",
+        text: "Confirm applicable standards, registrations, and import approvals.",
       },
       {
         title: "Establish local representation",
-        text: "Choose a credible local representative to support introductions, communication, and follow-up with purchasing entities.",
+        text: "Build local relationships for buyer engagement and follow-up.",
       },
       {
         title: "Prepare for procurement and tendering",
-        text: "Review buyer procedures, eligibility criteria, required documents, bid securities, and the terms of each opportunity.",
+        text: "Check eligibility, required documents, bid securities, and key terms.",
       },
       {
         title: "Plan delivery and ongoing support",
-        text: "Coordinate freight, customs, in-country handling, delivery acceptance, warranty support, and maintenance where required.",
+        text: "Plan freight, customs, delivery, and after-sales support.",
       },
     ],
     opportunitiesEyebrow: "Selected Opportunities",
@@ -189,132 +180,6 @@ const content: Record<string, ProcurementContent> & { en: ProcurementContent } =
     coordinationText:
       "Suppliers and institutional buyers can contact Lead Multi-Choice ® to discuss appropriate coordination support, from supplier introductions to logistics and delivery follow-up.",
     ctaButton: "Discuss a Business Opportunity",
-  },
-  rw: {
-    eyebrow: "Amasoko n'Ubujyanama mu Gushaka Ibicuruzwa",
-    heroTitle: "Gushaka Ibicuruzwa mu Buryo bw'Ingenzi n'Amahirwe y'Amasoko",
-    heroIntro:
-      "Guhuza ibigo bigura n'abatanga ibicuruzwa mpuzamahanga bizewe binyuze mu gushaka ibicuruzwa mu buryo buhamye, no gufasha abakora ibicuruzwa n'ababikwirakwiza binjira ku isoko ry'u Rwanda n'irya Afurika y'Iburasirazuba.",
-    tabsBuyer: "Ku Bigo Bigura Ibicuruzwa",
-    tabsSupplier: "Ku Bakora n'Abakwirakwiza Ibicuruzwa",
-    tabsOpportunities: "Reba Amahirwe y'Amasoko",
-    principlesEyebrow: "Amahame y'Ubujyanama",
-    principlesTitle: "Gushaka Ibicuruzwa mu Buryo bw'Ingenzi — Amahame y'Ibanze",
-    principlesIntro:
-      "Ubu buryo burenze kugura gusa; butuma habaho agaciro gakomeye, ubwizerane n'iyubahirizwa ry'amabwiriza mu migendekere y'amasoko.",
-    principles: [
-      {
-        title: "Isesengura Ryuzuye",
-        text: "Gusuzuma ikiguzi cyose, ubuziranenge, igihe cyo kugeza ibicuruzwa, kuramba n'udushya—hashingiwe ku birenze igiciro cyo ku isoko gusa.",
-      },
-      {
-        title: "Ibyemezo Bishingiye ku Makuru",
-        text: "Gukoresha isesengura ry'amafaranga asohoka, amakuru ku batanga ibicuruzwa n'ubushakashatsi ku isoko kugira ngo hagirwe ubwumvikane bunoze.",
-      },
-      {
-        title: "Gukomeza Kwiyubaka no Gukurikirana",
-        text: "Gukurikirana imikorere y'abatanga ibicuruzwa, amasezerano no kugabanya ingaruka mbi zishobora kugaragara.",
-      },
-    ],
-    processTitle: "Intambwe 7 mu Gushaka Ibicuruzwa mu Buryo bw'Ingenzi",
-    processIntro:
-      "Uburyo bufasha inzego z'abaguzi kubona ibikoresho na serivisi bifite ubuziranenge bwo hejuru kandi bikazigama umutungo.",
-    steps: [
-      {
-        step: "01",
-        title: "Gusesengura Ibyakoreshejwe n'Ibikenewe",
-        text: "Kureba uko amafaranga akoreshwa, ibyo abaguzi bakeneye n'igihe ibikoresho bigomba kubonekera.",
-      },
-      {
-        step: "02",
-        title: "Kumenya Isoko ry'Abatanga Ibicuruzwa",
-        text: "Gushakisha abatunganya ibicuruzwa n'ababikwirakwiza mu karere no ku rwego mpuzamahanga.",
-      },
-      {
-        step: "03",
-        title: "Gutoranya Abatanga Ibicuruzwa Bakwiye",
-        text: "Gusuzuma ibyemezo by'ubuziranenge, ubushobozi bw'amafaranga n'uburambe mu itangwa ry'ibicuruzwa.",
-      },
-      {
-        step: "04",
-        title: "Gutoranya Binyuze mu Ipiganwa (RFP / RFQ)",
-        text: "Gutegura amabwiriza asobanutse yo gupiganwa ashingiye ku bipimo bisobanutse by'isuzuma.",
-      },
-      {
-        step: "05",
-        title: "Kuganira no Gusoza Amasezerano",
-        text: "Kumvikana ku biciro, garanti, uburyo bwo kwishyura n'ingengabihe yo kugeza ibicuruzwa.",
-      },
-      {
-        step: "06",
-        title: "Gushyira mu Bikorwa no Gucunga Umubano",
-        text: "Guhuza ubwikorezi bwo mu gihugu, gasutamo, kwakira ibicuruzwa no gukurikirana ubufatanye.",
-      },
-      {
-        step: "07",
-        title: "Gusuzuma no Kunoza Ibikorwa Ubudahwema",
-        text: "Gupima imikorere y'abatanga ibicuruzwa, gukemura inzitizi no kongera inyungu mu mikoranire.",
-      },
-    ],
-    benefitsTitle: "Inyungu z'Ubu Buryo",
-    benefits: [
-      {
-        title: "Kuzigama Amafaranga",
-        text: "Kugabanya ibiciro no kuzigama mu buryo burambye mu gihe cy'imikoreshereze y'igicuruzwa.",
-      },
-      {
-        title: "Ubuziranenge Bunoze",
-        text: "Kuzuza ibipimo bya tekiniki n'amabwiriza y'ubuziranenge yemewe mu gihugu no hanze.",
-      },
-      {
-        title: "Kwirinda Inzitizi",
-        text: "Kugira abatanga ibicuruzwa basimbura hagamijwe ko ibikoresho bidahagarara.",
-      },
-      {
-        title: "Ubufatanye Burambye",
-        text: "Kubaka umubano w'igihe kirekire wizerana n'abakora ibicuruzwa ku rwego rw'isi.",
-      },
-    ],
-    supplierEyebrow: "Uruhande rw'Abakora n'Abakwirakwiza Ibicuruzwa",
-    supplierTitle: "Kugeza Ibicuruzwa mu Rwanda no mu Karere: Iby'Ingenzi Kwitondera",
-    supplierIntro:
-      "Icyo abakora ibicuruzwa mpuzamahanga n'ababikwirakwiza babiherewe uburenganzira bagomba kumenya mbere yo kwinjira ku isoko ry'u Rwanda.",
-    considerations: [
-      {
-        title: "Kuzuza Amabwiriza n'Ibyemezo by'Ubuziranenge",
-        text: "Gushaka ibyemezo by'Ikigo cy'Ubuziranenge (RSB), Rwanda FDA n'izindi nzego zibifitiye ububasha mbere yo gutumiza ibicuruzwa.",
-      },
-      {
-        title: "Kugira Umufatanyabikorwa Ukwemerewe mu Karere",
-        text: "Gukorana n'ikigo cyemewe mu gihugu gishobora guhagararira izina ryawe, kwitabira inama no gukurikirana ubucuruzi.",
-      },
-      {
-        title: "Kuzuza Ibisabwa mu Masoko ya Leta n'ay'Ibigo",
-        text: "Gusobanukirwa n'uburyo bwa UMUCYO e-procurement, ingwate z'ipiganwa (bid bonds) n'amasezerano arambye.",
-      },
-      {
-        title: "Ubwikorezi, Gasutamo n'Ububiko",
-        text: "Gukurikirana ubwikorezi bwerekeza i Kigali, ububiko bwa gasutamo (bonded warehouse) n'amahoro ya gasutamo muri EAC/COMESA.",
-      },
-      {
-        title: "Ubufasha Nyuma yo Kugurisha na Garanti",
-        text: "Gutegura ubufasha mu bya tekiniki, kuboneka kw'ibice by'ibikoresho (spare parts) no guhugura abakoresha ibyo bikorwa.",
-      },
-    ],
-    opportunitiesEyebrow: "Amahirwe Yatoranyijwe",
-    opportunitiesTitle: "Amahirwe y'Amasoko Yatoranyijwe",
-    opportunitiesIntro:
-      "Reba amahirwe yatoranyijwe y'amasoko n'ubujyanama aturutse mu masoko anyuranye.",
-    aboutTitle: "Ibyerekeye aya mahirwe",
-    aboutText1:
-      "Izi linki zijyana ku mahirwe yihariye y'amasoko n'ubujyanama. Reba buri tangazo kugira ngo umenye ibisabwa n'itariki ntarengwa.",
-    aboutText2:
-      "Lead Multi-Choice ® ntabwo ari yo nyiri aya matangazo kandi ntishobora kwemeza ko uzatsinda cyangwa gufata ibyemezo by'amasoko. Reba ibisabwa, uko usaba n'itariki yo gusoza muri buri tangazo.",
-    coordinationEyebrow: "Gufasha guhuza ibikorwa",
-    coordinationTitle: "Ukeneye ubufasha bwo gukurikirana amahirwe?",
-    coordinationText:
-      "Abatanga ibicuruzwa n'inzego z'abaguzi bashobora kuvugana na Lead Multi-Choice ® bakaganira ku bufasha bukwiye bwo guhuza ibikorwa, kuva ku guhuza abatanga ibicuruzwa kugeza ku bwikorezi no gukurikirana ishyikirizwa.",
-    ctaButton: "Ganira natwe ku mahirwe y'ubucuruzi",
   },
   fr: {
     eyebrow: "Achats et approvisionnement stratégique",
@@ -342,7 +207,7 @@ const content: Record<string, ProcurementContent> & { en: ProcurementContent } =
         text: "Comprend la réévaluation régulière des prestataires, la gestion rigoureuse des contrats et la veille proactive du marché.",
       },
     ],
-    processTitle: "Le processus d'approvisionnement stratégique en 7 étapes",
+    processTitle: "Guide du processus d'approvisionnement",
     processIntro:
       "Une démarche éprouvée qui aide les acheteurs à se procurer biens, équipements et services avec une qualité garantie et des coûts optimisés.",
     steps: [
@@ -468,7 +333,7 @@ const content: Record<string, ProcurementContent> & { en: ProcurementContent } =
         text: "Kujumuisha tathmini ya mara kwa mara ya wasambazaji, usimamizi wa mikataba na udhibiti wa hatari za ununuzi.",
       },
     ],
-    processTitle: "Mchakato wa Hatua 7 wa Upatikanaji wa Kimkakati",
+    processTitle: "Mwongozo wa mchakato wa ununuzi",
     processIntro:
       "Mwongozo uliopangiliwa unaosaidia taasisi za ununuzi kupata bidhaa na huduma zenye ubora na kuokoa gharama.",
     steps: [
@@ -594,7 +459,7 @@ const content: Record<string, ProcurementContent> & { en: ProcurementContent } =
         text: "涵盖长效的供应商绩效再评估、合同合规监管及前瞻性供应链风险缓释，形成良性循环。",
       },
     ],
-    processTitle: "标准 7 步战略寻源流程",
+    processTitle: "采购流程指南",
     processIntro:
       "结构化且透明的寻源路线图，帮助机构采购方以可预测的品质和显著的成本节约获得物资与专业服务。",
     steps: [
@@ -720,7 +585,7 @@ const content: Record<string, ProcurementContent> & { en: ProcurementContent } =
         text: "Umfasst stetige Leistungsbewertungen, Vertragsüberwachung und vorausschauendes Risikomanagement.",
       },
     ],
-    processTitle: "Der 7-stufige strategische Beschaffungsprozess",
+    processTitle: "Leitfaden für den Beschaffungsprozess",
     processIntro:
       "Ein strukturierter Leitfaden, der Einkäufern hilft, Waren, Ausrüstung und Dienstleistungen mit verlässlicher Qualität und Einsparungen zu beschaffen.",
     steps: [
@@ -846,7 +711,7 @@ const content: Record<string, ProcurementContent> & { en: ProcurementContent } =
         text: "تشمل إعادة التقييم الدوري لأداء الموردين، ومراقبة الالتزام بالعقود، والتخفيف الاستباقي لمخاطر سلاسل الإمداد.",
       },
     ],
-    processTitle: "عملية التوريد الاستراتيجي النموذجية في 7 خطوات",
+    processTitle: "دليل عملية التوريد والمشتريات",
     processIntro:
       "خريطة طريق منهجية وشفافة تساعد جهات الشراء على تأمين السلع والمعدات والخدمات بأعلى جودة وتوفير حقيقي في التكاليف.",
     steps: [
@@ -951,7 +816,6 @@ const content: Record<string, ProcurementContent> & { en: ProcurementContent } =
 const defaultSoundLabel = { unmute: "Unmute audio", mute: "Mute audio" };
 const audioLabels: Record<string, { unmute: string; mute: string }> = {
   en: defaultSoundLabel,
-  rw: { unmute: "Fungura ijwi", mute: "Funga ijwi" },
   fr: { unmute: "Activer le son", mute: "Couper le son" },
   sw: { unmute: "Washa sauti", mute: "Zima sauti" },
   zh: { unmute: "开启声音", mute: "静音" },
@@ -979,8 +843,7 @@ export default function Procurement({ resources }: { resources: ProcurementResou
   const heroImage = visuals["procurement.hero"];
 
   return (
-    <>
-      {/* Hero with dynamic background video on one side and content on the other */}
+    <div className="w-full">
       <section className="group relative isolate flex min-h-[520px] items-center overflow-hidden border-b border-border bg-brand-primary text-brand-white md:min-h-[60vh] lg:min-h-[65vh]">
         {/* Background video on one side */}
         <div className="pointer-events-none absolute inset-y-0 w-full overflow-hidden ltr:right-0 rtl:left-0 lg:w-1/2">
@@ -1002,7 +865,7 @@ export default function Procurement({ resources }: { resources: ProcurementResou
           {/* Subtle gradient blends — just enough to blend into the left */}
           <div className="absolute inset-0 hidden bg-gradient-to-r from-brand-primary via-brand-primary/5 to-transparent ltr:block rtl:hidden" />
           <div className="absolute inset-0 hidden bg-gradient-to-l from-brand-primary via-brand-primary/5 to-transparent rtl:block ltr:hidden" />
-          <div className="absolute inset-0 bg-brand-primary/60 lg:hidden" />
+          <div className="absolute inset-0 bg-brand-primary/35 lg:hidden" />
           <div className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-brand-primary/20 to-transparent" />
           <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-brand-primary/20 to-transparent" />
         </div>
@@ -1035,156 +898,112 @@ export default function Procurement({ resources }: { resources: ProcurementResou
         </button>}
       </section>
 
-      {/* Quick Nav Anchors */}
-      <nav aria-label="Page navigation" className="sticky top-[84px] z-30 border-b border-border bg-background/95 backdrop-blur">
-        <div className="container-site flex flex-wrap items-center justify-center gap-3 py-3 text-sm md:text-base">
-          <a
-            href="#purchasing-entities"
-            className="inline-flex items-center gap-1.5 rounded-md border border-border bg-brand-white px-4 py-1.5 font-medium text-foreground transition-colors hover:border-brand-primary hover:text-brand-primary"
-          >
-            <Users size={14} className="text-brand-primary" />
-            <span>{copy.tabsBuyer}</span>
-          </a>
-          <a
-            href="#manufacturers-distributors"
-            className="inline-flex items-center gap-1.5 rounded-md border border-border bg-brand-white px-4 py-1.5 font-medium text-foreground transition-colors hover:border-brand-primary hover:text-brand-primary"
-          >
-            <Factory size={14} className="text-brand-primary" />
-            <span>{copy.tabsSupplier}</span>
-          </a>
-          <a
-            href="#browse-opportunities"
-            className="inline-flex items-center gap-1.5 rounded-md border border-border bg-brand-white px-4 py-1.5 font-medium text-foreground transition-colors hover:border-brand-primary hover:text-brand-primary"
-          >
-            <Compass size={14} className="text-brand-primary" />
-            <span>{copy.tabsOpportunities}</span>
-          </a>
-        </div>
-      </nav>
+      <Tabs defaultValue="buyers" className="w-full">
+        <nav aria-label="Page sections" className="sticky top-[84px] z-30 border-b border-border bg-background/95 backdrop-blur">
+          <TabsList className="container-site flex h-auto w-full flex-nowrap items-center justify-center gap-2 overflow-x-auto bg-transparent py-2">
+            <TabsTrigger value="buyers" className="shrink-0 gap-1.5 whitespace-nowrap rounded-md px-3 py-2 sm:px-4">
+              <Users size={14} aria-hidden="true" />
+              <span>{copy.tabsBuyer}</span>
+            </TabsTrigger>
+            <TabsTrigger value="suppliers" className="shrink-0 gap-1.5 whitespace-nowrap rounded-md px-3 py-2 sm:px-4">
+              <Factory size={14} aria-hidden="true" />
+              <span>{copy.tabsSupplier}</span>
+            </TabsTrigger>
+            <TabsTrigger value="opportunities" className="shrink-0 gap-1.5 whitespace-nowrap rounded-md px-3 py-2 sm:px-4">
+              <Compass size={14} aria-hidden="true" />
+              <span>{copy.tabsOpportunities}</span>
+            </TabsTrigger>
+          </TabsList>
+        </nav>
 
-      {/* Path 1: purchasing entity strategic sourcing */}
-      <section id="purchasing-entities" className="scroll-mt-36 container-site py-12 md:py-16">
+      <TabsContent value="buyers" className="mt-0">
+      <section id="purchasing-entities" className="container-site flex flex-col gap-5 py-6 md:gap-8 md:py-10">
         <div>
           <SectionHeading
-            eyebrow={copy.tabsBuyer}
+            eyebrow={copy.principlesEyebrow}
             title={copy.principlesTitle}
-            intro={copy.principlesIntro}
             className="max-w-none"
-            titleClassName="md:text-[32px] lg:whitespace-nowrap lg:text-[36px]"
+            titleClassName="text-[clamp(1.35rem,2.5vw,2rem)]"
           />
-          <div className="mt-7 grid gap-4 border-y border-border py-5 sm:grid-cols-3">
+          <p className="mt-2 max-w-3xl text-sm text-muted-foreground">{copy.principlesIntro}</p>
+          <div className="mt-3 grid grid-cols-3 gap-2 sm:mt-4 sm:gap-3">
             {copy.principles.map((principle) => (
-              <article key={principle.title} className="border-l-2 border-brand-gold pl-3">
-                <h3 className="text-base font-semibold text-foreground">{principle.title}</h3>
-                <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{principle.text}</p>
+              <article key={principle.title} className="min-w-0 border-l-2 border-brand-gold bg-surface/70 px-2 py-2 sm:px-3 sm:py-2.5">
+                <h3 className="text-xs font-semibold leading-tight text-foreground sm:text-sm">{principle.title}</h3>
+                <p className="mt-1 hidden line-clamp-2 text-xs leading-relaxed text-muted-foreground sm:block sm:text-sm">{principle.text}</p>
               </article>
             ))}
           </div>
         </div>
 
-        <div className="mt-10">
-          <SectionHeading
-            eyebrow={copy.tabsBuyer}
-            title={tc("Procurement models")}
-            className="max-w-none"
-          />
-          <div className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <div>
+          <h3 className="font-display text-lg font-semibold text-foreground">{tc("Procurement models")}</h3>
+          <div className="mt-2 grid grid-cols-2 gap-2 xl:grid-cols-4">
             {procurementModels.map((model) => (
-              <article key={model.id} className="h-full rounded-md border border-border bg-transparent p-4 md:p-5">
-                <h3 className="font-display text-base font-semibold text-foreground">{tc(model.name)}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{tc(model.description)}</p>
+              <article key={model.id} className="min-w-0 border-t-2 border-brand-primary/50 bg-background px-3 py-2.5">
+                <h4 className="font-display text-sm font-semibold text-foreground sm:text-base">{tc(model.name)}</h4>
+                <p className="mt-1 hidden line-clamp-2 text-xs leading-relaxed text-muted-foreground sm:block sm:text-sm">{tc(model.description)}</p>
               </article>
             ))}
           </div>
-        </div>
-
-        <div className="mt-6 border-t border-border pt-5">
-          <h3 className="text-sm font-bold uppercase tracking-[0.14em] text-brand-gold">{copy.benefitsTitle}</h3>
-          <ul className="mt-4 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-            {copy.benefits.map((benefit) => (
-              <li key={benefit.title} className="flex items-start gap-2.5">
-                <CheckCircle2 size={16} className="mt-0.5 shrink-0 text-brand-primary" aria-hidden="true" />
-                <div>
-                  <p className="text-base font-semibold text-foreground">{benefit.title}</p>
-                  <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{benefit.text}</p>
-                </div>
-              </li>
-            ))}
-          </ul>
         </div>
       </section>
+      </TabsContent>
 
       {/* Section 2: For Manufacturers & Licensed Distributors */}
-      <PhotoScrollSection
-        id="manufacturers-distributors"
-        image="/site/hero-port.jpg"
-        visualKey="procurement.portals"
-        overlayClassName="bg-brand-white/92"
-        className="scroll-mt-36 py-12 md:py-16"
-      >
-        <div className="container-site">
+      <TabsContent value="suppliers" className="mt-0">
+        <section id="manufacturers-distributors" className="container-site flex flex-col gap-4 py-6 md:gap-6 md:py-10">
           <SectionHeading
             eyebrow={copy.supplierEyebrow}
             title={copy.supplierTitle}
-            intro={copy.supplierIntro}
+            titleClassName="text-[clamp(1.35rem,2.5vw,2rem)]"
           />
 
-          <div className="mt-8 grid gap-8 lg:grid-cols-[1fr_17rem] lg:items-start">
-            <ol className="grid gap-x-8 gap-y-7 sm:grid-cols-2 xl:grid-cols-3">
-              {copy.considerations.map((item, idx) => {
-                const icons = [Compass, FileCheck2, Handshake, FileText, Truck];
-                const Icon = icons[idx] ?? ShieldCheck;
-                return (
-                  <li key={item.title} className="relative min-w-0 border-l border-brand-primary/30 pl-6">
-                    <span className="absolute -left-[16px] top-0 flex size-8 items-center justify-center rounded-full bg-brand-primary text-brand-white ring-4 ring-brand-white/80">
-                      <Icon size={15} aria-hidden="true" />
-                    </span>
-                    <p className="text-[10px] font-bold tracking-[0.16em] text-brand-gold">0{idx + 1}</p>
-                    <h3 className="mt-1 text-base font-semibold leading-snug text-foreground">{item.title}</h3>
-                    <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{item.text}</p>
-                  </li>
-                );
-              })}
-            </ol>
-
-            {/* In-country support CTA */}
-            <div className="flex flex-col justify-between rounded-md border border-brand-primary/30 bg-brand-primary p-5 text-brand-white">
-              <div>
-                <p className="text-sm font-bold uppercase tracking-wider text-brass-light">
-                  {copy.coordinationEyebrow}
-                </p>
-                <h3 className="mt-2 text-lg font-bold text-brand-white">{copy.coordinationTitle}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-brand-white/85">
-                  {copy.coordinationText}
-                </p>
-              </div>
-              <ButtonLink href="/contact" variant="light" className="mt-6" arrow>
-                {copy.ctaButton}
-              </ButtonLink>
-            </div>
+          <div className="flex items-center justify-between gap-4">
+            <p className="hidden max-w-3xl text-sm text-muted-foreground lg:block">{copy.supplierIntro}</p>
+            <ButtonLink href="/contact" variant="primary" className="hidden shrink-0 sm:inline-flex" arrow>
+              {copy.ctaButton}
+            </ButtonLink>
           </div>
-        </div>
-      </PhotoScrollSection>
+          <ol className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-5">
+            {copy.considerations.map((item, idx) => {
+              const icons = [Compass, FileCheck2, Handshake, FileText, Truck];
+              const Icon = icons[idx] ?? ShieldCheck;
+              return (
+                <li key={item.title} className="flex min-w-0 items-start gap-3 border-l-2 border-brand-gold bg-surface/70 p-2.5 lg:min-h-40 lg:flex-col lg:p-3">
+                  <span className="flex size-8 shrink-0 items-center justify-center bg-brand-primary text-brand-white">
+                    <Icon size={15} aria-hidden="true" />
+                  </span>
+                  <div className="min-w-0">
+                    <p className="text-xs font-bold tabular-nums text-brand-primary">0{idx + 1}</p>
+                    <h3 className="mt-0.5 text-sm font-semibold leading-snug text-foreground">{item.title}</h3>
+                    <p className="mt-1 hidden line-clamp-3 text-xs leading-relaxed text-muted-foreground lg:block">{item.text}</p>
+                  </div>
+                </li>
+              );
+            })}
+          </ol>
+        </section>
+      </TabsContent>
 
       {/* Section 3: Selected Opportunities & Portals */}
-      <section id="browse-opportunities" className="scroll-mt-36 container-site py-12 md:py-16">
+      <TabsContent value="opportunities" className="mt-0">
+      <section id="browse-opportunities" className="container-site flex flex-col gap-4 py-6 md:gap-6 md:py-10">
         <SectionHeading
           eyebrow={copy.opportunitiesEyebrow}
           title={copy.opportunitiesTitle}
-          titleClassName="whitespace-nowrap text-[clamp(1rem,3vw,2rem)]"
-          intro={copy.opportunitiesIntro}
+          titleClassName="text-[clamp(1.35rem,2.5vw,2rem)]"
         />
-        <div className="mt-8">
-          <ProcurementResourceCarousel resources={resources} />
+        <div>
+          <ProcurementResourceCarousel resources={resources} compact />
         </div>
 
-        {/* Disclaimer / Notice */}
-        <aside className="mt-8 text-sm text-charcoal">
-          <h4 className="font-semibold text-foreground">{copy.aboutTitle}</h4>
-          <p className="mt-2 text-muted-foreground leading-relaxed">{copy.aboutText1}</p>
-          <p className="mt-2 text-muted-foreground leading-relaxed">{copy.aboutText2}</p>
+        <aside className="text-xs text-muted-foreground">
+          <p>{copy.aboutText2}</p>
         </aside>
       </section>
-    </>
+      </TabsContent>
+      </Tabs>
+    </div>
   );
 }

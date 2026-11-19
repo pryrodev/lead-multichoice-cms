@@ -8,7 +8,7 @@ import type { ProcurementResource } from "@/lib/cms/procurement-resources";
 import { Button } from "@/components/ui/button";
 import { ProcurementResourceCard } from "@/components/site/sections";
 
-export function ProcurementResourceCarousel({ resources }: { resources: ProcurementResource[] }) {
+export function ProcurementResourceCarousel({ resources, compact = false }: { resources: ProcurementResource[]; compact?: boolean }) {
   const [viewportRef, emblaApi] = useEmblaCarousel({
     align: "start",
     containScroll: "trimSnaps",
@@ -86,7 +86,7 @@ export function ProcurementResourceCarousel({ resources }: { resources: Procurem
         <div className="flex touch-pan-y">
           {resources.map((resource) => (
             <div key={resource.id} className="min-w-0 flex-[0_0_100%] pr-4 md:flex-[0_0_50%]">
-              <ProcurementResourceCard r={resource} />
+            <ProcurementResourceCard r={resource} compact={compact} />
             </div>
           ))}
         </div>

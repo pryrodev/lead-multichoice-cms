@@ -7,7 +7,7 @@ import { partnerTickerLabels } from "@/content/insights";
 import { useI18n } from "@/i18n/I18nProvider";
 import type { WebsitePartner } from "@/lib/cms/partners";
 
-export function PartnerTicker({ organizations }: { organizations: WebsitePartner[] }) {
+export function PartnerTicker({ organizations, compact = false }: { organizations: WebsitePartner[]; compact?: boolean }) {
   const { language } = useI18n();
   const controls = useAnimationControls();
   const shouldReduceMotion = useReducedMotion();
@@ -37,9 +37,9 @@ export function PartnerTicker({ organizations }: { organizations: WebsitePartner
   }
 
   return (
-    <div className="container-site relative z-10 pb-8 pt-4 md:pb-10 md:pt-6">
+    <div className={`container-site relative z-10 ${compact ? "pb-2 pt-1 md:pb-3 md:pt-2" : "pb-8 pt-4 md:pb-10 md:pt-6"}`}>
       <section className="scroll-mt-28" aria-label={partnerTickerLabels[language] ?? partnerTickerLabels.en}>
-        <div className="mx-auto mb-4 flex max-w-5xl items-center gap-4 md:mb-5 md:gap-6">
+        <div className={`mx-auto flex max-w-5xl items-center gap-4 md:gap-6 ${compact ? "mb-1 md:mb-2" : "mb-4 md:mb-5"}`}>
           <span className="h-px flex-1 bg-brand-white/35" aria-hidden="true" />
           <p className="eyebrow whitespace-nowrap text-brand-white/80">{partnerTickerLabels[language] ?? partnerTickerLabels.en}</p>
           <span className="h-px flex-1 bg-brand-white/35" aria-hidden="true" />
@@ -73,9 +73,9 @@ export function PartnerTicker({ organizations }: { organizations: WebsitePartner
                       target="_blank"
                       rel="noreferrer"
                       tabIndex={copy === 1 ? -1 : undefined}
-                      className="flex min-h-12 items-center gap-3 rounded-sm text-brand-white/90 transition-opacity hover:opacity-75 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-white focus-visible:ring-offset-4 focus-visible:ring-offset-brand-primary"
+                      className={`flex items-center gap-3 rounded-sm text-brand-white/90 transition-opacity hover:opacity-75 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-white focus-visible:ring-offset-4 focus-visible:ring-offset-brand-primary ${compact ? "min-h-9" : "min-h-12"}`}
                     >
-                      <span className="relative block h-10 w-28 shrink-0 md:h-12 md:w-32">
+                      <span className={`relative block shrink-0 ${compact ? "h-8 w-24 md:h-9 md:w-28" : "h-10 w-28 md:h-12 md:w-32"}`}>
                         <Image
                           src={organization.logo}
                           alt={organization.name}

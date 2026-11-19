@@ -22,7 +22,7 @@ export function RequestTracker() {
   }
 
   return (
-    <section className="photo-parallax relative isolate flex min-h-[calc(100svh-6rem)] items-center overflow-hidden bg-brand-primary py-16 md:py-20">
+    <section className="request-tracker-view photo-parallax relative isolate flex h-full min-h-0 items-center overflow-hidden bg-brand-primary py-4 md:py-8">
       <div className="photo-parallax-window" aria-hidden="true">
         <Image src={visuals["tracking.hero"]} alt="" fill priority sizes="100vw" className="photo-parallax-image" />
       </div>
@@ -37,7 +37,7 @@ export function RequestTracker() {
           Check the latest progress shared by the Lead Multi-Choice ® team.
         </p>
 
-        <Card className="mx-auto mt-9 max-w-4xl rounded-xl border-brand-white/30 bg-brand-white p-2 text-foreground shadow-none sm:p-3">
+        <Card className="mx-auto mt-9 max-w-4xl rounded-md border-brand-white/30 bg-brand-white p-2 text-foreground shadow-none sm:p-3">
           <CardContent className="p-2 sm:p-3">
             <form onSubmit={submit} className="grid gap-3 text-left sm:grid-cols-[minmax(0,1fr)_auto] sm:items-end">
               <div className="grid gap-2">
@@ -47,7 +47,7 @@ export function RequestTracker() {
                   <Input id="tracking-reference" value={reference} onChange={(event) => setReference(event.target.value.toUpperCase())} placeholder="LMC-REQ-XXXXXXXXXXXXXXXXXXXXXXXX" autoCapitalize="characters" autoComplete="off" required maxLength={32} className="h-12 pl-10" />
                 </div>
               </div>
-              <Button type="submit" className="h-12 min-w-40">
+              <Button type="submit" className="h-12 min-w-40 rounded-sm bg-brand-gold text-charcoal hover:bg-brand-gold/90 hover:text-charcoal">
                 Track progress <ArrowRight data-icon="inline-end" />
               </Button>
             </form>

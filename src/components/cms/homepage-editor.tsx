@@ -19,7 +19,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 
 const PREVIEW_STORAGE_KEY = "lead-multichoice-homepage-preview";
-const languageFlags: Record<CmsLanguage, string> = { en: "🇬🇧", rw: "🇷🇼", fr: "🇫🇷", sw: "🇹🇿" };
+const languageFlags: Record<CmsLanguage, string> = { en: "🇬🇧", fr: "🇫🇷", zh: "🇨🇳", de: "🇩🇪", ar: "🇸🇦" };
 
 export function HomepageEditor() {
   const saved = useAdminHomePage();

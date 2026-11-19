@@ -508,7 +508,7 @@ const sw: Record<string, string> = {
 };
 
 Object.assign(rw, {
-  "Procurement and deal acceleration.": "Amasoko no kwihutisha amasezerano y'ubucuruzi.",
+  "Five Services. One Local Gateway. Your Regional Advantage.": "Serivisi eshanu. Irembo rimwe ry’imbere mu gihugu. Ibyiza by’akarere.",
   "Market Access": "Kwinjira ku isoko",
   "Connect purchasing entities with manufacturers.": "Huza ibigo bigura ibicuruzwa n'ababikora.",
   "Supply chain coordination": "Guhuza uruhererekane rw'ibicuruzwa",
@@ -543,7 +543,7 @@ Object.assign(rw, {
     "Abatanga ibicuruzwa n'inzego z'abaguzi bashobora kuvugana na Lead Multi-Choice ® bakaganira ku bufasha bukwiye bwo guhuza ibikorwa, kuva ku guhuza abatanga ibicuruzwa kugeza ku bwikorezi no gukurikirana ishyikirizwa.",
 });
 Object.assign(fr, {
-  "Procurement and deal acceleration.": "Achats et accélération des transactions.",
+  "Five Services. One Local Gateway. Your Regional Advantage.": "Cinq services. Un seul point d’entrée local. Votre avantage régional.",
   "Market Access": "Accès au marché",
   "Connect purchasing entities with manufacturers.": "Mettre les acheteurs en relation avec les fabricants.",
   "Supply chain coordination": "Coordination de la chaîne d'approvisionnement",
@@ -576,7 +576,7 @@ Object.assign(fr, {
     "Les fournisseurs et acheteurs institutionnels peuvent contacter Lead Multi-Choice ® pour discuter d’un appui adapté, de la mise en relation avec des fournisseurs au suivi logistique et à la livraison.",
 });
 Object.assign(sw, {
-  "Procurement and deal acceleration.": "Ununuzi na kuharakisha mikataba ya biashara.",
+  "Five Services. One Local Gateway. Your Regional Advantage.": "Huduma tano. Lango moja la ndani. Faida yako ya kikanda.",
   "Market Access": "Upatikanaji wa soko",
   "Connect purchasing entities with manufacturers.": "Unganisha taasisi za ununuzi na watengenezaji.",
   "Supply chain coordination": "Uratibu wa mnyororo wa ugavi",
@@ -2031,7 +2031,7 @@ const ar: Record<string, string> = {
 };
 
 Object.assign(zh, {
-  "Procurement and deal acceleration.": "采购与交易提速",
+  "Five Services. One Local Gateway. Your Regional Advantage.": "五项服务，一个本地门户，助您赢得区域优势。",
   "Market Access": "市场准入",
   "Connect purchasing entities with manufacturers.": "对接采购机构与制造商。",
   "Supply chain coordination": "供应链协调",
@@ -2109,7 +2109,7 @@ Object.assign(zh, {
 });
 
 Object.assign(de, {
-  "Procurement and deal acceleration.": "Beschaffung und beschleunigte Geschäftsabschlüsse.",
+  "Five Services. One Local Gateway. Your Regional Advantage.": "Fünf Leistungen. Ein lokaler Zugang. Ihr regionaler Vorteil.",
   "Market Access": "Marktzugang",
   "Connect purchasing entities with manufacturers.": "Beschaffungsstellen mit Herstellern verbinden.",
   "Supply chain coordination": "Lieferkettenkoordination",
@@ -2187,7 +2187,7 @@ Object.assign(de, {
 });
 
 Object.assign(ar, {
-  "Procurement and deal acceleration.": "المشتريات وتسريع الصفقات",
+  "Five Services. One Local Gateway. Your Regional Advantage.": "خمس خدمات. بوابة محلية واحدة. ميزتك الإقليمية.",
   "Market Access": "الوصول إلى السوق",
   "Connect purchasing entities with manufacturers.": "ربط جهات الشراء بالمصنعين.",
   "Supply chain coordination": "تنسيق سلسلة التوريد",
@@ -2307,8 +2307,8 @@ Object.assign(ar, {
     "نربط جهات الشراء في رواندا بالمصنعين الدوليين والموزعين المعتمدين ومقدمي الخدمات المتخصصة حول العالم.",
 });
 
-const copy: Partial<Record<Language | CmsLanguage, Record<string, string>>> = { rw, fr, sw, zh, de, ar };
-export const siteCopySourceTexts = [...new Set([...Object.keys(rw), ...Object.keys(fr), ...Object.keys(sw), ...Object.keys(zh), ...Object.keys(de), ...Object.keys(ar)])];
+const copy: Partial<Record<Language | CmsLanguage, Record<string, string>>> = { fr, zh, de, ar };
+export const siteCopySourceTexts = [...new Set([...Object.keys(fr), ...Object.keys(zh), ...Object.keys(de), ...Object.keys(ar)])];
 const siteCopyAliases: Record<string, string> = {
   "Local support from supplier search through delivery.": "From procurement opportunity to delivery acceptance.",
   "Lead Multi-Choice ® Ltd is a private limited company registered in 2015 with the Rwanda Development Board (RDB) under Rwanda’s applicable company laws, with its headquarters in Remera, Kigali, Rwanda.":

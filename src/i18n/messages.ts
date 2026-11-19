@@ -1,11 +1,12 @@
-export const languages = ["en", "zh", "de", "ar"] as const;
+export const languages = ["en", "fr", "zh", "de", "ar"] as const;
 export type Language = (typeof languages)[number];
 
-export const cmsLanguages = ["en", "rw", "fr", "sw"] as const;
+export const cmsLanguages = ["en", "fr", "zh", "de", "ar"] as const;
 export type CmsLanguage = (typeof cmsLanguages)[number];
 
 export const languageOptions: { code: Language; name: string }[] = [
   { code: "en", name: "English" },
+  { code: "fr", name: "Français" },
   { code: "zh", name: "简体中文" },
   { code: "de", name: "Deutsch" },
   { code: "ar", name: "العربية" },
@@ -13,9 +14,10 @@ export const languageOptions: { code: Language; name: string }[] = [
 
 export const cmsLanguageOptions: { code: CmsLanguage; name: string }[] = [
   { code: "en", name: "English" },
-  { code: "rw", name: "Ikinyarwanda" },
   { code: "fr", name: "Français" },
-  { code: "sw", name: "Kiswahili" },
+  { code: "zh", name: "简体中文" },
+  { code: "de", name: "Deutsch" },
+  { code: "ar", name: "العربية" },
 ];
 
 const en = {
@@ -826,4 +828,4 @@ const ar: TranslationSet = {
   "service.open": "فتح الخريطة",
 };
 
-export const messages: Record<Language | CmsLanguage, TranslationSet> = { en, zh, de, ar, rw, fr, sw };
+export const messages: Record<Language, TranslationSet> & Partial<Record<"rw" | "sw", TranslationSet>> = { en, fr, zh, de, ar, rw, sw };

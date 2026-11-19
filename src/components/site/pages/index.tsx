@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, Check, Handshake, SearchCheck, Truck } from "lucide-react";
+import { ArrowRight, BadgeCheck, Building2, Check, ClipboardList, Handshake, Package, SearchCheck, Truck } from "lucide-react";
 import { motion } from "motion/react";
 import { services } from "@/content/services";
 import { procurementModels } from "@/content/site";
@@ -36,6 +36,13 @@ const bridgeSteps = [
     icon: Truck,
   },
 ];
+
+const procurementModelIcons = {
+  "hardware-supply": Package,
+  "framework-contracts": ClipboardList,
+  "epc-turnkey-contracts": Building2,
+  "consultancy-urgency": BadgeCheck,
+} as const;
 
 export default function Home({
   contentOverride,
@@ -79,13 +86,13 @@ export default function Home({
   const heroPort = cmsPage.heroImageUrl || "/site/hero-port.jpg";
   const heroVideo = visuals["home.heroVideo"];
   return (
-    <>
+    <div className="home-page-views">
       <section
         id="home-hero"
         hidden={activeSection !== "overview"}
         style={viewStyle("overview")}
         data-no-reveal
-        className="photo-parallax relative isolate flex min-h-[540px] scroll-mt-28 flex-col justify-end overflow-visible bg-brand-primary md:min-h-[calc(100svh-7rem)]"
+        className="photo-parallax relative isolate flex h-full min-h-0 flex-col justify-between overflow-hidden bg-brand-primary"
       >
         <div className="photo-parallax-window" aria-hidden>
           <img
@@ -112,18 +119,18 @@ export default function Home({
           )}
         </div>
         <div className="photo-parallax-shade absolute inset-0 -z-10" aria-hidden />
-        <div className="container-site pb-5 pt-24 md:pb-3 md:pt-28">
+        <div className="container-site flex flex-1 items-center py-3 md:py-5">
           <div className="max-w-4xl">
             <motion.p
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="eyebrow mb-4 flex items-center gap-3 text-brass-light text-[16px]"
+              className="eyebrow mb-2 flex items-center gap-3 text-brass-light text-[13px] md:mb-3 md:text-[16px]"
             >
               <span className="h-px w-8 bg-current" aria-hidden />
               {cmsText("Market Access | Supplier Engagement | Trade Facilitation")}
             </motion.p>
-            <h1 className="max-w-4xl text-[20px] leading-[1.04] text-background md:text-[40px] lg:text-[50px]">
+            <h1 className="max-w-4xl text-[clamp(1.65rem,4vw,3.125rem)] leading-[1.04] text-background">
               {cmsText(
                 "Connecting international suppliers with purchasing entities across Rwanda and East Africa.",
               )}
@@ -133,7 +140,7 @@ export default function Home({
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
             >
-              <p className="mt-5 max-w-2xl text-[16px] text-background/85 md:text-[18px] text-justify">
+              <p className="mt-3 max-w-2xl text-[14px] text-background/85 md:mt-4 md:text-[18px] text-justify">
                 {cmsText(
                   "We connect international manufacturers, authorised distributors and suppliers with purchasing entities in Rwanda and beyond. We facilitate introductions and coordinate procurement, logistics, delivery and after-sales support.",
                 )}
@@ -141,35 +148,48 @@ export default function Home({
             </motion.div>
           </div>
         </div>
-        <PartnerTicker organizations={partners} />
+        <PartnerTicker organizations={partners} compact />
       </section>
 
-      <section id="home-models" hidden={activeSection !== "models"} style={viewStyle("models")} className="container-site scroll-mt-28 grid min-h-[calc(100svh-7rem)] content-center py-4 md:py-6" aria-labelledby="procurement-models-heading">
-        <div className="mb-5 flex flex-wrap items-end justify-between gap-3">
-          <div>
-            <p className="eyebrow">{cmsText("Procurement models")}</p>
-            <h2
-              id="procurement-models-heading"
-              className="mt-2 font-display text-xl font-semibold tracking-tight md:text-2xl"
-            >
-              {cmsText("Support for procurement and project needs.")}
-            </h2>
-          </div>
+      <section id="home-models" hidden={activeSection !== "models"} style={viewStyle("models")} className="relative isolate flex h-full min-h-0 items-center overflow-hidden bg-brand-primary text-brand-white" aria-labelledby="procurement-models-heading">
+        <div className="absolute inset-0 z-0" aria-hidden="true">
+          <img src={visuals["home.models"]} alt="" width={1600} height={1000} className="h-full w-full object-cover object-center" />
         </div>
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          {procurementModels.map((model) => (
-            <article
-              key={model.id}
-              className="h-full rounded-md border border-border bg-transparent p-4 md:p-5"
-            >
-              <h3 className="font-display text-base font-semibold text-foreground">
-                {cmsText(model.name)}
-              </h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                {cmsText(model.description)}
-              </p>
-            </article>
-          ))}
+        <div className="absolute inset-0 z-[1] bg-brand-primary/70" aria-hidden="true" />
+        <div className="container-site relative z-10 w-full py-4 md:py-8">
+          <div className="mb-5 flex flex-col gap-2 md:mb-8 lg:flex-row lg:items-end lg:justify-between lg:gap-8">
+            <div className="max-w-3xl">
+              <p className="eyebrow text-brass-light">{cmsText("Procurement models")}</p>
+              <h2
+                id="procurement-models-heading"
+                className="mt-2 whitespace-nowrap font-display text-[clamp(0.8rem,4vw,3rem)] font-semibold tracking-tight text-brand-white"
+              >
+                {cmsText("Support for procurement and project needs.")}
+              </h2>
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-2 md:gap-4 lg:grid-cols-4">
+            {procurementModels.map((model, index) => {
+              const ModelIcon = procurementModelIcons[model.id];
+              return (
+                <article
+                  key={model.id}
+                  className="flex min-h-36 min-w-0 flex-col border-t-2 border-brand-gold bg-brand-white/10 p-3 backdrop-blur-sm sm:min-h-40 sm:p-4 md:min-h-52 md:p-5"
+                >
+                  <div className="mb-5 flex items-center justify-between md:mb-8">
+                    <ModelIcon className="text-brand-gold" size={22} strokeWidth={1.8} aria-hidden="true" />
+                    <span className="font-display text-sm font-semibold tabular-nums text-brand-gold">0{index + 1}</span>
+                  </div>
+                  <h3 className="font-display text-sm font-semibold leading-snug text-brand-white sm:text-base md:text-lg">
+                    {cmsText(model.name)}
+                  </h3>
+                  <p className="mt-2 text-xs leading-relaxed text-brand-white/85 sm:text-sm">
+                    {cmsText(model.description)}
+                  </p>
+                </article>
+              );
+            })}
+          </div>
         </div>
       </section>
 
@@ -180,25 +200,25 @@ export default function Home({
         image="/site/meeting.jpg"
         visualKey="home.marketAccess"
         overlayClassName="bg-brand-primary/55"
-        className="scroll-mt-28 py-14 text-brand-white md:py-20"
+        className="flex h-full min-h-0 items-center overflow-hidden py-2 text-brand-white md:py-4"
       >
         <div className="container-site">
           <div className="max-w-3xl">
             <p className="eyebrow mb-3 text-brass-light">{cmsText("Rwanda market access")}</p>
-            <h2 className="text-balance text-[30px] leading-tight text-brand-white md:text-[42px]">
+            <h2 className="text-balance text-[clamp(1.5rem,3vw,2.625rem)] leading-tight text-brand-white">
               {cmsText("From procurement opportunity to delivery acceptance and payment.")}
             </h2>
-            <p className="mt-4 max-w-2xl text-[16px] text-brand-white/85 md:text-[18px]">
+            <p className="mt-2 max-w-2xl text-[14px] text-brand-white/85 md:mt-3 md:text-[16px]">
               {cmsText(
                 "We identify relevant opportunities, connect with manufacturers, and coordinate procurement, logistics, delivery, and after-sales services.",
               )}
             </p>
           </div>
-          <ol className="mt-9 grid gap-3 sm:grid-cols-2 lg:mt-12 lg:grid-cols-4">
+          <ol className="mt-4 grid grid-cols-2 gap-2 md:mt-6 md:gap-3 lg:grid-cols-4">
             {bridgeSteps.map(({ title, text, icon: Icon }, index) => (
               <li
                 key={title}
-                className="min-w-0 rounded-lg border border-brand-white/30 bg-brand-primary/80 p-5 backdrop-blur-sm md:p-6"
+                className="min-w-0 rounded-md border border-brand-white/30 bg-brand-primary/80 p-3 backdrop-blur-sm md:p-4 lg:p-5"
               >
                 <div className="flex items-center justify-between">
                   <Icon className="text-brass-light" size={23} aria-hidden />
@@ -206,8 +226,8 @@ export default function Home({
                     0{index + 1}
                   </span>
                 </div>
-                <h3 className="mt-5 text-[20px] text-brand-white">{cmsText(title)}</h3>
-                <p className="mt-2 text-xs leading-relaxed text-brand-white/85 [overflow-wrap:anywhere] md:text-[13px]">
+                <h3 className="mt-2 text-[16px] text-brand-white md:mt-3 md:text-[18px]">{cmsText(title)}</h3>
+                <p className="mt-1 text-xs leading-snug text-brand-white/85 [overflow-wrap:anywhere] md:mt-2 md:text-[13px]">
                   {cmsText(text)}
                 </p>
               </li>
@@ -216,43 +236,50 @@ export default function Home({
         </div>
       </PhotoScrollSection>
 
-      <section id="home-services" hidden={activeSection !== "services"} style={viewStyle("services")} className="container-site grid min-h-[calc(100svh-7rem)] content-center scroll-mt-28 py-12 md:py-16">
-        <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
-          <SectionHeading
-            eyebrow={cmsText("What we do")}
-            title={cmsText("Procurement and deal acceleration.")}
-            className="max-w-none"
-            titleClassName="lg:whitespace-nowrap lg:text-[clamp(1.75rem,2.8vw,2.25rem)]"
-          />
-          <Link
-            href="/services"
-            className="inline-flex shrink-0 items-center gap-2 font-semibold text-corporate hover:text-brand-primary"
-          >
-            {cmsText("Explore all services")} <ArrowRight size={16} aria-hidden />
-          </Link>
+      <section id="home-services" hidden={activeSection !== "services"} style={viewStyle("services")} className="relative isolate grid h-full min-h-0 content-center overflow-hidden bg-brand-primary py-3 text-brand-white md:py-6">
+        <div className="absolute inset-0 z-0" aria-hidden="true">
+          <img src={visuals["home.services"]} alt="" width={1600} height={1000} className="h-full w-full object-cover object-center" />
         </div>
-        <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <div className="absolute inset-0 z-[1] bg-brand-primary/75" aria-hidden="true" />
+        <div className="container-site relative z-10 w-full">
+          <div className="flex flex-col justify-between gap-3 md:flex-row md:items-end md:gap-6">
+            <SectionHeading
+              eyebrow={cmsText("What we do")}
+              title={cmsText("Procurement and deal acceleration.")}
+              className="max-w-none"
+              titleClassName="text-brand-white lg:whitespace-nowrap lg:text-[clamp(1.75rem,2.8vw,2.25rem)]"
+              inverted
+            />
+            <Link
+              href="/services"
+              className="inline-flex shrink-0 items-center gap-2 font-semibold text-brand-white hover:text-brand-gold"
+            >
+              {cmsText("Explore all services")} <ArrowRight size={16} aria-hidden />
+            </Link>
+          </div>
+          <div className="mt-4 grid grid-cols-3 gap-2 md:mt-6 md:gap-4">
           {services.slice(0, 3).map((service, index) => (
             <Link
               key={service.id}
               href={`/services#${service.id}`}
-              className="group rounded border border-border p-6 transition-colors hover:border-corporate hover:bg-surface md:p-7"
+              className="group min-w-0 border-t-2 border-brand-gold bg-brand-white/10 p-2 backdrop-blur-sm transition-colors hover:bg-brand-white/15 sm:p-3 md:p-5"
             >
-              <p className="font-display text-[13px] font-bold tabular-nums text-brass">
+              <p className="font-display text-[13px] font-bold tabular-nums text-brand-gold">
                 0{index + 1}
               </p>
-              <h3 className="mt-3 text-[20px] group-hover:text-corporate">
+              <h3 className="mt-2 text-sm font-medium text-brand-white group-hover:text-brand-gold sm:text-base md:mt-3 md:text-[20px]">
                 {cmsText(service.title)}
               </h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+              <p className="mt-1 text-xs leading-snug text-brand-white/85 sm:text-sm md:mt-2 md:text-sm">
                 {cmsText(service.summary)}
               </p>
             </Link>
           ))}
+          </div>
         </div>
       </section>
 
-      <div hidden={activeSection !== "contact"} style={viewStyle("contact")}><CallToActionSection id="home-contact" visualKey="home.cta" photoBackground="/site/hero-port.jpg" /></div>
-    </>
+      <div className="h-full min-h-0" hidden={activeSection !== "contact"} style={viewStyle("contact")}><CallToActionSection compact id="home-contact" visualKey="home.cta" photoBackground="/site/hero-port.jpg" /></div>
+    </div>
   );
 }

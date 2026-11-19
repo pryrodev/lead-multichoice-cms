@@ -36,7 +36,7 @@ const loadPublishedHomePage = async (): Promise<HomePageContent> => {
     return defaultHomePageContent;
   }
 };
-const cachedPublishedHomePage = unstable_cache(loadPublishedHomePage, ["published-home-page-v1"], { revalidate: 3600, tags: ["cms-homepage"] });
+const cachedPublishedHomePage = unstable_cache(loadPublishedHomePage, ["published-home-page-v2"], { revalidate: 3600, tags: ["cms-homepage"] });
 export const getPublishedHomePage = () => isProductionBuild() ? Promise.resolve(defaultHomePageContent) : cachedPublishedHomePage();
 
 const loadPublishedSiteVisuals = async (): Promise<SiteVisuals> => {

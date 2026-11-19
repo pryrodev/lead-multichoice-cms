@@ -1,4 +1,6 @@
 export const SITE_VISUAL_FIELDS = [
+  { key: "home.models", label: "Home · Procurement models section", fallback: "/site/warehouse.jpg" },
+  { key: "home.services", label: "Home · What we do section", fallback: "/site/truck.jpg" },
   { key: "home.marketAccess", label: "Home · Market access section", fallback: "/site/meeting.jpg" },
   { key: "home.tenders", label: "Home · Featured tenders section", fallback: "/site/warehouse.jpg" },
   { key: "home.cta", label: "Home · Conversation section", fallback: "/site/hero-port.jpg" },
