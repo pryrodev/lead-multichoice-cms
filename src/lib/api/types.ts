@@ -250,3 +250,24 @@ export interface AdminIndustries {
   publishedAt: string | null;
   updatedAt: string | null;
 }
+
+export interface AdminSiteSeo {
+  content: import("@/lib/cms/site-seo").SiteSeoContent;
+  hasDraft: boolean;
+  publishedAt: string | null;
+  updatedAt: string | null;
+}
+
+export interface AdminSiteNavigation {
+  content: import("@/lib/cms/site-navigation").SiteNavigationContent;
+  hasDraft: boolean;
+  publishedAt: string | null;
+  updatedAt: string | null;
+}
+
+export interface AdminMediaGallery {
+  content: import("@/lib/cms/media-gallery").MediaGalleryContent;
+  hasDraft: boolean;
+  publishedAt: string | null;
+  updatedAt: string | null;
+}

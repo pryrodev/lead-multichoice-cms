@@ -1,11 +1,7 @@
-import type { Metadata } from "next";
 import MarketAccessInvestment from "@/components/site/pages/market-access-investment";
+import { getPublicPageMetadata } from "@/lib/cms/metadata";
 
-export const metadata: Metadata = {
-  title: "Market Access | Lead Multichoice Ltd",
-  description:
-    "Rwanda: Your gateway to regional and continental opportunities. Learn how Lead Multichoice Ltd supports international manufacturers and suppliers with market intelligence, local representation, and procurement coordination.",
-};
+export async function generateMetadata() { return getPublicPageMetadata("market-access-investment"); }
 
 export default function MarketAccessInvestmentPage() {
   return <MarketAccessInvestment />;

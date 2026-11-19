@@ -14,6 +14,7 @@ import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import { ReusableTable, type DataTableColumn } from "@/components/data-table/reusable-table";
+import { DraftPreviewButton } from "@/components/cms/draft-preview-button";
 
 const languageFlags: Record<CmsLanguage, string> = { en: "🇬🇧", fr: "🇫🇷", zh: "🇨🇳", de: "🇩🇪", ar: "🇸🇦" };
 
@@ -66,6 +67,7 @@ export function SiteCopyEditor() {
             <CardDescription className="mt-1">Edit shared labels and public page copy in English, French, Chinese, German, and Arabic.</CardDescription>
           </div>
           <div className="flex flex-wrap gap-2">
+            <DraftPreviewButton href="/cms-preview/site-copy?view=home" onPrepare={async () => { if (isDirty || !saved.hasDraft) await saveDraft.mutateAsync(content); }} disabled={saveDraft.isPending} />
             <Button variant="outline" onClick={save} disabled={!isDirty || saveDraft.isPending}><Save data-icon="inline-start" />Save draft</Button>
             <Button onClick={publish} disabled={saveDraft.isPending || publishCopy.isPending}><Send data-icon="inline-start" />Publish</Button>
           </div>

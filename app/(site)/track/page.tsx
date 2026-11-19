@@ -1,13 +1,10 @@
-import type { Metadata } from "next";
 import { RequestTracker } from "@/components/client-portal/request-tracker";
 import { PortalUnavailable } from "@/components/client-portal/portal-unavailable";
 import { isClientPortalEnabled } from "@/lib/auth/portal-access";
 import { QueryProvider } from "@/components/providers/query-provider";
+import { getPublicPageMetadata } from "@/lib/cms/metadata";
 
-export const metadata: Metadata = {
-  title: "Track a Request",
-  description: "View the latest Lead Multi-Choice ® updates for your request.",
-};
+export async function generateMetadata() { return getPublicPageMetadata("track"); }
 
 export default function TrackPage() {
   return isClientPortalEnabled() ? (

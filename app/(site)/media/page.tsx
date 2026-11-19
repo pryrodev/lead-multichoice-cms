@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
 import MediaPage from "@/components/site/pages/media";
+import { getPublishedMediaGallery } from "@/lib/cms/server";
+import { getPublicPageMetadata } from "@/lib/cms/metadata";
 
-export const metadata: Metadata = {
-  title: "Media",
-  description:
-    "Explore the markets, people and supply journeys connected through Lead Multi-Choice's trade facilitation work in Rwanda and the region.",
-};
+export async function generateMetadata(): Promise<Metadata> { return getPublicPageMetadata("media"); }
 
-export default function Page() {
-  return <MediaPage />;
+export default async function Page() {
+  const { stories } = await getPublishedMediaGallery();
+  return <MediaPage stories={stories} />;
 }

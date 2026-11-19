@@ -1,9 +1,5 @@
-import type { Metadata } from "next";
 import About from "@/components/site/pages/about";
+import { getPublicPageMetadata } from "@/lib/cms/metadata";
 
-export const metadata: Metadata = {
-  title: "About Us",
-  description:
-    "Lead Multi-Choice ® connects international manufacturers and suppliers with buyers in Rwanda and East Africa, and coordinates everything in between.",
-};
+export async function generateMetadata() { return getPublicPageMetadata("about"); }
 export default About;

@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { Eye, Images, Save, Send, Video } from "lucide-react";
+import { Images, Save, Send, Video } from "lucide-react";
 import { toast } from "sonner";
 import { SITE_VIDEO_FIELDS, SITE_VISUAL_FIELDS, type SiteVideoKey, type SiteVisualKey, type SiteVisuals } from "@/lib/cms/site-visuals";
 import { useMediaAssets, usePublishSiteVisuals, useSaveSiteVisualsDraft, useSiteVisualsDraft } from "@/lib/api/hooks";
@@ -14,6 +14,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Label } from "@/components/ui/label";
 import { ReusableTable, type DataTableColumn } from "@/components/data-table/reusable-table";
+import { DraftPreviewButton } from "@/components/cms/draft-preview-button";
 
 type VisualField = (typeof SITE_VISUAL_FIELDS)[number];
 
@@ -75,7 +76,7 @@ export function SiteVisualsEditor() {
           <CardDescription className="mt-1">Manage hero videos and the images used across public pages. Drafts stay private until published.</CardDescription>
           </div>
           <div className="flex flex-wrap gap-2">
-            <Button variant="outline" onClick={() => window.open("/", "_blank", "noopener,noreferrer")}><Eye data-icon="inline-start" />Preview site</Button>
+            <DraftPreviewButton href="/cms-preview/site-visuals?view=home" onPrepare={async () => { if (isDirty || !saved.hasDraft) await saveDraft.mutateAsync(content); }} disabled={saveDraft.isPending} />
             <Button variant="outline" onClick={save} disabled={!isDirty || saveDraft.isPending}><Save data-icon="inline-start" />Save draft</Button>
             <Button onClick={publish} disabled={saveDraft.isPending || publishVisuals.isPending}><Send data-icon="inline-start" />Publish</Button>
           </div>

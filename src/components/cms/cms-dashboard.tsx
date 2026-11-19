@@ -10,6 +10,8 @@ import {
   ImagePlus,
   Images,
   Languages,
+  Compass,
+  Search,
   Link as LinkIcon,
   Send,
 } from "lucide-react";
@@ -23,12 +25,15 @@ import type { CmsContentItem } from "@/lib/cms/dashboard";
 const contentIcons = {
   home: FilePenLine,
   "site-copy": Languages,
+  "site-seo": Search,
+  "site-navigation": Compass,
   "site-visuals": ImagePlus,
   "procurement-resources": LinkIcon,
   partners: Handshake,
   blog: FilePenLine,
   industries: Factory,
   media: Images,
+  "media-gallery": Images,
 } as const;
 
 const formatDate = (date: string | null) =>

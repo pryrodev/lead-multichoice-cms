@@ -7,14 +7,17 @@ import {
   Activity,
   Briefcase,
   ClipboardList,
+  Compass,
   FilePenLine,
   Factory,
   Gavel,
+  Handshake,
   LayoutDashboard,
   Images,
   ImagePlus,
   Link as LinkIcon,
   Languages,
+  Search,
   Settings,
   Truck,
   UserRoundSearch,
@@ -46,11 +49,24 @@ const website = [
   { title: "CMS dashboard", url: "/admin/content", icon: LayoutDashboard },
   { title: "Homepage editor", url: "/admin/content/home", icon: FilePenLine },
   { title: "Website copy", url: "/admin/content/copy", icon: Languages },
-  { title: "Website images", url: "/admin/content/visuals", icon: ImagePlus },
-  { title: "Procurement resources", url: "/admin/content/resources", icon: LinkIcon },
   { title: "Blog", url: "/admin/content/blog", icon: FilePenLine },
   { title: "Industries", url: "/admin/content/industries", icon: Factory },
+  { title: "Partners", url: "/admin/content/partners", icon: Handshake },
+] as const;
+
+const siteStructure = [
+  { title: "Navigation", url: "/admin/content/navigation", icon: Compass },
+  { title: "Page SEO & URLs", url: "/admin/content/seo", icon: Search },
+] as const;
+
+const siteMedia = [
+  { title: "Website images", url: "/admin/content/visuals", icon: ImagePlus },
   { title: "Media library", url: "/admin/content/media", icon: Images },
+  { title: "Media gallery", url: "/admin/content/gallery", icon: Images },
+] as const;
+
+const procurementContent = [
+  { title: "Procurement resources", url: "/admin/content/resources", icon: LinkIcon },
 ] as const;
 
 export const initials = (name: string) =>
@@ -87,7 +103,7 @@ export function AppSidebar({ staffMode = false }: { staffMode?: boolean }) {
           <SidebarTrigger className="h-9 w-9 shrink-0 rounded-xl border bg-card shadow-sm" />
         </div>
       </SidebarHeader>
-      <SidebarContent>
+      <SidebarContent className="admin-sidebar-scroll">
         <SidebarGroup>
           {!staffMode && <SidebarGroupLabel>Overview</SidebarGroupLabel>}
           <SidebarGroupContent>
@@ -113,7 +129,7 @@ export function AppSidebar({ staffMode = false }: { staffMode?: boolean }) {
             <SidebarGroupLabel>Website CMS</SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>
-                {website.map((item) => (
+                {website.slice(0, 3).map((item) => (
                   <SidebarMenuItem key={item.url}>
                     <SidebarMenuButton asChild isActive={path === item.url} tooltip={item.title}>
                       <Link href={item.url}>
@@ -126,6 +142,78 @@ export function AppSidebar({ staffMode = false }: { staffMode?: boolean }) {
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>
+        )}
+        {!staffMode && (
+          <>
+            <SidebarGroup className="pt-0">
+              <SidebarGroupLabel>Website content</SidebarGroupLabel>
+              <SidebarGroupContent>
+                <SidebarMenu>
+                  {website.slice(3).map((item) => (
+                    <SidebarMenuItem key={item.url}>
+                      <SidebarMenuButton asChild isActive={path === item.url} tooltip={item.title}>
+                        <Link href={item.url}>
+                          <item.icon />
+                          <span>{item.title}</span>
+                        </Link>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  ))}
+                </SidebarMenu>
+              </SidebarGroupContent>
+            </SidebarGroup>
+            <SidebarGroup className="pt-0">
+              <SidebarGroupLabel>Site structure</SidebarGroupLabel>
+              <SidebarGroupContent>
+                <SidebarMenu>
+                  {siteStructure.map((item) => (
+                    <SidebarMenuItem key={item.url}>
+                      <SidebarMenuButton asChild isActive={path === item.url} tooltip={item.title}>
+                        <Link href={item.url}>
+                          <item.icon />
+                          <span>{item.title}</span>
+                        </Link>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  ))}
+                </SidebarMenu>
+              </SidebarGroupContent>
+            </SidebarGroup>
+            <SidebarGroup className="pt-0">
+              <SidebarGroupLabel>Media</SidebarGroupLabel>
+              <SidebarGroupContent>
+                <SidebarMenu>
+                  {siteMedia.map((item) => (
+                    <SidebarMenuItem key={item.url}>
+                      <SidebarMenuButton asChild isActive={path === item.url} tooltip={item.title}>
+                        <Link href={item.url}>
+                          <item.icon />
+                          <span>{item.title}</span>
+                        </Link>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  ))}
+                </SidebarMenu>
+              </SidebarGroupContent>
+            </SidebarGroup>
+            <SidebarGroup className="pt-0">
+              <SidebarGroupLabel>Procurement</SidebarGroupLabel>
+              <SidebarGroupContent>
+                <SidebarMenu>
+                  {procurementContent.map((item) => (
+                    <SidebarMenuItem key={item.url}>
+                      <SidebarMenuButton asChild isActive={path === item.url} tooltip={item.title}>
+                        <Link href={item.url}>
+                          <item.icon />
+                          <span>{item.title}</span>
+                        </Link>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  ))}
+                </SidebarMenu>
+              </SidebarGroupContent>
+            </SidebarGroup>
+          </>
         )}
         {!staffMode && (
           <SidebarGroup>

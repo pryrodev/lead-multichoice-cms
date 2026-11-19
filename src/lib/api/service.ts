@@ -7,6 +7,9 @@ import type { ProcurementResourcesContent } from "@/lib/cms/procurement-resource
 import type { PartnersContent } from "@/lib/cms/partners";
 import type { BlogContent } from "@/lib/cms/blog";
 import type { IndustriesContent } from "@/lib/cms/industries";
+import type { SiteSeoContent } from "@/lib/cms/site-seo";
+import type { SiteNavigationContent } from "@/lib/cms/site-navigation";
+import type { MediaGalleryContent } from "@/lib/cms/media-gallery";
 
 async function requestJson<T>(url: string, init?: RequestInit): Promise<T> {
   const response = await fetch(url, {
@@ -117,4 +120,19 @@ export const api = {
     requestJson("/api/admin/cms/industries", { method: "PUT", body: JSON.stringify(content) }),
   publishIndustries: (): Promise<{ published: boolean; publishedAt: string }> =>
     requestJson("/api/admin/cms/industries/publish", { method: "POST" }),
+  getSiteSeo: (): Promise<import("./types").AdminSiteSeo> => requestJson("/api/admin/cms/site-seo"),
+  saveSiteSeoDraft: (content: SiteSeoContent): Promise<Pick<import("./types").AdminSiteSeo, "content" | "hasDraft">> =>
+    requestJson("/api/admin/cms/site-seo", { method: "PUT", body: JSON.stringify(content) }),
+  publishSiteSeo: (): Promise<{ published: boolean; publishedAt: string }> =>
+    requestJson("/api/admin/cms/site-seo/publish", { method: "POST" }),
+  getSiteNavigation: (): Promise<import("./types").AdminSiteNavigation> => requestJson("/api/admin/cms/site-navigation"),
+  saveSiteNavigationDraft: (content: SiteNavigationContent): Promise<Pick<import("./types").AdminSiteNavigation, "content" | "hasDraft">> =>
+    requestJson("/api/admin/cms/site-navigation", { method: "PUT", body: JSON.stringify(content) }),
+  publishSiteNavigation: (): Promise<{ published: boolean; publishedAt: string }> =>
+    requestJson("/api/admin/cms/site-navigation/publish", { method: "POST" }),
+  getMediaGallery: (): Promise<import("./types").AdminMediaGallery> => requestJson("/api/admin/cms/media-gallery"),
+  saveMediaGalleryDraft: (content: MediaGalleryContent): Promise<Pick<import("./types").AdminMediaGallery, "content" | "hasDraft">> =>
+    requestJson("/api/admin/cms/media-gallery", { method: "PUT", body: JSON.stringify(content) }),
+  publishMediaGallery: (): Promise<{ published: boolean; publishedAt: string }> =>
+    requestJson("/api/admin/cms/media-gallery/publish", { method: "POST" }),
 };

@@ -1,12 +1,15 @@
 import { queryOptions, useMutation, useQuery, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
 import { api } from "./service";
-import type { AdminBlog, AdminIndustries, AdminPartners, AdminProcurementResources, AdminSiteCopy, AdminSiteVisuals, CompanySettings, MediaAsset, StaffMember } from "./types";
+import type { AdminBlog, AdminIndustries, AdminMediaGallery, AdminPartners, AdminProcurementResources, AdminSiteCopy, AdminSiteNavigation, AdminSiteSeo, AdminSiteVisuals, CompanySettings, MediaAsset, StaffMember } from "./types";
 import type { SiteVisuals } from "@/lib/cms/site-visuals";
 import type { SiteCopyContent } from "@/lib/cms/site-copy";
 import type { ProcurementResourcesContent } from "@/lib/cms/procurement-resources";
 import type { PartnersContent } from "@/lib/cms/partners";
 import type { BlogContent } from "@/lib/cms/blog";
 import type { IndustriesContent } from "@/lib/cms/industries";
+import type { SiteSeoContent } from "@/lib/cms/site-seo";
+import type { SiteNavigationContent } from "@/lib/cms/site-navigation";
+import type { MediaGalleryContent } from "@/lib/cms/media-gallery";
 
 export const kpisQuery = queryOptions({ queryKey: ["kpis"], queryFn: api.getKpis });
 export const stagesQuery = queryOptions({ queryKey: ["stages"], queryFn: api.getStages });
@@ -221,6 +224,39 @@ export function usePublishIndustries() {
       publishedAt: published.publishedAt,
     } : current),
   });
+}
+
+export const siteSeoQuery = queryOptions({ queryKey: ["admin", "cms", "site-seo"], queryFn: api.getSiteSeo });
+export const useSiteSeoDraft = () => useSuspenseQuery(siteSeoQuery).data;
+export function useSaveSiteSeoDraft() {
+  const qc = useQueryClient();
+  return useMutation({ mutationFn: (content: SiteSeoContent) => api.saveSiteSeoDraft(content), onSuccess: (saved) => qc.setQueryData<AdminSiteSeo>(siteSeoQuery.queryKey, (current) => ({ content: saved.content, hasDraft: saved.hasDraft, publishedAt: current?.publishedAt ?? null, updatedAt: new Date().toISOString() })) });
+}
+export function usePublishSiteSeo() {
+  const qc = useQueryClient();
+  return useMutation({ mutationFn: api.publishSiteSeo, onSuccess: (published) => qc.setQueryData<AdminSiteSeo>(siteSeoQuery.queryKey, (current) => current ? { ...current, hasDraft: false, publishedAt: published.publishedAt } : current) });
+}
+
+export const siteNavigationQuery = queryOptions({ queryKey: ["admin", "cms", "site-navigation"], queryFn: api.getSiteNavigation });
+export const useSiteNavigationDraft = () => useSuspenseQuery(siteNavigationQuery).data;
+export function useSaveSiteNavigationDraft() {
+  const qc = useQueryClient();
+  return useMutation({ mutationFn: (content: SiteNavigationContent) => api.saveSiteNavigationDraft(content), onSuccess: (saved) => qc.setQueryData<AdminSiteNavigation>(siteNavigationQuery.queryKey, (current) => ({ content: saved.content, hasDraft: saved.hasDraft, publishedAt: current?.publishedAt ?? null, updatedAt: new Date().toISOString() })) });
+}
+export function usePublishSiteNavigation() {
+  const qc = useQueryClient();
+  return useMutation({ mutationFn: api.publishSiteNavigation, onSuccess: (published) => qc.setQueryData<AdminSiteNavigation>(siteNavigationQuery.queryKey, (current) => current ? { ...current, hasDraft: false, publishedAt: published.publishedAt } : current) });
+}
+
+export const mediaGalleryQuery = queryOptions({ queryKey: ["admin", "cms", "media-gallery"], queryFn: api.getMediaGallery });
+export const useMediaGalleryDraft = () => useSuspenseQuery(mediaGalleryQuery).data;
+export function useSaveMediaGalleryDraft() {
+  const qc = useQueryClient();
+  return useMutation({ mutationFn: (content: MediaGalleryContent) => api.saveMediaGalleryDraft(content), onSuccess: (saved) => qc.setQueryData<AdminMediaGallery>(mediaGalleryQuery.queryKey, (current) => ({ content: saved.content, hasDraft: saved.hasDraft, publishedAt: current?.publishedAt ?? null, updatedAt: new Date().toISOString() })) });
+}
+export function usePublishMediaGallery() {
+  const qc = useQueryClient();
+  return useMutation({ mutationFn: api.publishMediaGallery, onSuccess: (published) => qc.setQueryData<AdminMediaGallery>(mediaGalleryQuery.queryKey, (current) => current ? { ...current, hasDraft: false, publishedAt: published.publishedAt } : current) });
 }
 
 export function useAddActivity() {

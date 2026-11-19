@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { Eye, Pencil, Plus, Save, Send, Trash2 } from "lucide-react";
+import { Pencil, Plus, Save, Send, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { useIndustriesDraft, useMediaAssets, usePublishIndustries, useSaveIndustriesDraft } from "@/lib/api/hooks";
 import type { IndustrySector } from "@/lib/cms/industries";
@@ -16,6 +16,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { ReusableTable, type DataTableColumn } from "@/components/data-table/reusable-table";
+import { DraftPreviewButton } from "@/components/cms/draft-preview-button";
 
 type IndustryDraft = {
   heroTitle: string;
@@ -83,7 +84,7 @@ export function IndustriesEditor() {
     <Card className="rounded-md shadow-none">
       <CardHeader className="flex flex-row flex-wrap items-center justify-between gap-4">
         <div><CardTitle>Industries page</CardTitle><CardDescription className="mt-1">Manage the page introduction and each sector, image, and support area.</CardDescription></div>
-        <div className="flex flex-wrap gap-2"><Button asChild variant="outline"><Link href="/industries" target="_blank" rel="noreferrer"><Eye data-icon="inline-start" />Preview page</Link></Button><Button variant="outline" onClick={save} disabled={!dirty || saveDraft.isPending}><Save data-icon="inline-start" />Save draft</Button><Button onClick={publish} disabled={saveDraft.isPending || publishIndustries.isPending}><Send data-icon="inline-start" />Publish</Button></div>
+        <div className="flex flex-wrap gap-2"><DraftPreviewButton href="/cms-preview/industries?view=industries" onPrepare={async () => { if (dirty || !saved.hasDraft) await saveDraft.mutateAsync(content); }} disabled={saveDraft.isPending} /><Button variant="outline" onClick={save} disabled={!dirty || saveDraft.isPending}><Save data-icon="inline-start" />Save draft</Button><Button onClick={publish} disabled={saveDraft.isPending || publishIndustries.isPending}><Send data-icon="inline-start" />Publish</Button></div>
       </CardHeader>
       <CardContent className="flex flex-wrap items-center gap-2 border-t pt-4 text-sm">{saved.hasDraft ? <Badge variant="secondary">Draft saved</Badge> : <Badge variant="outline">No saved draft</Badge>}{saved.publishedAt && <span className="text-muted-foreground">Last published {new Date(saved.publishedAt).toLocaleString()}</span>}{dirty && <Badge variant="outline">Unsaved changes</Badge>}</CardContent>
     </Card>

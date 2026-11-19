@@ -1,5 +1,5 @@
-import type { Metadata } from "next";
 import Services from "@/components/site/pages/services";
+import { getPublicPageMetadata } from "@/lib/cms/metadata";
 
-export const metadata: Metadata = { title: "Services", description: "Market access, procurement and supply chain coordination, logistics and trade compliance support, project coordination and after-sales support in Rwanda." };
+export async function generateMetadata() { return getPublicPageMetadata("services"); }
 export default Services;

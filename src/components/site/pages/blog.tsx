@@ -6,7 +6,7 @@ import { useI18n } from "@/i18n/I18nProvider";
 import { insightUi } from "@/content/insights";
 import type { InsightArticle } from "@/content/insights";
 
-export default function BlogPage({ articles }: { articles?: InsightArticle[] }) {
+export default function BlogPage({ articles, articleHrefBase, listHref }: { articles?: InsightArticle[]; articleHrefBase?: string; listHref?: string }) {
   const { language } = useI18n();
   const copy = insightUi[language] ?? insightUi.en;
   return (
@@ -22,7 +22,7 @@ export default function BlogPage({ articles }: { articles?: InsightArticle[] }) 
         visualKey="blog.hero"
         alt="Colleagues discussing business and sourcing information"
       />
-      <InsightsGrid {...(articles ? { articles } : {})} />
+      <InsightsGrid {...(articles ? { articles } : {})} {...(articleHrefBase ? { articleHrefBase } : {})} {...(listHref ? { listHref } : {})} />
     </>
   );
 }

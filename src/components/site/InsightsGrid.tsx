@@ -8,7 +8,7 @@ import { useI18n } from "@/i18n/I18nProvider";
 import { useSiteVisuals } from "@/components/site/SiteVisualsProvider";
 import type { InsightArticle } from "@/content/insights";
 
-export function InsightsGrid({ id, articles: articleOverride }: { id?: string; articles?: InsightArticle[] }) {
+export function InsightsGrid({ id, articles: articleOverride, articleHrefBase = "/blog/", listHref = "/blog" }: { id?: string; articles?: InsightArticle[]; articleHrefBase?: string; listHref?: string }) {
   const { language } = useI18n();
   const visuals = useSiteVisuals();
   const copy = insightUi[language] ?? insightUi.en;
@@ -25,7 +25,7 @@ export function InsightsGrid({ id, articles: articleOverride }: { id?: string; a
           <p className="mt-3 max-w-2xl text-sm text-muted-foreground md:text-base">{copy.intro}</p>
         </div>
         <Link
-          href="/blog"
+          href={listHref}
           className="inline-flex shrink-0 items-center gap-1.5 text-sm font-semibold text-brand-primary hover:underline"
         >
           {copy.all}
@@ -48,7 +48,7 @@ export function InsightsGrid({ id, articles: articleOverride }: { id?: string; a
               const image = articleOverride ? article.image : visuals[visualKey] || article.image;
               return (
                 <Link
-                  href={`/blog/${article.slug}`}
+                  href={`${articleHrefBase}${article.slug}`}
                   aria-label={`${copy.read}: ${article.title}`}
                   className="relative block aspect-[16/9] overflow-hidden bg-brand-primary/10"
                 >
@@ -66,7 +66,7 @@ export function InsightsGrid({ id, articles: articleOverride }: { id?: string; a
               <p className="eyebrow text-brass">{article.category}</p>
               <h3 className="mt-3 font-display text-xl font-semibold leading-snug">
                 <Link
-                  href={`/blog/${article.slug}`}
+                  href={`${articleHrefBase}${article.slug}`}
                   className="transition-colors group-hover:text-brand-primary"
                 >
                   {article.title}
@@ -76,7 +76,7 @@ export function InsightsGrid({ id, articles: articleOverride }: { id?: string; a
                 {article.summary}
               </p>
               <Link
-                href={`/blog/${article.slug}`}
+                href={`${articleHrefBase}${article.slug}`}
                 className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-primary hover:underline"
               >
                 {copy.read}

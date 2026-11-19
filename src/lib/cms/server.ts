@@ -8,6 +8,9 @@ import { defaultProcurementResources, mergeProcurementResources, type Procuremen
 import { defaultPartners, mergePartners, type PartnersContent } from "./partners";
 import { defaultBlogContent, mergeBlogContent, type BlogContent } from "./blog";
 import { defaultIndustriesContent, mergeIndustriesContent, type IndustriesContent } from "./industries";
+import { defaultSiteSeoContent, mergeSiteSeo, type SiteSeoContent } from "./site-seo";
+import { defaultSiteNavigation, mergeSiteNavigation, type SiteNavigationContent } from "./site-navigation";
+import { defaultMediaGallery, mergeMediaGallery, type MediaGalleryContent } from "./media-gallery";
 
 const isProductionBuild = () => process.env["NEXT_PHASE"] === "phase-production-build";
 
@@ -122,3 +125,45 @@ const loadPublishedIndustries = async (): Promise<IndustriesContent> => {
 };
 const cachedPublishedIndustries = unstable_cache(loadPublishedIndustries, ["published-industries-v1"], { revalidate: 3600, tags: ["cms-industries"] });
 export const getPublishedIndustries = () => isProductionBuild() ? Promise.resolve(defaultIndustriesContent) : cachedPublishedIndustries();
+
+async function loadPublishedSiteSeo(): Promise<SiteSeoContent> {
+  try {
+    const page = await getDb().sitePage.findUnique({ where: { slug: "site-seo" }, select: { publishedContent: true } });
+    const stored = page?.publishedContent;
+    const content = typeof stored === "string" ? JSON.parse(stored) as unknown : stored;
+    return content ? mergeSiteSeo(content) : defaultSiteSeoContent;
+  } catch (error) {
+    handleCmsDbError("published page SEO", error);
+    return defaultSiteSeoContent;
+  }
+}
+const cachedPublishedSiteSeo = unstable_cache(loadPublishedSiteSeo, ["published-site-seo-v1"], { revalidate: 3600, tags: ["cms-site-seo"] });
+export const getPublishedSiteSeo = () => isProductionBuild() ? Promise.resolve(defaultSiteSeoContent) : cachedPublishedSiteSeo();
+
+async function loadPublishedSiteNavigation(): Promise<SiteNavigationContent> {
+  try {
+    const page = await getDb().sitePage.findUnique({ where: { slug: "site-navigation" }, select: { publishedContent: true } });
+    const stored = page?.publishedContent;
+    const content = typeof stored === "string" ? JSON.parse(stored) as unknown : stored;
+    return content ? mergeSiteNavigation(content) : defaultSiteNavigation;
+  } catch (error) {
+    handleCmsDbError("published site navigation", error);
+    return defaultSiteNavigation;
+  }
+}
+const cachedPublishedSiteNavigation = unstable_cache(loadPublishedSiteNavigation, ["published-site-navigation-v1"], { revalidate: 3600, tags: ["cms-site-navigation"] });
+export const getPublishedSiteNavigation = () => isProductionBuild() ? Promise.resolve(defaultSiteNavigation) : cachedPublishedSiteNavigation();
+
+async function loadPublishedMediaGallery(): Promise<MediaGalleryContent> {
+  try {
+    const page = await getDb().sitePage.findUnique({ where: { slug: "media-gallery" }, select: { publishedContent: true } });
+    const stored = page?.publishedContent;
+    const content = typeof stored === "string" ? JSON.parse(stored) as unknown : stored;
+    return content ? mergeMediaGallery(content) : defaultMediaGallery;
+  } catch (error) {
+    handleCmsDbError("published media gallery", error);
+    return defaultMediaGallery;
+  }
+}
+const cachedPublishedMediaGallery = unstable_cache(loadPublishedMediaGallery, ["published-media-gallery-v1"], { revalidate: 3600, tags: ["cms-media-gallery"] });
+export const getPublishedMediaGallery = () => isProductionBuild() ? Promise.resolve(defaultMediaGallery) : cachedPublishedMediaGallery();

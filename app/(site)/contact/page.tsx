@@ -1,9 +1,5 @@
-import type { Metadata } from "next";
 import Contact from "@/components/site/pages/contact";
+import { getPublicPageMetadata } from "@/lib/cms/metadata";
 
-export const metadata: Metadata = {
-  title: "Contact Us",
-  description:
-    "Contact Lead Multi-Choice ® in Remera, Kigali, Rwanda to discuss a business opportunity.",
-};
+export async function generateMetadata() { return getPublicPageMetadata("contact"); }
 export default Contact;

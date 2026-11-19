@@ -1,12 +1,8 @@
-import type { Metadata } from "next";
 import BlogPage from "@/components/site/pages/blog";
 import { getPublishedBlog } from "@/lib/cms/server";
+import { getPublicPageMetadata } from "@/lib/cms/metadata";
 
-export const metadata: Metadata = {
-  title: "Blog",
-  description:
-    "Practical articles on trade facilitation, sourcing, supplier readiness and supply coordination in Rwanda.",
-};
+export async function generateMetadata() { return getPublicPageMetadata("blog"); }
 
 export default async function Page() {
   const content = await getPublishedBlog();

@@ -47,6 +47,9 @@ collectFields(procurementResources, "Procurement");
 collectFields(procurementModels, "Procurement models");
 collectFields(enquiryTypes, "Contact");
 collectFields(leader, "Leadership");
+for (const source of [...leader.summary, ...leader.bio, ...leader.tags, ...leader.credentials]) {
+  if (!copySources.has(source)) copySources.set(source, { group: "Leadership" });
+}
 collectFields(company, "Company");
 collectFields(nav, "Navigation");
 collectFields(insights.en, "Blog");

@@ -9,6 +9,7 @@ import { useBlogDraft, useMediaAssets, usePublishBlog, useSaveBlogDraft } from "
 import type { InsightArticle } from "@/content/insights";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { DraftPreviewButton } from "@/components/cms/draft-preview-button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
@@ -73,7 +74,7 @@ export function BlogEditor() {
     <Card className="rounded-md shadow-none">
       <CardHeader className="flex flex-row flex-wrap items-center justify-between gap-4">
         <div><CardTitle>Blog articles</CardTitle><CardDescription className="mt-1">Write articles for the public blog and homepage.</CardDescription></div>
-        <div className="flex flex-wrap gap-2"><Button asChild variant="outline"><Link href="/blog" target="_blank" rel="noreferrer"><Eye data-icon="inline-start" />Preview blog</Link></Button><Button variant="outline" onClick={save} disabled={!dirty || saveDraft.isPending}><Save data-icon="inline-start" />Save draft</Button><Button onClick={publish} disabled={saveDraft.isPending || publishBlog.isPending}><Send data-icon="inline-start" />Publish</Button></div>
+        <div className="flex flex-wrap gap-2"><DraftPreviewButton href="/cms-preview/blog?view=blog" onPrepare={async () => { if (dirty || !saved.hasDraft) await saveDraft.mutateAsync({ articles }); }} disabled={saveDraft.isPending} /><Button variant="outline" onClick={save} disabled={!dirty || saveDraft.isPending}><Save data-icon="inline-start" />Save draft</Button><Button onClick={publish} disabled={saveDraft.isPending || publishBlog.isPending}><Send data-icon="inline-start" />Publish</Button></div>
       </CardHeader>
       <CardContent className="flex flex-wrap items-center gap-2 border-t pt-4 text-sm">{saved.hasDraft ? <Badge variant="secondary">Draft saved</Badge> : <Badge variant="outline">No saved draft</Badge>}{saved.publishedAt && <span className="text-muted-foreground">Last published {new Date(saved.publishedAt).toLocaleString()}</span>}{dirty && <Badge variant="outline">Unsaved changes</Badge>}</CardContent>
     </Card>

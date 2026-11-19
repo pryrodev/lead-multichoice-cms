@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { Eye, Handshake, Pencil, Plus, Save, Send, Trash2 } from "lucide-react";
+import { Handshake, Pencil, Plus, Save, Send, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import {
   useMediaAssets,
@@ -14,6 +14,7 @@ import {
 import type { WebsitePartner } from "@/lib/cms/partners";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { DraftPreviewButton } from "@/components/cms/draft-preview-button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   AlertDialog,
@@ -211,12 +212,7 @@ export function PartnersEditor() {
             </CardDescription>
           </div>
           <div className="flex flex-wrap gap-2">
-            <Button asChild variant="outline">
-              <Link href="/" target="_blank" rel="noopener noreferrer">
-                <Eye data-icon="inline-start" />
-                Preview homepage
-              </Link>
-            </Button>
+            <DraftPreviewButton href="/cms-preview/partners?view=home" onPrepare={async () => { if (isDirty || !saved.hasDraft) await saveDraft.mutateAsync({ partners }); }} disabled={saveDraft.isPending} />
             <Button variant="outline" onClick={save} disabled={!isDirty || saveDraft.isPending}>
               <Save data-icon="inline-start" />
               Save draft

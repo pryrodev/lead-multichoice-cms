@@ -4,23 +4,23 @@ import Image from "next/image";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import { mediaStories } from "@/content/media-gallery";
+import type { MediaGalleryContent } from "@/lib/cms/media-gallery";
 import { useI18n } from "@/i18n/I18nProvider";
 
 const autoplayDelay = 6500;
 
-export function MediaCoverflow() {
+export function MediaCoverflow({ stories }: { stories: MediaGalleryContent["stories"] }) {
   const { language, t } = useI18n();
   const reduceMotion = useReducedMotion();
-  const [activeIndex, setActiveIndex] = useState(1);
+  const [activeIndex, setActiveIndex] = useState(0);
   const [paused, setPaused] = useState(false);
   const [stageWidth, setStageWidth] = useState(0);
   const touchStart = useRef<number | null>(null);
   const stageRef = useRef<HTMLDivElement>(null);
 
   const move = useCallback((direction: number) => {
-    setActiveIndex((index) => (index + direction + mediaStories.length) % mediaStories.length);
-  }, []);
+    setActiveIndex((index) => stories.length ? (index + direction + stories.length) % stories.length : 0);
+  }, [stories.length]);
 
   useEffect(() => {
     const stage = stageRef.current;
@@ -38,7 +38,7 @@ export function MediaCoverflow() {
     return () => window.clearInterval(timer);
   }, [move, paused, reduceMotion]);
 
-  const active = mediaStories[activeIndex]!;
+  const active = stories[activeIndex];
   const isMobile = stageWidth > 0 && stageWidth < 640;
   const isTablet = stageWidth >= 640 && stageWidth < 1024;
 
@@ -60,6 +60,10 @@ export function MediaCoverflow() {
       : Math.min(290, Math.max(220, (stageWidth || 1200) * 0.22));
 
   const duration = reduceMotion ? 0.01 : 0.72;
+
+  if (!active) {
+    return <section className="flex min-h-[calc(100vh-6.5rem)] items-center justify-center bg-brand-primary px-6 text-center text-brand-white">The gallery is being updated.</section>;
+  }
 
   return (
     <section
@@ -134,11 +138,11 @@ export function MediaCoverflow() {
           setPaused(false);
         }}
       >
-        {mediaStories.map((story, index) => {
+        {stories.map((story, index) => {
           const offset =
-            ((index - activeIndex + mediaStories.length + Math.floor(mediaStories.length / 2)) %
-              mediaStories.length) -
-            Math.floor(mediaStories.length / 2);
+            ((index - activeIndex + stories.length + Math.floor(stories.length / 2)) %
+              stories.length) -
+            Math.floor(stories.length / 2);
           const distance = Math.abs(offset);
           const x = offset === 0 ? 0 : Math.sign(offset) * sideOffset * (distance === 1 ? 1 : 1.75);
           const rotateY = offset === 0 ? 0 : -Math.sign(offset) * (distance === 1 ? 26 : 38);
@@ -147,7 +151,7 @@ export function MediaCoverflow() {
 
           return (
             <motion.article
-              key={story.image}
+              key={story.id}
               className="absolute overflow-hidden rounded-2xl border border-white/25 bg-[#0091D7] shadow-[0_22px_60px_rgba(0,0,0,0.32)]"
               style={{
                 width: cardWidth,
@@ -235,9 +239,9 @@ export function MediaCoverflow() {
 
       {/* Pagination indicators (dots + active elongated gold pill) */}
       <div className="relative z-30 mt-6 flex items-center justify-center gap-2 sm:mt-8">
-        {mediaStories.map((story, index) => (
+        {stories.map((story, index) => (
           <button
-            key={story.image}
+            key={story.id}
             type="button"
                 aria-label={`${t("media.goToSlide")} ${index + 1}: ${story.title[language] ?? story.title["en"] ?? ""}`}
             aria-pressed={index === activeIndex}

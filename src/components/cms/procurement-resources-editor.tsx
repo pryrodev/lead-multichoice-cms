@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Eye, Pencil, Plus, Save, Send, Trash2 } from "lucide-react";
+import { Pencil, Plus, Save, Send, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { useProcurementResourcesDraft, usePublishProcurementResources, useSaveProcurementResourcesDraft } from "@/lib/api/hooks";
 import type { ProcurementResource } from "@/lib/cms/procurement-resources";
@@ -15,6 +15,7 @@ import { ReusableTable, type DataTableColumn } from "@/components/data-table/reu
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
+import { DraftPreviewButton } from "@/components/cms/draft-preview-button";
 
 export function ProcurementResourcesEditor() {
   const saved = useProcurementResourcesDraft();
@@ -97,7 +98,7 @@ export function ProcurementResourcesEditor() {
             <CardDescription className="mt-1">Manage the public links shown on the homepage and Procurement Opportunities page.</CardDescription>
           </div>
           <div className="flex flex-wrap gap-2">
-            <Button asChild variant="outline"><a href="/procurement-opportunities" target="_blank" rel="noreferrer"><Eye data-icon="inline-start" />Preview page</a></Button>
+            <DraftPreviewButton href="/cms-preview/procurement-resources?view=procurement-opportunities" onPrepare={async () => { if (isDirty || !saved.hasDraft) await saveDraft.mutateAsync({ resources }); }} disabled={saveDraft.isPending} />
             <Button variant="outline" onClick={save} disabled={!isDirty || saveDraft.isPending}><Save data-icon="inline-start" />Save draft</Button>
             <Button onClick={publish} disabled={saveDraft.isPending || publishResources.isPending}><Send data-icon="inline-start" />Publish</Button>
           </div>

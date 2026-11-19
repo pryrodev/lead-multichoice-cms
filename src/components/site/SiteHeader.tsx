@@ -6,7 +6,7 @@ import { ArrowUpRight, ChevronDown, Mail, MapPin, Menu, MessageCircle, Phone, X 
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { company, headerNavigation, nav } from "@/content/site";
+import { company, nav } from "@/content/site";
 import { Logo } from "./Logo";
 import { ButtonLink } from "./ui";
 import { RainbowButton } from "@/components/ui/rainbow-button";
@@ -14,6 +14,8 @@ import { LanguageSelect } from "./LanguageSelect";
 import { useI18n } from "@/i18n/I18nProvider";
 import type { MessageKey } from "@/i18n/messages";
 import { defaultHomePageContent, HOME_SECTION_NAV_ITEMS, type HomePageContent } from "@/lib/cms/homepage";
+import { defaultSiteNavigation, type SiteNavigationContent } from "@/lib/cms/site-navigation";
+import { defaultSiteSeoContent, getSeoPath, type SiteSeoContent } from "@/lib/cms/site-seo";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -42,7 +44,9 @@ const navKeys: Record<(typeof nav)[number]["to"], MessageKey> = {
   "/media": "nav.media",
   "/contact": "nav.contact",
 };
-const getNavItem = (to: (typeof nav)[number]["to"]) => nav.find((item) => item.to === to)!;
+type HeaderItem =
+  | { type: "link"; to: "/" }
+  | { type: "group"; id: string; label: string; links: Array<{ id: string; label: string; href: string }> };
 
 function selectHomeSection(event: MouseEvent<HTMLAnchorElement>, sectionId: string, anchor: string) {
   if (window.location.pathname !== "/") return;
@@ -51,13 +55,22 @@ function selectHomeSection(event: MouseEvent<HTMLAnchorElement>, sectionId: stri
   window.dispatchEvent(new CustomEvent("home-section-change", { detail: { sectionId } }));
 }
 
-export function SiteHeader({ homePageContent = defaultHomePageContent }: { homePageContent?: HomePageContent } = {}) {
+export function SiteHeader({ homePageContent = defaultHomePageContent, navigation = defaultSiteNavigation, siteSeo = defaultSiteSeoContent, previewSection }: { homePageContent?: HomePageContent; navigation?: SiteNavigationContent; siteSeo?: SiteSeoContent; previewSection?: string } = {}) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const hoverCloseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const pathname = usePathname();
   const { t, tc } = useI18n();
+  const headerNavigation: HeaderItem[] = [
+    { type: "link", to: "/" },
+    ...navigation.groups.map((group) => ({
+      type: "group" as const,
+      id: group.id,
+      label: group.label,
+      links: group.links.map((link) => ({ id: link.id, label: link.label, href: previewSection ? `/cms-preview/${previewSection}?view=${link.pageId}` : getSeoPath(link.pageId, siteSeo) })),
+    })),
+  ];
   const reduceMotion = useReducedMotion();
   const enabledHomeMenuIds = Array.isArray(homePageContent?.homeMenuEnabledIds)
     ? homePageContent.homeMenuEnabledIds
@@ -158,7 +171,7 @@ export function SiteHeader({ homePageContent = defaultHomePageContent }: { homeP
         className={`sticky top-7 z-50 transition-all duration-300 ${scrolled ? "border-b border-border bg-background/85 shadow-sm backdrop-blur-md" : "border-b border-transparent bg-background"}`}
       >
         <div className="container-site flex h-16 items-center justify-between gap-6">
-          <Logo />
+          <Logo href={previewSection ? `/cms-preview/${previewSection}?view=home` : "/"} />
           <nav aria-label="Main" className="hidden xl:block">
             <ul className="flex items-center gap-2">
               {headerNavigation.map((item) => {
@@ -201,7 +214,7 @@ export function SiteHeader({ homePageContent = defaultHomePageContent }: { homeP
                           >
                             {homeMenuItems.map((section) => (
                               <DropdownMenuItem key={section.id} asChild>
-                                <Link href={`/#${section.anchor}`} onClick={(event) => selectHomeSection(event, section.id, section.anchor)} className="cursor-pointer px-3 py-2.5 text-charcoal">
+                                <Link href={previewSection ? `/cms-preview/${previewSection}?view=home#${section.anchor}` : `/#${section.anchor}`} onClick={(event) => selectHomeSection(event, section.id, section.anchor)} className="cursor-pointer px-3 py-2.5 text-charcoal">
                                   {homeMenuLabel(section.id)}
                                 </Link>
                               </DropdownMenuItem>
@@ -228,24 +241,24 @@ export function SiteHeader({ homePageContent = defaultHomePageContent }: { homeP
                   );
                 }
 
-                const active = item.links.some((to) => pathname.startsWith(to));
+                const active = item.links.some((link) => pathname === link.href || pathname.startsWith(`${link.href}/`));
                 return (
                   <li
-                    key={item.label}
-                    onPointerEnter={(event) => event.pointerType === "mouse" && openDropdownOnHover(item.label)}
-                    onPointerLeave={(event) => event.pointerType === "mouse" && closeDropdownAfterHover(item.label)}
+                    key={item.id}
+                    onPointerEnter={(event) => event.pointerType === "mouse" && openDropdownOnHover(item.id)}
+                    onPointerLeave={(event) => event.pointerType === "mouse" && closeDropdownAfterHover(item.id)}
                   >
                     <DropdownMenu
                       modal={false}
-                      open={openDropdown === item.label}
+                      open={openDropdown === item.id}
                       onOpenChange={(nextOpen) => {
                         cancelHoverClose();
-                        setOpenDropdown(nextOpen ? item.label : null);
+                        setOpenDropdown(nextOpen ? item.id : null);
                       }}
                     >
                       <DropdownMenuTrigger asChild>
                         <button type="button" aria-current={active ? "page" : undefined} className={`relative inline-flex h-10 items-center gap-1 whitespace-nowrap rounded-md px-2 text-[14px] font-medium text-charcoal/80 transition-colors hover:bg-surface hover:text-brand-primary focus-visible:outline-none data-[state=open]:bg-surface data-[state=open]:text-brand-primary [&[data-state=open]>svg]:rotate-180 ${active ? "text-brand-primary" : ""}`}>
-                          {t(item.label)}
+                        {tc(item.label)}
                           <ChevronDown className="size-3.5 transition-transform" aria-hidden="true" />
                           {active && <motion.span layoutId="site-nav-active-indicator" aria-hidden="true" className="pointer-events-none absolute bottom-0 left-2 right-2 h-0.5 rounded-full bg-brand-primary" />}
                         </button>
@@ -256,16 +269,15 @@ export function SiteHeader({ homePageContent = defaultHomePageContent }: { homeP
                         sideOffset={8}
                         collisionPadding={12}
                         onPointerEnter={cancelHoverClose}
-                        onPointerLeave={() => closeDropdownAfterHover(item.label)}
+                        onPointerLeave={() => closeDropdownAfterHover(item.id)}
                         className="w-64 max-w-[calc(100vw-1.5rem)]"
                       >
-                        {item.links.map((to) => {
-                          const child = getNavItem(to);
-                          const childActive = pathname === to || pathname.startsWith(`${to}/`);
+                        {item.links.map((link) => {
+                          const childActive = pathname === link.href || pathname.startsWith(`${link.href}/`);
                           return (
-                            <DropdownMenuItem key={to} asChild>
-                              <Link href={to} aria-current={childActive ? "page" : undefined} className={`cursor-pointer px-3 py-2.5 ${childActive ? "bg-surface font-semibold text-brand-primary" : "text-charcoal"}`}>
-                                {t(navKeys[child.to])}
+                            <DropdownMenuItem key={link.id} asChild>
+                              <Link href={link.href} aria-current={childActive ? "page" : undefined} className={`cursor-pointer px-3 py-2.5 ${childActive ? "bg-surface font-semibold text-brand-primary" : "text-charcoal"}`}>
+                                {tc(link.label)}
                               </Link>
                             </DropdownMenuItem>
                           );
@@ -284,7 +296,7 @@ export function SiteHeader({ homePageContent = defaultHomePageContent }: { homeP
               </Link>
             </RainbowButton>
             <ButtonLink
-              href="/contact"
+              href={getSeoPath("contact", siteSeo)}
               className="cta-attention hidden whitespace-nowrap xl:inline-flex hover:brightness-105 hover:shadow-lg"
               arrow
             >
@@ -311,8 +323,12 @@ export function SiteHeader({ homePageContent = defaultHomePageContent }: { homeP
               pathname={pathname}
               signedIn={false}
               t={t}
+              tc={tc}
+              navigation={headerNavigation}
               homeMenuItems={homeMenuItems}
               homeMenuLabel={homeMenuLabel}
+              contactHref={previewSection ? `/cms-preview/${previewSection}?view=contact` : getSeoPath("contact", siteSeo)}
+              previewSection={previewSection}
             />
           )}
         </AnimatePresence>
@@ -332,15 +348,23 @@ function MobileNavigation({
   pathname,
   signedIn,
   t,
+  tc,
+  navigation,
   homeMenuItems,
   homeMenuLabel,
+  contactHref,
+  previewSection,
 }: {
   onClose: () => void;
   pathname: string;
   signedIn: boolean;
   t: (key: MessageKey) => string;
+  tc: (text: string) => string;
+  navigation: HeaderItem[];
   homeMenuItems: (typeof HOME_SECTION_NAV_ITEMS)[number][];
   homeMenuLabel: (id: (typeof HOME_SECTION_NAV_ITEMS)[number]["id"]) => string;
+  contactHref: string;
+  previewSection?: string | undefined;
 }) {
   return (
     <motion.div
@@ -366,7 +390,7 @@ function MobileNavigation({
       </div>
       <nav aria-label="Mobile" className="container-site pb-10 pt-4">
         <Accordion type="single" collapsible className="border-t border-background/15">
-          {headerNavigation.map((item, i) => {
+          {navigation.map((item, i) => {
             if (item.type === "link") {
               const active = item.to === "/" ? pathname === "/" : pathname.startsWith(item.to);
               if (item.to === "/") {
@@ -389,7 +413,7 @@ function MobileNavigation({
                           {homeMenuItems.map((section) => (
                             <li key={section.id}>
                               <Link
-                                href={`/#${section.anchor}`}
+                                href={previewSection ? `/cms-preview/${previewSection}?view=home#${section.anchor}` : `/#${section.anchor}`}
                                 onClick={(event) => { selectHomeSection(event, section.id, section.anchor); onClose(); }}
                                 className="block rounded py-2 text-base text-background/80 transition-colors hover:text-brass-light"
                               >
@@ -412,7 +436,7 @@ function MobileNavigation({
                   className="border-b border-background/15"
                 >
                   <Link
-                    href={item.to}
+                    href={previewSection ? `/cms-preview/${previewSection}?view=home` : item.to}
                     onClick={onClose}
                     className={`group flex items-center justify-between py-4 font-display text-2xl font-semibold ${active ? "text-brass-light" : "text-background"}`}
                   >
@@ -426,35 +450,34 @@ function MobileNavigation({
               );
             }
 
-            const active = item.links.some((to) => pathname.startsWith(to));
+            const active = item.links.some((link) => pathname === link.href || pathname.startsWith(`${link.href}/`));
             return (
               <motion.div
-                key={item.label}
+                key={item.id}
                 initial={{ opacity: 0, y: 18 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.05 + i * 0.04, duration: 0.35 }}
               >
-                <AccordionItem value={item.label} className="border-background/15">
+                <AccordionItem value={item.id} className="border-background/15">
                   <AccordionTrigger className={`py-4 font-display text-2xl font-semibold hover:no-underline [&>svg]:text-background/60 ${active ? "text-brass-light" : "text-background"}`}>
                     <span className="flex items-baseline gap-4">
                       <span className="text-xs tabular-nums text-background/50">0{i + 1}</span>
-                      {t(item.label)}
+                      {tc(item.label)}
                     </span>
                   </AccordionTrigger>
                   <AccordionContent className="pb-3 pl-9">
                     <ul className="space-y-1">
-                      {item.links.map((to) => {
-                        const child = getNavItem(to);
-                        const childActive = pathname === to || pathname.startsWith(`${to}/`);
+                      {item.links.map((link) => {
+                        const childActive = pathname === link.href || pathname.startsWith(`${link.href}/`);
                         return (
-                          <li key={to}>
+                          <li key={link.id}>
                             <Link
-                              href={to}
+                              href={link.href}
                               onClick={onClose}
                               aria-current={childActive ? "page" : undefined}
                               className={`block rounded py-2 text-base transition-colors hover:text-brass-light ${childActive ? "font-semibold text-brass-light" : "text-background/80"}`}
                             >
-                              {t(navKeys[child.to])}
+                              {tc(link.label)}
                             </Link>
                           </li>
                         );
@@ -478,7 +501,7 @@ function MobileNavigation({
                 {t("header.getStarted")}
               </Link>
             </RainbowButton>
-            <ButtonLink href="/contact" className="w-full" onClick={onClose} arrow>
+            <ButtonLink href={contactHref} className="w-full" onClick={onClose} arrow>
               {t("header.letsTalk")}
             </ButtonLink>
           </div>

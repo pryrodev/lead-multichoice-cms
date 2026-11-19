@@ -4,11 +4,11 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/i18n/I18nProvider";
 
-export function Logo({ inverted = false, className }: { inverted?: boolean; className?: string }) {
+export function Logo({ inverted = false, className, href = "/" }: { inverted?: boolean; className?: string; href?: string }) {
   const { t } = useI18n();
   return (
     <Link
-      href="/"
+      href={href}
       className={cn("inline-flex shrink-0 items-center", className)}
       aria-label={`${t("nav.home")} — Lead Multi-Choice ®`}
     >

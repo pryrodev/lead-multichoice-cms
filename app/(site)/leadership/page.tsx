@@ -1,9 +1,5 @@
-import type { Metadata } from "next";
 import Leadership from "@/components/site/pages/leadership";
+import { getPublicPageMetadata } from "@/lib/cms/metadata";
 
-export const metadata: Metadata = {
-  title: "Leadership",
-  description:
-    "Meet the Lead Multi-Choice ®  leadership team and learn about its trade facilitation, procurement, supply chain and digital transformation experience.",
-};
+export async function generateMetadata() { return getPublicPageMetadata("leadership"); }
 export default Leadership;

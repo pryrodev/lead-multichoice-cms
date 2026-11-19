@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { Eye, ExternalLink, ImagePlus, Languages, Save, Send } from "lucide-react";
+import { ExternalLink, ImagePlus, Languages, Save, Send } from "lucide-react";
 import { toast } from "sonner";
 import { HOME_CMS_FIELDS, HOME_SECTION_NAV_ITEMS, defaultHomePageContent, type HomePageContent } from "@/lib/cms/homepage";
 import { cmsLanguageOptions, type CmsLanguage } from "@/i18n/messages";
@@ -17,8 +17,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
+import { DraftPreviewButton } from "@/components/cms/draft-preview-button";
 
-const PREVIEW_STORAGE_KEY = "lead-multichoice-homepage-preview";
 const languageFlags: Record<CmsLanguage, string> = { en: "🇬🇧", fr: "🇫🇷", zh: "🇨🇳", de: "🇩🇪", ar: "🇸🇦" };
 
 export function HomepageEditor() {
@@ -77,11 +77,6 @@ export function HomepageEditor() {
     }
   };
 
-  const preview = () => {
-    window.localStorage.setItem(PREVIEW_STORAGE_KEY, JSON.stringify(content));
-    window.open("/preview/home", "_blank", "noopener,noreferrer");
-  };
-
   return <div className="flex flex-col gap-5">
     <Card>
       <CardHeader className="flex flex-row flex-wrap items-center justify-between gap-4">
@@ -90,7 +85,7 @@ export function HomepageEditor() {
           <CardDescription className="mt-1">Edit each section in the four CMS languages. Draft changes stay private until published.</CardDescription>
         </div>
         <div className="flex flex-wrap gap-2">
-          <Button variant="outline" onClick={preview}><Eye data-icon="inline-start" /> Preview draft</Button>
+          <DraftPreviewButton href="/cms-preview/home?view=home" onPrepare={async () => { if (isDirty || !saved.hasDraft) await saveDraft.mutateAsync(content); }} disabled={saveDraft.isPending} />
           <Button variant="outline" onClick={save} disabled={!isDirty || saveDraft.isPending}><Save data-icon="inline-start" />{saveDraft.isPending ? "Saving…" : "Save draft"}</Button>
           <Button onClick={publish} disabled={saveDraft.isPending || publishPage.isPending}><Send data-icon="inline-start" />{publishPage.isPending ? "Publishing…" : "Publish"}</Button>
         </div>
